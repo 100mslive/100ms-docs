@@ -1,0 +1,106 @@
+---
+ title: HandRaise, Peer count and Support for Large Rooms
+ nav: 7.26
+---
+
+Previously, you had to implement **handRaise** functionality with peer metadata. But that is no more required. We have made raising/lowering hand as **first class API** on HMSSDK.
+
+## How to raise hand
+
+```swift
+hmsSDK.raiseLocalPeerHand() { success, error in
+    // handle error if any
+}
+```
+
+## How to lower hand
+
+```swift
+hmsSDK.lowerLocalPeerHand() { success, error in
+    // handle error if any
+}
+```
+
+## How to lower hand of remote peer
+
+```swift
+let remotePeer: HMSPeer
+hmsSDK.lowerRemotePeerHand(remotePeer) { success, error in
+    // handle error if any
+}
+```
+
+## How to know when a peer raises hand
+
+Listen to callbacks when local  or remote peer’s hand raise status is changed in **on(peer:update:)** callback of **HMSUpdateListener**:
+
+```swift
+func on(peer: HMSPeer, update: HMSPeerUpdate) {
+     if(update == .handRaiseUpdated) {
+	// Update UI of hmsPeer
+     }
+}
+```
+
+Or you can use the new getter **isHandRaised** on **HMSPeer** to fetch the status of handRaise of any peer. **isHandRaised** property is added in **HMSPeer** to denote if hand is raised for the peer.
+
+```swift
+hmsPeer.isHandRaised
+```
+
+## How to get Total Peer count of the room
+
+Use **peerCount** property of HMSRoom to get the latest peer count of the room. Whenever peer count is udated, SDK sends a **peerCountUpdated** notification to the app in **on(room:update:)** as well.
+
+```swift
+func on(room: HMSRoom, update: HMSRoomUpdate) {
+     if(update == .peerCountUpdated) {
+	// Update UI of peer count
+     }
+}
+```
+
+# Supporting Large Scale Room
+
+You don't want to fetch every peer if the room is very large. You get a peer list iterator instead.
+
+## How to get peer list iterator in a large room
+
+You call **getPeerListIterator** method on **HMSSDK** instance to get **HMSPeerListIterator**.
+
+```swift
+let options = HMSPeerListIteratorOptions(filterByRoleName: nil, filterByPeerIds: nil, limit: 10)
+let peerListIterator = hmsSDK.getPeerListIterator(options: options)
+```
+
+Now with **peerListIterator** instance you can incremently load peers, or check peer count without fetching the peers.
+
+## How to use peer iterator to load peers incremently
+
+You use **next** method on **HMSPeerListIterator** to check if there are more peers available to fetch.
+
+```swift
+peerListIterator.next() { loadedPeers, error in
+    if let loadedPeers = loadedPeers {
+       // store newly loaded peers to show in UI
+    }
+}
+```
+
+### How to check if more peers are available to load
+
+You use **hasNext** property on **HMSPeerListIterator** to check if there are more peers available to fetch.
+
+```swift
+if peerListIterator.hasNext {
+    // load next set of peers
+}
+```
+
+### How to check the total count of peers in the peer list
+
+You use **totalCount** property on **HMSPeerListIterator** to know how many peers are there in the peer list.
+
+```swift
+let totalPeerCount = peerListIterator.totalCount
+```
