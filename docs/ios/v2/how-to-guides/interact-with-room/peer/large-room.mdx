@@ -36,9 +36,9 @@ Listen to callbacks when local  or remote peer’s hand raise status is changed 
 
 ```swift
 func on(peer: HMSPeer, update: HMSPeerUpdate) {
-	if(update == .handRaiseUpdated) {
-		// Update UI of hmsPeer
-	}
+     if(update == .handRaiseUpdated) {
+	// Update UI of hmsPeer
+     }
 }
 ```
 
@@ -54,13 +54,13 @@ Use **peerCount** property of HMSRoom to get the latest peer count of the room. 
 
 ```swift
 func on(room: HMSRoom, update: HMSRoomUpdate) {
-	if(update == .peerCountUpdated) {
-		// Update UI of peer count
-	}
+     if(update == .peerCountUpdated) {
+	// Update UI of peer count
+     }
 }
 ```
 
-# How to get list of peers in a large room
+# Supporting Large Scale Room
 
 You don't want to fetch every peer if the room is very large. You get a peer list iterator instead.
 
@@ -82,7 +82,7 @@ You use **next** method on **HMSPeerListIterator** to check if there are more pe
 ```swift
 peerListIterator.next() { loadedPeers, error in
     if let loadedPeers = loadedPeers {
-        // store newly loaded peers to show in UI
+       // store newly loaded peers to show in UI
     }
 }
 ```
