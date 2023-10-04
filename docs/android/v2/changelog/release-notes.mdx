@@ -17,7 +17,17 @@ import AndroidSdkVersionShield from '@/common/android-sdk-version-shield.md';
 | live.100ms:hls-player-stats: |<AndroidSdkVersionShield /> 
 | live.100ms:virtual-background: |<AndroidSdkVersionShield />|
 
-## v2.7.8 - 04-10-2023
+## v2.7.7 - 2023-10-04
+### ADDED
+Pagination API support for fetching peer list in large rooms.
+
+### FIXED
+Bug in hasNext() method of iterator.
+Initial mute state of HMSTrackSettings not working . This bug  was introduced in v2.7.6
+
+### CHANGED
+Ability to switch to software echo cancellation from backend.
+
 ## v2.7.6 - 2023-09-14
 ### Breaking Changes
 - The SDK is now compiled with Java 11 and if you're using an older version of the JDK you'll get an error like "class file has wrong version 55.0, should be 52.0". To fix this please upgrade your JDK to at least Java 11. This was necessitated by a change in webrtc.
