@@ -54,6 +54,8 @@ import { usePaginatedParticipants } from '@100mslive/react-sdk';
 
 const PaginatedPeers = () => {
   const { peers, total, loadPeers, loadMorePeers } = usePaginatedParticipants({ role: roleName, limit: 20 });
+  // to check if there are more peers
+  const hasNext = total > peers.length;
 
   useEffect(() => {
     loadPeers();
