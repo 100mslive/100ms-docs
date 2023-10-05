@@ -12,6 +12,7 @@ nav: '5.1.1'
 - [useDevicesResult](/api-reference/javascript/v2/react-hooks/interfaces/useDevicesResult)
 - [useEmbedShareResult](/api-reference/javascript/v2/react-hooks/interfaces/useEmbedShareResult)
 - [usePDFShareResult](/api-reference/javascript/v2/react-hooks/interfaces/usePDFShareResult)
+- [usePaginatedParticipantsResult](/api-reference/javascript/v2/react-hooks/interfaces/usePaginatedParticipantsResult)
 - [useParticipantListResult](/api-reference/javascript/v2/react-hooks/interfaces/useParticipantListResult)
 - [useParticipantsResult](/api-reference/javascript/v2/react-hooks/interfaces/useParticipantsResult)
 - [usePreviewInput](/api-reference/javascript/v2/react-hooks/interfaces/usePreviewInput)
@@ -64,6 +65,12 @@ only logs the error to the console, and can be overridden for any other behaviou
 ##### Returns
 
 `void`
+
+---
+
+### usePaginatedParticipantsInput
+
+Ƭ **usePaginatedParticipantsInput**: `HMSPeerListIteratorOptions`
 
 ---
 
@@ -404,6 +411,29 @@ For almost every case, `useHMSStore` would get the job done.
 [`usePDFShareResult`](/api-reference/javascript/v2/react-hooks/interfaces/usePDFShareResult)
 
 usePDFShareResult
+
+---
+
+### usePaginatedParticipants
+
+▸ **usePaginatedParticipants**(`options`): `Object`
+
+#### Parameters
+
+| Name      | Type                         |
+| :-------- | :--------------------------- |
+| `options` | `HMSPeerListIteratorOptions` |
+
+#### Returns
+
+`Object`
+
+| Name            | Type                     |
+| :-------------- | :----------------------- |
+| `loadMorePeers` | () => `Promise`<`void`\> |
+| `loadPeers`     | () => `Promise`<`void`\> |
+| `peers`         | `HMSPeer`[]              |
+| `total`         | `number`                 |
 
 ---
 

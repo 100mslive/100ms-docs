@@ -1,6 +1,6 @@
 ---
 title: HMSPeerWithMuteStatus
-nav: '4.32'
+nav: '4.34'
 ---
 
 ## Properties

@@ -1,6 +1,6 @@
 ---
 title: useScreenShareResult
-nav: '5.2.14'
+nav: '5.2.15'
 ---
 
 ## Properties

@@ -54,6 +54,8 @@ nav: '1.1'
 - [HMSMessage](/api-reference/javascript/v2/interfaces/HMSMessage)
 - [HMSMessageNotification](/api-reference/javascript/v2/interfaces/HMSMessageNotification)
 - [HMSPeer](/api-reference/javascript/v2/interfaces/HMSPeer)
+- [HMSPeerListIterator](/api-reference/javascript/v2/interfaces/HMSPeerListIterator)
+- [HMSPeerListIteratorOptions](/api-reference/javascript/v2/interfaces/HMSPeerListIteratorOptions)
 - [HMSPeerListNotification](/api-reference/javascript/v2/interfaces/HMSPeerListNotification)
 - [HMSPeerNotification](/api-reference/javascript/v2/interfaces/HMSPeerNotification)
 - [HMSPeerStats](/api-reference/javascript/v2/interfaces/HMSPeerStats)
@@ -107,6 +109,12 @@ nav: '1.1'
 Renames and re-exports [HMSNotifications](/api-reference/javascript/v2/interfaces/HMSNotifications)
 
 ## Type Aliases
+
+### HMSGroupName
+
+Ƭ **HMSGroupName**: `string`
+
+---
 
 ### HMSMessageID
 
@@ -892,6 +900,22 @@ NOTE: Returns true only after join, returns false during preview.
 ▸ **selectIsInPreview**(`state`): `boolean`
 
 Select a boolean denoting whether the room is in Preview state.
+
+#### Parameters
+
+| Name    | Type                                                                                                            |
+| :------ | :-------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+
+#### Returns
+
+`boolean`
+
+---
+
+### selectIsLargeRoom
+
+▸ **selectIsLargeRoom**(`state`): `boolean`
 
 #### Parameters
 

@@ -1,6 +1,6 @@
 ---
 title: useVideoResult
-nav: '5.2.19'
+nav: '5.2.20'
 ---
 
 ## Properties

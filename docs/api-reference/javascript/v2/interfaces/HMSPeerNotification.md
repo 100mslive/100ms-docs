@@ -1,6 +1,6 @@
 ---
 title: HMSPeerNotification
-nav: '4.30'
+nav: '4.32'
 ---
 
 ## Hierarchy

@@ -1,6 +1,6 @@
 ---
 title: HMSRoom
-nav: '4.52'
+nav: '4.54'
 ---
 
 ## Properties
@@ -20,6 +20,12 @@ nav: '4.52'
 ### isConnected
 
 • `Optional` **isConnected**: `boolean`
+
+---
+
+### isLargeRoom
+
+• `Optional` **isLargeRoom**: `boolean`
 
 ---
 
