@@ -53,7 +53,7 @@ async function PaginatedParticipants() {
 import { usePaginatedParticipants } from '@100mslive/react-sdk';
 
 const PaginatedPeers = () => {
-  const { peers, total, loadPeers } = usePaginatedParticipants({ role: roleName, limit: 20 });
+  const { peers, total, loadPeers, loadMorePeers } = usePaginatedParticipants({ role: roleName, limit: 20 });
 
   useEffect(() => {
     loadPeers();
@@ -65,6 +65,12 @@ const PaginatedPeers = () => {
     </>
   )
 };
+
+// You can add a load more button or infinite pagination and make the call to loadMorePeers in the above implementation to get the next peers.
 ```
 
 </Tab>
+
+
+> NOTE: The data given by the API might become stale, so it is recommended to poll the `iterator.findPeers()` for js and `loadPeers()` for React, so that if any peer
+has left it would be updated
