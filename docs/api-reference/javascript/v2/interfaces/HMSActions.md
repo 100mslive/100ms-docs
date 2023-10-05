@@ -373,6 +373,22 @@ enable sending audio speaker data to beam
 
 ---
 
+### getPeerListIterator
+
+▸ **getPeerListIterator**(`options?`): [`HMSPeerListIterator`](/api-reference/javascript/v2/interfaces/HMSPeerListIterator)
+
+#### Parameters
+
+| Name       | Type                                                                                               |
+| :--------- | :------------------------------------------------------------------------------------------------- |
+| `options?` | [`HMSPeerListIteratorOptions`](/api-reference/javascript/v2/interfaces/HMSPeerListIteratorOptions) |
+
+#### Returns
+
+[`HMSPeerListIterator`](/api-reference/javascript/v2/interfaces/HMSPeerListIterator)
+
+---
+
 ### ignoreMessageTypes
 
 ▸ **ignoreMessageTypes**(`msgTypes`, `replace?`): `void`
