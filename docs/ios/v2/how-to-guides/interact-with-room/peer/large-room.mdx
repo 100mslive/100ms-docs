@@ -62,7 +62,7 @@ func on(room: HMSRoom, update: HMSRoomUpdate) {
 
 # Supporting Large Scale Room
 
-You don't want to fetch every peer if the room is very large. You get a peer list iterator instead.
+You don't want to fetch every peer if the room is very large, use the peer list iterator instead.
 
 ## How to get peer list iterator in a large room
 
@@ -73,11 +73,13 @@ let options = HMSPeerListIteratorOptions(filterByRoleName: nil, filterByPeerIds:
 let peerListIterator = hmsSDK.getPeerListIterator(options: options)
 ```
 
+If you wish to filter peers based on role name or peer ids, you can pass them in **HMSPeerListIteratorOptions**. **limit** is the number of peers you want to fetch in one go.
+
 Now with **peerListIterator** instance you can incremently load peers, or check peer count without fetching the peers.
 
 ## How to use peer iterator to load peers incremently
 
-You use **next** method on **HMSPeerListIterator** to check if there are more peers available to fetch.
+You can use **next** method on **HMSPeerListIterator** to fetch the next set of peers, with the filters applied while creating the `peerListIterator`.
 
 ```swift
 peerListIterator.next() { loadedPeers, error in
