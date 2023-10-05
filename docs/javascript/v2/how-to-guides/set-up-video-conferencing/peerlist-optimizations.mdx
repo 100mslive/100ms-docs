@@ -1,5 +1,5 @@
 ---
-title: Handling peerlist in large room(10k peers or more)
+title: Handling peerlist in large room
 nav: 1.23
 ---
 
@@ -7,7 +7,7 @@ Prerequisites:
 
 **Minimum required [SDK version](../../changelog/release-notes#2023-10-04)**
 
-In case of large rooms, it does not make sense to show all the peers at once as the peers of interest would be limited. So we updated our implementation
+In case of large rooms(more than 5k peers), it does not make sense to show all the peers at once as the peers of interest would be limited. So we updated our implementation
 to show peers of interest(peers with publish permissions, peers who handraised) in the initial peer list.
 
 However, if you wish to show peers of particular role(s), we introduced new set of API's to achieve this.
