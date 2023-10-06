@@ -1,0 +1,123 @@
+---
+ title: HandRaise, Peer count and Support for Large Rooms
+ nav: 7.26
+---
+
+## Handle Raise and Lower Hand
+
+Previously, We had to implement **hand raise** functionality with peer metadata.
+But that is no more required, We have made raising/lowering hand as **first class API** on HMSSDK.
+
+### How to Raise Hand
+
+You can use `raiseLocalPeerHand` method available on `HMSSDK` instance to raise hand of local peer.
+
+```js
+// `hmsInstance` is an instance of `HMSSDK` class
+
+await hmsInstance.raiseLocalPeerHand();
+```
+
+### How to Lower Hand
+
+You can use `lowerLocalPeerHand` method available on `HMSSDK` instance to lower hand of local peer.
+
+```js
+// `hmsInstance` is an instance of `HMSSDK` class
+
+await hmsInstance.lowerLocalPeerHand();
+```
+
+### How to Lower Hand of Remote Peer
+
+You can use `lowerRemotePeerHand` method available on `HMSSDK` instance to lower hand of remote peer.
+It accepts a peer (an instance of the HMSPeer class) of whom you want to lower the hand.
+
+
+```js
+// `hmsInstance` is an instance of `HMSSDK` class
+// `peer` is a remote peer of whom we want to lower the hand
+
+await hmsInstance.lowerRemotePeerHand(peer);
+```
+
+### How to know when a Peer raises or lowers hand
+
+Whenever local/remote peer raises or lowers hand, `HMSUpdateListenerActions.ON_PEER_UPDATE` event 
+is emitted with `HMSPeerUpdate.HAND_RAISED_CHANGED` update type. You can subscribe to this event and update the UI for updated peer.
+
+```js
+const onPeerListener = (data: { peer: HMSPeer; type: HMSPeerUpdate; }) => {
+    const { peer, type } = data;
+
+    if (type === HMSPeerUpdate.HAND_RAISED_CHANGED) {
+        // {peer} has either raised or lowered its hand
+        // Update UI for the {peer}
+
+        // Parsing the updated Metadata
+        const isHandRaised = peer.isHandRaised;
+    }
+};
+
+hmsInstance.addEventListener(HMSUpdateListenerActions.ON_PEER_UPDATE, onPeerListener);
+```
+
+### Get current hand raise status of peer
+
+Now, `HMSPeer` instance has `isHandRaised` property on it. It will be `true` when 
+peer has raised it's hand and `false` otherwise. You can use `peer.isHandRaised` property to 
+get the current status.
+
+```js
+hmsPeer.isHandRaised
+```
+
+## How to get Total Peer count of the Room
+
+You can use `peerCount` property of `HMSRoom` instance to get the latest peer count of the room. 
+Whenever peer count is updated, `HMSUpdateListenerActions.ON_ROOM_UPDATE` event is emitted with `HMSRoomUpdate.ROOM_PEER_COUNT_UPDATED` update type.
+
+```js
+const roomUpdateHandler = (data: {
+  room: HMSRoom;
+  type: HMSRoomUpdate;
+}) => {
+  if (data.type === HMSRoomUpdate.ROOM_PEER_COUNT_UPDATED) {
+    // Update UI of `room.peerCount`
+  }
+};
+
+hmsInstance.addEventListener(
+  HMSUpdateListenerActions.ON_ROOM_UPDATE,
+  roomUpdateHandler
+);
+```
+
+## Large Room changes
+
+### Get list of peers on join
+
+When local peer join a room, it will not receive `ON_PEER_UPDATE` with
+ `type === HMSPeerUpdate.PEER_JOINED` for each remote peer like it used to.
+ Now, `ON_PEER_LIST_UPDATED` event is emitted with list of all the peers present
+ in the room.
+
+You can subscribe to `ON_PEER_LIST_UPDATED` event to get list of added or removed peers -
+
+```js
+const peerListUpdateHandler = (data: {
+  addedPeers: HMSPeer[];
+  removedPeers: HMSPeer[];
+}) => {
+  // here,
+  // `data.addedPeers` is list of added peers in room
+  // `data.removedPeers` is list of removed peers from room
+};
+
+hmsInstance.addEventListener(
+  HMSUpdateListenerActions.ON_PEER_LIST_UPDATED,
+  peerListUpdateHandler
+);
+```
+
+Note that on subsequent peer joins, both `ON_PEER_LIST_UPDATED` and `ON_PEER_UPDATE` with `type === HMSPeerUpdate.PEER_JOINED` events are emitted 
