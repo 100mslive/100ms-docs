@@ -15,7 +15,7 @@ At 100ms, we categorize live video interactions into three levels of interactivi
 
     Delayed Stream participants consume a composite live stream, with less than 10 seconds of latency, without publishing their own audio/video, interacting with other participants via messaging. This experience is similar to platforms like Twitch or YouTube Live and is facilitated through 100ms Interactive Live Streaming
     <br/>
-    **Live streaming uses [HLS](https://www.100ms.live/blog/hls-101-beginners-guide) to achieve near real-time latency at scale.**
+    **Live streaming uses HTTP Live Streaming [(HLS)](https://www.100ms.live/blog/hls-101-beginners-guide) to achieve near real-time latency at scale.**
 
 The [roles primitive](/javascript/v2/foundation/templates-and-roles#roles) allows defining participant capabilities and associating them with an interaction level, enabling participants to move between levels with a single API call to change roles.
 
@@ -57,8 +57,8 @@ descriptions={["Build your Live Streaming use-case without writing a single line
 
 This configures your new template with [roles](/javascript/v2/foundation/templates-and-roles) and prebuilt that can be customised (more on this later). All rooms created based on this template will have this configuration.
 
--   `broadcaster`: This role represents a streamer, on stage, who can publish their audio/video. There can be multiple participants who join as a broadcaster
--   `co-broadcaster`: This role represents a streamer, on stage, who can also publish their audio/video but cannot start or stop the stream
+-   `broadcaster`: This role represents a streamer on stage, capable of publishing their audio/video. There can be multiple participants who join as a broadcaster
+-   `co-broadcaster`: This role represents a streamer on stage, who can also publish their audio/video but cannot start or stop the stream, providing a level of control over the broadcast flow
 -   `viewer-realtime`: This role represents an off stage participant (WebRTC), who subscribes to on stage participants and can interact using messaging, but cannot publish audio/video
 -   `viewer-near-realtime`: This role represents an off stage participant (HLS) with a delayed stream, who subscribes to the composite live stream and can interact using messaging
 -   `viewer-on-stage` (only if enabled): This role represents a temporary on stage participant (WebRTC), who subscribes to the broadcaster and co-broadcaster, and can share audio/video
@@ -83,7 +83,7 @@ To integrate 100ms Interactive Live Streaming in your app, follow these steps:
 1. [Enable live streaming](#enable-live-streaming)
 2. [Integrate the 100ms SDK in your app](#sdk-integration)
 3. [Integrate live stream playback](#live-stream-playback)
-4. [Video on demand (VOD) use cases](#video-on-demand-vod-use-cases)
+4. [Video on demand (VOD) use-cases](#video-on-demand-vod-use-cases)
 
 ### Enable live streaming
 
@@ -119,8 +119,8 @@ If you need to only enable HLS playback and don't need interactivity, you can fo
     -   `customer_id`: replace this placeholder with your customer_id from [developer section](https://dashboard.100ms.live/developer) on your dashboard.
     -   `room_id`: replace this placeholder with the `room_id` of the respective room from which the stream will be broadcasted.
 
-### Video on Demand (VOD) use cases
+### Video on Demand (VOD) use-cases
 
-If you wish to replay your HLS stream for Video on demand (VOD) use case, 100ms provides the capability to record the HLS stream which will be posted to your webhook as a ZIP file of M3U8 format (same playback format as HLS) with all the chunks once the stream ends.
+If you wish to replay your HLS stream for Video on demand (VOD) use-case, 100ms provides the capability to record the HLS stream which will be posted to your webhook as a ZIP file of M3U8 format (same playback format as HLS) with all the chunks once the stream ends.
 
 You can start recording a live stream using the [client-side SDK](/javascript/v2/how--to-guides/record-and-live-stream/hls/hls) or using the [server API](/server-side/v2/Destinations/rtmp-streaming-and-browser-recording#start-streaming-recording). Once the HLS recording is completed, you will get the details of recording as a callback to the webhook configured in your account. Check `hls.recording.success` [webhook event](/server-side/v2/introduction/webhook#hls-recording-success) for more information.
