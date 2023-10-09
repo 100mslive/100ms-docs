@@ -56,20 +56,22 @@ hmsActions.setScreenShareEnabled(false);
 
 The `setScreenShareEnabled` function accepts a second optional config prop. It has the following options:
 
+<br />
+
 -   `videoOnly`: Share only video. Default value is `false`.
 -   `audioOnly`: Share only audio. Default value is `false`.
 -   `forceCurrentTab`: Show the current tab first in the browser prompt and throw an error if any other tab is selected. Default value is `false`.
--   `preferCurrentTab`: Show the current tab first in the browser prompt but don't throw an error if any other tab is selected. Default value is `false`
+-   `preferCurrentTab`: Show the current tab first in the browser prompt but does not throw an error if any other tab is selected. Default value is `false`.
 
 -   `selfBrowserSurface`: Whether to show an option for sharing the current tab in the screen share prompt. Screen sharing current tab might lead to hall of mirrors effect.
-    Default is `exclude`, if either of `forceCurrentTab` or `preferCurrentTab` are `true`, this is set to include.
+    Default is `exclude`, if either of `forceCurrentTab` or `preferCurrentTab` are `true`, this is set to `include`.
 
--   `surfaceSwitching`: Include the option to switch tabs while sharing. Default is `include`, but will be set to `exclude` if `forceCurrentTab` is `true`
+-   `surfaceSwitching`: Include the option to switch tabs while sharing. Default is `include`, but will be set to `exclude` if `forceCurrentTab` is `true`.
 
 -   `systemAudio`: Whether to show option for sharing system level audio if the entire screen
     is being shared. Possible values are `include` and `exclude`. Not applicable if `videoOnly` is `true`. Note that sharing system audio will cause echo if the mic is on. The default value is `exclude`.
 
--   `displaySurface`: Preselect the relevant tab in screenshare menu. Use `browser` for preferring a browser tab, `window` for application window, and `monitor` for full screen.
+-   `displaySurface`: Preselect the relevant tab in screenshare menu. Use `browser` for preferring a browser tab, `window` for application window, and `monitor` for full screen. The default value is `monitor`.
 
 ## Useful Selectors
 
