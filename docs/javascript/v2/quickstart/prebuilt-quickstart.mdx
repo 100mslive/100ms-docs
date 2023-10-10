@@ -148,5 +148,16 @@ HMSPrebuilt accepts the following props:
 `role` (optional unless roomId is specified)
 - A string specifying the role of the peer. Should be specified if the roomId is being used to join the room.
 
+`onJoin` (optional)
+- A callback function that will be executed after the peer joins the call. 
+
 `onLeave` (optional)
 - A callback function that will be executed after the peer leaves the call, the session ends or if the peer gets kicked out.
+
+`options` (optional)
+- An object which accepts the following parameters:
+    - `userName` (optional): The name to be assigned to the peer.
+
+    - `userId` (optional): The user ID to be assigned to the peer.
+
+    - `endpoints` (optional): The init and token endpoints can be passed here with `init` and `tokenByRoomCode` as keys.
