@@ -1,0 +1,132 @@
+---
+title: Create large rooms
+nav: 8
+---
+
+This guide will help you create large rooms which support a conferencing or HLS viewer count of up to **20,000** peers. Integration of multiple SFU instances in a mesh configuration, alongside optimized signaling mechanisms, facilitates efficient management of extensive peer lists and related actions like room joining and hand-raising. This scalability enhancement is particularly valuable for webinar and live streaming scenarios in 100ms rooms.
+
+Essentially, two implementation details need attention. 
+<FlexContainer>
+<Callout icon="link" title="Server-side implementation">
+Creation of a room which has the required optimisations to support a large number of peers.
+
+[Create a large room →](#create-a-large-room)
+
+</Callout>
+<Callout icon="client" title="Client-side implementation">
+Utilisation of first class APIs in the SDKs to handle hand-raise and peer list functionalities.
+
+[Implement functionalities →](#client-side-implementation)
+
+</Callout>
+</FlexContainer>
+
+## Create a large room
+
+Large rooms work similarly to your normal 100ms rooms in function. The scale optimisations kick in when a large number of peers join the room Use 100ms' server-side [Create Room API](/server-side/v2/api-reference/Rooms/create-via-api) to create a room with the `large_room` flag enabled. Use the `size` to define the maximum number of expected peers in that room.
+The following cURL example illustrates how to create a large room.
+
+<PostRequest title="https://api.100ms.live/v2/rooms" />
+<Request id="req-comp-0">
+```bash
+curl --location --request POST 'https://api.100ms.live/v2/rooms' \
+--header 'Authorization: Bearer <management_token>' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "name": "new-large-room-081023",
+    "description": "This is a sample description for the room",
+    "template_id": "<template_id of the template you wish to associate with the room>",
+    "large_room": true,
+    "size":20000
+}'
+```
+</Request>
+<ResponseBox id="resp-0" status="200 OK">
+
+```json
+{
+    "id": "631b2654f771854d9bf633df",
+    "name": "new-large-room-081023",
+    "enabled": true,
+    "description": "This is a sample description for the room",
+    "customer_id": "627cdddff2e4e30487862ad1",
+    "customer":"627cdddff2e4e30487862ad1",
+    "app_id":"62510797903d857ab8ec3ba5",
+    "recording_info": {
+        "enabled": false
+    },
+    "template_id": "63188115d11d6db790c73c60",
+    "template": "sample-template-name",
+    "region": "us",
+    "size": 20000,
+    "large_room": true,
+    "created_at": "2022-09-09T11:41:08.082Z",
+    "updated_at": "2022-09-09T11:41:08.074Z"
+}
+```
+</ResponseBox>
+
+When using the above API, following points need to be noted:
+1. The range of values for `size` is 0 to 2500 when the `large_room` flag is disabled. Expect the following error if a value larger than 2500 is used. 
+```json
+{
+    "code": 400,
+    "message": "Invalid body param",
+    "details": [
+        "Invalid body param: room size greater than 2500, set large_room flag as true"
+    ]
+}
+```
+2. The range of values for `size` can go up to 20,000 when the `large_room` flag is enabled. Expect the following error if a value larger than 20,000 is used.
+ ```json
+ {
+    "code": 400,
+    "message": "Invalid body param",
+    "details": [
+        "Invalid body param: room size greater than 20000"
+    ]
+}
+```
+3. The client side SDK optimisations only kick in if the `large_room` flag is enabled. Additionally, large rooms cannot be created through the 100ms dashboard. 
+
+> **Note**
+>
+> Large rooms support only 200 publishing peers.
+> 
+
+## Client-side implementation
+
+In order to take advantage of these large rooms, you are required to use platform SDKs whose versions are higher than or equal to:
+1. For Web - `@100mslive/hms-video-store v0.10.17` and `@100mslive/react-sdk v0.8.17`
+2. For Android - `@live.100ms/android-sdk v2.7.7`
+3. For iOS - `v1.1.0`
+4. For React Native - `@100mslive/react-native-hms v2.0.0-alpha.0`
+
+### Handling peer hand-raise function
+100ms now supports first class APIs for hand-raise functionalitiy. The following can be accomplished using them:
+- How to raise and lower hand
+- How to lower hand of a remote peer
+- How to know when a peer raises or lowers their hand
+
+Follow the given documentation to implement the above functionalities.
+- On [Web](/javascript/v2/how-to-guides/build-interactive-features/handraise)
+- On [iOS](/ios/v2/how-to-guides/interact-with-room/peer/large-room)
+- On [React Native](/react-native/v2/how-to-guides/interact-with-room/peer/large-room)
+
+
+### Working with the peer list
+If the room is very large, it is difficult to fetch each and every peer. 
+
+- On [iOS](/ios/v2/how-to-guides/interact-with-room/peer/large-room#how-to-get-peer-list-iterator-in-a-large-room)
+- On [React Native](/react-native/v2/how-to-guides/interact-with-room/peer/large-room)
+
+
+> **Note**
+> 
+> There will be no changes in functionality of the APIs shared above, if `large_room` flag is not enabled.
+>
+
+
+
+
+
