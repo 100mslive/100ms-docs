@@ -23,7 +23,7 @@ Utilisation of first class APIs in the SDKs to handle hand-raise and peer list f
 
 ## Create a large room
 
-Large rooms work similarly to your normal 100ms rooms in their function. The scale optimisations kick in when a large number of peers join the room. Use 100ms' server-side [Create Room API](/server-side/v2/api-reference/Rooms/create-via-api) to create a room with the `large_room` flag enabled. Use the `size` field to define the maximum number of expected peers in that room.
+Standard 100ms rooms handle up to 2500 peers. Large rooms need to be created with special scale optimizations to handle a large number of peers while functioning similarly to standard 100ms rooms. Use 100ms' server-side [Create Room API](/server-side/v2/api-reference/Rooms/create-via-api) to create a room with the `large_room` flag enabled. Use the `size` field to define the maximum number of expected peers in that room.
 The following cURL example illustrates how to create a large room.
 
 <PostRequest title="https://api.100ms.live/v2/rooms" />
@@ -67,23 +67,23 @@ curl --location --request POST 'https://api.100ms.live/v2/rooms' \
 </ResponseBox>
 
 When using the above API, following points need to be noted:
-1. The range of values for `size` is 0 to 2500 when the `large_room` flag is disabled. Expect the following error if a value larger than 2500 is used. 
-```json
-{
-    "code": 400,
-    "message": "Invalid body param",
-    "details": [
-        "Invalid body param: room size greater than 2500, set large_room flag as true"
-    ]
-}
-```
-2. The range of values for `size` can go up to 20,000 when the `large_room` flag is enabled. Expect the following error if a value larger than 20,000 is used.
+1. The range of values for `size` can go up to 20,000 when the `large_room` flag is enabled. Expect the following error if a value larger than 20,000 is used.
  ```json
  {
     "code": 400,
     "message": "Invalid body param",
     "details": [
         "Invalid body param: room size greater than 20000"
+    ]
+}
+```
+2. All rooms which require the `size` to be greater than 2500 need to have the `large_room` flag enabled. Expect the following error if a value larger than 2500 is used without enabling the flag. 
+```json
+{
+    "code": 400,
+    "message": "Invalid body param",
+    "details": [
+        "Invalid body param: room size greater than 2500, set large_room flag as true"
     ]
 }
 ```
@@ -126,6 +126,7 @@ If the room is very large, it is difficult to fetch each and every peer. To get 
 > 
 > There will be no changes in functionality of the APIs shared above, if `large_room` flag is not enabled.
 >
+
 
 
 
