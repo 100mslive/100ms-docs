@@ -121,3 +121,84 @@ hmsInstance.addEventListener(
 ```
 
 Note that on subsequent peer joins, both `ON_PEER_LIST_UPDATED` and `ON_PEER_UPDATE` with `type === HMSPeerUpdate.PEER_JOINED` events are emitted.
+
+## Peer List Iterator API
+
+You don't want to fetch every peer if the room is very large, use the peer list iterator instead.
+
+### How to get peer list iterator
+
+You call `getPeerListIterator` method on `HMSSDK` instance to get `HMSPeerListIterator`.
+
+`getPeerListIterator` method has following `HMSPeerListIteratorOptions` options -
+- `byRoleName?: string` - filter by role of the peers
+- `byPeerIds?: string[]` - `peerID`s of the peers you want to fetch with iterator.
+- `limit?: number` - number of peers fetched by the iterator in `next` method call. Default value is `10`
+
+```js
+// calling `getPeerListIterator` without any options
+const peerListIterator = hmsInstance.getPeerListIterator();
+
+// calling `getPeerListIterator` with some options
+const peerListIterator =  hmsInstance.getPeerListIterator({
+  limit: 10,
+  byRoleName: 'viewer-realtime',
+});
+```
+
+If you wish to filter peers based on role name or peer ids, you can pass them in **HMSPeerListIteratorOptions**.
+
+**limit** is the number of peers you want to fetch in one go.
+
+Now with **peerListIterator** instance you can incremently load peers.
+
+### How to use peer iterator to load peers incremently
+
+You can use `next` method on `HMSPeerListIterator` instance to fetch the next set of peers.
+
+```js
+try {
+  const peers = await peerListIterator.next();
+
+  // store newly loaded peers to show in UI
+} catch (error) {
+  // handle error returned by `next` method here
+}
+```
+
+### How to check if more peers are available to load
+
+You can use `hasNext` method on `HMSPeerListIterator` instance to check if there are more peers available to fetch.
+
+```js
+try {
+  const hasNext = await peerListIterator.hasNext();
+
+  if (hasNext) {
+    // can fetch more peers by calling `next` method
+  } else {
+    // There are no more peers available to fetch right now
+  }
+} catch (error) {
+  // handle error returned by `hasNext` method here
+}
+```
+
+### How to check the total count of peers in the peer list
+
+You use `totalCount` property on `HMSPeerListIterator` instance to know how many peers are there in
+ the peer list. This property is updated whenever you can `next` method, initially it is zero. so,
+  ensure you have called `peerListIterator.next()` method before using `totalCount` property.
+
+```js
+try {
+  await peerListIterator.next();
+
+  const totalCount = peerListIterator.totalCount;
+
+  // `totalCount` is the number of peers in the room
+
+} catch (error) {
+  // handle error returned by `next` method here
+}
+```
