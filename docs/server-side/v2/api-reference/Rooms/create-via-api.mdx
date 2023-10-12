@@ -28,11 +28,13 @@ curl --location --request POST 'https://api.100ms.live/v2/rooms' \
     "name": "new-room-1662723668",
     "enabled": true,
     "description": "This is a sample description for the room",
-    "customer": "627cdddff2e4e30487862ad1",
+    "customer_id": "627cdddff2e4e30487862ad1",
+    "app_id":"62510797903d857ab8ec3ba5",
     "recording_info": {
         "enabled": false
     },
     "template_id": "63188115d11d6db790c73c60",
+    "template": "sample-template-name",
     "region": "us",
     "created_at": "2022-09-09T11:41:08.082Z",
     "updated_at": "2022-09-09T11:41:08.074Z"
@@ -43,15 +45,17 @@ curl --location --request POST 'https://api.100ms.live/v2/rooms' \
 
 ## Main Arguments
 
-| Name                 | Type     | Description                                                                                                                                                                                                                                                                                                                                                    | Required |
-| :------------------- | :------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| name <br/>           | `string` | An alias you can assign to 100ms rooms. This is `case-insensitive`. <br/><br/>Accepted characters are `a-z, A-Z, 0-9, and . - : _`. If not provided, this is generated automatically. <br/><br/>**Note**: If `Create room request` is triggered with an existing room name, then the corresponding room ID is returned.                                        | No       |
-| description <br/>    | `string` | A string to describe your room's usage. For example "9PM English Class Batch 2"                                                                                                                                                                                                                                                                                | No       |
-| template_id <br/>    | `string` | Template ID of template you wish to associate with the room. You can get template ID either from the templates section on the [dashboard](https://dashboard.100ms.live/dashboard) or use the [Template API](../policy/retrieve-a-template). <br/><br/>**Note**: `default template` will be assigned if template is not specified in the `create room request`. | No       |
-| recording_info <br/> | `object` | Object of type `recording_info`. This object contains information for enabling recording/setting storage location for recordings. <br/><br/>Check the [recording_info arguments](#recording-info-arguments) below for more information.                                                                                                                        | No       |
-| region <br/>         | `string` | Region in which you want to create a room. <br/><br/> `eu` - European Union <br/><br/> `in` - India <br/><br/> `us` - United States <br/><br/><br/> `auto` Fallback to region of the template (default value)                                                                                                                                                  | No       |
+| Name                 | Type      | Description                                                                                                                                                                                                                                                                                                                                                    | Required |
+|:---------------------|:----------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:---------|
+| name <br/>           | `string`  | An alias you can assign to 100ms rooms. This is `case-insensitive`. <br/><br/>Accepted characters are `a-z, A-Z, 0-9, and . - : _`. If not provided, this is generated automatically. <br/><br/>**Note**: If `Create room request` is triggered with an existing room name, then the corresponding room ID is returned.                                        | No       |
+| description <br/>    | `string`  | A string to describe your room's usage. For example "9PM English Class Batch 2"                                                                                                                                                                                                                                                                                | No       |
+| template_id <br/>    | `string`  | Template ID of template you wish to associate with the room. You can get template ID either from the templates section on the [dashboard](https://dashboard.100ms.live/dashboard) or use the [Template API](../policy/retrieve-a-template). <br/><br/>**Note**: `default template` will be assigned if template is not specified in the `create room request`. | No       |
+| recording_info <br/> | `object`  | Object of type `recording_info`. This object contains information for enabling recording/setting storage location for recordings. <br/><br/>Check the [recording_info arguments](#recording-info-arguments) below for more information.                                                                                                                        | No       |
+| region <br/>         | `string`  | Region in which you want to create a room. <br/><br/> `eu` - European Union <br/><br/> `in` - India <br/><br/> `us` - United States <br/><br/><br/> `auto` Fallback to region of the template (default value)                                                                                                                                                  | No       |
+| large_room <br/>     | `boolean` | Enable this flag if the requirement is to support more than 2500 peers in the room. You are also required to update to latest SDKs to support this functionality. By default, this value is set to `false`. Learn more about it in the [large room creation guide](/server-side/v2/how-to-guides/create-large-rooms).                                                                                                                              | No       |
+| size <br/>           | `int`     | This value is used to define the maximum number of peers expected to be joining the given room. Following are the acceptable ranges: <br/> <br/>  With `large_room: false`, Minimum `size` = 0; Maximum `size` = 2500  <br/> <br/>  With `large_room: true`, Minimum `size` = 0; Maximum `size` = 20000                                                        | No       |
 
-> **Warning:** If you create a room with the name of an existing room, the same room will be updated with the new configuration passed in the request payload. <br/> For example, if the existing room was assigned to template-ABC earlier and in the request payload you've used template-DEF, then template-DEF will be assigned to the existing room.
+> **Warning:** If you create a room with the name of an existing room, the same room will be updated with the new configuration passed in the request payload. <br/> For example, if the existing room was assigned to **'template-ABC'** earlier and in the request payload you've used **'template-DEF'**, then **'template-DEF'** will be assigned to the existing room.
 
 ## recording_info arguments
 
@@ -59,7 +63,7 @@ curl --location --request POST 'https://api.100ms.live/v2/rooms' \
 
 | Name        | Type      | Description                                                                                                                                                                                                                                                                                                              | Required |
 | :---------- | :-------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| enabled     | `boolean` | Enable SFU recording. Disabled by default. <br/><br/> **Note:** This argument is only applicable to enable/disable [SFU recording](/server-side/v2/Destinations/recording). Refer to [RTMP Streaming & Browser Recording](/server-side/v2/Destinations/rtmp-streaming-and-browser-recording) guide for other options.    | No       |
+| enabled     | `boolean` | Enable SFU recording. Disabled by default. <br/><br/> **Note:** This argument is only applicable to enable/disable [SFU recording](/server-side/v2/Destinations/recording). Refer to [RTMP Streaming & Browser Recording](/server-side/v2/api-reference/external-streams/overview) guide for other options.    | No       |
 | upload_info | `object`  | Object of type `upload_info`. This object contains information on recordings storage location. <br/><br/>If you want to store recording with 100ms, and not use your own storage (s3/gs/oss), don't add this to the object. <br/><br/>Check the [upload_info object](#upload-info-arguments) below for more information. | No       |
 
 `recording_info` in the room acts as an atomic property. It depends on the recording settings defined in a template as below:
