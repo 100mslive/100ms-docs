@@ -1,0 +1,368 @@
+---
+title: HandRaise, Peer count and Support for Large Rooms
+nav: 7.26
+---
+
+## Handle Raise and Lower Hand
+
+Previously, We had to implement **hand raise** functionality with peer metadata.
+Introducing Hand Raise first class API's, now you can raise and lower hand of peers with a simple method call.
+
+### How to Raise Hand
+
+You can use `raiseLocalPeerHand` method available on `HMSSDK` instance to raise hand of local peer.
+
+```dart
+class Meeting implements HMSUpdateListener, HMSActionResultListener{
+
+    HMSSDK hmsSDK;
+    ...
+
+    void raiseLocalPeerHand(){
+        ///[hmsActionResultListener]: an instance of a class which implements HMSActionResultListener
+        //Here this is an instance of a class that implements HMSActionResultListener that is Meeting
+        hmsSDK.raiseLocalPeerHand(hmsActionResultListener: this);
+    }
+
+}
+```
+
+### How to Lower Hand
+
+You can use `lowerLocalPeerHand` method available on `HMSSDK` instance to lower hand of local peer.
+
+```dart
+class Meeting implements HMSUpdateListener, HMSActionResultListener{
+
+    HMSSDK hmsSDK;
+    ...
+
+    void lowerLocalPeerHand(){
+        ///[hmsActionResultListener]: an instance of a class which implements HMSActionResultListener
+        //Here this is an instance of a class that implements HMSActionResultListener that is Meeting
+        hmsSDK.lowerLocalPeerHand(hmsActionResultListener: this);
+    }
+
+}
+```
+
+### How to Lower Hand of Remote Peer
+
+You can use `lowerRemotePeerHand` method available on `HMSSDK` instance to lower hand of remote peer.
+It accepts a peer (an instance of the HMSPeer class) of whom you want to lower the hand.
+
+
+```dart
+class Meeting implements HMSUpdateListener, HMSActionResultListener{
+
+    HMSSDK hmsSDK;
+    ...
+
+    void lowerRemotePeerHand(HMSPeer forPeer){
+        ///[forPeer]: HMSPeer instance of the peer of whom you want to lower the hand
+        ///[hmsActionResultListener]: an instance of a class which implements HMSActionResultListener
+        //Here this is an instance of a class that implements HMSActionResultListener that is Meeting
+        hmsSDK.lowerRemotePeerHand(
+        forPeer: forPeer, hmsActionResultListener: this);
+    }
+
+}
+```
+
+### Get current hand raise status of peer
+
+`HMSPeer` instance now has `isHandRaised` property on it. It will be `true` when 
+peer has raised it's hand and `false` otherwise. You can use `peer.isHandRaised` property to 
+get the current hand raise status.
+
+```dart
+class Meeting implements HMSUpdateListener, HMSActionResultListener{
+
+    HMSSDK hmsSDK;
+    ...
+
+    void raiseLocalPeerHand(){
+        ///[hmsActionResultListener]: an instance of a class which implements HMSActionResultListener
+        //Here this is an instance of a class that implements HMSActionResultListener that is Meeting
+        hmsSDK.raiseLocalPeerHand(hmsActionResultListener: this);
+    }
+
+    @override
+    void onPeerUpdate({required HMSPeer peer, required HMSPeerUpdate update}) async {
+        if(peer.isHandRaised){
+            ///Peer's hand is raised
+        }
+    }
+
+}
+```
+
+### How to know when a Peer raises or lowers hand
+
+Whenever local/remote peer raises or lowers hand, `handRaiseUpdated` event type of `onPeerUpdate` 
+is emitted. You can subscribe to this event and update the UI for updated peer.
+
+```dart
+class Meeting implements HMSUpdateListener, HMSActionResultListener{
+
+    HMSSDK hmsSDK;
+    ...
+
+    void raiseLocalPeerHand(){
+        ///[hmsActionResultListener]: an instance of a class which implements HMSActionResultListener
+        //Here this is an instance of a class that implements HMSActionResultListener that is Meeting
+        hmsSDK.raiseLocalPeerHand(hmsActionResultListener: this);
+    }
+
+    @override
+    void onPeerUpdate({required HMSPeer peer, required HMSPeerUpdate update}) async {
+        if(updated == HMSPeerUpdate.handRaiseUpdated){
+            ///Update the Hand Raise UI for the peer
+            if(peer.isHandRaised){
+                ///Peer's hand is raised
+                ///Update the UI for raised hand
+            }else{
+                ///Peer's hand is lowered
+            }
+        }
+    }
+
+}
+```
+
+## How to get Total Peer count of the Room
+
+You can use `peerCount` property of `HMSRoom` instance to get the latest peer count of the room. 
+Whenever peer count is updated, `roomPeerCountUpdated` event type of `HMSRoomUpdate` is emitted.
+
+```dart
+class Meeting implements HMSUpdateListener, HMSActionResultListener{
+
+    HMSSDK hmsSDK;
+    ...
+
+    void raiseLocalPeerHand(){
+        ///[hmsActionResultListener]: an instance of a class which implements HMSActionResultListener
+        //Here this is an instance of a class that implements HMSActionResultListener that is Meeting
+        hmsSDK.raiseLocalPeerHand(hmsActionResultListener: this);
+    }
+
+    @override
+    void onRoomUpdate({required HMSRoom room, required HMSRoomUpdate update}) {
+        if(update == HMSRoomUpdate.roomPeerCountUpdated){
+            ///Update the UI for peer count
+            ///You can use room.peerCount to get the latest peer count
+        }
+    }
+}
+```
+
+## Large Room Updates
+
+### Get list of peers on join
+
+When local peer joins room, now it will not receive `peerJoined` update for each remote peer like it used to.
+Now, a new callback `onPeerListUpdate` is fired. `onPeerListUpdate` is a method of `HMSUpdateListener`. You need to 
+override this method wherever you implement `HMSUpdateListener`. 
+
+You can subscribe to `onPeerListUpdate` event to get list of added and removed peers as:
+
+```dart
+class Meeting implements HMSUpdateListener, HMSActionResultListener{
+
+    HMSSDK hmsSDK;
+    ...
+
+    void raiseLocalPeerHand(){
+        ///[hmsActionResultListener]: an instance of a class which implements HMSActionResultListener
+        //Here this is an instance of a class that implements HMSActionResultListener that is Meeting
+        hmsSDK.raiseLocalPeerHand(hmsActionResultListener: this);
+    }
+
+    @override
+    void onRoomUpdate({required HMSRoom room, required HMSRoomUpdate update}) {}
+
+    @override
+    void onPeerListUpdate({required List<HMSPeer> addedPeers,required List<HMSPeer> removedPeers}) {
+        ///[addedPeers] contains the list of peers joined in the room
+        ///[removedPeers] contains the list of peers who left the room
+    }
+}
+```
+
+> 🔑 Note: that on subsequent peer joins, both `onPeerListUpdate` and `onPeerUpdate` with type `peerJoined` events are emitted.
+
+## Peer List Iterator API
+
+For large rooms, we have introduced a new API to fetch peers incremently. You can use this API to fetch peers in batches.
+
+The flow to get peers incremently is as follows:
+
+1. Create `peerListIterator` with required filters(role, peerIDs) using `getPeerListIterator` method on `HMSSDK` instance.
+2. Use `hasNext` method on `peerListIterator` instance to check if there are more peers available to fetch.
+3. Call `next` method on `peerListIterator` instance to fetch next set of peers.
+
+### How to get peer list iterator
+
+You call `getPeerListIterator` method on `HMSSDK` instance to get the `HMSPeerListIterator` instance.
+
+`getPeerListIterator` method takes `PeerListIteratorOptions` optional parameter. You can pass `PeerListIteratorOptions` to filter peers based on role name or peer ids.
+You can also limit the number of peers in a batch using the `limit` parameter.
+
+Let's look at the `PeerListIteratorOptions` class:
+
+```dart
+class PeerListIteratorOptions {
+
+  /// list of peerIds for which peer list is required
+  final List<String>? byPeerIds;
+
+  /// name of the role for which peer list is required
+  final String? byRoleName;
+
+  /// maximum number of peers to be returned
+  final int limit;
+}
+```
+
+Let's see how you can get the `HMSPeerListIterator` instance:
+
+```dart
+class Meeting implements HMSUpdateListener, HMSActionResultListener{
+
+    HMSSDK hmsSDK;
+    ...
+
+    @override
+    void onRoomUpdate({required HMSRoom room, required HMSRoomUpdate update}) {}
+
+    @override
+    void onPeerListUpdate({required List<HMSPeer> addedPeers,required List<HMSPeer> removedPeers}) {
+        ///[addedPeers] contains the list of peers joined in the room
+        ///[removedPeers] contains the list of peers who left the room
+    }
+
+    ///To get a peer list iterator with "15" peers in a batch, 
+    ///and of role type "viewer-on-stage"
+     var peerListIterator = await hmsSDK.getPeerListIterator(peerListIteratorOptions:PeerListIteratorOptions(limit: 15, byRoleName: "viewer-on-stage"));
+    
+    ///`getPeerListIterator` method can return an instance of 
+    ///`HMSException` if there is an error in getting the peer list iterator
+    ///In case of success it returns an instance of `HMSPeerListIterator`
+    
+    if(peerListIterator != null && peerListIterator is HMSPeerListIterator){
+        ///Perform the operation on the instance
+    }
+    else{
+        ///Handle the error
+    }
+}
+```
+
+### How to use peer list iterator to load peers incremently
+
+You can use `next` method on `HMSPeerListIterator` instance to fetch the next set of peers.
+
+```dart
+class Meeting implements HMSUpdateListener, HMSActionResultListener{
+
+    HMSSDK hmsSDK;
+    ...
+
+    var peerListIterator = await hmsSDK.getPeerListIterator(peerListIteratorOptions:PeerListIteratorOptions(limit: 15, byRoleName: "viewer-on-stage"));
+    if(peerListIterator != null && peerListIterator is HMSPeerListIterator){
+
+        ///Fetch a set of peers using next method
+
+        dynamic viewersOnStage = await peerListIterator.next();
+
+        ///Since `next` method call can return `HMSException` or `List<HMSPeer>`
+        ///So we handle them here
+        if (viewersOnStage is List<HMSPeer>) {
+            ///Access the elements of list here
+        }else{
+            ///Handle the error
+        }
+    }
+    else{
+        ///Handle the error
+    }
+}
+```
+
+### How to check if more peers are available to load
+
+You can use `hasNext` method on `HMSPeerListIterator` instance to check if there are more peers available to fetch.
+
+```dart
+class Meeting implements HMSUpdateListener, HMSActionResultListener{
+
+    HMSSDK hmsSDK;
+    ...
+
+    var peerListIterator = await hmsSDK.getPeerListIterator(peerListIteratorOptions:PeerListIteratorOptions(limit: 15, byRoleName: "viewer-on-stage"));
+    if(peerListIterator != null && peerListIterator is HMSPeerListIterator){
+
+        ///Here we will check whether there are more peers available to fetch
+        ///For this we will use the `hasNext` method call
+
+        dynamic isNextSetOfPeersPresent = await peerListIterator.hasNext();
+
+        if(isNextSetOfPeersPresent is bool && isNextSetOfPeersPresent){
+
+            dynamic viewersOnStage = await peerListIterator.next();
+
+            ///Since `next` method call can return `HMSException` or `List<HMSPeer>`
+            ///So we handle them here
+            if (viewersOnStage is List<HMSPeer>) {
+                ///Access the elements of list here
+            }else{
+                ///Handle the error
+            }
+        }
+        else{
+            ///Handle the error
+        }
+    }else{
+        ///Handle the error
+    }
+}
+```
+
+### How to check the total count of peers in the peer list
+
+You can use `totalCount` property on `HMSPeerListIterator` instance to know how many peers are there in
+the peer list. This property is updated whenever you can `next` method, initially it is zero. so,
+ensure to call `peerListIterator.next()` method before using `totalCount` property.
+
+```dart
+class Meeting implements HMSUpdateListener, HMSActionResultListener{
+
+    HMSSDK hmsSDK;
+    ...
+
+    ///To get a peer list iterator with "15" peers in a batch, 
+    ///and of role type "viewer-on-stage"
+     var peerListIterator = await hmsSDK.getPeerListIterator(peerListIteratorOptions:PeerListIteratorOptions(limit: 15, byRoleName: "viewer-on-stage"));
+    
+    ///`getPeerListIterator` method can return an instance of 
+    ///`HMSException` if there is an error in getting the peer list iterator
+    ///In case of success it returns an instance of `HMSPeerListIterator`
+    
+    if(peerListIterator != null && peerListIterator is HMSPeerListIterator){
+        ///Perform the operation on the instance
+
+        ///Fetch a set of peers using next method
+
+        dynamic viewersOnStage = await peerListIterator.next();
+
+        ///Get the total count of peers as
+
+        int totalCountOfPeers = peerListIterator.totalCount;
+
+    }
+    else{
+        ///Handle the error
+    }
+}
+```
