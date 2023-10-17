@@ -1,0 +1,25 @@
+---
+title: Disable RTMP stream key
+nav: 3.171
+---
+
+Use this request to disable the RTMP stream key for a specific room.
+
+<GetRequest title="https://api.100ms.live/v2/stream-keys/room/<room_id>/disable" />
+<Request id="req-0">
+
+```bash
+curl --location --request POST 'https://api.100ms.live/v2/stream-keys/room/<room_id>/disable' \
+--header 'Authorization: Bearer <management_token>'
+```
+</Request>
+
+<ResponseBox id="res-0" status="201 OK">
+```json
+{
+    "code": 201,
+    "message": "key disabled successfully"
+}
+```
+</ResponseBox>
+

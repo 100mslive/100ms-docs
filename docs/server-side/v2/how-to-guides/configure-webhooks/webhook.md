@@ -8,11 +8,12 @@ nav: 4.3
 | [session.open.success](#sessionopensuccess), <br/> [session.close.success](#sessionclosesuccess)                                                                                       | Session                            | Triggered during the start and end of a session                                         |
 | [peer.join.success](#peerjoinsuccess),<br/> [peer.leave.success](#peerleavesuccess), <br/>[peer.join.failure](#peerjoinfailure),<br/> [peer.leave.failure](#peerleavefailure)          | Peer                               | Triggered when a peer join/leave succeeds/fails                                         |
 | [room.end.success](#roomendsuccess)                                                                                                                                                    | Room                               | Triggered when a room ends                                                              |
-| [recording.success](#recordingsuccess), <br/>[recording.failed](#recordingfailed)                                                                                                      | SFU recording                      | Triggered at the end of a SFU recording                                                 |
+| [recording.success](#recordingsuccess), <br/>[recording.failed](#recordingfailed)                                                                                                      | SFU Recording                      | Triggered at the end of a SFU recording                                                 |
 | [beam.started.success](#beamstartedsuccess),<br/> [beam.stopped.success](#beamstoppedsuccess),<br/> [beam.recording.success](#beamrecordingsuccess),<br/> [beam.failure](#beamfailure) | RTMP Streaming & Browser Recording | Triggered during the start, end, and failure of RTMP streaming and/or browser recording |
 | [hls.started.success](#hlsstartedsuccess),<br/> [hls.stopped.success](#hlsstoppedsuccess),<br/> [hls.recording.success](#hlsrecordingsuccess),<br/> [hls.failure](#hlsfailure)         | HLS Streaming Events               | Triggered during the start, end, and failure of HLS streaming and/or HLS recording      |
-| [role.change.success](#rolechangesuccess)                                                                                                                                              | Role change Events                 | Triggered when a role is updated                                                        |
-| [transcription.started.success](#transcriptionstartedsuccess),<br/>[transcription.success](#transcriptionsuccess),<br/> [transcription.failure](#transcriptionfailure)                 | Transcription Events               | Triggered at the start and end of transcription       
+| [role.change.success](#rolechangesuccess)                                                                                                                                              | Role Change Events                 | Triggered when a role is updated                                                        |
+| [transcription.started.success](#transcriptionstartedsuccess),<br/>[transcription.success](#transcriptionsuccess),<br/> [transcription.failure](#transcriptionfailure)                 | Transcription Events               | Triggered at the start and end of transcription                                         |
+| [ingest.start.success](#ingeststartsuccess),<br/> [ingest.end.success](#ingestendsuccess)                                                                                              | RTMP Ingestion Events              | Triggered at the start and end of RTMP Ingestion                                        |
 
 ## Event payload
 
@@ -1452,5 +1453,98 @@ This event is sent when transcription fails. Some files might still be generated
             "transcript_txt_path": "s3://<transcript-txt-address>.json",
             "transcript_txt_presigned_url": "https://<file-access-url>?<signature>"
     }
+}
+```
+
+## RTMP Ingestion Events
+
+### ingest.start.success
+
+This event is sent when RTMP ingestion has successfully started.
+
+#### Attributes
+
+| Name         | Type                 | Description                                                                                 |
+|:-------------|:---------------------|:--------------------------------------------------------------------------------------------|
+| id           | `string`             | Id of the event <br/><br/> Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4                    |
+| account_id   | `string`             | Customer ID from which this event is generated <br/><br/> Example: 5ff5881b80b66969e1fb35f4 |
+| app_id       | `string`             | App ID from which this event is generated <br/><br/> Example: 5ff5881b80b66969e1fb35f6      |
+| recording_id | `string`             | 100ms assigned id to the recording  <br/><br/> Example: 5ff5881b80b66969e1fb35f4            |
+| timestamp    | `timestamp (in UTC)` | Timestamp of the event <br/><br/> Example: 2020-11-11T16:32:17Z                             |
+| type         | `string`             | Type of the event <br/><br/> Example: ingest.start.success                                  |
+| started_at   | `timestamp (in UTC)` | Timestamp at which ingestion started <br/><br/> Example: 2020-11-11T17:32:18Z                  |
+| room_id      | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312df                         |
+| ingest_id    | `string`             | 100ms assigned id to identify the ingestion <br/><br/> Example: 652d2dfb3bde33b03a9602da    |
+| stream_id    | `string`             | 100ms assigned id to identify the stream <br/><br/> Example: 652d2dfc037b60106eb62413       |
+| template_id  | `string`             | Template ID of the room <br/><br/> Example: 66112497abcd52312556c4gg                        |
+
+#### Sample `ingest.start.success` event
+
+```json
+{
+  "version": "2.0",
+  "id": "********-****-****-****-***********",
+  "account_id": "***********************",
+  "app_id": "***********************",
+  "timestamp": "2023-10-16T12:35:08Z",
+  "type": "ingest.start.success",
+  "data": {
+            "account_id": "***********************",
+            "app_id": "***********************",
+            "ingest_id": "***********************",
+            "room_id": "***********************",
+            "started_at": "2023-10-16T12:35:08Z",
+            "stream_id": "***********************",
+            "template_id": "***********************"
+  }
+}
+```
+
+### ingest.end.success
+
+This event is sent when RTMP ingestion has successfully ended.
+
+#### Attributes
+
+| Name         | Type                 | Description                                                                                 |
+|:-------------|:---------------------|:--------------------------------------------------------------------------------------------|
+| id           | `string`             | Id of the event <br/><br/> Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4                    |
+| account_id   | `string`             | Customer ID from which this event is generated <br/><br/> Example: 5ff5881b80b66969e1fb35f4 |
+| app_id       | `string`             | App ID from which this event is generated <br/><br/> Example: 5ff5881b80b66969e1fb35f6      |
+| recording_id | `string`             | 100ms assigned id to the recording  <br/><br/> Example: 5ff5881b80b66969e1fb35f4            |
+| timestamp    | `timestamp (in UTC)` | Timestamp of the event <br/><br/> Example: 2020-11-11T16:32:17Z                             |
+| type         | `string`             | Type of the event <br/><br/> Example: ingest.end.success                                    |
+| started_at   | `timestamp (in UTC)` | Timestamp at which RTMP ingestion started <br/><br/> Example: 2020-11-11T17:32:18Z          |
+| completed_at | `timestamp (in UTC)` | Timestamp at which ingestion ended <br/><br/> Example: 2020-11-11T17:32:18Z                 |
+| duration     | `int`                | Duration of the stream that is ingested (in seconds) <br/><br/> Example: 110                |
+| room_id      | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312df                         |
+| ingest_id    | `string`             | 100ms assigned id to identify the ingestion <br/><br/> Example: 652d2dfb3bde33b03a9602da    |
+| stream_id    | `string`             | 100ms assigned id to identify the stream <br/><br/> Example: 652d2dfc037b60106eb62413       |
+| template_id  | `string`             | Template ID of the room <br/><br/> Example: 66112497abcd52312556c4gg                        |
+
+
+#### Sample `ingest.end.success` event
+
+```json
+{
+  "version": "2.0",
+  "id": "********-****-****-****-***********",
+  "account_id": "***********************",
+  "app_id": "***********************",
+  "timestamp": "2023-10-16T12:36:58Z",
+  "type": "ingest.end.success",
+  "data": {
+            "account_id": "***********************",
+            "app_id": "***********************",
+            "completed_at": "2023-10-16T12:36:58Z",
+            "duration": 111,
+            "ingest_id": "***********************",
+            "last_disconnected_at": "2023-10-16T12:36:58Z",
+            "reason": "reconnection window expired",
+            "room_id": "***********************",
+            "started_at": "2023-10-16T12:36:58Z",
+            "stream_id": "***********************",
+            "template_id": "***********************"
+  }
 }
 ```
