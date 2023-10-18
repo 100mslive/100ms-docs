@@ -34,3 +34,18 @@ curl --location --request GET 'https://api.100ms.live/v2/stream-keys/room/<room_
 }
 ```
 </ResponseBox>
+
+### Arguments
+
+| Field   | Type     | Description |
+|:--------|:---------|:------------|
+| room_id | `string` | mandatory   |
+
+### Errors
+
+| Description                   | Code |
+|:------------------------------|:-----|
+| No active key found           | 404  |
+| Room not found                | 404  |
+| Room is disabled (not active) | 403  |
+| Authentication Error          | 401  |

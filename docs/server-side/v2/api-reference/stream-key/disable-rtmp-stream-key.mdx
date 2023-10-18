@@ -23,6 +23,21 @@ curl --location --request POST 'https://api.100ms.live/v2/stream-keys/room/<room
 ```
 </ResponseBox>
 
+### Arguments
+
+| Field   | Type     | Description |
+|:--------|:---------|:------------|
+| room_id | `string` | mandatory   |
+
+### Errors
+
+| Description                   | Code |
+|:------------------------------|:-----|
+| Key not found                 | 404  |
+| Room not found                | 404  |
+| Room is disabled (not active) | 403  |
+| Authentication Error          | 401  |
+
 > **Note on resetting stream keys**
 >
 > In order to reset stream key for a particular room, disable the existing stream key for the room using the above given API, and then create a new stream key using the [Create Stream Key API](/server-side/v2/api-reference/stream-key/create-rtmp-stream-key). This is especially important if a stream key is leaked publically.
