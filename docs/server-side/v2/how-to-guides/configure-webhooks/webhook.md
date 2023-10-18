@@ -1550,7 +1550,7 @@ This event is sent when RTMP ingestion has successfully ended.
 }
 ```
 
-### ingest.start.failure
+### ingest.failure
 
 This event is sent when RTMP ingestion has failed to start.
 
@@ -1568,7 +1568,7 @@ This event is sent when RTMP ingestion has failed to start.
 | template_id   | `string`             | Template ID of the room <br/><br/> Example: 66112497abcd52312556c4gg                                                                                                                                   |
 
 
-#### Sample `ingest.end.success` event
+#### Sample `ingest.failure` event
 
 ```json
 {
