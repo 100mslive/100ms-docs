@@ -1563,7 +1563,7 @@ This event is sent when RTMP ingestion has failed to start.
 | app_id        | `string`             | App ID from which this event is generated <br/><br/> Example: 5ff5881b80b66969e1fb35f6                                                                                                                 |
 | timestamp     | `timestamp (in UTC)` | Timestamp of the event <br/><br/> Example: 2020-11-11T16:32:17Z                                                                                                                                        |
 | type          | `string`             | Type of the event <br/><br/> Example: ingest.end.success                                                                                                                                               |
-| error_message | `string`             | Error message for failure of ingestion start. Possible messages are: `stream key disabled`, `internal error`, `no hls destinations`, `remote session active`, `already connected`,  `beam start error` |
+| error_message | `string`             | Error message for failure of ingestion start. Possible messages are: `"stream key disabled"`, `"internal error"`, `"no hls destinations"`, `"remote session active"`, `"already connected"`,  `"beam start error"` |
 | room_id       | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312df                                                                                                                                    |
 | template_id   | `string`             | Template ID of the room <br/><br/> Example: 66112497abcd52312556c4gg                                                                                                                                   |
 
