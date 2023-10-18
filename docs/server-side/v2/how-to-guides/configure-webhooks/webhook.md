@@ -15,6 +15,7 @@ nav: 4.3
 | [transcription.started.success](#transcriptionstartedsuccess),<br/>[transcription.success](#transcriptionsuccess),<br/> [transcription.failure](#transcriptionfailure)                 | Transcription Events               | Triggered at the start and end of transcription                                         |
 | [ingest.start.success](#ingeststartsuccess),<br/> [ingest.end.success](#ingestendsuccess), <br/> [ingest.start.failure](#ingeststartfailure)                                           | RTMP Ingestion Events              | Triggered at the start and end of RTMP Ingestion                                        |
 
+
 ## Event payload
 
 Event is a JSON dictionary which has the following keys.
@@ -1471,7 +1472,7 @@ This event is sent when RTMP ingestion has successfully started.
 | app_id       | `string`             | App ID from which this event is generated <br/><br/> Example: 5ff5881b80b66969e1fb35f6      |
 | timestamp    | `timestamp (in UTC)` | Timestamp of the event <br/><br/> Example: 2020-11-11T16:32:17Z                             |
 | type         | `string`             | Type of the event <br/><br/> Example: ingest.start.success                                  |
-| started_at   | `timestamp (in UTC)` | Timestamp at which ingestion started <br/><br/> Example: 2020-11-11T17:32:18Z                  |
+| started_at   | `timestamp (in UTC)` | Timestamp at which ingestion started <br/><br/> Example: 2020-11-11T17:32:18Z               |
 | room_id      | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312df                         |
 | ingest_id    | `string`             | 100ms assigned id to identify the ingestion <br/><br/> Example: 652d2dfb3bde33b03a9602da    |
 | stream_id    | `string`             | 100ms assigned id to identify the stream <br/><br/> Example: 652d2dfc037b60106eb62413       |
@@ -1512,7 +1513,7 @@ This event is sent when RTMP ingestion has successfully ended.
 | app_id               | `string`             | App ID from which this event is generated <br/><br/> Example: 5ff5881b80b66969e1fb35f6                                                           |
 | timestamp            | `timestamp (in UTC)` | Timestamp of the event <br/><br/> Example: 2020-11-11T16:32:17Z                                                                                  |
 | type                 | `string`             | Type of the event <br/><br/> Example: ingest.end.success                                                                                         |
-| started_at           | `timestamp (in UTC)` | Timestamp at which ingestion started <br/><br/> Example: 2020-11-11T17:32:18Z                                                               |
+| started_at           | `timestamp (in UTC)` | Timestamp at which ingestion started <br/><br/> Example: 2020-11-11T17:32:18Z                                                                    |
 | completed_at         | `timestamp (in UTC)` | Timestamp at which ingestion ended <br/><br/> Example: 2020-11-11T17:32:18Z                                                                      |
 | duration             | `int`                | Duration of the stream that is ingested (in seconds) <br/><br/> Example: 110                                                                     |
 | last_disconnected_at | `string`             | Last timestamp at which 100ms ingest servers stopped receiving media <br/><br/> Example: 2020-11-11T17:32:18Z                                    |
