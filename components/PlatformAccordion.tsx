@@ -3,14 +3,21 @@ import Link from 'next/link';
 import { ChevronDownIcon } from '@100mslive/react-icons';
 import { Flex, Text } from '@100mslive/react-ui';
 import { titleCasing } from '../lib/utils';
+import { SidebarAPIReference } from './SidebarAPIReference';
 
-const references = {
+export const references = {
     Web: '/api-reference/javascript/v2/home/content',
     Android: '/api-reference/android/v2/index.html',
     'React Native': '/api-reference/react-native/v2/modules.html',
     Flutter:
         'https://pub.dev/documentation/hmssdk_flutter/latest/hmssdk_flutter/hmssdk_flutter-library.html',
-    iOS: '/api-reference/ios/v2/documentation/hmssdk'
+    iOS: [
+        { name: 'HMSSDK Reference', link: '/api-reference/ios/v2/HMSSDK/documentation/hmssdk' },
+        {
+            name: 'HMSRoomModels SDK Reference',
+            link: '/api-reference/ios/v2/HMSRoomModelsSDK/documentation/hmsroommodels/hmsroommodel'
+        }
+    ]
     // 'Server side': ''
 };
 
@@ -81,19 +88,7 @@ const PlatformAccordion = ({
                     </Link>
                 ))}
                 {title !== 'Server side' ? (
-                    <Link passHref href={references[title]}>
-                        <Text
-                            as="a"
-                            variant="sm"
-                            css={{
-                                pl: '$12',
-                                my: '$8',
-                                color: 'var(--docs_text_primary)',
-                                display: 'block'
-                            }}>
-                            API Reference
-                        </Text>
-                    </Link>
+                    <SidebarAPIReference reference={references[title]} />
                 ) : null}
             </div>
         </div>
