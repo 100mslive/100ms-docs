@@ -4,22 +4,7 @@ import { ChevronDownIcon } from '@100mslive/react-icons';
 import { Flex, Text } from '@100mslive/react-ui';
 import { titleCasing } from '../lib/utils';
 import { SidebarAPIReference } from './SidebarAPIReference';
-
-export const references = {
-    Web: '/api-reference/javascript/v2/home/content',
-    Android: '/api-reference/android/v2/index.html',
-    'React Native': '/api-reference/react-native/v2/modules.html',
-    Flutter:
-        'https://pub.dev/documentation/hmssdk_flutter/latest/hmssdk_flutter/hmssdk_flutter-library.html',
-    iOS: [
-        { name: 'HMSSDK Reference', link: '/api-reference/ios/v2/HMSSDK/documentation/hmssdk' },
-        {
-            name: 'HMSRoomModels SDK Reference',
-            link: '/api-reference/ios/v2/HMSRoomModelsSDK/documentation/hmsroommodels/hmsroommodel'
-        }
-    ]
-    // 'Server side': ''
-};
+import { references } from '../api-references';
 
 const PlatformAccordion = ({
     title,
