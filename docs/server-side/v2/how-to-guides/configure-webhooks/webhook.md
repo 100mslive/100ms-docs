@@ -13,7 +13,8 @@ nav: 4.3
 | [hls.started.success](#hlsstartedsuccess),<br/> [hls.stopped.success](#hlsstoppedsuccess),<br/> [hls.recording.success](#hlsrecordingsuccess),<br/> [hls.failure](#hlsfailure)         | HLS Streaming Events               | Triggered during the start, end, and failure of HLS streaming and/or HLS recording      |
 | [role.change.success](#rolechangesuccess)                                                                                                                                              | Role Change Events                 | Triggered when a role is updated                                                        |
 | [transcription.started.success](#transcriptionstartedsuccess),<br/>[transcription.success](#transcriptionsuccess),<br/> [transcription.failure](#transcriptionfailure)                 | Transcription Events               | Triggered at the start and end of transcription                                         |
-| [ingest.start.success](#ingeststartsuccess),<br/> [ingest.end.success](#ingestendsuccess)                                                                                              | RTMP Ingestion Events              | Triggered at the start and end of RTMP Ingestion                                        |
+| [ingest.start.success](#ingeststartsuccess),<br/> [ingest.end.success](#ingestendsuccess), <br/> [ingest.failure](#ingestfailure)                                           | RTMP Ingestion Events              | Triggered at the start and end of RTMP Ingestion                                        |
+
 
 ## Event payload
 
@@ -1469,10 +1470,9 @@ This event is sent when RTMP ingestion has successfully started.
 | id           | `string`             | Id of the event <br/><br/> Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4                    |
 | account_id   | `string`             | Customer ID from which this event is generated <br/><br/> Example: 5ff5881b80b66969e1fb35f4 |
 | app_id       | `string`             | App ID from which this event is generated <br/><br/> Example: 5ff5881b80b66969e1fb35f6      |
-| recording_id | `string`             | 100ms assigned id to the recording  <br/><br/> Example: 5ff5881b80b66969e1fb35f4            |
 | timestamp    | `timestamp (in UTC)` | Timestamp of the event <br/><br/> Example: 2020-11-11T16:32:17Z                             |
 | type         | `string`             | Type of the event <br/><br/> Example: ingest.start.success                                  |
-| started_at   | `timestamp (in UTC)` | Timestamp at which ingestion started <br/><br/> Example: 2020-11-11T17:32:18Z                  |
+| started_at   | `timestamp (in UTC)` | Timestamp at which ingestion started <br/><br/> Example: 2020-11-11T17:32:18Z               |
 | room_id      | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312df                         |
 | ingest_id    | `string`             | 100ms assigned id to identify the ingestion <br/><br/> Example: 652d2dfb3bde33b03a9602da    |
 | stream_id    | `string`             | 100ms assigned id to identify the stream <br/><br/> Example: 652d2dfc037b60106eb62413       |
@@ -1511,10 +1511,9 @@ This event is sent when RTMP ingestion has successfully ended.
 | id                   | `string`             | Id of the event <br/><br/> Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4                                                                         |
 | account_id           | `string`             | Customer ID from which this event is generated <br/><br/> Example: 5ff5881b80b66969e1fb35f4                                                      |
 | app_id               | `string`             | App ID from which this event is generated <br/><br/> Example: 5ff5881b80b66969e1fb35f6                                                           |
-| recording_id         | `string`             | 100ms assigned id to the recording  <br/><br/> Example: 5ff5881b80b66969e1fb35f4                                                                 |
 | timestamp            | `timestamp (in UTC)` | Timestamp of the event <br/><br/> Example: 2020-11-11T16:32:17Z                                                                                  |
 | type                 | `string`             | Type of the event <br/><br/> Example: ingest.end.success                                                                                         |
-| started_at           | `timestamp (in UTC)` | Timestamp at which RTMP ingestion started <br/><br/> Example: 2020-11-11T17:32:18Z                                                               |
+| started_at           | `timestamp (in UTC)` | Timestamp at which ingestion started <br/><br/> Example: 2020-11-11T17:32:18Z                                                                    |
 | completed_at         | `timestamp (in UTC)` | Timestamp at which ingestion ended <br/><br/> Example: 2020-11-11T17:32:18Z                                                                      |
 | duration             | `int`                | Duration of the stream that is ingested (in seconds) <br/><br/> Example: 110                                                                     |
 | last_disconnected_at | `string`             | Last timestamp at which 100ms ingest servers stopped receiving media <br/><br/> Example: 2020-11-11T17:32:18Z                                    |
@@ -1546,6 +1545,44 @@ This event is sent when RTMP ingestion has successfully ended.
             "room_id": "***********************",
             "started_at": "2023-10-16T12:36:58Z",
             "stream_id": "***********************",
+            "template_id": "***********************"
+  }
+}
+```
+
+### ingest.failure
+
+This event is sent when RTMP ingestion has failed to start.
+
+#### Attributes
+
+| Name          | Type                 | Description                                                                                                                                                                                            |
+|:--------------|:---------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| id            | `string`             | Id of the event <br/><br/> Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4                                                                                                                               |
+| account_id    | `string`             | Customer ID from which this event is generated <br/><br/> Example: 5ff5881b80b66969e1fb35f4                                                                                                            |
+| app_id        | `string`             | App ID from which this event is generated <br/><br/> Example: 5ff5881b80b66969e1fb35f6                                                                                                                 |
+| timestamp     | `timestamp (in UTC)` | Timestamp of the event <br/><br/> Example: 2020-11-11T16:32:17Z                                                                                                                                        |
+| type          | `string`             | Type of the event <br/><br/> Example: ingest.failure                                                                                                                                               |
+| error_message | `string`             | Error message for failure of ingestion start. Possible messages are: `"stream key disabled"`, `"internal error"`, `"no hls destinations"`, `"remote session active"`, `"already connected"`,  `"beam start error"` |
+| room_id       | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312df                                                                                                                                    |
+| template_id   | `string`             | Template ID of the room <br/><br/> Example: 66112497abcd52312556c4gg                                                                                                                                   |
+
+
+#### Sample `ingest.failure` event
+
+```json
+{
+  "version": "2.0",
+  "id": "********-****-****-****-***********",
+  "account_id": "***********************",
+  "app_id": "***********************",
+  "timestamp": "2023-10-16T12:36:58Z",
+  "type": "ingest.failure",
+  "data": {
+            "account_id": "***********************",
+            "app_id": "***********************",
+            "error_message": "stream key disabled",
+            "room_id": "***********************",
             "template_id": "***********************"
   }
 }

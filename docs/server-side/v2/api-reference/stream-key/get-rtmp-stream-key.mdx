@@ -1,6 +1,6 @@
 ---
 title: Get RTMP stream key
-nav: 3.170
+nav: 3.73
 ---
 
 Use this request to get the RTMP stream key and URL for a specific room.
@@ -34,3 +34,18 @@ curl --location --request GET 'https://api.100ms.live/v2/stream-keys/room/<room_
 }
 ```
 </ResponseBox>
+
+### Arguments
+
+| Field   | Type     | Description |
+|:--------|:---------|:------------|
+| room_id | `string` | mandatory   |
+
+### Errors
+
+| Description                   | Code |
+|:------------------------------|:-----|
+| No active key found           | 404  |
+| Room not found                | 404  |
+| Room is disabled (not active) | 403  |
+| Authentication Error          | 401  |
