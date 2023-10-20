@@ -5,10 +5,11 @@ export const references = {
     Flutter:
         'https://pub.dev/documentation/hmssdk_flutter/latest/hmssdk_flutter/hmssdk_flutter-library.html',
     iOS: [
-        { name: 'HMSSDK Reference', link: '/api-reference/ios/v2/HMSSDK/documentation/hmssdk' },
+        { name: 'HMSSDK Reference', link: '/api-reference/ios/v2/documentation/hmssdk' },
+
         {
             name: 'HMSRoomModels SDK Reference',
-            link: '/api-reference/ios/v2/HMSRoomModelsSDK/documentation/hmsroommodels/hmsroommodel'
+            link: '/api-reference/ios/HMSRoomModelsSDK/documentation/hmsroommodels/hmsroommodel'
         }
     ]
     // 'Server side': ''
