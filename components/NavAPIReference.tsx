@@ -57,16 +57,3 @@ export const NavAPIReference = ({ reference }) => {
         </Box>
     );
 };
-/*
-<HeaderLink
-    URLincludes={['/docs/api-reference/']}
-    onClick={() =>
-        window.analytics.track('link.clicked', {
-            btnId: 'api.reference.clicked',
-            currentPage: window.location.href
-        })
-    }
-    href={routeAPIRef()}>
-    API Reference
-</HeaderLink>
- */
