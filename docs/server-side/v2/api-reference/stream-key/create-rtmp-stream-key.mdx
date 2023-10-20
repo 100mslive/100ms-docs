@@ -3,7 +3,7 @@ title: Create RTMP stream key
 nav: 3.72
 ---
 
-Use this request to generate an RTMP stream key and RTMP URL for any room, enabling HLS live streaming from an external RTMP broadcaster to the specified room.
+Use this request to generate an RTMP stream key and RTMP URL for any room, enabling HLS live streaming from an external RTMP broadcaster to the specified room. 
 
 <PostRequest title="https://api.100ms.live/v2/stream-keys/room/<room_id>" />
 <Request id="req-0">
@@ -29,6 +29,11 @@ curl --location --request POST 'https://api.100ms.live/v2/stream-keys/room/<room
 }
 ```
 </ResponseBox>
+
+> Note on disabled rooms
+>
+> This API will not generate stream keys for disabled 100ms rooms. The rooms need to be enabled either through the 100ms Dashboard or using the [REST API](/server-side/v2/api-reference/Rooms/disable-or-enable).
+>
 
 ### Arguments
 
