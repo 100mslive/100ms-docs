@@ -1,76 +1,78 @@
 ## Overview
 
-Live video interactions can span various levels of interactivity. For example, in a virtual event, some participants can be on stage talking to each other, whereas participants in the audience can be listening to them.
+Live video interactions can span across levels of interactivity; for instance, in a virtual event, some participants may be on stage conversing, while others are off stage listening.
 
-At 100ms, we think of this as the **3 levels of interactivity**. 100ms enables you to build live video use-cases by mixing and matching these 3 levels to get to your ideal solution.
+At 100ms, we categorize live video interactions into three levels of interactivity. This enables you to construct live video use-cases by mixing and matching these levels to achieve your ideal solution.
 
--   **Level 1**: Full duplex audio/video in real-time
+-   **On Stage (WebRTC)**: Full duplex audio/video in real-time\
+    On stage participants can publish their audio/video and interact with others with sub-second latency, similar to real-time video conferencing platforms like Zoom or Google Meet
 
-    Level 1 participants publish their audio/video, and interact with others in sub-second latency. This is real-time video conferencing, similar to Zoom or Google Meet.
+-   **Off Stage (WebRTC)**: Webinar-style audience with sub-second latency
 
--   **Level 2**: Webinar-style audience in real-time
+    Off stage participants consume audio/video from on stage participants with sub-second latency but do not publish their own audio/video. They can, however, engage with on stage participants through messaging, such as chat, emojis, and custom events, similar to a Zoom webinar.
 
-    Level 2 participants consume audio/video from level 1 participants with sub-second latency, without publishing their own audio/video. Level 2 participants can engage with level 1 through messaging (chat, emojis, custom events). This is similar to a Zoom webinar.
+-   **Off Stage (HLS)**: Live stream audience consuming a delayed Stream (\<10 s delay)
 
-    Levels 1 and 2 are enabled using WebRTC.
+    Delayed Stream participants consume a composite live stream, with less than 10 seconds of latency, without publishing their own audio/video, interacting with other participants via messaging. This experience is similar to platforms like Twitch or YouTube Live and is facilitated through 100ms Interactive Live Streaming
+    <br/>
+    **Live streaming uses HTTP Live Streaming [(HLS)](https://www.100ms.live/blog/hls-101-beginners-guide) to achieve near real-time latency at scale.**
 
--   **Level 3**: Live stream audience consuming in near real-time
+The [roles primitive](/javascript/v2/foundation/templates-and-roles#roles) allows defining participant capabilities and associating them with an interaction level, enabling participants to move between levels with a single API call to change roles.
 
-    Level 3 participants consume a composite live stream in near real-time (\<10 secs of latency) without publishing their audio/video. They can interact with other participants via messaging. This is similar to viewers on Twitch or YouTube Live, and is enabled via **100ms Interactive Live Streaming**.
+## Get Started with Prebuilt (No-code)
 
-    Live streaming uses [HLS](https://www.100ms.live/blog/hls-101-beginners-guide) to achieve near real-time latency at scale.
-
-The [roles primitive](/javascript/v2/foundation/templates-and-roles) can be used to define capabilities of a participant and associate them to an interaction level. A participant can move between levels using a single API call to change roles.
-
-## Try Interactive Live Streaming
-
-Use our [Live Streaming Starter Kit](https://www.100ms.live/marketplace/live-streaming-starter-kit) to try out the experience before you write a line of code.
+Build your Live Streaming use-case using [Prebuilt and our Customiser](https://www.100ms.live/marketplace/live-streaming-starter-kit) to build your use-case without writing a single line of code.
 
 <StepsToc
 parentId="try-live-streaming"
-descriptions={["Use our Live streaming starter kit to try out the experience before you write a line of code.", "Understand the difference between a stream broadcaster and stream viewer.", "Use the demo app link to go live for the first time as a broadcaster and join the stream as viewer.", "Use the 100ms self-serve dashboard to update the layout, aspect ratio, etc of the stream."]}
+descriptions={["Build your Live Streaming use-case without writing a single line of code using Prebuilt", "Configure your use-case to customise it for your needs and select add-ons such as recording","Understand the difference between a broadcaster, co-broadcaster, viewer and other off stage roles", "Experience prebuilt as a broadcaster by going live and experience the stream by joining as a viewer"]}
 
 />
 
 <StepsContainer id="try-live-streaming">
 
-### Create a new template
+### Get Started
 
-![Live streaming starter kit](/docs/v2/live-streaming-starter-kit.png)
+![Live Streaming Template](/docs/v2/live-streaming/live-streaming-template.png)
 
-1. Make sure that you have [an account with 100ms](https://dashboard.100ms.live/register) and can access the [100ms dashboard](https://dashboard.100ms.live/)
-1. On the dashboard, create a new template using the Live Streaming preset
-1. Specify a subdomain and region on the next screen
+1. Make sure that you have [an account with 100ms](https://dashboard.100ms.live/register), then go to [100ms dashboard](https://dashboard.100ms.live/)
+1. If you have previously signed up, click on **Create Template** on the dashboard
+1. Select the **Live Streaming** use-case and proceed to configure
 
-### Understand roles
+### Configure
 
-![Live Streaming roles](/docs/v2/live-streaming-roles.png)
+<video loop="true" autoplay="autoPlay" controls="false" id="vid" muted>
+    <source src="/docs/docs/v2/live-streaming/live-streaming-configure.mp4" type="video/mp4" />
+</video>
 
-This preset configures your new template with [two roles](/javascript/v2/foundation/templates-and-roles). All rooms created based on this template will have this configuration.
+1. Choose where the broadcaster will stream from. This will ensure the end user experience is optimised based on the broadcaster's video aspect ratio
+1. Choose if viewers can be invited to join the stage. This will enable the broadcaster and co-broadcaster to temporarily invite viewers on stage, and remove them later
+1. Choose if you want to record the stream. Recording will automatically start when the broadcaster goes live. To start with, we will store your recordings for 15 days. You can add your own storage later.
+1. Finally, choose what type of recording you require. Video on Demand (.m3u8) is optimised for re-streaming content later, while .mp4 is optimised for Post-processing (such as editing the video)
+1. If you are not sure, you can always change this configuration later
 
--   `broadcaster`: This role represents a streamer who publishes their audio/video. There can be multiple peers who join as broadcasters
--   `hls-viewer`: This role represents a circle 3 audience, who subscribes to the composite live stream and can interact using messaging
+### Understand Roles
 
-### Go live
+![Live Streaming roles](/docs/v2/live-streaming/live-streaming-roles.png)
 
-![Go live](/docs/v2/live-streaming-go-live.gif)
+This configures your new template with [roles](/javascript/v2/foundation/templates-and-roles) and prebuilt that can be customised (more on this later). All rooms created based on this template will have this configuration.
 
-1. To go live for the first time, join the room as a `broadcaster` and start the live stream
-2. Once the stream has started, join the room as an `hls-viewer` and you should be able to see the ongoing live stream
-3. Use chat messages to interact between the viewer and the broadcaster
+-   `broadcaster`: This role represents a streamer on stage, capable of publishing their audio/video. There can be multiple participants who join as a broadcaster
+-   `co-broadcaster`: This role represents a streamer on stage, who can also publish their audio/video but cannot start or stop the stream, providing a level of control over the broadcast flow
+-   `viewer-realtime`: This role represents an off stage participant (WebRTC), who subscribes to on stage participants and can interact using messaging, but cannot publish audio/video
+-   `viewer-near-realtime`: This role represents an off stage participant (HLS) with a delayed stream, who subscribes to the composite live stream and can interact using messaging
+-   `viewer-on-stage` (only if enabled): This role represents a temporary on stage participant (WebRTC), who subscribes to the broadcaster and co-broadcaster, and can share audio/video
 
-### Customize the stream
+### Experience Live Streaming
 
-![Go live](/docs/v2/live-streaming-customise.png)
+<video loop="true" autoplay="autoPlay" controls="false" id="vid" muted>
+    <source src="/docs/docs/v2/live-streaming/live-streaming-go-live.mp4" type="video/mp4" />
+</video>
 
-By default, the live stream is composed in landscape mode for desktop viewers (with an aspect ratio of 16:9). You can customise the live stream for viewers on mobile or to support multiple broadcaster tiles.
-
-1. On the 100ms dashboard, click the gear icon on your app to open configuration settings
-2. Go to "destinations" and scroll down to find live stream (HLS) configuration
-3. Update the configuration based on your needs:
-    - If your viewers are on mobile, change the video aspect ratio to 9:16
-    - If you have multiple broadcasters joining in, choose grid or active speaker based on your needs
-    - In case of grid layout, choose the tile size that fits your use-case. For example, a stream with 2 streamers looks better with 1:1 tiles.
+1. Click on **Experience as `broadcaster`**
+1. Enter your name and click on **Go Live** to start the live stream
+1. Once the stream has started, join the room from another tab/device as a `viewer-delayed-stream` and you should be able to see the ongoing live stream
+1. Use chat messages to interact between the viewer and the broadcaster
 
 </StepsContainer>
 
@@ -81,7 +83,7 @@ To integrate 100ms Interactive Live Streaming in your app, follow these steps:
 1. [Enable live streaming](#enable-live-streaming)
 2. [Integrate the 100ms SDK in your app](#sdk-integration)
 3. [Integrate live stream playback](#live-stream-playback)
-4. [Video on demand (VOD) use cases](#video-on-demand-vod-use-cases)
+4. [Video on demand (VOD) use-cases](#video-on-demand-vod-use-cases)
 
 ### Enable live streaming
 
@@ -117,8 +119,8 @@ If you need to only enable HLS playback and don't need interactivity, you can fo
     -   `customer_id`: replace this placeholder with your customer_id from [developer section](https://dashboard.100ms.live/developer) on your dashboard.
     -   `room_id`: replace this placeholder with the `room_id` of the respective room from which the stream will be broadcasted.
 
-### Video on Demand (VOD) use cases
+### Video on Demand (VOD) use-cases
 
-If you wish to replay your HLS stream for Video on demand (VOD) use case, 100ms provides the capability to record the HLS stream which will be posted to your webhook as a ZIP file of M3U8 format (same playback format as HLS) with all the chunks once the stream ends.
+If you wish to replay your HLS stream for Video on demand (VOD) use-case, 100ms provides the capability to record the HLS stream which will be posted to your webhook as a ZIP file of M3U8 format (same playback format as HLS) with all the chunks once the stream ends.
 
 You can start recording a live stream using the [client-side SDK](/javascript/v2/how--to-guides/record-and-live-stream/hls/hls) or using the [server API](server-side/v2/api-reference/live-streams/start-live-stream-for-room). Once the HLS recording is completed, you will get the details of recording as a callback to the webhook configured in your account. Check `hls.recording.success` [webhook event](/server-side/v2/introduction/webhook#hls-recording-success) for more information.
