@@ -13,7 +13,7 @@ nav: 4.3
 | [hls.started.success](#hlsstartedsuccess),<br/> [hls.stopped.success](#hlsstoppedsuccess),<br/> [hls.recording.success](#hlsrecordingsuccess),<br/> [hls.failure](#hlsfailure)         | HLS Streaming Events               | Triggered during the start, end, and failure of HLS streaming and/or HLS recording      |
 | [role.change.success](#rolechangesuccess)                                                                                                                                              | Role Change Events                 | Triggered when a role is updated                                                        |
 | [transcription.started.success](#transcriptionstartedsuccess),<br/>[transcription.success](#transcriptionsuccess),<br/> [transcription.failure](#transcriptionfailure)                 | Transcription Events               | Triggered at the start and end of transcription                                         |
-| [ingest.start.success](#ingeststartsuccess),<br/> [ingest.end.success](#ingestendsuccess), <br/> [ingest.start.failure](#ingeststartfailure)                                           | RTMP Ingestion Events              | Triggered at the start and end of RTMP Ingestion                                        |
+| [ingest.start.success](#ingeststartsuccess),<br/> [ingest.end.success](#ingestendsuccess), <br/> [ingest.failure](#ingestfailure)                                           | RTMP Ingestion Events              | Triggered at the start and end of RTMP Ingestion                                        |
 
 
 ## Event payload
