@@ -1,23 +1,7 @@
-import Link from 'next/link';
 import { Box, Flex, Text } from '@100mslive/react-ui';
 import { useState } from 'react';
 import { ChevronDownIcon } from '@100mslive/react-icons';
-
-const LinkItem = ({ reference, text }) => (
-    <Link passHref href={reference}>
-        <Text
-            as="a"
-            variant="sm"
-            css={{
-                pl: '$12',
-                my: '$8',
-                color: 'var(--docs_text_primary)',
-                display: 'block'
-            }}>
-            {text}
-        </Text>
-    </Link>
-);
+import { LinkItem } from './LinkItem';
 
 // Can be link or array of links
 export const SidebarAPIReference = ({ reference }) => {
