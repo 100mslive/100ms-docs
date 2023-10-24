@@ -108,11 +108,11 @@ HMSPrebuilt uses [room code](/concepts/v2/concepts/rooms/room-codes/room-codes) 
     - `userName` - prefills the user name on HMSPrebuilt preview screen
     - `userID` - use your user IDs to track user of your app
 
-Sample code snippet to embed Prebuilt component. Head over for a step by step guides for [React](/javascript/v2/quickstart/prebuilt-quickstart), [Flutter](/flutter/v2/quickstart/prebuilt), [React Native](/react-native/v2/quickstart/prebuilt), [Android](/android/v2/quickstart/prebuilt-android).
+Sample code snippet to embed Prebuilt component. Head over for a step by step guides for [React](/javascript/v2/quickstart/prebuilt-quickstart), [Flutter](/flutter/v2/quickstart/prebuilt), [React Native](/react-native/v2/quickstart/prebuilt), [Android](/android/v2/quickstart/prebuilt-android), [iOS](https://www.100ms.live/docs/ios/v2/quickstart/prebuilt).
 
 <Tabs
   id="sample-code"
-  items={["React", "Flutter", "React Native", "Android"]}
+  items={["React", "Flutter", "React Native", "Android", "iOS"]}
 />
 
 <Tab id='sample-code-0'>
@@ -170,6 +170,25 @@ import live.hms.roomkit.ui.HMSRoomKit
 
 // launch prebuilt from your activity or fragment
 HMSRoomKit.launchPrebuilt(roomCode = "<room-code>", context = Activity)
+
+```
+</Tab>
+
+<Tab id='sample-code-4'>
+```swift section=SampleCode tab=iOS
+
+// add roomkit sdk dependency with swift package manager: https://github.com/100mslive/100ms-roomkit-ios
+
+// import roomkit sdk
+import HMSRoomKit
+
+// embed prebuilt view as a swiftui view with room-code
+HMSPrebuiltView(roomCode: /*pass room code as string here*/)
+
+Or
+
+// embed prebuilt view as a swiftui view with auth-token
+HMSPrebuiltView(token: /*pass role's auth token as string here*/)
 
 ```
 </Tab>
