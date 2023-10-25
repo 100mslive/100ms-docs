@@ -7,6 +7,12 @@ It's finally time to bring everything together and display live streaming video 
 
 Here's what you need to do:
 
+<Tabs
+  id="sample-code"
+  items={["UIKit", "SwiftUI"]}
+/>
+
+<Tab id='sample-code-0'>
 1. Create an HMSVideoView object in your view hierarchy. This is a subclass of UIView, so add it to your UI just like any other view, using Storyboard, XIB or in-code.
 
 2. Get a reference to a video track object, specifically an HMSVideoTrack or one of its subclasses (eg. HMSLocalVideoTrack). For example, the local peer's video track can be accessed like this:
@@ -28,3 +34,74 @@ videoView.setVideoTrack(track) // videoView is HMSVideoView, track is HMSVideoTr
 That's it. The video transmitted by the peer will now be displayed and start playing in your video view. 🥳
 
 Remember, it's all about connecting the Video Track to the Video View. You'll be doing this often.
+</Tab>
+
+<Tab id='sample-code-1'>
+Create HMSVideoTrackView object and pass a peer model instance to show/render its video track.
+```swift
+HMSVideoTrackView(peer: /* pass an instance of HMSPeerModel*/)
+```
+<details>
+    <summary>Code in context</summary>
+    ```swift
+//  Render local peer's video tile
+import HMSRoomModels
+struct MeetingView: View {
+    
+    @ObservedObject var roomModel = HMSRoomModel(roomCode: "qdr-mik-seb")
+    
+    var body: some View {
+        
+        switch roomModel.roomState {
+        case .notJoined, .leftMeeting:
+            // Button to join the room
+            ...
+        case .inMeeting:
+            VStack {
+                // Render local peer's video tile
+                if let localPeer = roomModel.localPeerModel {
+                    HMSVideoTrackView(peer: localPeer)
+                        .frame(height: 200)
+                }
+                // Button to leave the room
+                ...
+            }
+        }
+    }
+}
+```
+```swift
+//  Simple Meeting View to render each peer's video in a list
+import HMSRoomModels
+struct MeetingView: View {
+    
+    @ObservedObject var roomModel = HMSRoomModel(roomCode: "qdr-mik-seb")
+    
+    var body: some View {
+        
+        switch roomModel.roomState {
+        case .notJoined, .leftMeeting:
+            // Button to join the room
+            ...
+        case .inMeeting:
+            VStack {
+                // Render video of each peer in the call
+                List {
+                    ForEach(roomModel.peerModels) { peerModel in
+                        VStack {
+                            Text(peerModel.name)
+                            HMSVideoTrackView(peer: peerModel)
+                                .frame(height: 200)
+                        }
+                    }
+                }
+
+                // Button to leave the room
+                ...
+            }
+        }
+    }
+}
+```
+</details>
+</Tab>
