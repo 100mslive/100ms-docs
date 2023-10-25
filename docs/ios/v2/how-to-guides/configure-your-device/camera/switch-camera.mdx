@@ -5,7 +5,15 @@ nav: 6.1
 
 ## How to Switch Cameras in Video Calls Using the 100ms SDK
 
-With the 100ms SDK, you can switch between using the front and back camera for your video calls. To do so, you need to set the **cameraFacing** setting in the **HMSVideoTrackSettings** when building the trackSettings for the SDK. The following code demonstrates how to set the camera facing to the back:
+With the 100ms SDK, you can switch between using the front and back camera for your video calls.
+
+<Tabs
+  id="sample-code"
+  items={["UIKit", "SwiftUI"]}
+/>
+
+<Tab id='sample-code-0'>
+To do so, you need to set the **cameraFacing** setting in the **HMSVideoTrackSettings** when building the trackSettings for the SDK. The following code demonstrates how to set the camera facing to the back:
 
 ```swift
 var hmsSDK: HMSSDK?
@@ -44,3 +52,11 @@ if let localTrack = hmsSDK.localPeer?.videoTrack as? HMSLocalVideoTrack {
 You can utilise this completion handler to time a transition effect while camera is switching for example.
 
 👀 To see a complete example of switching cameras in an iOS app using 100ms SDK, checkout [our example project](https://github.com/100mslive/100ms-ios-sdk/tree/main/Example).
+</Tab>
+
+<Tab id='sample-code-1'>
+You call **switchCamera** method on HMSRoomModel instance.
+```swift
+try await roomModel.switchCamera()
+```
+</Tab>

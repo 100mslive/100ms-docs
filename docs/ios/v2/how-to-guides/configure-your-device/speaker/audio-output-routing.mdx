@@ -5,6 +5,12 @@ nav: 6.1
 
 If you want to give your users option to switch audio between speaker and earpiece, you use Audio Output Routing API. For example, you can implement an in-call speaker button that toggles between speaker and earpiece audio.
 
+<Tabs
+  id="sample-code"
+  items={["UIKit", "SwiftUI"]}
+/>
+
+<Tab id='sample-code-0'>
 ## Minimum Requirements
 
 -   SDK version 0.5.1
@@ -38,3 +44,27 @@ let availableAudioOutputDevices = hmsSDK.getAudioOutputDeviceList()
 Note: In future getAudioOutputDeviceList may return other available audio devices.
 
 👀 To see an example iOS audio routing implementation using 100ms SDK, checkout [our example project](https://github.com/100mslive/100ms-ios-sdk/tree/main/Example).
+</Tab>
+
+<Tab id='sample-code-1'>
+
+You call **switchAudioOutput(to:)** method on HMSRoomModel instance passing in the HMSAudioOutputDevice that you would like to switch audio to. Like below:
+
+```swift
+// Switch audio to earpiece
+try roomModel.switchAudioOutput(to: .earpiece)
+
+// Switch audio to speaker
+try roomModel.switchAudioOutput(to: .speaker)
+```
+
+Currently, there are only 2 HMSAudioOutputDevices available:
+
+1. **speaker** - in-built speaker device
+2. **earpiece** - in-built earpiece device
+
+## Can I switch audio to audio output devices other than speaker and earpiece?
+
+No. Currently _in-built speaker_ and _in-built earpiece_ are the only two supported devices.
+
+</Tab>
