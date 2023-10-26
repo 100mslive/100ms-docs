@@ -10,15 +10,21 @@ tags:
     - ios
 ---
 
-## Prerequisites
-
-Familiarity with Xcode and iOS SDK, Knowledge about either Swift Package Manager or Cocoapods
-
 ## Xcode Project Setup
 
 Create an Xcode project and select "iOS" for platform and "App" for application
 
 ![Xcode](/guides/xcode1.png)
+
+<Tabs
+  id="sample-code"
+  items={["UIKit", "SwiftUI"]}
+/>
+
+<Tab id='sample-code-0'>
+## Prerequisites
+
+Familiarity with Xcode and iOS SDK, Knowledge about either Swift Package Manager or Cocoapods
 
 Select "Storyboard" for interface and "Swift" for language
 
@@ -258,3 +264,233 @@ Checkout complete project code on github: [https://github.com/100mslive/100ms-io
 Checkout a sample code for a full featured conferencing app:
 
 [https://github.com/100mslive/100ms-ios-sdk/tree/main/Example](https://github.com/100mslive/100ms-ios-sdk/tree/main/Example)
+</Tab>
+
+<Tab id='sample-code-1'>
+## Prerequisites
+
+1. Xcode 14 or higher
+2. iOS 15 or higher
+
+Select SwiftUI for interface and "Swift" for language
+
+## Integration
+You can integrate RoomModels SDK into your project using Swift Package Manager (SPM). Follow these steps:
+
+1. Open your Xcode project.
+2. Navigate to File > Add Package Dependency.
+3. In the dialog that appears, enter the following URL as the package source: https://github.com/100mslive/100ms-roomkit-models-ios
+4. Click Next and follow the prompts to add the package to your project.
+
+Add the entitlements for video, audio and network access to your `Info.plist`
+
+```xml section=XcodeProjectSetup sectionIndex=2
+<key>NSCameraUsageDescription</key>
+<string>Please allow access to Camera to enable video conferencing.</string>
+<key>NSMicrophoneUsageDescription</key>
+<string>Please allow access to Microphone to enable video conferencing.</string>
+```
+
+## Import SDK
+
+You import the RoomModels SDK with following import statement
+
+```swift
+import HMSRoomModels
+```
+
+## Create an instance of HMSRoomModel
+
+You can create a reactive model of the room with either a room-code or an auth-token like below:
+
+```swift
+// Initialize with room-code
+let roomModel = HMSRoomModel(roomCode: /*pass room code as string here*/)
+
+// Initialize with auth-token
+let roomModel = HMSRoomModel(token: /*pass role's auth token as string here*/)
+```
+
+### Room Code Setup
+
+Before we proceed we need to obtain the room-code for your room. In case you are not sure how to do this here is a quick guide about room-codes: [Get Room Code From Dashboard](https://www.100ms.live/docs/ios/v2/get-started/token). For more information about room-code check out [Room Code Setup Guide](https://www.100ms.live/docs/concepts/v2/concepts/rooms/room-codes/room-codes)
+
+## Join Room
+
+Alright with the room-code we are ready to proceed.
+
+Pass room-code that you obtained in previous steps in `HMSRoomModel` initializer then call `joinSession()` method on roomModel instance.
+
+```swift
+struct MeetingView: View {
+    
+    @ObservedObject var roomModel = HMSRoomModel(roomCode: "qdr-mik-seb")
+    
+    var body: some View {
+        
+        switch roomModel.roomState {
+        case .notJoined, .leftMeeting:
+            // Button to join the room
+            Button {
+                Task {
+                    try await roomModel.joinSession(userName: "iOS User")
+                }
+            } label: {
+                Text("Join")
+            }
+        case .inMeeting:
+            ...
+        }
+    }
+}
+```
+
+Note that we have marked roomModel instance above with `@ObservedObject` because we are using it's published property `roomState` to drive the UI.
+
+Note: You can have a text-field in your app where user enters the room-code. Then you can use the room-code entered by the user in to initialize HMSRoomModel instance.
+
+Congratulations! You have an audio conference app.
+
+Build and launch on device, then join same room on web app to try a call between web and iOS. (To join from the web, use one of the role url links from your room [Room in Dashboard](https://dashboard.100ms.live/rooms))
+
+## Adding Video
+
+Let's iterate through all the peers in the room using `peerModels` property in `HMSRoomModel`. And use `HMSVideoTrackView` to render each peer's video track in a vertical list.
+
+```swift
+struct MeetingView: View {
+    
+    @ObservedObject var roomModel = HMSRoomModel(roomCode: "qdr-mik-seb")
+    
+    var body: some View {
+        
+        switch roomModel.roomState {
+        case .notJoined, .leftMeeting:
+            // Button to join the room
+            ...
+        case .inMeeting:
+            VStack {
+                // Render video of each peer in the call
+                List {
+                    ForEach(roomModel.peerModels) { peerModel in
+                        VStack {
+                            Text(peerModel.name)
+                            HMSVideoTrackView(peer: peerModel)
+                                .frame(height: 200)
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+Build and run the app. Congratulations you have an audio-video call running!
+
+### Final Points
+
+To control mute/unmute state of local video and audio tracks use
+
+```swift
+// Toggle local user's mic
+roomModel.toggleMic()
+// Toggle local user's camera
+roomModel.toggleCamera()
+// check if local user's mic is mute
+roomModel.isMicMute
+// check if local user's camera is mute
+roomModel.isCameraMute
+```
+
+After you are done with the call it is a good idea to call leave to leave the call.
+
+```swift
+roomModel.leaveSession()
+```
+
+<details>
+    <summary>Full Code in Context</summary>
+```swift
+import SwiftUI
+import HMSRoomModels
+
+struct MeetingView: View {
+    
+    @ObservedObject var roomModel = HMSRoomModel(roomCode: "qdr-mik-seb")
+    
+    var body: some View {
+        
+        switch roomModel.roomState {
+        case .notJoined, .leftMeeting:
+            // Button to join the room
+            Button {
+                Task {
+                    try await roomModel.joinSession(userName: "iOS User")
+                }
+            } label: {
+                Text("Join")
+            }
+        case .inMeeting:
+            VStack {
+                List {
+                    
+                    // If a participant is sharing their screen, show their screen at the top of the list
+                    if roomModel.peersSharingScreen.count > 0 {
+                        TabView {
+                            ForEach(roomModel.peersSharingScreen) { screenSharingPeer in
+                                HMSScreenTrackView(peer: screenSharingPeer)
+                            }
+                        }
+                        .tabViewStyle(.page(indexDisplayMode: .never))
+                        .frame(height: 200)
+                    }
+                    
+                    // Render video of each peer in the call
+                    ForEach(roomModel.peerModels) { peerModel in
+                        
+                        VStack {
+                            Text(peerModel.name)
+                            HMSVideoTrackView(peer: peerModel)
+                                .frame(height: 200)
+                        }
+                    }
+                }
+                
+                HStack {
+                    
+                    // Toggle local user's mic
+                    Image(systemName: roomModel.isMicMute ? "mic.slash" : "mic")
+                        .onTapGesture {
+                            roomModel.toggleMic()
+                        }
+                    
+                    // Toggle local user's camera
+                    Image(systemName: roomModel.isCameraMute ? "video.slash" : "video")
+                        .onTapGesture {
+                            roomModel.toggleCamera()
+                        }
+                    
+                    // Button to leave the room
+                    Image(systemName: "phone.down.fill")
+                        .onTapGesture {
+                            Task {
+                                try await roomModel.leaveSession()
+                            }
+                        }
+                }
+            }
+        }
+    }
+}
+```
+</details>
+
+### Ways to go from here
+
+Checkout the HMSRoomModels SDK in detail on github: [https://github.com/100mslive/100ms-roomkit-models-ios](https://github.com/100mslive/100ms-roomkit-models-ios)
+
+Checkout a sample code for a full featured conferencing app:
+
+[https://github.com/100mslive/100ms-roomkit-ios/tree/main/HMSRoomKitExample](https://github.com/100mslive/100ms-roomkit-ios/tree/main/HMSRoomKitExample)
+</Tab>
