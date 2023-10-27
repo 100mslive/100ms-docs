@@ -13,7 +13,7 @@ nav: '4.48'
 
 ### data
 
-• **data**: `null`
+• **data**: `null` \| [`HMSException`](/api-reference/javascript/v2/interfaces/HMSException)
 
 ---
 
