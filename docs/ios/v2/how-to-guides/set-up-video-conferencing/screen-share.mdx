@@ -269,8 +269,7 @@ You need to follow following steps to be able to share screen from iOS app:
 
 1. Make a new **Broadcast Upload Extension** target from Xcode. This target will be embedded into your application. Xcode automatically sets everything up if you use Xcode template named **Broadcast Upload Extension** to create the target.
 2. Add **App Group** capability in your **main app** target as well as in this new **Broadcast Upload Extension** target. Use the same App Group ID in both the targets. Let's assume your app group id is "group.live.100ms.videoapp.roomkit".
-3. Add **HMSBroadcastExtensionSDK** to your **main app** target from Swift Package Manager. You can use Swift Package Manager (use https://github.com/100mslive/100ms-ios-broadcast-sdk.git as the package source) to add this SDK to your app. Then add **HMSBroadcastExtensionSDK** to your iOS **Broadcast Upload Extension** target using plus button in target's framework and libraries section.
-4. Xcode creates a **SampleHandler.swift** file in a new folder for your **Broadcast Upload Extension** target. Modify this **SampleHandler.swift** file to contain the following code (delete all the code in **SampleHandler.swift** file and paste the following code):
+3. Xcode creates a **SampleHandler.swift** file in a new folder for your **Broadcast Upload Extension** target. Modify this **SampleHandler.swift** file to contain the following code (delete all the code in **SampleHandler.swift** file and paste the following code):
 
 ```swift
 import HMSBroadcastExtensionSDK
