@@ -5,6 +5,13 @@ nav: 4.7
 
 iOS SDK provides support for sharing the entire screen of the device in the room or you can share just your App's Screen.
 
+
+<Tabs
+  id="sample-code"
+  items={["UIKit", "SwiftUI"]}
+/>
+
+<Tab id='sample-code-0'>
 # Share Just Your App's Screen
 
 You can use the hmsSDK instance to start sharing your app screen like below:
@@ -253,3 +260,146 @@ Replace "live.100ms.videoapp.screenshare" with the bundle ID of your own broadca
 👀 To see an Example iOS broadcast upload extension implementation for screen sharing using 100ms Broadcast extension SDK, checkout [our Example project](https://github.com/100mslive/100ms-ios-sdk/tree/main/Example).
 
 📲 Download the 100ms fully featured Sample iOS app here: https://testflight.apple.com/join/dhUSE7N8
+</Tab>
+
+<Tab id='sample-code-1'>
+# How to share iOS screen of local user
+
+You need to follow following steps to be able to share screen from iOS app:
+
+1. Make a new **Broadcast Upload Extension** target from Xcode. This target will be embedded into your application. Xcode automatically sets everything up if you use Xcode template named **Broadcast Upload Extension** to create the target.
+2. Add **App Group** capability in your **main app** target as well as in this new **Broadcast Upload Extension** target. Use the same App Group ID in both the targets. Let's assume your app group id is "group.live.100ms.videoapp.roomkit".
+3. Add **HMSBroadcastExtensionSDK** to your **main app** target from Swift Package Manager. You can use Swift Package Manager (use https://github.com/100mslive/100ms-ios-broadcast-sdk.git as the package source) to add this SDK to your app. Then add **HMSBroadcastExtensionSDK** to your iOS **Broadcast Upload Extension** target using plus button in target's framework and libraries section.
+4. Xcode creates a **SampleHandler.swift** file in a new folder for your **Broadcast Upload Extension** target. Modify this **SampleHandler.swift** file to contain the following code (delete all the code in **SampleHandler.swift** file and paste the following code):
+
+```swift
+import HMSBroadcastExtensionSDK
+
+class SampleHandler: HMSBroadcastSampleHandler {
+    
+    override var appGroupId: String {
+        "group.live.100ms.videoapp.roomkit"
+    }
+}
+```
+
+Where "group.live.100ms.videoapp.roomkit" is the app group ID of your app group that created in step 2. Make sure to replace it with your App Group ID string.
+
+5. With the above steps completed, let your RoomModel instance know about your App Group ID like below:
+
+```swift
+@ObservedObject var roomModel = HMSRoomModel(roomCode: "qdw-mil-sev", options: .init(appGroupName: "group.live.100ms.videoapp.roomkit"))
+```
+
+6. At this point you are ready to share screen of local iOS user. You can use the following code to make a button to start screen sharing from inside your app UI:
+
+```swift
+import SwiftUI
+import HMSRoomModels
+import ReplayKit
+
+struct RoomModelStandaloneExample: View {
+    
+    @ObservedObject var roomModel = HMSRoomModel(roomCode: "qdw-mil-sev", options: .init(appGroupName: "group.live.100ms.videoapp.roomkit"))
+    
+    @StateObject var broadcastPickerView = {
+        let picker = RPSystemBroadcastPickerView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+        picker.showsMicrophoneButton = false
+        return picker
+    }()
+    
+    var body: some View {
+        
+        switch roomModel.roomState {
+        case .notJoined, .leftMeeting:
+            // Button to join the room
+            ...
+        case .inMeeting:
+            VStack {
+                List {
+                    
+                    // If a participant is sharing their screen, show their screen at the top of the list
+                    ...
+                        
+                    // Render video of each peer in the call
+                    ...
+                }
+                
+                HStack {
+                    
+                    // Toggle local user's mic
+                    ...
+                    
+                    // Toggle local user's camera
+                    ...
+
+                    // Share local user's screen from iOS
+                    if roomModel.userCanShareScreen {
+                        Image(systemName: "rectangle.inset.filled.and.person.filled")
+                            .onTapGesture {
+                                for subview in broadcastPickerView.subviews {
+                                    if let button = subview as? UIButton {
+                                        button.sendActions(for: UIControl.Event.allTouchEvents)
+                                    }
+                                }
+                            }
+                            .onAppear() {
+                                broadcastPickerView.preferredExtension = "live.100ms.videoapp.roomkit.Screenshare"
+                            }
+                    }
+                    
+                    // Button to leave the room
+                    ...
+                }
+            }
+        }
+    }
+}
+```
+
+Where "live.100ms.videoapp.roomkit.Screenshare" is the bundle id of your **Broadcast Upload Extension** target.
+
+# How to check if a participant is sharing their screen
+
+You can check if a peer is sharing their screen by checking `HMSPeerModel`'s `isSharingScreen` property. Also, you can find out which participants are sharing their screens using **peersSharingScreen** property of RoomModel instance.
+```swift
+peerModel.isSharingScreen
+roomModel.peersSharingScreen
+```
+
+# How to show/render a Participant's Screen Track
+
+You use **HMSScreenTrackView** and pass a peer model to show/render its screen track. You can check which participants are sharing their screens using **peersSharingScreen** property of RoomModel instance.
+
+Example: If a participant is sharing their screen, show their screen at the top of the peer video list.
+
+```swift
+...
+
+List {
+
+    // If a participant is sharing their screen, show their screen at the top of the list
+    if roomModel.peersSharingScreen.count > 0 {
+        TabView {
+            ForEach(roomModel.peersSharingScreen) { screenSharingPeer in
+                HMSScreenTrackView(peer: screenSharingPeer)
+            }
+        }
+        .tabViewStyle(.page(indexDisplayMode: .never))
+        .frame(height: 200)
+    }
+
+    // Render video of each peer in the call
+    ForEach(roomModel.peerModels) { peerModel in
+        VStack {
+            Text(peerModel.name)
+            HMSVideoTrackView(peer: peerModel)
+                .frame(height: 200)
+        }
+    }
+}
+
+...
+```
+
+</Tab>
