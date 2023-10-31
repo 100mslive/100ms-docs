@@ -13,7 +13,15 @@ The permission to end a room is called `removeOthers` and you should check for t
 
 ### Removing a peer
 
-Once the permissions are checked to ensure the caller has the permission to remove a peer, remove them by calling `hmsSdk.removePeer`.
+Once the permissions are checked to ensure the caller has the permission to remove a peer...
+
+<Tabs
+  id="sample-code"
+  items={["UIKit", "SwiftUI"]}
+/>
+
+<Tab id='sample-code-0'>
+Remove them by calling `hmsSdk.removePeer`.
 
 The parameters are:
 
@@ -51,3 +59,55 @@ requestedBy: The details of the peer who called `removePeer`.
 roomEnded: True if the entire room was ended. False if only the receiving peer was removed.
 
 Clients should read this callback and show the appropriate UI.
+</Tab>
+
+<Tab id='sample-code-1'>
+You call `remove(peer, withReason:)` method on `HMSRoomModel` instance to remove a remote participant.
+```swift
+try await roomModel.remove(peer: /* peer model instance*/, withReason reason: /* an optional string describing the reason for ending the session for everyone*/)
+```
+<details>
+    <summary>Code in context</summary>
+```swift
+guard let studentPeerModel = (roomModel.peerModels.first{$0.name == "Pawan"}) else { return }
+try await roomModel.remove(peer: studentPeerModel, withReason: "Expelled from class.")
+```
+</details>
+
+### How to check whether you were removed from the room
+You check the `roomState` property on `HMSRoomModel` instance and see if it's set to `leftMeeting(reason: LeaveReason)` enum, and the LeaveReason is set to `removedFromRoom`.
+
+```swift
+struct MeetingView: View {
+    
+    @ObservedObject var roomModel = HMSRoomModel(roomCode: "qdr-mik-seb")
+    
+    var body: some View {
+        
+        switch roomModel.roomState {
+        case .notJoined:
+            // Button to join the room
+            ...
+        case .inMeeting:
+            VStack {
+                // Button to leave the room
+                ...
+            }
+        case .leftMeeting(reason: let leaveReason):
+            if case .removedFromRoom(reasonString: _) = leaveReason {
+                // show a view to let user know that they were kicked out of the room
+            }
+        }
+    }
+}
+```
+
+where leave reasons can be following:
+```swift
+public enum LeaveReason {
+    case roomEnded
+    case youLeft
+    case removedFromRoom
+}
+```
+</Tab>
