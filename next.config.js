@@ -98,6 +98,11 @@ const nextConfig = {
                 permanent: true
             },
             {
+                source: '/:slug/changelog/:pattern',
+                destination: '/:slug/release-notes/:pattern',
+                permanent: true
+            },
+            {
                 source: '/server-side/v2/foundation/basics',
                 destination: '/server-side/v2/introduction/basics',
                 permanent: false
