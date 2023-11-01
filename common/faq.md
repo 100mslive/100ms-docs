@@ -524,7 +524,7 @@ Yes this is possible. The [disable/enable a room API](/server-side/v2/Rooms/disa
 To restrict the session length, you can employ either of the following methods:
 
 1. Through `max_duration_seconds` parameter in room. See [Room API](/server-side/v2/api-reference/Rooms/overview).
-OR
+
 2. Through the [end an active room API](/server-side/v2/active-rooms/end-active-room).<br/>
   Say you want to limit the duration of a session to 30 minutes: - 
   - Start a timer as soon as the session begins and you receive the [session.open.success](/server-side/v2/introduction/webhook#sessionopensuccess) webhook event
