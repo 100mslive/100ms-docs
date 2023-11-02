@@ -7,6 +7,13 @@ Preview screen is a frequently used UX element which allows users to check if th
 
 To invoke this API call
 
+<Tabs
+  id="sample-code"
+  items={["UIKit", "SwiftUI"]}
+/>
+
+<Tab id='sample-code-0'>
+
 ```swift
 hmsSDK.preview(config: config, delegate: previewDelegate)
 ```
@@ -38,3 +45,15 @@ func on(peer: HMSPeer, update: HMSPeerUpdate)
 ```
 
 Can be used to get peer updates i.e peer join and leave.
+
+</Tab>
+
+<Tab id='sample-code-1'>
+
+You call preview method on the `HMSRoomModel` instance to preview the room. You can optionally pass the name of the participant in the preview method.
+
+```swift
+roomModel.preview(userName: /*pass participant's name as string here*/)
+```
+
+</Tab>

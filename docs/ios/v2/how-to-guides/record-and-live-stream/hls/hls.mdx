@@ -13,6 +13,12 @@ is ready, the server will give a URL which can be played using any HLS Player.
 
 ## Starting HLS
 
+<Tabs
+  id="sample-code"
+  items={["UIKit", "SwiftUI"]}
+/>
+
+<Tab id='sample-code-0'>
 HLS can be started in two ways depending on the level of customization you need.
 
 1. Default View: The simplest view to just begin a stream with default UI and parameters.
@@ -105,6 +111,87 @@ The room status should be checked in following two places -
    The properties mentioned above will be on the `HMSRoom` object.
 2. In the `on(room: HMSRoom, update: HMSRoomUpdate)` callback of `HMSUpdateListener`.
    The `HMSRoomUpdate` type will be `hlsStreamingStateUpdated`.
+</Tab>
+
+<Tab id='sample-code-1'>
+You can call `startStreaming` method on HMSRoomModel instance to start streaming the room.
+```swift
+try await roomModel.startStreaming()
+```
+
+## How to stop streaming
+To stop streaming the room, call `stopStreaming` method.
+```swift
+try await roomModel.stopStreaming()
+```
+
+## How to know when room is getting streamed
+Check the `isBeingStreamed` on HMSRoomModel instance to know if room is getting streamed.
+```swift
+roomModel.isBeingStreamed
+```
+
+## How to play the hls stream from the room on viewer side
+You instantiate `HMSHLSPlayerView()` instance to render the HLS stream from the room you are in.
+```swift
+HMSHLSPlayerView()
+```
+ <details>
+    <summary>Code in context</summary>
+```swift
+import SwiftUI
+import HMSRoomModels
+
+struct MeetingView: View {
+    
+    @ObservedObject var roomModel = HMSRoomModel(roomCode: "qde-mik-seb")
+    
+    var body: some View {
+        
+        switch roomModel.roomState {
+        case .notJoined, .leftMeeting:
+            // Button to join the room
+            Button {
+                Task {
+                    try await roomModel.joinSession(userName: "iOS User")
+                }
+            } label: {
+                Text("Join")
+            }
+        case .inMeeting:
+            VStack {
+                // Show HLS stream from the room
+                if roomModel.hlsVariants.first?.url != nil {
+                    HMSHLSPlayerView()
+                        .onResolutionChanged { size in
+                            print("resolution: \(size)")
+                        }
+                        .onPlaybackFailure { error in
+                            print("hlsError: \(error.localizedDescription)")
+                        }
+                }
+                else {
+                    // view to show when stream is yet to start
+                }
+                
+                HStack {
+                    
+                    // Button to leave the room
+                    Image(systemName: "phone.down.fill")
+                        .onTapGesture {
+                            Task {
+                                try await roomModel.leaveSession()
+                            }
+                        }
+                }
+            }
+        }
+    }
+}
+```
+</details>
+
+</Tab>
 
 ## Tips
 
