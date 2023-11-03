@@ -20,6 +20,7 @@ const Note: React.FC<Props> = ({ type = 'success', title = '', children }) => {
                         fontWeight: '500',
                         fontSize: '13px',
                         paddingBottom: '4px',
+                        lineHeight: '24px',
                         color: resolveColor()
                     }}>
                     {title}
@@ -31,9 +32,7 @@ const Note: React.FC<Props> = ({ type = 'success', title = '', children }) => {
                     padding-left: 20px;
                     background: var(--docs_bg_card);
                     margin: 24px 0;
-                    border-radius: var(--docs_border_radius_s);
-                    border 1px solid var(--docs_border_strong);
-                    border-left: 8px solid ${resolveColor()};
+                    border-left: 4px solid ${resolveColor()};
                 }
             `}</style>
         </div>

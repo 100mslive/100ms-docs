@@ -107,6 +107,8 @@ Here's some of them added and can be easily added:
 </Note>
 ```
 
+Types available: `success`,`warning`,`error`, `white`
+
 ---
 
 #### 2. Code
@@ -181,7 +183,7 @@ All CSS Variables prefixed with `token` control the Syntax Highlighting.
 
 ## #️⃣ Viewing updated release versions on local before pushing changes
 
-- To view the updated release version on local after adding changelog, run the following command before starting the local server:
+-   To view the updated release version on local after adding changelog, run the following command before starting the local server:
     -   `yarn updatereleases`
     -   `yarn dev`
 
