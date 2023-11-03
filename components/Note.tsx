@@ -10,7 +10,7 @@ interface Props {
 // Error: red
 // White: white
 
-const Note: React.FC<Props> = ({ type = 'success', title = '', children }) => {
+const Note: React.FC<Props> = ({ type = 'white', title = '', children }) => {
     const resolveColor = () => `var(--${type})`;
     return (
         <div className="note">

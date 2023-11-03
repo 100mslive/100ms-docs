@@ -90,7 +90,7 @@ Here's some of them added and can be easily added:
 
 #### 1. Note Component
 
--   You can easily use this by using `> blockquote` it will have a default type of `'success'`
+-   You can easily use this by using `> blockquote` it will have a default type of `white`
 -   To use other types write in this way
 
 ```jsx
