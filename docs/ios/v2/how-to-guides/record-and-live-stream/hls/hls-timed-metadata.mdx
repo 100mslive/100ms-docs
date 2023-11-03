@@ -5,6 +5,13 @@
 
 HLS Timed Metadata feature helps you synchronise certain events with the HLS stream. This can be useful for showing interactive quizzes / product overlays etc.
 
+
+<Tabs
+  id="sample-code"
+  items={["UIKit", "SwiftUI"]}
+/>
+
+<Tab id='sample-code-0'>
 ## Requirements
 
 -   100ms iOS SDK version 0.6.3 or higher
@@ -150,3 +157,97 @@ extension AVDateRangeMetadataGroup {
 ```
 
 👀 To see an example of HLS Timed Metadata implementation using 100ms SDK, checkout [our example project](https://github.com/100mslive/100ms-ios-sdk/blob/main/Example/HMSSDKExample/Meeting/HLS/HLSStreamViewController.swift).
+</Tab>
+
+<Tab id='sample-code-1'>
+You access timed metadata cues from `onCue` transformation on `HMSHLSPlayerView()` like below.
+```swift
+HMSHLSPlayerView()
+    .onCue { cue in
+        // use HMSHLSCue to overlay metadata information
+    }
+```
+
+Where HMSHLSCue is
+```swift
+/// HMSHLSCue represents a timed metadata event in a HLS Stream
+@objc public class HMSHLSCue: NSObject {
+    
+    /// Unique id of the timed event
+    public let id: String
+    
+    /// startDate of the timed event
+    public let startDate: Date
+    
+    /// endDate of the timed event
+    public let endDate: Date?
+    
+    /// String payload of the timed event
+    public let payload: String?
+    
+    init(id: String, startDate: Date, endDate: Date?, payload: String?) {
+        self.id = id
+        self.startDate = startDate
+        self.endDate = endDate
+        self.payload = payload
+    }
+}
+```
+
+<details>
+    <summary>Code in context</summary>
+```swift
+import SwiftUI
+import HMSRoomModels
+
+struct MeetingView: View {
+    
+    @ObservedObject var roomModel = HMSRoomModel(roomCode: "qdw-mil-sev")
+    
+    var body: some View {
+        
+        switch roomModel.roomState {
+        case .notJoined, .leftMeeting:
+            // Button to join the room
+            Button {
+                Task {
+                    try await roomModel.joinSession(userName: "iOS User")
+                }
+            } label: {
+                Text("Join")
+            }
+        case .inMeeting:
+            VStack {
+                if roomModel.hlsVariants.first?.url != nil {
+                    HMSHLSPlayerView()
+                        .onResolutionChanged { size in
+                            print("resolution: \(size)")
+                        }
+                        .onPlaybackFailure { error in
+                            print("hlsError: \(error.localizedDescription)")
+                        }
+                        .onCue { cue in
+                            
+                        }
+                }
+                else {
+                    // view to show when stream is yet to start
+                }
+                
+                HStack {
+                    
+                    // Button to leave the room
+                    Image(systemName: "phone.down.fill")
+                        .onTapGesture {
+                            Task {
+                                try await roomModel.leaveSession()
+                            }
+                        }
+                }
+            }
+        }
+    }
+}
+```
+</details>
+</Tab>

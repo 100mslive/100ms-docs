@@ -21,7 +21,15 @@ The permission to mute others is called `mute` and you should check for that wit
 
 ### Muting/Unmuting
 
-Once you have checked that the caller has permissions to mute another peer's audio or video, you can use `hmsSdk.changeTrackState` to make a remote mute/unmute request.
+Once you have checked that the caller has permissions to mute another peer's audio or video
+
+<Tabs
+  id="sample-code"
+  items={["UIKit", "SwiftUI"]}
+/>
+
+<Tab id='sample-code-0'>
+You can use `hmsSdk.changeTrackState` to make a remote mute/unmute request.
 
 To mute a track:
 
@@ -52,3 +60,47 @@ class HMSChangeTrackStateRequest {
 ```
 
 With the information here, show a dialog to the user to ask if they want to accept the change and then apply the settings locally. The same as in a regular user [Mute/Unmute](/ios/v2/how--to-guides/set-up-video-conferencing/mute).
+
+</Tab>
+
+<Tab id='sample-code-1'>
+
+You can call toggleAudio and toggleVideo to mute/unmute remote participant. Please note that you can't let just anyone mute others. First you need to create a role with the permissions to mute other participants and unmute other participants. Please note that they are two separate permissions, one for muting others and one to be able to unmute others. Also, while mute request will succeed directly, an unmute request will be send to remote peer. You can check if you have received an unmute request by checking changeTrackStateRequests property on Room Model instance.
+
+Example: Teacher wants to mute a student named 'Pawan''s audio (which is currently unmuted)
+
+```swift
+guard let studentPeerModel = (roomModel.peerModels.first{$0.name == "Pawan"}) else { return }
+try await studentPeerModel.toggleAudio()
+```
+
+Example: Teacher wants to request student named 'Pawan' to unmute their video (which is currently muted)
+
+```swift
+// Teacher's side - Toggle student peer model's video
+guard let studentPeerModel = (roomModel.peerModels.first{$0.name == "Pawan"}) else { return }
+try await studentPeerModel.toggleVideo()
+
+...
+
+// Student's side - Observe changeTrackStateRequests and unmute requested tracks
+
+VStack {
+  ...
+}
+.onChange(of: roomModel.changeTrackStateRequests) { changeTrackStateRequests in
+                
+    changeTrackStateRequests.forEach { request in
+        if let trackModel = roomModel.localPeerModel?.trackModels.first(where: {$0.track == request.track}) {
+            if trackModel.isMute {
+                Task {
+                    try await trackModel.toggleMute()
+                }
+            }
+        }
+    }
+    
+    roomModel.changeTrackStateRequests.removeAll()
+}
+```
+</Tab>

@@ -14,6 +14,12 @@ Each `HMSPeer` instance has a `role` property which returns an `HMSRole` instanc
 
 In certain scenarios you may want to change someone's role. Imagine an audio room with 2 roles "speaker" and "listener." Only someone with a "speaker" role can publish audio to the room while "listener" can only subscribe. Now at some point "speaker" may decide to nominate some "listener" to become a "speaker." This is where the `changeRole` API comes in.
 
+<Tabs
+  id="sample-code"
+  items={["UIKit", "SwiftUI"]}
+/>
+
+<Tab id='sample-code-0'>
 To invoke the API you will need 2 things. An instance of `HMSPeer` of the peer who's role you want to change and the `HMSRole` instance for the target role. All the peers that are in the current room are accessible via `peers` property of `HMSRoom` instance that you can get via `room` property of `HMSSDK` instance after successful room join. A list of all available roles in the current room can be accessed via `roles` property of `HMSSDK`
 
 Once you have both you can invoke
@@ -80,3 +86,25 @@ func changeRoles(hmsSdk: HMSSDK) {
 ```
 
 <BulkRoleChangeErrors />
+</Tab>
+
+<Tab id='sample-code-1'>
+You call `changeRole(of: to: shouldAskForApproval:)` method on `HMSRoomModel` instance.
+```swift
+try await roomModel.changeRole(of: /* instance of HMSPeerModel */, to: /* role's name as string */, shouldAskForApproval: /* optional boolean to denote if role should change immediately or after the participant's approval */)
+```
+
+### How to approve the role change request
+When someone changes role of a peer setting `shouldAskForApproval` flag to true, the peer receives a `roleChangeRequests` that they need to approve before their role changes. When you receive such request, it's appended in `roleChangeRequests` array that is a property on the `HMSRoomModel` instance. You handle the request by either approving on denying the request.
+```swift
+// accept current roleChangeRequest request
+if let _ = roomModel.roleChangeRequests.last {
+    try await roomModel.acceptChangeRoleRequest()
+}
+
+// decline current roleChangeRequest request
+if let _ = roomModel.roleChangeRequests.last {
+    try await roomModel.declineChangeRoleRequest()
+}
+```
+</Tab>

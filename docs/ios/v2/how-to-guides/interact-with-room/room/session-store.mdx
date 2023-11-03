@@ -16,7 +16,15 @@ While peer metadata is associated with individual peers and each peer can have t
 
 ## How to use
 
-Session store is only available after user joins the session. To obtain a reference to the session store, you need to override the `func on(sessionStoreAvailable store: HMSSessionStore)` function of the `HMSUpdateListener` protocol. Once you get the reference to the store you can save it in your app for accessing later.
+Session store is only available after user joins the session.
+
+<Tabs
+  id="sample-code"
+  items={["UIKit", "SwiftUI"]}
+/>
+
+<Tab id='sample-code-0'>
+To obtain a reference to the session store, you need to override the `func on(sessionStoreAvailable store: HMSSessionStore)` function of the `HMSUpdateListener` protocol. Once you get the reference to the store you can save it in your app for accessing later.
 
 ### Setting a value for a specific key
 
@@ -78,6 +86,43 @@ store.object(forKey: "my key") { value, error in
     }
 }
 ```
+</Tab>
+
+<Tab id='sample-code-1'>
+### How to Store Common Objects/Information in the Room that is Shared across all Participants
+`HMSRoomModel` instance exposes a shared dictionary called `sharedStore`. You can use this to store any objects or primitives and they will be available to all participants in the room. You store key value pairs to this dictionary like following.
+
+As an example, let's see how to store Participant's ID in Shared Storage of the Room so that Everyone in the Meeting can access this ID
+
+```swift
+guard let highlightedStudent = (roomModel.peerModels.first{$0.name == "Pawan"}) else { return }
+roomModel.sharedStore["Highlighted Participant ID"] = highlightedStudent.id
+```
+
+How would other Participants use this Shared ID?
+
+Step 1. Make sure that room model observes this key like following:
+
+```swift
+roomModel.beginObserving(keys: ["Highlighted Participant ID"])
+```
+
+You generally do this at the start of the meeting, so that you can begin observing any changes for that key. If at any point in the call, you want to stop observing changes for a particular key call `stopObserving(keys:)` method passing an array of keys that you no more want to observe.
+
+Step 2. Display highlighted student
+
+```swift
+VStack {
+    if let highlightedStudentID = roomModel.sharedStore?["Highlighted Participant ID"] as? String,
+       let highlightedStudent = roomModel.peerModels.first(where: {$0.id == highlightedStudentID}) {
+        
+           HMSVideoTrackView(peer: highlightedStudent)
+    }
+}
+```
+
+Note that `sharedStore` dictionary is Published property of room model, thus any changes in this dictionary values reflect in your SwiftUI views automatically.
+</Tab>
 
 ## Limitations and workarounds in Alpha release
 

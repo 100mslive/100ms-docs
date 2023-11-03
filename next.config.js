@@ -98,6 +98,11 @@ const nextConfig = {
                 permanent: true
             },
             {
+                source: '/:slug(android|javascript|flutter|react-native|ios|server-side)/v2/changelog/:path',
+                destination: '/:slug/v2/release-notes/:path',
+                permanent: true
+            },
+            {
                 source: '/server-side/v2/foundation/basics',
                 destination: '/server-side/v2/introduction/basics',
                 permanent: false

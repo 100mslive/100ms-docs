@@ -7,8 +7,7 @@ Session store is a shared realtime key-value store that is accessible by everyon
 
 The session store persists throughout the session and is cleared when the last peer leaves the room.
 
-<Note>
-💡 Session Store vs Peer Metadata
+<Note title="💡 Session Store vs Peer Metadata">
 
 While peer metadata is associated with individual peers and each peer can have their own metadata, session store remains the same for every peer in the room.
 
@@ -31,7 +30,6 @@ fun updateSessionStore(data: Any?, key : String, hmsActionResultListener: HMSAct
     hmsSessionStore.set(data, key, hmsActionResultListener)
 }
 ```
-
 
 </Tab>
 
@@ -73,11 +71,11 @@ sessionStore.addKeyChangeListener(listOf("time","cat","cats"), object : HMSKeyCh
                             val cat : Cat = Gson().fromJson(value as JsonElement, Cat::class.java)
                     }
                     // Lists of objects
-                    "cats" -> { 
+                    "cats" -> {
                         val type = TypeToken.getParameterized(List::class.java, Cat::class.java).type
 
                         if(value !=null && key == catKey)
-                            val cats: List<Cats> = Gson().fromJson(value, type)                        
+                            val cats: List<Cats> = Gson().fromJson(value, type)
                      }
                 }
             }
@@ -88,7 +86,6 @@ sessionStore.addKeyChangeListener(listOf("time","cat","cats"), object : HMSKeyCh
             }
         )
 ```
-
 
 </Tab>
 
@@ -152,7 +149,6 @@ Use the `get(key : String, listener: HMSSessionMetadataListener)` API if your ap
 
 <Tab id='sessionstoresingle-0'>
 
-
 ```kotlin
 sessionStore.get("mykey", object : HMSSessionMetadataListener {
     override fun onSuccess(sessionMetadata: JsonElement?) {
@@ -188,6 +184,7 @@ sessionStore.get("mykey",new  HMSSessionMetadataListener(){
 
 });
 ```
+
 </Tab>
 
 ## Limitations and workarounds in Alpha release
@@ -199,6 +196,6 @@ sessionStore.get("mykey",new  HMSSessionMetadataListener(){
 
 ## Limits
 
-- Max payload size for data can be 1KB.
-- Maximum 100 keys are supported with 64KB limit applied to all keys combined.
-- Metadata size for 64 KB also include the key size.
+-   Max payload size for data can be 1KB.
+-   Maximum 100 keys are supported with 64KB limit applied to all keys combined.
+-   Metadata size for 64 KB also include the key size.
