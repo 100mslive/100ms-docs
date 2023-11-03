@@ -6,7 +6,7 @@ interface Props {
 }
 
 // Warning: yellow
-// Success: Green
+// Success: green
 // Error: red
 // White: white
 
