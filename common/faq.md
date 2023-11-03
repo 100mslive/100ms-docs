@@ -521,11 +521,14 @@ Yes this is possible. The [disable/enable a room API](/server-side/v2/Rooms/disa
 
 #### How do I limit the session to a specified duration?
 
-Through the [end an active room API](/server-side/v2/active-rooms/end-active-room).
+To restrict the session length, you can employ either of the following methods:
 
-Say you want to limit the duration of a session to 30 minutes: - 
-- Start a timer as soon as the session begins and you receive the [session.open.success](/server-side/v2/introduction/webhook#sessionopensuccess) webhook event
-- Wait till the duration (timer) of the session reaches 30 minutes
-- Once reached, trigger the [end an active room API](/server-side/v2/active-rooms/end-active-room) to end the session and kick out the peers from the session.
+1. Through `max_duration_seconds` parameter in room. See [Room API](/server-side/v2/api-reference/Rooms/overview).
+
+2. Through the [end an active room API](/server-side/v2/active-rooms/end-active-room).<br/>
+  Say you want to limit the duration of a session to 30 minutes: - 
+  - Start a timer as soon as the session begins and you receive the [session.open.success](/server-side/v2/introduction/webhook#sessionopensuccess) webhook event
+  - Wait till the duration (timer) of the session reaches 30 minutes
+  - Once reached, trigger the [end an active room API](/server-side/v2/active-rooms/end-active-room) to end the session and kick out the peers from the session.
 
 > Note: If you set the lock argument to true, it will end the active room, and users will not be able to join the room later. You can use [enable a room API](/server-side/v2/Rooms/disable-or-enable) or [dashboard](https://dashboard.100ms.live/rooms) to enable the room again.
