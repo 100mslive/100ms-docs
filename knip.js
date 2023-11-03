@@ -1,0 +1,1 @@
+const config = {entry:['pages/index.tsx'], project:['.*\.tsx$']}; export default config;
