@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface Props {
-    type: 'warning' | 'success' | 'error' | 'white';
+    type?: 'warning' | 'success' | 'error' | 'white';
     title?: string;
 }
 
