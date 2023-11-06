@@ -1,0 +1,102 @@
+---
+title: Screens and Components
+nav: 2.2
+---
+
+ As Prebuilt UI maps to its template configuration, you'll be able to preview and customise Prebuilt behavior for each role in your template. This guide explains how Prebuilt's default can be customised for its role using screens and components.
+
+- **Screens** - represents Prebuilt's screens, namely 
+	- Preview - a screen that allows setting up a participant's audio/video before they join a 100ms room
+	- Room - a space where participants engage in a video-conferencing or livestreaming template set up
+- **Components** - each of the Prebuilt screen has its components that exposes functionalities like Join button, Chat, participant list, video layouts or features like bring on stage
+
+## Configuring screens and components 
+By default, components are enabled based on the role associated with the use case you've selected during template creation. A component can be easily enabled or disabled for a role, you can also go deeper into a component and customise its configuration on Prebuilt. Follow these steps to get started:
+
+- Choose an existing template or create a new one on 100ms dashboard.
+- Jump to Customise Prebuilt and head to "Screens and components" section.
+- Select a role to start customising components on Preview and Room screens.
+
+
+### Preview Screen
+
+<StepsContainer id="room-code-auth">
+
+#### Header
+Set up a custom header for each roles using `Title` and `Subtitle` fields.
+#### Join
+Choose how peers join the room
+	- **Join Now** - Peers from this role will see "Join Now" and would be able join after entering their name.
+	- **Join and Start Streaming** - Peers from this role will see "Go Live" and would be able to join and start streaming when they join the room. Ensure that this role has the permission to "Start/Stop HLS streaming" as `enabled` under Role permissions on its template configuration.
+
+</StepsContainer>
+
+### Room Screen
+Prebuilt's room screen provides components that enables interactivity an within a room. Select a role and customise
+
+#### Chat
+By default, Chat is enabled for all templates. Enable or disable chat functionality for a role. If enabled, you can further configure deeper functionalities on your Prebuilt UI.
+
+<StepsContainer id="room-code-auth">
+
+##### Initial State
+This defines initial of Chat component when a peer joins a room. 
+
+##### Enable Overlay View
+Enabling a chat overlay view The default state is set to false.
+
+##### Allow Pinning messages
+Enabling this allows the selected role to pin chat messages in your Prebuilt UI.  
+
+</StepsContainer>
+
+
+### Participant List
+Make participants list accessible for roles who need to see it. Scenarios where a role(for instance, viewers in a large room) don't need to see other participants, but a Host/Broadcasters would want to keep a tab on the participant list. By default, participant list is enabled by default for all roles for any template.
+
+
+### Video Tile Layout
+100ms Prebuilt UI allows tweaks on its default grid layout and supports multiple video layouts.
+
+<StepsContainer id="room-code-auth">
+#### Enable local tile inset
+Enabling this makes the local peer's *(for the selected role)* tile in a smaller inset window as default, alternatively if it's disabled, the local tile will be part of the grid view. Join with atleast two peers to preview this configuration in action.
+
+#### Prominent roles
+Defining one or more roles as prominent gives them higher tile view prominence for the selected role. For example:
+- For a 1:1 call, define Host as prominent tile for Guest and vice-versa. 
+- For a webinar, set Host as the prominent tile for all other roles. Every role would see Host as the primary tile in the room
+- For a mobile-first livestreaming view, set Broadcaster as prominent tile for every other role, including Broadcaster themselves.
+
+#### Can spotlight peer
+Allow this config for roles who can spotlight others or themselves in the room. Spotlighting a tile reflects for everyone in the room.
+
+
+</StepsContainer>
+
+	
+
+### Be Right Back (BRB)
+Depending on your use case, allow roles to set themselves on BRB mode. If disabled, this component will not be visible to the selected role.
+
+
+### Emoji Reactions
+Enabling this for a role allows its peers to send emoji reactions in the room. 
+
+### Bring others on Stage
+This component allows the selected role to allow/deny stage request from off stage participants. This component is available on both conferencing and live-streaming templates. By default, this feature is enabled for Hosts, Broadcasters and Co-broadcasters, where viewer(non-publishing) roles would have a hand-raise option to request stage access. If your use case doesn't require this feature, simply disable this component. Read more on Bring on stage feature. 
+
+<StepsContainer id="room-code-auth">
+
+#### Bring on Stage Label
+
+Customise text label that Hosts and Broadcasters will see when they receive on stage requests. The default text is "Bring to stage".
+
+#### Remove from Stage Label
+
+Customise text label that Hosts and Broadcasters will see when they receive on stage requests. The default text is "Remove from stage".
+
+#### On Stage and Off Stage Role
+An off stage participant becomes an on stage participant once their stage access has been accepted. For instance, an off stage role, say Viewer requests a Broadcaster to go on stage. Once their request is accepted, the Viewer can tranisition to an on stage role, which could be a Viewer-on-stage, a Guest, or a Co-broadcaster. 
+
+</StepsContainer>
