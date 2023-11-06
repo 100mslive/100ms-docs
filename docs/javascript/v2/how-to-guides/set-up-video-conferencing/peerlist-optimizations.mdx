@@ -1,0 +1,78 @@
+---
+title: Handling peerlist in large room
+nav: 1.23
+---
+
+Prerequisites:
+
+**Minimum required [SDK version](../../changelog/release-notes#2023-10-04)**
+
+In case of large rooms(more than 2.5k peers), it does not make sense to show all the peers at once as the peers of interest would be limited. So we updated our implementation
+to show peers of interest(peers with publish permissions, peers who handraised) in the initial peer list.
+
+However, if you wish to query for additional peers, we introduced new set of API's to achieve this.
+
+```ts
+interface HMSPeerListIteratorOptions {
+    role?: HMSRoleName;
+    group?: HMSGroupName;
+    peerIds?: string[];
+    limit?: number; // max 100 and defaults to 10
+}
+
+interface HMSPeerListIterator {
+  hasNext(): boolean;
+  next(): Promise<HMSPeer[]>;
+  getTotal(): number;
+  findPeers(): Promise<HMSPeer[]>;
+}
+```
+
+
+<Tabs id="large-room-peers" items={['Javascript', 'React']} />
+
+<Tab id='large-room-peers-0'>
+
+```js
+let peers;
+async function PaginatedParticipants() {
+   const iterator = hmsActions.getPeerListIterator({ role: 'roleName', limit: 20  }); 
+   const peers = await iterator.findPeers(); // this will give you initial set of peers
+   // to check if there are more peers
+   const hasNext = iterator.hasNext();
+   // To fetch more peers from this point, you can call:
+   peers = peers.concat(await iterator.next());
+}
+```
+
+</Tab>
+
+<Tab id='large-room-peers-1'>
+
+```jsx
+import { usePaginatedParticipants } from '@100mslive/react-sdk';
+
+const PaginatedPeers = () => {
+  const { peers, total, loadPeers, loadMorePeers } = usePaginatedParticipants({ role: roleName, limit: 20 });
+  // to check if there are more peers
+  const hasNext = total > peers.length;
+
+  useEffect(() => {
+    loadPeers();
+  }, []);
+   
+  return (
+    <>
+     {peers.map(peer => <div>{peer.name}</div>)}
+    </>
+  )
+};
+
+// You can add a load more button or infinite pagination and make the call to loadMorePeers in the above implementation to get the next peers.
+```
+
+</Tab>
+
+
+> NOTE: The data given by the API might become stale, so it is recommended to poll the `iterator.findPeers()` for Javascript and `loadPeers()` for React, so that if any peer
+has left it would be updated

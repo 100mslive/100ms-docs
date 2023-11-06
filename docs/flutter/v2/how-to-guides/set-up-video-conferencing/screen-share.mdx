@@ -39,6 +39,25 @@ super.onActivityResult(requestCode, resultCode, data)
 <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 ```
 
+> If your application uses `FlutterFragmentActivity` instead of `FlutterActivity`, then you need to replace `activity` with `this` in the above code.
+
+
+```kotlin
+import live.hms.hmssdk_flutter.HmssdkFlutterPlugin
+import io.flutter.embedding.android.FlutterFragmentActivity
+import android.content.Intent
+import live.hms.hmssdk_flutter.Constants
+
+override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+super.onActivityResult(requestCode, resultCode, data)
+
+    if (requestCode == Constants.SCREEN_SHARE_INTENT_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+        data?.action = Constants.HMSSDK_RECEIVER
+        this.sendBroadcast(data?.putExtra(Constants.METHOD_CALL, Constants.SCREEN_SHARE_REQUEST))
+    }
+}
+```
+
 ### Migrating from older HMSSDK version to 1.5.0 or above
 
 There is a change in the Screenshare setup in HMSSDK version [1.5.0](https://github.com/100mslive/100ms-flutter/releases/tag/1.5.0) as compared to older versions.

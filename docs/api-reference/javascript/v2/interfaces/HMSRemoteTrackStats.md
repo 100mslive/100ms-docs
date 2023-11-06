@@ -18,6 +18,16 @@ Ref: https://www.w3.org/TR/webrtc-stats/#dom-rtcinboundrtpstreamstats
 
 ## Properties
 
+### audioLevel
+
+• `Optional` **audioLevel**: `number`
+
+#### Inherited from
+
+MissingInboundStats.audioLevel
+
+---
+
 ### bitrate
 
 • **bitrate**: `number`
@@ -58,6 +68,26 @@ BaseTrackStats.codecId
 
 ---
 
+### concealedSamples
+
+• `Optional` **concealedSamples**: `number`
+
+#### Inherited from
+
+MissingInboundStats.concealedSamples
+
+---
+
+### concealmentEvents
+
+• `Optional` **concealmentEvents**: `number`
+
+#### Inherited from
+
+MissingInboundStats.concealmentEvents
+
+---
+
 ### enabled
 
 • `Optional` **enabled**: `boolean`
@@ -65,6 +95,26 @@ BaseTrackStats.codecId
 #### Inherited from
 
 BaseTrackStats.enabled
+
+---
+
+### fecPacketsDiscarded
+
+• `Optional` **fecPacketsDiscarded**: `number`
+
+#### Inherited from
+
+MissingInboundStats.fecPacketsDiscarded
+
+---
+
+### fecPacketsReceived
+
+• `Optional` **fecPacketsReceived**: `number`
+
+#### Inherited from
+
+MissingInboundStats.fecPacketsReceived
 
 ---
 
@@ -268,6 +318,16 @@ MissingInboundStats.roundTripTime
 
 ---
 
+### silentConcealedSamples
+
+• `Optional` **silentConcealedSamples**: `number`
+
+#### Inherited from
+
+MissingInboundStats.silentConcealedSamples
+
+---
+
 ### ssrc
 
 • **ssrc**: `number`
@@ -295,6 +355,26 @@ BaseTrackStats.timestamp
 #### Inherited from
 
 MissingInboundStats.totalRoundTripTime
+
+---
+
+### totalSamplesDuration
+
+• `Optional` **totalSamplesDuration**: `number`
+
+#### Inherited from
+
+MissingInboundStats.totalSamplesDuration
+
+---
+
+### totalSamplesReceived
+
+• `Optional` **totalSamplesReceived**: `number`
+
+#### Inherited from
+
+MissingInboundStats.totalSamplesReceived
 
 ---
 

@@ -53,7 +53,7 @@ const examples: {
     {
         title: 'Sample App - React Native',
         description: 'A conferencing app built with React Native using the 100ms React SDK',
-        url: 'https://github.com/100mslive/react-native-hms/tree/main/example',
+        url: 'https://github.com/100mslive/100ms-react-native/tree/main/packages/react-native-room-kit/example',
         technologies: [TECHNOLOGIES.REACT_NATIVE],
         tags: ['Mobile'],
         categories: [CATEGORIES.APPS]
@@ -195,7 +195,7 @@ const examples: {
     {
         title: 'Clubhouse Clone - Flutter',
         description: 'A Clubhouse clone in Flutter using the 100ms Flutter SDK',
-        url: 'https://github.com/govindmaheshwari2/clubhouse_100ms/tree/starter',
+        url: 'https://github.com/ygit/clubhouse_100ms',
         technologies: [TECHNOLOGIES.FLUTTER],
         tags: ['Mobile'],
         categories: [CATEGORIES.APPS]

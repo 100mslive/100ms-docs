@@ -3,10 +3,11 @@ import { Flex, Text, Box } from '@100mslive/react-ui';
 
 const Callout = ({ title, icon, children }) => (
     <Flex
+        className="callout"
         direction="column"
         justify="between"
         css={{
-            borderRadius: '$3',
+            borderRadius: '0.5rem',
             border: '1px solid',
             borderColor: '$surfaceLighter',
             width: '100%',

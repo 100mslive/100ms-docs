@@ -430,6 +430,7 @@ usePDFShareResult
 
 | Name            | Type                     |
 | :-------------- | :----------------------- |
+| `hasNext`       | () => `boolean`          |
 | `loadMorePeers` | () => `Promise`<`void`\> |
 | `loadPeers`     | () => `Promise`<`void`\> |
 | `peers`         | `HMSPeer`[]              |

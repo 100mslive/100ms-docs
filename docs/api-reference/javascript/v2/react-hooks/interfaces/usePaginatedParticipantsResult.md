@@ -5,6 +5,20 @@ nav: '5.2.8'
 
 ## Properties
 
+### hasNext
+
+• **hasNext**: () => `boolean`
+
+#### Type declaration
+
+▸ (): `boolean`
+
+##### Returns
+
+`boolean`
+
+---
+
 ### loadMorePeers
 
 • **loadMorePeers**: `Promise`<`void`\>

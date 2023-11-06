@@ -3,7 +3,15 @@
  nav: 7.21
 ---
 
-Any peer can change their own name before or after joining a room. Before joining, the name would have to be specified in `HMSConfig` that is passed to the join method. This document shows how the name can be changed after joining.
+Any peer can change their own name before or after joining a room.
+
+<Tabs
+  id="sample-code"
+  items={["UIKit", "SwiftUI"]}
+/>
+
+<Tab id='sample-code-0'>
+Before joining, the name would have to be specified in `HMSConfig` that is passed to the join method. This document shows how the name can be changed after joining.
 
 ## Responding to name changes
 
@@ -21,3 +29,20 @@ hmsSdk.change(name: newName) { success, error in
    ...
 }
 ```
+</Tab>
+
+<Tab id='sample-code-1'>
+Before joining, the name would have to be passed a parameter to `joinSession` call or `HMSRoomModel` initializer. This document shows how the name can be changed after joining.
+
+## Changing the name
+
+The peer who wants to change their name should call the following method on an `HMSRoomModel` instance.
+
+```swift
+let newName = "Pawan Dixit"
+try await roomModel.changeUserName(to: newName)
+```
+
+## Responding to name changes
+Whenever a remote peer's name is changed, it's peer model's `name` property changes. Because it's published property, it should automatically reflect in your UI.
+</Tab>

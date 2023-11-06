@@ -13,7 +13,15 @@ The permission to end a room is called `endRoom` and you should check for that w
 
 ### Ending the Room
 
-Once you're sure the peer has the permissions to end the room they can call for the room to end when they're ready with `hmsSdk.endRoom`.
+Once you're sure the peer has the permissions to end the room they can call for the room to end when they're ready.
+
+<Tabs
+  id="sample-code"
+  items={["UIKit", "SwiftUI"]}
+/>
+
+<Tab id='sample-code-0'>
+End the room with `hmsSdk.endRoom`.
 
 `endRoom` takes three parameters.
 
@@ -56,3 +64,55 @@ requestedBy: The details of the peer who called `endRoom`.
 roomEnded: True if the entire room was ended. False if only the receiving peer was removed.
 
 Clients should read this callback and show the appropriate UI.
+</Tab>
+
+<Tab id='sample-code-1'>
+
+### How to end the Room
+Call `endSession` method on `HMSRoomModel` instance.
+```swift
+try await roomModel.endSession(withReason reason: /* an optional string describing the reason for ending the session for everyone*/, shouldAllowReJoin: /* an optional bool whether anyone should be allowed to join the room after it has been ended*/)
+```
+    <details>
+    <summary>Code in context</summary>
+    ```swift
+    // End a class room locking it so that no-one can join/start the room again.
+    try await roomModel.endSession(withReason: "Class has been over.", shouldAllowReJoin: false)
+    ```
+    </details>
+
+### How to know when the Room has been ended
+You check the `roomState` property on `HMSRoomModel` instance and see if it's set to `leftMeeting(reason: LeaveReason)` enum.
+
+```swift
+struct MeetingView: View {
+    
+    @ObservedObject var roomModel = HMSRoomModel(roomCode: "qdr-mik-seb")
+    
+    var body: some View {
+        
+        switch roomModel.roomState {
+        case .notJoined:
+            // Button to join the room
+            ...
+        case .inMeeting:
+            // Button to leave the room
+            ...
+        case .leftMeeting(reason: let leaveReason):
+            if case .roomEnded(reasonString: _) = leaveReason {
+                // show room ended view here
+            }
+        }
+    }
+}
+```
+
+where leave reasons can be following:
+```swift
+public enum LeaveReason {
+    case roomEnded
+    case youLeft
+    case removedFromRoom
+}
+```
+</Tab>

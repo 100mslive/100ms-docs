@@ -5,6 +5,12 @@
 
 Looking for persistent state that can be set on a peer and updated anytime, for everyone in the room? Peer metadata it is!
 
+<Tabs
+  id="sample-code"
+  items={["UIKit", "SwiftUI"]}
+/>
+
+<Tab id='sample-code-0'>
 Metadata can be set initially in the `HMSConfig` object that's passed into the join method.
 
 This section will show you how to:
@@ -41,3 +47,33 @@ hmsSdk.change(metadata: newMetadata) { success, error in
    ...
 }
 ```
+</Tab>
+
+<Tab id='sample-code-1'>
+### How to Attach Objects/Information to a Participant object in the Meeting so that All Participants can Access it
+
+Peer Model instance exposes a shared dictionary called metadata. You can use this to store any objects or primitives and they will get attached to that peer. And will be available to all participants in the room. You store key value pairs to this dictionary like following.
+
+For example let's see how to attach a link to Particiapnt's Avatar image in Metadata of the Participant so that Everyone in the Meeting can show the Avatar for that Participant.
+
+```swift
+roomModel.localPeerModel?.metadata["Avatar Image URL"] = /* url string to avatar image */
+```
+
+How would other Participants access this attached Avatar on a Peer and show it with their Video Tile?
+
+```swift
+// Render video of each peer in the call
+ForEach(roomModel.peerModels) { peerModel in
+    VStack {
+        if let urlString = peerModel.metadata["Avatar Image URL"] as? String, let url = URL(string: urlString) {
+            AsyncImage(url: url)
+        }
+        HMSVideoTrackView(peer: peerModel)
+            .frame(height: 200)
+    }
+}
+```
+Note that metadata dictionary is Published property of peer model, thus any changes in this dictionary values reflect in your SwiftUI views automatically.
+
+</Tab>

@@ -1,0 +1,27 @@
+---
+title: Overview
+nav: 3.71
+---
+
+This object refers to RTMP stream key needed for ingesting media from a RTMP broadcaster. With these REST APIs, you can create a RTMP stream key for a specific room, get an active stream key for a specific room, or disable an existing active stream key for a specific room. Additionally, the APIs also return `url` which contains the RTMP URL.
+
+Use stream key and RTMP URL to ingest RTMP-encoded media from a broadcasting software (for example - OBS Studio) and play it in a 100ms room as a HLS stream.
+
+## Object
+
+| Property    | Description                                                                                                      |
+|-------------|------------------------------------------------------------------------------------------------------------------|
+| id          | Unique identifier for generation of the stream key                                                               |
+| room_id     | Identifier of the room for which the stream key is generated                                                     |
+| key         | Contains the **'Stream Key'** which is a secure code that allows any software encoder to communicate with 100ms  |
+| url         | Contains RTMP URL that carries the live video stream when it is broadcasted                                      |
+| customer_id | Unique identifier for the user account                                                                           |
+| app_id      | App ID from which this event is generated <br/><br/> Example: 5ff5881b80b66969e1fb35f6                           |
+| enabled     | Property of type `boolean` which tells whether the stream key is active or not                                   |
+| created_at  | Timestamp when the stream key was created (in ISO-8601 format)                                                   |
+| updated_at  | Timestamp for when the status of the key was updated (in ISO-8601 format)                                        |                                                                               
+
+> **Note**
+> 
+> RTMP stream key should be kept private. In case the key gets leaked publicly, we highly recommend resetting it using the method shared in the [Disable Stream Key API documentation](/server-side/v2/api-reference/stream-key/disable-rtmp-stream-key).
+>
