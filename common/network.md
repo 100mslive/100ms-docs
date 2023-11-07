@@ -28,4 +28,4 @@ A common occurrence in large rooms, or constrained networks is dropped frames. T
 
 100ms will automatically prioritize connections if network limits are reached. This prioritization can be controlled by developers using the dashboard or 100ms APIs.
 
-eg. A developer can prioritize host's screenshare higher than guests' videos. In low bandwidth constraints, guests' videos will be turned off, while host's screenshare will remain.
+For example, a developer can prioritize host's screenshare higher than guests' videos. In low bandwidth constraints, guests' videos will be turned off, while host's screenshare will remain.
