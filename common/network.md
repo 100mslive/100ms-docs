@@ -20,7 +20,7 @@ The usual recourse in these exceptions is to prompt a user action - "Grant permi
 
 Another set of common issues are minor network blips. Common causes are when a user moves from one room to another, or switches from wifi to data.
 
-100ms will send a notification within 10s of detecting a network disconnection and will automatically retry when connection is available upto 60s. After 60s, a terminal error is thrown to the client.
+100ms will send a notification within 10s of detecting a network disconnection and will automatically retry when connection is available up to 60s. After 60s, a terminal error is thrown to the client.
 
 ## Network bandwidth limitation/large rooms
 

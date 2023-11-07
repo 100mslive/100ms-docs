@@ -962,7 +962,7 @@ found in store, no change in store will take place.
 | Name         | Type      | Description                                                            |
 | :----------- | :-------- | :--------------------------------------------------------------------- |
 | `readStatus` | `boolean` | boolean value which you want to set as read flag for message/messages. |
-| `messageId?` | `string`  | message id whose read falg you want to set.                            |
+| `messageId?` | `string`  | message id whose read flag you want to set.                            |
 
 #### Returns
 
@@ -1013,7 +1013,7 @@ This can be used to mute/unmute a remote peer's track
 
 ▸ **setRemoteTracksEnabled**(`params`): `Promise`<`void`\>
 
-Use this to mute/unmute multipe tracks by source, role or type
+Use this to mute/unmute multiple tracks by source, role or type
 
 #### Parameters
 
