@@ -1,6 +1,6 @@
 ---
 title: usePreviewInput
-nav: "5.2.8"
+nav: '5.2.11'
 ---
 
 ## Properties
@@ -9,7 +9,7 @@ nav: "5.2.8"
 
 • `Optional` **asRole**: `string`
 
-___
+---
 
 ### autoManageVideo
 
@@ -19,7 +19,7 @@ if this flag is enabled, the SDK takes care of unsubscribing to the video when i
 Additionally if simulcast is enabled, it takes care of auto managing simulcast layers based on the
 dimensions of the video element to conserve bandwidth.
 
-___
+---
 
 ### autoManageWakeLock
 
@@ -28,7 +28,7 @@ ___
 if this flag is enabled, wake lock will be acquired automatically(if supported) when joining the room, so the device
 will be kept awake.
 
-___
+---
 
 ### captureNetworkQualityInPreview
 
@@ -39,7 +39,7 @@ Enable to get a network quality score while in preview. The score ranges from -1
 0 when there is a timeout/failure when measuring the quality
 1-5 ranges from poor to good quality.
 
-___
+---
 
 ### handleError
 
@@ -47,13 +47,13 @@ ___
 
 function to handle errors happening during preview
 
-___
+---
 
 ### initEndpoint
 
 • `Optional` **initEndpoint**: `string`
 
-___
+---
 
 ### initialSettings
 
@@ -61,7 +61,7 @@ ___
 
 initial settings for audio/video and device to be used.
 
-___
+---
 
 ### metadata
 
@@ -69,7 +69,7 @@ ___
 
 any extra metadata info for the peer
 
-___
+---
 
 ### name
 
@@ -77,7 +77,7 @@ ___
 
 name of user who is joining, this is only required if join is called
 
-___
+---
 
 ### token
 

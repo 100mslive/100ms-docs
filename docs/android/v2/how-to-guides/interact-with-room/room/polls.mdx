@@ -1,0 +1,175 @@
+---
+ title: Polls
+ nav: 10.3
+---
+
+The Poll feature in the HMS SDK allows you to create, manage, and participate in polls and quizzes. Polls are an effective way to gather opinions, feedback, and insights from a group of people in a quick and convenient manner. With the Poll feature, you can create custom polls, set their properties, add questions, and manage responses. You can also receive real-time updates on poll status, and view poll results in an organized and easy-to-use format.
+
+This feature can also be used to create quizzes. Under the hood, quizzes are like polls where questions have right or wrong answers.
+
+This document provides guidance on how to use the Poll APIs to create a poll, receive updates on a poll, and vote on a poll.
+
+
+## Prerequisites
+
+- Android SDK 2.7.3
+- Poll Read permission should be enabled for roles that can view polls.
+- Poll Write and Poll Read permission should be enabled for roles that can create polls.
+
+## Creating a Poll
+
+### Quick Create
+
+Here is how to quickly create a poll using poll builder:
+
+```kotlin
+val pollBuilder = HMSPollBuilder.Builder()
+        .addQuestion(HMSPollQuestionBuilder.Builder(HMSPollQuestionType.singleChoice)
+            .addOption("hot")
+            .addOption("warm")
+            .addOption("cold")
+            .build()
+        )
+        .build()
+
+
+    hmsInteractivityCenter.quickStartPoll(pollBuilder, object : HMSActionResultListener {
+        override fun onError(error: HMSException) {
+            // Error
+        }
+
+        override fun onSuccess() {
+            // Success
+        }
+
+    })
+```
+
+This code will create a poll with a default title and a single choice question, and share it with the room. 
+
+
+### Quiz Creation
+
+Quiz assumes that correct answers are provided to each question which are then used to evaluate the user’s score. Use question builder API to indicate which options are correct.
+
+```kotlin
+val pollBuilder = HMSPollBuilder.Builder()
+        .withTitle("My Weather Quiz")
+        .withCategory(HmsPollCategory.QUIZ)
+        .addQuestion(HMSPollQuestionBuilder.Builder(HMSPollQuestionType.singleChoice)
+            .addQuizOption("hot", true)
+            .addQuizOption("warm", false)
+            .addQuizOption("cold", false)
+            .build()
+        )
+        .build()
+
+hmsSdk.hmsInteractivityCenter.quickStartPoll(pollBuilder, object : HMSActionResultListener {
+    override fun onError(error: HMSException) {
+        // Error
+    }
+
+    override fun onSuccess() {
+        // Success
+    }
+
+})
+```
+
+## Receiving Updates on a Poll
+
+Once you have start a poll, you can receive real-time updates on the poll's status and results using the `addPollUpdateListner` method in `HMSInteractivityCenter`. This method takes a closure as a parameter, which is called whenever an update occurs, such as when a poll starts, stops, or has its results updated.
+
+You can use the `HMSPoll` object returned by the closure to access information about the poll, such as its current state, duration, and questions. 
+
+```kotlin
+// Listen for poll updates 
+hmsSDK.getHmsInteractivityCenter().pollUpdateListener = 
+object : HmsPollUpdateListener {
+    override fun onPollUpdate(
+        hmsPoll: HmsPoll,
+        hmsPollUpdateType: HMSPollUpdateType
+    ) {
+        when(hmsPollUpdateType) {
+            HMSPollUpdateType.started -> showPollStartedToast()
+            HMSPollUpdateType.stopped -> loadResultsSummaryIfNeeded()
+            HMSPollUpdateType.resultsupdated -> updateResultsScreen()
+        }
+    }
+
+}
+```
+
+## Voting on a Poll
+
+To participate in a poll, you can use the `add(response: HMSPollResponseBuilder, completion: HmsTypedActionResultListener<PollAnswerResponse>)` method in `HMSInteractivityCenter`. This method takes a poll response builder object as a parameter, which you can use to add responses to the poll's questions. You can provide selected options or answers to short or long answer questions, depending on the question type.
+
+```kotlin
+val response = HMSPollResponseBuilder(hmsPoll, null)
+                .addResponse(question, answer)
+
+hmsSdk.getHmsInteractivityCenter().add(response, object : HmsTypedActionResultListener<PollAnswerResponse>{
+    override fun onSuccess(result: PollAnswerResponse) {
+        // Success
+    }
+
+    override fun onError(error: HMSException) {
+        // Error
+    }
+
+})
+```
+
+Once you have submitted your responses, other peers in the room will get `resultsUpdated` update from the `addPollUpdateListner` callback. You can check updated vote counts for each option of poll questions:
+
+```kotlin{7-10}
+hmsSDK.getHmsInteractivityCenter().pollUpdateListener = 
+object : HmsPollUpdateListener {
+    override fun onPollUpdate(
+        hmsPoll: HmsPoll,
+        hmsPollUpdateType: HMSPollUpdateType
+    ) {
+        when(hmsPollUpdateType) {
+            HMSPollUpdateType.resultsupdated -> {
+              val voteCount = updatedPoll.questions?.firstOrNull().options?.firstOrNull()?.voteCount
+              Log.d("Poll","Vote count for first option of first question is $voteCount")
+            }
+            ....
+        }
+    }
+
+}
+```
+
+You can use the `getResponses` method in `HMSInteractivityCenter` to fetch the detailed responses for the poll that will contain the information about the voter (in case of non anonymous poll) as well as responses to open ended questions that can’t be summarised. 
+
+## Stopping a Poll
+
+Use `fun stop(poll: HmsPoll, completion: HMSActionResultListener)` when you wan’t to prevent further responses recorded.
+
+## Viewing Poll Results Summary
+
+After poll has ended you can get a poll summary to get statistics like how many peers responded and how many total peers were in the room at the time of poll.  
+
+```kotlin
+hmsSDK.interactivityCenter.getPollResults(for: poll) { [weak self] poll, error in
+	let pollResult = poll?.result else { return }
+	let countOfPeersWithNoResponses = pollResult.maxUserCount - pollResult.userCount
+}
+
+hmsSDK.getHmsInteractivityCenter().getResults(hmsPoll, object : HmsTypedActionResultListener<HmsPoll> {
+    override fun onSuccess(result: HmsPoll) {
+        val countOfPeersWithNoResponses = with(hmsPoll.result!!) {
+            (this.totalDistinctUsers ?:0  ) - ( this.votingUsers ?:0)
+        }
+        Log.d("Poll","Count of peers with no responses: $countOfPeersWithNoResponses")
+    }
+
+    override fun onError(error: HMSException) {
+        // Error
+    }
+
+})
+```
+
+👀 For an example of how to implement polls in an Android app with the 100ms SDK, checkout [our example project](https://github.com/100mslive/100ms-android/commit/f0a7f0d0029bb007cc0412ea2b05f8a330aee0c6).

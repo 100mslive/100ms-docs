@@ -176,10 +176,6 @@ You can continue using the existing routes (room_id/role) or set up your own rou
 
 ## Recording
 
-#### What is the difference between the Beam recording vs. SFU recording?
-
-Beam recording is the browser recording, built to give users a participant-first recording experience. SFU recording is a composite recording which gets created after recording each of the individual peers and merging it. Please check this [guide](/javascript/v2/foundation/recordings) for more information.
-
 #### After a live stream ends, how long does it take (for both Beam recording and SFU) to show up in our s3 bucket? 
 
 Beam recording should be available within 15-20 minutes after the call ends. SFU recording will take ~1.5 times the call duration, after the call ends. For example, if the call duration is 30 minutes, then SFU recording will be available in 45 minutes.
@@ -525,11 +521,14 @@ Yes this is possible. The [disable/enable a room API](/server-side/v2/Rooms/disa
 
 #### How do I limit the session to a specified duration?
 
-Through the [end an active room API](/server-side/v2/active-rooms/end-active-room).
+To restrict the session length, you can employ either of the following methods:
 
-Say you want to limit the duration of a session to 30 minutes: - 
-- Start a timer as soon as the session begins and you receive the [session.open.success](/server-side/v2/introduction/webhook#sessionopensuccess) webhook event
-- Wait till the duration (timer) of the session reaches 30 minutes
-- Once reached, trigger the [end an active room API](/server-side/v2/active-rooms/end-active-room) to end the session and kick out the peers from the session.
+1. Through `max_duration_seconds` parameter in room. See [Room API](/server-side/v2/api-reference/Rooms/overview).
+
+2. Through the [end an active room API](/server-side/v2/active-rooms/end-active-room).<br/>
+  Say you want to limit the duration of a session to 30 minutes: - 
+  - Start a timer as soon as the session begins and you receive the [session.open.success](/server-side/v2/introduction/webhook#sessionopensuccess) webhook event
+  - Wait till the duration (timer) of the session reaches 30 minutes
+  - Once reached, trigger the [end an active room API](/server-side/v2/active-rooms/end-active-room) to end the session and kick out the peers from the session.
 
 > Note: If you set the lock argument to true, it will end the active room, and users will not be able to join the room later. You can use [enable a room API](/server-side/v2/Rooms/disable-or-enable) or [dashboard](https://dashboard.100ms.live/rooms) to enable the room again.

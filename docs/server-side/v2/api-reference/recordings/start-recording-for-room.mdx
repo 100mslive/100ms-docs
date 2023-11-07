@@ -85,16 +85,28 @@ curl --location --request POST 'https://api.100ms.live/v2/recordings/room/<room_
 ```
 </ResponseBox>
 
-
 ## Parameters
 
-| Name          | Type      | Description                                                 | Required |
-| ------------- | --------- | ----------------------------------------------------------- | -------- |
-| meeting_url   | `string`  | Single click meeting URL for the stream.                    | No       |
-| resolution    | `object`  | Video resolution for stream.                                | No       |
-| audio_only    | `boolean` | Pass `true` to get an audio-only recording asset.           | No       |
-| destination   | `string`  | Name of destination from template to pick up configuration. | No       |
-| transcription | `object`  | Post call transcription configuration.                      | No       |
+| Name          | Type      | Description     | Required |
+| ------------- | --------- | --------------- | -------- |
+| meeting_url   | `string`  | Single click meeting URL for the stream     | No[1]   |
+| resolution    | `object`  | Video resolution for stream                 | No       |
+| destination   | `string`  | Name of destination from template to pick up configuration | No[2]     |
+| audio_only    | `boolean` | Pass `true` to get an audio-only recording  | No       |
+| transcription | `object`  | Post call transcription configuration       | No       |
+
+
+> [1] `meeting_url` is **required** when
+> - Composite recordings is not enabled on the dashboard ([see how](/get-started/v2/get-started/features/recordings/overview))
+> - The template of this room does not have a subdomain (templates created through the REST API don't have subdomains)
+
+
+> [2] (Advanced usage only) `destination` is **required** when
+> - There are multiple destinations of this type on the template
+
+### meeting_url
+
+<MeetingUrlConfig />
 
 ### transcription
 
@@ -118,9 +130,5 @@ curl --location --request POST 'https://api.100ms.live/v2/recordings/room/<room_
 
 | Name   | Type     | Description                                                                                                            | Required |
 | ------ | -------- | ---------------------------------------------------------------------------------------------------------------------- | -------- |
-| title  | `string` | Title of the section eg. `Agenda`, `Short Summary`, `Follow Up Action Items`, `Short Summary`. (limit: 100 characters) | Yes      |
+| title  | `string` | Title of the section `Agenda`, `Short Summary`, `Follow Up Action Items`, `Short Summary`. (limit: 100 characters) | Yes      |
 | format | `string` | Format of the section. Valid values: [`bullets`, `paragraph`]                                                          | Yes      |
-
-### meeting_url
-
-<MeetingUrlConfig />

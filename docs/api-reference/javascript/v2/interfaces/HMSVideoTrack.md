@@ -1,6 +1,6 @@
 ---
 title: HMSVideoTrack
-nav: '4.59'
+nav: '4.66'
 ---
 
 ## Hierarchy
@@ -116,7 +116,7 @@ BaseTrack.plugins
 
 ### preferredLayer
 
-• `Optional` **preferredLayer**: [`HMSPreferredSimulcastLayer`](/api-reference/javascript/v2/modules#hmspreferredsimulcastlayer)
+• `Optional` **preferredLayer**: [`HMSPreferredSimulcastLayer`](/api-reference/javascript/v2/home/content#hmspreferredsimulcastlayer)
 
 ---
 

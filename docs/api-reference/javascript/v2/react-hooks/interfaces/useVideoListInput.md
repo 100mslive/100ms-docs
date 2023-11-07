@@ -1,6 +1,6 @@
 ---
 title: useVideoListInput
-nav: "5.2.14"
+nav: '5.2.17'
 ---
 
 ## Properties
@@ -14,12 +14,12 @@ capture in the dashboard template.
 
 #### Type declaration
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type     |
+| :------- | :------- |
 | `height` | `number` |
-| `width` | `number` |
+| `width`  | `number` |
 
-___
+---
 
 ### filterNonPublishingPeers
 
@@ -28,7 +28,7 @@ ___
 By default this will be true. Only publishing(audio/video/screen) peers in the passed in peer list
 will be filtered. If you wish to show all peers, pass false for this.
 
-___
+---
 
 ### includeScreenShareForPeer
 
@@ -46,39 +46,39 @@ for example. includeScreenShare = (peer) => return peer.id !== mainScreenSharing
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name   | Type      |
+| :----- | :-------- |
 | `peer` | `HMSPeer` |
 
 ##### Returns
 
 `boolean`
 
-___
+---
 
 ### maxColCount
 
 • `Optional` **maxColCount**: `number`
 
-Max columns in a  page. Only applied if maxTileCount and maxRowCount are not present
+Max columns in a page. Only applied if maxTileCount and maxRowCount are not present
 
-___
+---
 
 ### maxRowCount
 
 • `Optional` **maxRowCount**: `number`
 
-Max rows in a  page. Only applied if maxTileCount is not present
+Max rows in a page. Only applied if maxTileCount is not present
 
-___
+---
 
 ### maxTileCount
 
 • `Optional` **maxTileCount**: `number`
 
-Max tiles in a  page. Overrides maxRowCount and maxColCount
+Max tiles in a page. Overrides maxRowCount and maxColCount
 
-___
+---
 
 ### offsetY
 
@@ -86,7 +86,7 @@ ___
 
 Height that would be subtracted from the parent's height to give the available height, use case: if your pagination is inside the parent component then offsetY would be the height of pagination
 
-___
+---
 
 ### peers
 

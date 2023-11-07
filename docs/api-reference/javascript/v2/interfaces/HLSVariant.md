@@ -5,6 +5,12 @@ nav: '4.4'
 
 ## Properties
 
+### initialisedAt
+
+• `Optional` **initialisedAt**: `Date`
+
+---
+
 ### meetingURL
 
 • `Optional` **meetingURL**: `string`

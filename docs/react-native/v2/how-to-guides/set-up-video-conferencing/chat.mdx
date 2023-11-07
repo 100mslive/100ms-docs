@@ -25,7 +25,7 @@ Want to let everyone in the chat know something? Call `sendBroadcastMessage` met
 `sendBroadcastMessage` method accepts following parameters:
 
 1. _message_: The text of the message.
-2. _type_[optional]: The type (`HMSMessageType`) of the message, default value is `HMSMessageType.CHAT`, other available value is `HMSMessageType.METADATA`.
+2. _type_[optional]: The type (`string`) of the message, default value is `chat`.
 
 > 💡 Note: `Promise` returned from `sendBroadcastMessage` method only lets you know if the server has received your request for the message or if there was some error. It does not convey whether the message was delivered to or read by the recipient.
 
@@ -47,7 +47,7 @@ Got secrets to share with someone? Call `sendDirectMessage` method on the `HMSSD
 
 1. _message_: The text of the message.
 2. _peer_: The `HMSPeer` instance that should receive the message.
-3. _type_[optional]: The type (`HMSMessageType`) of the message, default value is `HMSMessageType.CHAT`, other available value is `HMSMessageType.METADATA`.
+3. _type_[optional]: The type (`string`) of the message, default value is `chat`.
 
 > 💡 Note: `Promise` returned from `sendDirectMessage` method only lets you know if the server has received your request for the message or if there was some error. It does not convey whether the message was delivered to or read by the recipient.
 
@@ -69,7 +69,7 @@ Need to call attention to All the hosts or All the teachers or All the developer
 
 1. _message_: The text of the message.
 2. _roles_: The list of `HMSRole` i.e the roles to whom the message needs to be sent.
-3. _type_[optional]: The type (`HMSMessageType`) of the message, default value is `HMSMessageType.CHAT`, other available value is `HMSMessageType.METADATA`.
+3. _type_[optional]: The type (`string`) of the message, default value is `chat`.
 
 > 💡 Note: `Promise` returned from `sendGroupMessage` method only lets you know if the server has received your request for the message or if there was some error. It does not convey whether the message was delivered to or read by the recipient.
 
@@ -109,7 +109,7 @@ Let's look at what the `HMSMessage` looks like -
 interface HMSMessage {
     messageId: string; // Unique Id of the Message
     message: string;
-    type: HMSMessageType;
+    type: string;
     time: Date;
     sender?: HMSPeer;
     recipient: HMSMessageRecipient;
@@ -118,7 +118,7 @@ interface HMSMessage {
 
 -   _messageId_: Id to uniquely identify the message.
 -   _message_: The actual text message string that was sent.
--   _type_: Type of message sent. Default value is `HMSMessageType.CHAT`, other available value is `HMSMessageType.METADATA`.
+-   _type_: The type (`string`) of the message. Default value is `chat`.
 -   _time_: DateTime of when the server received the message. This can be used for accurate ordering of your messages.
 -   _sender_: The `HMSPeer` who sent this message.
 -   _recipient_: The intended recipient(s) of this message as a `HMSMessageRecipient` object.

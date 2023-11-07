@@ -1,6 +1,6 @@
 ---
 title: useParticipantsResult
-nav: "5.2.7"
+nav: '5.2.10'
 ---
 
 ## Properties
@@ -11,7 +11,7 @@ nav: "5.2.7"
 
 is joined in the room
 
-___
+---
 
 ### participants
 
@@ -19,7 +19,7 @@ ___
 
 list of participants that match the given filters
 
-___
+---
 
 ### peerCount
 
@@ -27,7 +27,7 @@ ___
 
 Total number of participants in the room
 
-___
+---
 
 ### rolesWithParticipants
 

@@ -8,11 +8,13 @@ nav: 4.3
 | [session.open.success](#sessionopensuccess), <br/> [session.close.success](#sessionclosesuccess)                                                                                       | Session                            | Triggered during the start and end of a session                                         |
 | [peer.join.success](#peerjoinsuccess),<br/> [peer.leave.success](#peerleavesuccess), <br/>[peer.join.failure](#peerjoinfailure),<br/> [peer.leave.failure](#peerleavefailure)          | Peer                               | Triggered when a peer join/leave succeeds/fails                                         |
 | [room.end.success](#roomendsuccess)                                                                                                                                                    | Room                               | Triggered when a room ends                                                              |
-| [recording.success](#recordingsuccess), <br/>[recording.failed](#recordingfailed)                                                                                                      | SFU recording                      | Triggered at the end of a SFU recording                                                 |
+| [recording.success](#recordingsuccess), <br/>[recording.failed](#recordingfailed)                                                                                                      | SFU Recording                      | Triggered at the end of a SFU recording                                                 |
 | [beam.started.success](#beamstartedsuccess),<br/> [beam.stopped.success](#beamstoppedsuccess),<br/> [beam.recording.success](#beamrecordingsuccess),<br/> [beam.failure](#beamfailure) | RTMP Streaming & Browser Recording | Triggered during the start, end, and failure of RTMP streaming and/or browser recording |
 | [hls.started.success](#hlsstartedsuccess),<br/> [hls.stopped.success](#hlsstoppedsuccess),<br/> [hls.recording.success](#hlsrecordingsuccess),<br/> [hls.failure](#hlsfailure)         | HLS Streaming Events               | Triggered during the start, end, and failure of HLS streaming and/or HLS recording      |
-| [role.change.success](#rolechangesuccess)                                                                                                                                              | Role change Events                 | Triggered when a role is updated                                                        |
-| [transcription.started.success](#transcriptionstartedsuccess),<br/>[transcription.success](#transcriptionsuccess),<br/> [transcription.failure](#transcriptionfailure)                 | Transcription Events               | Triggered at the start and end of transcription       
+| [role.change.success](#rolechangesuccess)                                                                                                                                              | Role Change Events                 | Triggered when a role is updated                                                        |
+| [transcription.started.success](#transcriptionstartedsuccess),<br/>[transcription.success](#transcriptionsuccess),<br/> [transcription.failure](#transcriptionfailure)                 | Transcription Events               | Triggered at the start and end of transcription                                         |
+| [ingest.start.success](#ingeststartsuccess),<br/> [ingest.end.success](#ingestendsuccess), <br/> [ingest.failure](#ingestfailure)                                           | RTMP Ingestion Events              | Triggered at the start and end of RTMP Ingestion                                        |
+
 
 ## Event payload
 
@@ -206,8 +208,8 @@ This event will be sent when peer leaves the room
 2. `peer kicked`: if the peer is removed by someone else from an active room using the [Client SDK](/javascript/v2/features/remove-peer) or the [Server API](/server-side/v2/active-rooms/remove-peers).
     - _Example scenarios:_
         - If the peer is removed by a role which has `Can remove participant from the room` [permissions](/server-side/v2/api-reference/policy/create-template-via-dashboard#permissions) enabled in the template.
-        - If the peer is removed using the [remove peer API](./../active-rooms/remove-peers) from the application server. <br />  
-          **Note**: If you remove a peer from an [active room](./../active-rooms/overview) using the
+        - If the peer is removed using the [remove peer API](/server-side/v2/active-rooms/remove-peers) from the application server. <br />  
+          **Note**: If you remove a peer from an [active room](/server-side/v2/active-rooms/overview) using the
           [client SDK](/javascript/v2/features/remove-peer) or the [server API](/server-side/v2/active-rooms/remove-peers),
           you can pass the reason as a message and the `peer.leave.success` event will contain the
           same in the `message` field.
@@ -1163,7 +1165,7 @@ This event will be sent when HLS recordings are successful and uploaded to the s
 #### Attributes
 
 | Name                                | Type                 | Description                                                                                                                    |
-| :---------------------------------- | :------------------- | :----------------------------------------------------------------------------------------------------------------------------- |
+|:------------------------------------|:---------------------|:-------------------------------------------------------------------------------------------------------------------------------|
 | beam_id                             | `string`             | Unique beam id <br/><br/> Example: 61d3def54b616982bd80ed83                                                                    |
 | room_id                             | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312df                                                            |
 | metadata_id                         | `string`             | Webhook metadata ID <br/><br/> Example: 14f350f5-18c4-46ca-8a33-71cbcc836600                                                   |
@@ -1171,8 +1173,8 @@ This event will be sent when HLS recordings are successful and uploaded to the s
 | duration                            | `int`                | Duration of HLS recording in seconds <br/><br/> Example: 12                                                                    |
 | session_id                          | `string`             | 100ms assigned id to identify the session <br/><br/> Example: 5f9edc6bd238215aec7700df                                         |
 | template_id                         | `string`             | Template ID of the room <br/><br/> Example: 66112497abcd52312556c4gg                                                           |
-| hls_vod_recording_path              | `string`             | Upload path of the HLS vod playlist such as s3 URI <br/><br/> Example: s3://bucket/prefix/ac.mp4                               |
-| hls_vod_recording_presigned_url     | `string`             | Pre signed url for HLS vod playlist url <br/><br/> Example: <https://upload-location/bucket/hls-vod.zip>                       |
+| hls_vod_recording_path              | `string`             | Upload path of the HLS VOD playlist such as s3 URL <br/><br/> Example: s3://bucket/prefix/ac.mp4                               |
+| hls_vod_recording_presigned_url     | `string`             | This will be a playable CDN URL for the VOD file or the pre-signed URL of the M3U8 file, depending upon the configured storage and the VOD upload format. Learn more about this [here](/get-started/v2/get-started/features/recordings/live-stream-recording#video-on-demand-vod-recording) <br/><br/> Example: <https://upload-location/bucket/hls-vod.zip> , <https://upload-location/bucket/hls-vod.m3u8>                     |
 | chat_recording_path                 | `string`             | Upload path of chat recording files such as s3 URI <br/><br/> Example: s3://bucket/prefix/ac.csv                               |
 | chat_recording_presigned_url        | `string`             | Pre signed url for chat recording files <br/><br/> Example: <https://upload-location/bucket/chat.csv>                          |
 | hls_vod_recording_size              | `int`                | Size of the HLS vod recording (in bytes) <br/><br/> Example: 10024                                                             |
@@ -1207,7 +1209,7 @@ This event will be sent when HLS recordings are successful and uploaded to the s
         "max_height": 720,
         "max_width": 1280,
         "meeting_url": "https://app.100ms.live/preview/rpe-pwl-akt?token=beam_recording",
-        "hls_vod_recording_path": "s3://<hls-vod-bucket-address>.zip",
+        "hls_vod_recording_path": "s3://<hls-vod-bucket-address>.m3u8",
         "hls_vod_recording_presigned_url": "https://<hls-vod-access-url>?<signature>",
         "chat_recording_path": "s3://<chat-recording-address>.csv",
         "chat_recording_presigned_url": "https://<chat-recording-access-url>?<signature>",
@@ -1452,5 +1454,136 @@ This event is sent when transcription fails. Some files might still be generated
             "transcript_txt_path": "s3://<transcript-txt-address>.json",
             "transcript_txt_presigned_url": "https://<file-access-url>?<signature>"
     }
+}
+```
+
+## RTMP Ingestion Events
+
+### ingest.start.success
+
+This event is sent when RTMP ingestion has successfully started.
+
+#### Attributes
+
+| Name         | Type                 | Description                                                                                 |
+|:-------------|:---------------------|:--------------------------------------------------------------------------------------------|
+| id           | `string`             | Id of the event <br/><br/> Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4                    |
+| account_id   | `string`             | Customer ID from which this event is generated <br/><br/> Example: 5ff5881b80b66969e1fb35f4 |
+| app_id       | `string`             | App ID from which this event is generated <br/><br/> Example: 5ff5881b80b66969e1fb35f6      |
+| timestamp    | `timestamp (in UTC)` | Timestamp of the event <br/><br/> Example: 2020-11-11T16:32:17Z                             |
+| type         | `string`             | Type of the event <br/><br/> Example: ingest.start.success                                  |
+| started_at   | `timestamp (in UTC)` | Timestamp at which ingestion started <br/><br/> Example: 2020-11-11T17:32:18Z               |
+| room_id      | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312df                         |
+| ingest_id    | `string`             | 100ms assigned id to identify the ingestion <br/><br/> Example: 652d2dfb3bde33b03a9602da    |
+| stream_id    | `string`             | 100ms assigned id to identify the stream <br/><br/> Example: 652d2dfc037b60106eb62413       |
+| template_id  | `string`             | Template ID of the room <br/><br/> Example: 66112497abcd52312556c4gg                        |
+
+#### Sample `ingest.start.success` event
+
+```json
+{
+  "version": "2.0",
+  "id": "********-****-****-****-***********",
+  "account_id": "***********************",
+  "app_id": "***********************",
+  "timestamp": "2023-10-16T12:35:08Z",
+  "type": "ingest.start.success",
+  "data": {
+            "account_id": "***********************",
+            "app_id": "***********************",
+            "ingest_id": "***********************",
+            "room_id": "***********************",
+            "started_at": "2023-10-16T12:35:08Z",
+            "stream_id": "***********************",
+            "template_id": "***********************"
+  }
+}
+```
+
+### ingest.end.success
+
+This event is sent when RTMP ingestion has successfully ended.
+
+#### Attributes
+
+| Name                 | Type                 | Description                                                                                                                                      |
+|:---------------------|:---------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------|
+| id                   | `string`             | Id of the event <br/><br/> Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4                                                                         |
+| account_id           | `string`             | Customer ID from which this event is generated <br/><br/> Example: 5ff5881b80b66969e1fb35f4                                                      |
+| app_id               | `string`             | App ID from which this event is generated <br/><br/> Example: 5ff5881b80b66969e1fb35f6                                                           |
+| timestamp            | `timestamp (in UTC)` | Timestamp of the event <br/><br/> Example: 2020-11-11T16:32:17Z                                                                                  |
+| type                 | `string`             | Type of the event <br/><br/> Example: ingest.end.success                                                                                         |
+| started_at           | `timestamp (in UTC)` | Timestamp at which ingestion started <br/><br/> Example: 2020-11-11T17:32:18Z                                                                    |
+| completed_at         | `timestamp (in UTC)` | Timestamp at which ingestion ended <br/><br/> Example: 2020-11-11T17:32:18Z                                                                      |
+| duration             | `int`                | Duration of the stream that is ingested (in seconds) <br/><br/> Example: 110                                                                     |
+| last_disconnected_at | `string`             | Last timestamp at which 100ms ingest servers stopped receiving media <br/><br/> Example: 2020-11-11T17:32:18Z                                    |
+| reason               | `string`             | Reason for ending of ingestion. Possible reasons are : `"publish error"`, `"reconnection window expired"`, `"stream closed"`, `"internal error"` |
+| room_id              | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312df                                                                              |
+| ingest_id            | `string`             | 100ms assigned id to identify the ingestion <br/><br/> Example: 652d2dfb3bde33b03a9602da                                                         |
+| stream_id            | `string`             | 100ms assigned id to identify the stream <br/><br/> Example: 652d2dfc037b60106eb62413                                                            |
+| template_id          | `string`             | Template ID of the room <br/><br/> Example: 66112497abcd52312556c4gg                                                                             |
+
+
+#### Sample `ingest.end.success` event
+
+```json
+{
+  "version": "2.0",
+  "id": "********-****-****-****-***********",
+  "account_id": "***********************",
+  "app_id": "***********************",
+  "timestamp": "2023-10-16T12:36:58Z",
+  "type": "ingest.end.success",
+  "data": {
+            "account_id": "***********************",
+            "app_id": "***********************",
+            "completed_at": "2023-10-16T12:36:58Z",
+            "duration": 111,
+            "ingest_id": "***********************",
+            "last_disconnected_at": "2023-10-16T12:36:58Z",
+            "reason": "reconnection window expired",
+            "room_id": "***********************",
+            "started_at": "2023-10-16T12:36:58Z",
+            "stream_id": "***********************",
+            "template_id": "***********************"
+  }
+}
+```
+
+### ingest.failure
+
+This event is sent when RTMP ingestion has failed to start.
+
+#### Attributes
+
+| Name          | Type                 | Description                                                                                                                                                                                            |
+|:--------------|:---------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| id            | `string`             | Id of the event <br/><br/> Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4                                                                                                                               |
+| account_id    | `string`             | Customer ID from which this event is generated <br/><br/> Example: 5ff5881b80b66969e1fb35f4                                                                                                            |
+| app_id        | `string`             | App ID from which this event is generated <br/><br/> Example: 5ff5881b80b66969e1fb35f6                                                                                                                 |
+| timestamp     | `timestamp (in UTC)` | Timestamp of the event <br/><br/> Example: 2020-11-11T16:32:17Z                                                                                                                                        |
+| type          | `string`             | Type of the event <br/><br/> Example: ingest.failure                                                                                                                                               |
+| error_message | `string`             | Error message for failure of ingestion start. Possible messages are: `"stream key disabled"`, `"internal error"`, `"no hls destinations"`, `"remote session active"`, `"already connected"`,  `"beam start error"` |
+| room_id       | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312df                                                                                                                                    |
+| template_id   | `string`             | Template ID of the room <br/><br/> Example: 66112497abcd52312556c4gg                                                                                                                                   |
+
+
+#### Sample `ingest.failure` event
+
+```json
+{
+  "version": "2.0",
+  "id": "********-****-****-****-***********",
+  "account_id": "***********************",
+  "app_id": "***********************",
+  "timestamp": "2023-10-16T12:36:58Z",
+  "type": "ingest.failure",
+  "data": {
+            "account_id": "***********************",
+            "app_id": "***********************",
+            "error_message": "stream key disabled",
+            "room_id": "***********************",
+            "template_id": "***********************"
+  }
 }
 ```

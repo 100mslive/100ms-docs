@@ -7,17 +7,24 @@ Preview screen is a frequently used UX element which allows users to check if th
 
 To invoke this API call
 
+<Tabs
+  id="sample-code"
+  items={["UIKit", "SwiftUI"]}
+/>
+
+<Tab id='sample-code-0'>
+
 ```swift
 hmsSDK.preview(config: config, delegate: previewDelegate)
 ```
 
-You would need the same config object that you would pass to [join API](join). The `previewDelegate` is an object conforming to `HMSPreviewListener` protocol that has four callbacks:
+You would need the same config object that you would pass to [join API](/ios/v2/how-to-guides/set-up-video-conferencing/join). The `previewDelegate` is an object conforming to `HMSPreviewListener` protocol that has four callbacks:
 
 ```swift
 func onPreview(room: HMSRoom, localTracks: [HMSTrack])
 ```
 
-Which is called when SDK has passed all its preflight checks and established the connection to 100ms server. This will pass an array of local tracks that you can display to the user (see [Render Video](/ios/v2/how--to-guides/set-up-video-conferencing/render-video/overview) and [Mute](mute) sections for more details).
+Which is called when SDK has passed all its preflight checks and established the connection to 100ms server. This will pass an array of local tracks that you can display to the user (see [Render Video](/ios/v2/how--to-guides/set-up-video-conferencing/render-video/overview) and [Mute](/ios/v2/how-to-guides/set-up-video-conferencing/mute) sections for more details).
 
 If however there was some error related to getting the input sources or some preflight check has failed
 
@@ -38,3 +45,15 @@ func on(peer: HMSPeer, update: HMSPeerUpdate)
 ```
 
 Can be used to get peer updates i.e peer join and leave.
+
+</Tab>
+
+<Tab id='sample-code-1'>
+
+You call preview method on the `HMSRoomModel` instance to preview the room. You can optionally pass the name of the participant in the preview method.
+
+```swift
+roomModel.preview(userName: /*pass participant's name as string here*/)
+```
+
+</Tab>

@@ -1,6 +1,6 @@
 ---
 title: useDevicesResult
-nav: "5.2.5"
+nav: '5.2.5'
 ---
 
 ## Properties
@@ -11,7 +11,7 @@ nav: "5.2.5"
 
 list of all devices by type
 
-___
+---
 
 ### selectedDeviceIDs
 
@@ -19,25 +19,25 @@ ___
 
 selected device ids for all types
 
-___
+---
 
 ### updateDevice
 
-• **updateDevice**: (`__namedParameters`: { `deviceId`: `string` ; `deviceType`: `DeviceType`  }) => `Promise`<`void`\>
+• **updateDevice**: (`__namedParameters`: { `deviceId`: `string` ; `deviceType`: `DeviceType` }) => `Promise`<`void`\>
 
 #### Type declaration
 
-▸ (`__namedParameters`): `Promise`<`void`\>
+▸ (`«destructured»`): `Promise`<`void`\>
 
 function to call to update device
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `__namedParameters` | `Object` |
-| `__namedParameters.deviceId` | `string` |
-| `__namedParameters.deviceType` | `DeviceType` |
+| Name             | Type         |
+| :--------------- | :----------- |
+| `«destructured»` | `Object`     |
+| › `deviceId`     | `string`     |
+| › `deviceType`   | `DeviceType` |
 
 ##### Returns
 

@@ -1,6 +1,6 @@
 ---
 title: HMSScreenVideoTrack
-nav: '4.50'
+nav: '4.57'
 ---
 
 ## Hierarchy
@@ -142,7 +142,7 @@ Omit.plugins
 
 ### preferredLayer
 
-• `Optional` **preferredLayer**: [`HMSPreferredSimulcastLayer`](/api-reference/javascript/v2/modules#hmspreferredsimulcastlayer)
+• `Optional` **preferredLayer**: [`HMSPreferredSimulcastLayer`](/api-reference/javascript/v2/home/content#hmspreferredsimulcastlayer)
 
 #### Inherited from
 

@@ -58,6 +58,12 @@ If lock is passed as true, the room cannot be used further.
 
 ---
 
+### interactivityCenter
+
+• **interactivityCenter**: [`IHMSInteractivityCenter`](/api-reference/javascript/v2/interfaces/IHMSInteractivityCenter)
+
+---
+
 ### sessionStore
 
 • **sessionStore**: [`IHMSSessionStoreActions`](/api-reference/javascript/v2/interfaces/IHMSSessionStoreActions)<`T`[``"sessionStore"``]\>
@@ -122,10 +128,6 @@ Accept the role change request received
 Add or remove a audio plugin from/to the local peer audio track. Eg. gain filter, noise suppression etc.
 Audio plugins can be added/removed at any time after the audio track is available
 
-**`See`**
-
-HMSAudioPlugin
-
 #### Parameters
 
 | Name     | Type             | Description    |
@@ -135,6 +137,10 @@ HMSAudioPlugin
 #### Returns
 
 `Promise`<`void`\>
+
+**`See`**
+
+HMSAudioPlugin
 
 ---
 
@@ -146,10 +152,6 @@ Add or remove a video plugin from/to the local peer video track. Eg. Virtual Bac
 Video plugins can be added/removed at any time after the video track is available.
 pluginFrameRate is the rate at which the output plugin will do processing
 
-**`See`**
-
-HMSVideoPlugin
-
 #### Parameters
 
 | Name               | Type             | Description    |
@@ -160,6 +162,10 @@ HMSVideoPlugin
 #### Returns
 
 `Promise`<`void`\>
+
+**`See`**
+
+HMSVideoPlugin
 
 ---
 
@@ -198,6 +204,18 @@ the stream coming from server saving significant bandwidth for the user.
 | :------------- | :----------------- | :-------------------------------------------------- |
 | `localTrackID` | `string`           | trackID as stored in the store for the peer         |
 | `videoElement` | `HTMLVideoElement` | HTML native element where the video has to be shown |
+
+#### Returns
+
+`Promise`<`void`\>
+
+---
+
+### cancelMidCallPreview
+
+▸ **cancelMidCallPreview**(): `Promise`<`void`\>
+
+stop tracks fetched during midcall preview and general cleanup
 
 #### Returns
 
@@ -248,10 +266,6 @@ If you want to update the name of peer.
 
 Request for a role change of a remote peer. Can be forced.
 
-**`Deprecated`**
-
-Use `changeRoleOfPeer`
-
 #### Parameters
 
 | Name        | Type      | Description                                                                    |
@@ -263,6 +277,10 @@ Use `changeRoleOfPeer`
 #### Returns
 
 `Promise`<`void`\>
+
+**`Deprecated`**
+
+Use `changeRoleOfPeer`
 
 ---
 
@@ -309,10 +327,6 @@ Request for a role change of a remote peer. Can be forced.
 
 ▸ **detachVideo**(`localTrackID`, `videoElement`): `Promise`<`void`\>
 
-**`See`**
-
-attachVideo
-
 #### Parameters
 
 | Name           | Type               |
@@ -323,6 +337,10 @@ attachVideo
 #### Returns
 
 `Promise`<`void`\>
+
+**`See`**
+
+attachVideo
 
 ---
 
@@ -352,6 +370,22 @@ enable sending audio speaker data to beam
 #### Returns
 
 `Promise`<`string`\>
+
+---
+
+### getPeerListIterator
+
+▸ **getPeerListIterator**(`options?`): [`HMSPeerListIterator`](/api-reference/javascript/v2/interfaces/HMSPeerListIterator)
+
+#### Parameters
+
+| Name       | Type                                                                                               |
+| :--------- | :------------------------------------------------------------------------------------------------- |
+| `options?` | [`HMSPeerListIteratorOptions`](/api-reference/javascript/v2/interfaces/HMSPeerListIteratorOptions) |
+
+#### Returns
+
+[`HMSPeerListIterator`](/api-reference/javascript/v2/interfaces/HMSPeerListIterator)
 
 ---
 
@@ -401,11 +435,6 @@ Notifications for the ignored messages will still be sent, it'll only not be put
 join function can be used to join the room, if the room join is successful,
 current details of participants and track details are populated in the store.
 
-**`Remarks`**
-
-If join is called while an earlier join is in progress for the room id, it
-is ignored
-
 #### Parameters
 
 | Name     | Type                                                             | Description                                             |
@@ -415,6 +444,11 @@ is ignored
 #### Returns
 
 `Promise`<`void`\>
+
+**`Remarks`**
+
+If join is called while an earlier join is in progress for the room id, it
+is ignored
 
 ---
 
@@ -430,19 +464,45 @@ This function can be used to leave the room, if the call is repeated it's ignore
 
 ---
 
+### lowerLocalPeerHand
+
+▸ **lowerLocalPeerHand**(): `Promise`<`void`\>
+
+#### Returns
+
+`Promise`<`void`\>
+
+---
+
+### lowerRemotePeerHand
+
+▸ **lowerRemotePeerHand**(`peerId`): `Promise`<`void`\>
+
+#### Parameters
+
+| Name     | Type     |
+| :------- | :------- |
+| `peerId` | `string` |
+
+#### Returns
+
+`Promise`<`void`\>
+
+---
+
 ### populateSessionMetadata
 
 ▸ **populateSessionMetadata**(): `Promise`<`void`\>
 
 Fetch the current room metadata from the server and populate it in store
 
-**`Deprecated`**
-
-use `actions.sessionStore.observe` instead
-
 #### Returns
 
 `Promise`<`void`\>
+
+**`Deprecated`**
+
+use `actions.sessionStore.observe` instead
 
 ---
 
@@ -452,9 +512,35 @@ use `actions.sessionStore.observe` instead
 
 #### Parameters
 
-| Name     | Type                                                                           |
-| :------- | :----------------------------------------------------------------------------- |
-| `config` | [`HMSPreviewConfig`](/api-reference/javascript/v2/interfaces/HMSPreviewConfig) |
+| Name     | Type                                                                                                        |
+| :------- | :---------------------------------------------------------------------------------------------------------- |
+| `config` | `HMSMidCallPreviewConfig` \| [`HMSPreviewConfig`](/api-reference/javascript/v2/interfaces/HMSPreviewConfig) |
+
+#### Returns
+
+`Promise`<`void`\>
+
+---
+
+### raiseLocalPeerHand
+
+▸ **raiseLocalPeerHand**(): `Promise`<`void`\>
+
+#### Returns
+
+`Promise`<`void`\>
+
+---
+
+### raiseRemotePeerHand
+
+▸ **raiseRemotePeerHand**(`peerId`): `Promise`<`void`\>
+
+#### Parameters
+
+| Name     | Type     |
+| :------- | :------- |
+| `peerId` | `string` |
 
 #### Returns
 
@@ -513,10 +599,6 @@ If you have **removeOthers** permission, you can remove a peer from the room.
 
 ▸ **removePluginFromAudioTrack**(`plugin`): `Promise`<`void`\>
 
-**`See`**
-
-addPluginToAudioTrack
-
 #### Parameters
 
 | Name     | Type             |
@@ -527,15 +609,15 @@ addPluginToAudioTrack
 
 `Promise`<`void`\>
 
+**`See`**
+
+addPluginToAudioTrack
+
 ---
 
 ### removePluginFromVideoTrack
 
 ▸ **removePluginFromVideoTrack**(`plugin`): `Promise`<`void`\>
-
-**`See`**
-
-addPluginToVideoTrack
 
 #### Parameters
 
@@ -546,6 +628,10 @@ addPluginToVideoTrack
 #### Returns
 
 `Promise`<`void`\>
+
+**`See`**
+
+addPluginToVideoTrack
 
 ---
 
@@ -632,7 +718,14 @@ This api adds EXT-X-DATERANGE tags to the media playlist.
 It is useful for defining timed metadata for interstitial regions such as advertisements,
 but can be used to define any timed metadata needed by your stream.
 usage (e.g)
-const metadataList = `[{ payload: "some string 1", duration: 2 }, { payload: "some string 2", duration: 3 }]`
+const metadataList = `[{
+ payload: "some string 1",
+ duration: 2
+},
+{
+ payload: "some string 2",
+ duration: 3
+}]`
 sendHLSTimedMetadata(metadataList);
 
 #### Parameters
@@ -651,15 +744,6 @@ sendHLSTimedMetadata(metadataList);
 
 ▸ **sendMessage**(`message`): `void`
 
-**`Deprecated`**
-
-The method should not be used
-
-**`See`**
-
-sendBroadcastMessage
-Send a plain text message to all the other participants in the room.
-
 #### Parameters
 
 | Name      | Type     | Description                 |
@@ -670,6 +754,15 @@ Send a plain text message to all the other participants in the room.
 
 `void`
 
+**`Deprecated`**
+
+The method should not be used
+
+**`See`**
+
+sendBroadcastMessage
+Send a plain text message to all the other participants in the room.
+
 ---
 
 ### setAppData
@@ -677,20 +770,6 @@ Send a plain text message to all the other participants in the room.
 ▸ **setAppData**(`key`, `value`, `merge?`): `void`
 
 use it for updating a particular property in the appdata
-
-**`Example`**
-
-assume appData is initially
-`{ mySettings: { setting1: 'val1', setting2: 'val2', }, mySettings2: 43, mySettings3: false, };`
-
-after calling,
-`setAppData("mySettings", {setting1:'val1-edit', setting3:'val3'}, true);`
-it becomes
-`{ mySettings: { setting1: 'val1-edit', setting2: 'val2', setting3: 'val3', }, mySettings2: 43, mySettings3: false, };`
-
-Note: This is not suitable for keeping large data or data which updates
-at a high frequency, it is recommended to use app side store for those
-cases.
 
 #### Parameters
 
@@ -703,6 +782,37 @@ cases.
 #### Returns
 
 `void`
+
+**`Example`**
+
+```ts
+assume appData is initially
+ `{
+    mySettings: {
+      setting1: 'val1',
+      setting2: 'val2',
+    },
+    mySettings2: 43,
+    mySettings3: false,
+  };`
+
+after calling,
+`setAppData("mySettings", {setting1:'val1-edit', setting3:'val3'}, true);`
+it becomes
+ `{
+    mySettings: {
+      setting1: 'val1-edit',
+      setting2: 'val2',
+      setting3: 'val3',
+    },
+    mySettings2: 43,
+    mySettings3: false,
+  };`
+
+Note: This is not suitable for keeping large data or data which updates
+at a high frequency, it is recommended to use app side store for those
+cases.
+```
 
 ▸ **setAppData**(`key`, `value`): `void`
 
@@ -948,10 +1058,6 @@ JSON.stringify.
 Session metadata is available to every peer in the room and is persisted throughout a session
 till the last peer leaves a room
 
-**`Deprecated`**
-
-use `actions.sessionStore.set` instead
-
 #### Parameters
 
 | Name       | Type  |
@@ -961,6 +1067,10 @@ use `actions.sessionStore.set` instead
 #### Returns
 
 `Promise`<`void`\>
+
+**`Deprecated`**
+
+use `actions.sessionStore.set` instead
 
 ---
 
@@ -1086,10 +1196,6 @@ Toggle the camera between front and back if the both the camera's exist
 
 To check the support of the plugin, based on browser, os and audio devices
 
-**`See`**
-
-HMSPluginSupportResult
-
 #### Parameters
 
 | Name     | Type             | Description    |
@@ -1100,6 +1206,10 @@ HMSPluginSupportResult
 
 `HMSPluginSupportResult`
 
+**`See`**
+
+HMSPluginSupportResult
+
 ---
 
 ### validateVideoPluginSupport
@@ -1107,10 +1217,6 @@ HMSPluginSupportResult
 ▸ **validateVideoPluginSupport**(`plugin`): `HMSPluginSupportResult`
 
 To check the support of the plugin, based on browser, os and audio devices
-
-**`See`**
-
-HMSPluginSupportResult
 
 #### Parameters
 
@@ -1121,3 +1227,7 @@ HMSPluginSupportResult
 #### Returns
 
 `HMSPluginSupportResult`
+
+**`See`**
+
+HMSPluginSupportResult

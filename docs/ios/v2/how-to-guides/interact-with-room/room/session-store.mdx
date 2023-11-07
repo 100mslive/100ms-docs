@@ -16,7 +16,15 @@ While peer metadata is associated with individual peers and each peer can have t
 
 ## How to use
 
-Session store is only available after user joins the session. To obtain a reference to the session store, you need to override the `func on(sessionStoreAvailable store: HMSSessionStore)` function of the `HMSUpdateListener` protocol. Once you get the reference to the store you can save it in your app for accessing later.
+Session store is only available after user joins the session.
+
+<Tabs
+  id="sample-code"
+  items={["UIKit", "SwiftUI"]}
+/>
+
+<Tab id='sample-code-0'>
+To obtain a reference to the session store, you need to override the `func on(sessionStoreAvailable store: HMSSessionStore)` function of the `HMSUpdateListener` protocol. Once you get the reference to the store you can save it in your app for accessing later.
 
 ### Setting a value for a specific key
 
@@ -46,7 +54,7 @@ store.observeChanges(forKeys: ["date", "time"]) { [weak self] key, value in
         self?.onTimeUpdated(value as? String)
     default:
         break
-        
+
     }
 }
 ```
@@ -56,6 +64,7 @@ You can have multiple observers running concurrently.
 ### Managing the lifecycle of observers
 
 During the lifecycle of the app, you may need to subscribe and unsubscribe for value updates. To unsubscribe we first need to get the observer reference by passing a completion closure to the `observeChanges` API:
+
 ```swift
 store.observeChanges(forKeys: ["key", "key2"], changeObserver: { [weak self] key, value in
     // ... update handling code
@@ -63,6 +72,7 @@ store.observeChanges(forKeys: ["key", "key2"], changeObserver: { [weak self] key
     self?.observer = observer
 }
 ```
+
 Later when the observer is no longer needed call `store.removeObserver(observer)` API to stop receiving update.
 
 ### Retrieve the current value once
@@ -76,10 +86,53 @@ store.object(forKey: "my key") { value, error in
     }
 }
 ```
+</Tab>
+
+<Tab id='sample-code-1'>
+### How to Store Common Objects/Information in the Room that is Shared across all Participants
+`HMSRoomModel` instance exposes a shared dictionary called `sharedStore`. You can use this to store any objects or primitives and they will be available to all participants in the room. You store key value pairs to this dictionary like following.
+
+As an example, let's see how to store Participant's ID in Shared Storage of the Room so that Everyone in the Meeting can access this ID
+
+```swift
+guard let highlightedStudent = (roomModel.peerModels.first{$0.name == "Pawan"}) else { return }
+roomModel.sharedStore["Highlighted Participant ID"] = highlightedStudent.id
+```
+
+How would other Participants use this Shared ID?
+
+Step 1. Make sure that room model observes this key like following:
+
+```swift
+roomModel.beginObserving(keys: ["Highlighted Participant ID"])
+```
+
+You generally do this at the start of the meeting, so that you can begin observing any changes for that key. If at any point in the call, you want to stop observing changes for a particular key call `stopObserving(keys:)` method passing an array of keys that you no more want to observe.
+
+Step 2. Display highlighted student
+
+```swift
+VStack {
+    if let highlightedStudentID = roomModel.sharedStore?["Highlighted Participant ID"] as? String,
+       let highlightedStudent = roomModel.peerModels.first(where: {$0.id == highlightedStudentID}) {
+        
+           HMSVideoTrackView(peer: highlightedStudent)
+    }
+}
+```
+
+Note that `sharedStore` dictionary is Published property of room model, thus any changes in this dictionary values reflect in your SwiftUI views automatically.
+</Tab>
 
 ## Limitations and workarounds in Alpha release
 
 -   There is no permission support, which means anyone can read/write session metadata. If you want to restrict access to session metadata, you have to implement it at the app level logic.
 -   Locks are required to ensure consistency of the data. If two peers update the data at the same time, it may result in a race condition where the last update overwrites the previous ones.
+
+## Limits
+
+-   Max payload size for data can be 1KB.
+-   Maximum 100 keys are supported with 64KB limit applied to all keys combined.
+-   Metadata size for 64 KB also include the key size.
 
 👀 For an example of how to implement pinned chat support using session store in an iOS app with the 100ms SDK, checkout [our example project](https://github.com/100mslive/100ms-ios-sdk/tree/main/Example).

@@ -1,6 +1,6 @@
 ---
 title: HMSSpeaker
-nav: '4.52'
+nav: '4.59'
 ---
 
 HMS Speaker stores the details of peers speaking at any point of time along with

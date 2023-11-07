@@ -38,7 +38,7 @@ curl --location --request GET 'https://api.100ms.live/v2/rooms' \
             "name": "test-room",
             "enabled": true,
             "description": "This is a test room",
-            "customer": "627cda********a39291b",
+            "customer_id": "627cda********a39291b",
             "recording_source_template": true,
             "template_id": "627cd********784227d3",
             "template": "default_createown_e319635a-****-****-****-ae9e95891e31",
@@ -46,13 +46,15 @@ curl --location --request GET 'https://api.100ms.live/v2/rooms' \
             "created_at": "2022-06-29T03:34:30.194Z",
             "key": "627***********a39291b:test-room",
             "updated_at": "0001-01-01T00:00:00Z"
+            "large_room": false,
+            "max_duration_seconds": 10000
         },
         {
             "id": "627cda81********6b077bc33",
             "name": "4b2705aa-****-****-****-f470c06d0c03",
             "enabled": true,
             "description": "This is a test room",
-            "customer": "627cd********037a39291b",
+            "customer_id": "627cd********037a39291b",
             "recording_source_template": false,
             "recording": {
                 "enabled": false
@@ -63,6 +65,9 @@ curl --location --request GET 'https://api.100ms.live/v2/rooms' \
             "created_at": "2022-05-12T09:59:29.343Z",
             "key": "627cda********037a39291b:4b2705aa-****-****-****-f470c06d0c03",
             "updated_at": "0001-01-01T00:00:00Z"
+            "large_room": true,
+            "size":19000,
+            "max_duration_seconds": 2000
         }
     ],
     "last": "627cda81bd4f3b56b077bc33"
@@ -73,11 +78,12 @@ curl --location --request GET 'https://api.100ms.live/v2/rooms' \
 
 ## Allowed filters
 
-| Name          | Type      | Description                                                                                                                                                                                                    | Required |
-| :------------ | :-------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| enabled <br/> | `boolean` | Flag to indicate if the room is enabled. <br/><br/>`Default`: true, <br/>`Allowed values`: true, false                                                                                                         | No       |
-| after <br/>   | `string`  | Check for rooms created with a timestamp greater than or equal to "after" <br/><br/>`Format`: YYYY-MM-DDTHH:mm:ss.sssZ.                                                                                        | No       |
-| before <br/>  | `string`  | Check for rooms created with a timestamp less than or equal to "before" <br/><br/>`Format`: YYYY-MM-DDTHH:mm:ss.sssZ.                                                                                           | No       |
-| name <br/>    | `string`  | Filter the result based on the room name. <br/><br/>**For example** "test-room". <br/> The room name would look like `7faa6631-5503-4535-b53e-4abe9230e139` if you didn't provide a name during room creation. | No       |
-| limit <br/>   | `int`     | Determines the number of room objects to be included in response. <br/><br/>`Default`: 10, <br/>`Allowed values`: **Min**: 10, **Max**: 100                                                                    | No       |
-| start <br/>   | `string`  | Determines the starting point. <br/>`last` field of the response can be used as start for the subsequent request. <br/><br/>**For example** "627cda81ab4f3b56a077dc33".                                        | No       |
+| Name              | Type      | Description                                                                                                                                                                                                    | Required |
+| :---------------- | :-------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| enabled <br/>     | `boolean` | Flag to indicate if the room is enabled. <br/><br/>`Default`: true, <br/>`Allowed values`: true, false                                                                                                         | No       |
+| after <br/>       | `string`  | Check for rooms created with a timestamp greater than or equal to "after" <br/><br/>`Format`: YYYY-MM-DDTHH:mm:ss.sssZ.                                                                                        | No       |
+| before <br/>      | `string`  | Check for rooms created with a timestamp less than or equal to "before" <br/><br/>`Format`: YYYY-MM-DDTHH:mm:ss.sssZ.                                                                                          | No       |
+| name <br/>        | `string`  | Filter the result based on the room name. <br/><br/>**For example** "test-room". <br/> The room name would look like `7faa6631-5503-4535-b53e-4abe9230e139` if you didn't provide a name during room creation. | No       |
+| limit <br/>       | `int`     | Determines the number of room objects to be included in response. <br/><br/>`Default`: 10, <br/>`Allowed values`: **Min**: 10, **Max**: 100                                                                    | No       |
+| start <br/>       | `string`  | Determines the starting point. <br/>`last` field of the response can be used as start for the subsequent request. <br/><br/>**For example** "627cda81ab4f3b56a077dc33".                                        | No       |
+| template_id <br/> | `string`  | Filter the result based on the template ID                                                                                                                                                                     | NO       |

@@ -13,6 +13,9 @@ import { Flex, Text, useTheme } from '@100mslive/react-ui';
 import ActiveLink, { ActiveLinkProps } from './ActiveLink';
 import SearchModal from './SearchModal';
 import { WebsiteLink, DashboardLink, GitHubLink, DiscordLink, ContactLink } from '@/lib/utils';
+import { references } from 'api-references';
+import { exposedPlatformNames } from 'common';
+import { NavAPIReference } from './NavAPIReference';
 
 interface Props {
     menuState: {
@@ -21,13 +24,13 @@ interface Props {
     };
     setModal: React.Dispatch<React.SetStateAction<boolean>>;
     modal: boolean;
-    // docs: { url: string; title: string; description: string; nav: number; content: string }[];
     showMobileMenu?: boolean;
     showReference?: boolean;
     onHomePage?: boolean;
 }
 
 const iconStyle = { height: '24px', width: '24px', color: 'inherit' };
+
 const linkCSS = {
     color: '$textMedEmp',
     display: 'flex',
@@ -74,30 +77,18 @@ const Header: React.FC<Props> = ({
 
         return currentTech || 'javascript';
     };
-    const currentTech = getCurrentTech();
-    const routeAPIRef = () => {
-        if (currentTech === 'react-native') {
-            return `/api-reference/react-native/v2/modules.html`;
-        }
-        if (currentTech === 'flutter') {
-            return `https://pub.dev/documentation/hmssdk_flutter/latest/hmssdk_flutter/hmssdk_flutter-library.html`;
-        }
-        if (currentTech === 'android') {
-            return `/api-reference/android/v2/index.html`;
-        }
-        if (currentTech === 'ios') {
-            return `/api-reference/ios/v2/documentation/hmssdk`;
-        }
-        const routeLink = `/api-reference/${currentTech}/v2/home/content`;
-        if (router.query.slug && router.query.slug[0] === 'api-reference') {
-            return router.asPath;
-        }
-        return routeLink;
+
+    const converter = {
+        'react-native': exposedPlatformNames.REACTNATIVE,
+        flutter: exposedPlatformNames.FLUTTER,
+        android: exposedPlatformNames.ANDROID,
+        javascript: exposedPlatformNames.WEB,
+        ios: exposedPlatformNames.IOS
     };
 
-    const isNonApiRef =
-        router.query.slug &&
-        (router.query.slug.includes('server-side') || router.query.slug.includes('get-started'));
+    const currentTechReference = references[converter?.[getCurrentTech()]];
+
+    const isNonApiRef = !currentTechReference;
 
     return renderComponent ? (
         <Flex
@@ -155,17 +146,7 @@ const Header: React.FC<Props> = ({
                         Examples
                     </HeaderLink>
                     {!isNonApiRef && showReference ? (
-                        <HeaderLink
-                            URLincludes={['/docs/api-reference/']}
-                            onClick={() =>
-                                window.analytics.track('link.clicked', {
-                                    btnId: 'api.reference.clicked',
-                                    currentPage: window.location.href
-                                })
-                            }
-                            href={routeAPIRef()}>
-                            API Reference
-                        </HeaderLink>
+                        <NavAPIReference reference={currentTechReference} />
                     ) : null}
                 </Flex>
             </Flex>

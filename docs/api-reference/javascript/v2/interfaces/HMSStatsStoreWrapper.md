@@ -1,6 +1,6 @@
 ---
 title: HMSStatsStoreWrapper
-nav: '4.54'
+nav: '4.61'
 ---
 
 ## Hierarchy

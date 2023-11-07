@@ -130,6 +130,12 @@ const App = () => {
 -   No permission support - anyone can read/write session metadata. If you want to restrict access to session metadata, you have to do it on your app level logic.
 -   Locks to ensure consistency of the data. If two peers update it at the same time, it will be a race condition for which one succeeds last, overwriting whatever was before.
 
+## Limits
+
+-   Max payload size for data can be 1KB.
+-   Maximum 100 keys are supported with 64KB limit applied to all keys combined.
+-   Metadata size for 64 KB also include the key size.
+
 ## Example - Pin Message
 
 You can use session store to pin information so that it's available for everyone in the room - even for newly joined peers. In this example we'll pin a chat message that's important in React.
@@ -182,7 +188,7 @@ We'll also use the same function returned from the hook to clear the pinned chat
 
 ```js
 import { useHMSStore } from '@100mslive/react-sdk';
-import { Box, Flex, IconButton, Text } from '@100mslive/react-ui';
+import { Box, Flex, IconButton, Text } from '@100mslive/roomkit-react';
 import { CrossIcon, PinIcon } from '@100mslive/react-icons';
 import { useSetPinnedMessage } from '../hooks/useSetPinnedMessage';
 
@@ -214,7 +220,7 @@ You can use session store to bring a particular peer/set of peers to center stag
 // https://github.com/100mslive/100ms-web/blob/sync-webapp/src/components/TileMenu.jsx
 
 import { selectSessionStore, useHMSActions, useHMSStore } from '@100mslive/react-sdk';
-import { StyledMenuTile } from '@100mslive/react-ui';
+import { StyledMenuTile } from '@100mslive/roomkit-react';
 
 const isSameTile = ({ trackId, videoTrackID, audioTrackID }) =>
     trackId &&
@@ -255,7 +261,7 @@ const SpotlightActions = ({ audioTrackID, videoTrackID }) => {
 
 import React from 'react';
 import { selectPeers, selectVideoTrackByPeerID, useHMSStore } from '@100mslive/react-sdk';
-import { Flex } from '@100mslive/react-ui';
+import { Flex } from '@100mslive/roomkit-react';
 import VideoTile from '../components/VideoTile';
 
 const CenterStageView = () => {

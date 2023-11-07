@@ -90,7 +90,7 @@ Here's some of them added and can be easily added:
 
 #### 1. Note Component
 
--   You can easily use this by using `> blockquote` it will have a default type of `'success'`
+-   You can easily use this by using `> blockquote` it will have a default type of `white`
 -   To use other types write in this way
 
 ```jsx
@@ -106,6 +106,8 @@ Here's some of them added and can be easily added:
   Hello this is Warning Note Component
 </Note>
 ```
+
+Types available: `success`,`warning`,`error`, `white`
 
 ---
 
@@ -178,6 +180,12 @@ All CSS Variables prefixed with `token` control the Syntax Highlighting.
 -   Vale extensions
     -   VSCode : [Vale](https://marketplace.visualstudio.com/items?itemName=errata-ai.vale-server)
     -   Android Studio/IntelliJ : [Vale-CLI](https://plugins.jetbrains.com/plugin/19613-vale-cli)
+
+## #️⃣ Viewing updated release versions on local before pushing changes
+
+-   To view the updated release version on local after adding changelog, run the following command before starting the local server:
+    -   `yarn updatereleases`
+    -   `yarn dev`
 
 ## 🙏🏽 Acknowledgement
 

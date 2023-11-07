@@ -25,9 +25,21 @@ HMSPeer stores the details of individual participants in the room
 
 ---
 
+### groups
+
+• `Optional` **groups**: `string`[]
+
+---
+
 ### id
 
 • **id**: `string`
+
+---
+
+### isHandRaised
+
+• **isHandRaised**: `boolean`
 
 ---
 

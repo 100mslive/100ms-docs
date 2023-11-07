@@ -165,7 +165,7 @@ const Sidebar: React.FC<Props> = ({
             ref={baseRef}
             className="hide-scrollbar"
             css={{
-                minWidth: '304px',
+                minWidth: '310px',
                 display: hideOnDesktop && !menu ? 'none' : 'flex',
                 flexDirection: 'column',
                 alignItems: 'stretch',

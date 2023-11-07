@@ -14,6 +14,13 @@ When user indicates that they want to _join_ the room, your app should have -
 
 ## Join a Room
 
+<Tabs
+  id="sample-code"
+  items={["UIKit", "SwiftUI"]}
+/>
+
+<Tab id='sample-code-0'>
+
 We'll call the `join` method on `HMSSDK` object with a config containing above fields to join the room.
 
 <StepsContainer>
@@ -117,3 +124,117 @@ After calling `join` your app will be provided an update from the 100ms SDK.
 ✅ If successful, the `func on(join room: HMSRoom)` method of `HMSUpdateListener` will be invoked with information about the room encapsulated in the `HMSRoom` object.
 
 ❌ If failure, the `func on(error: HMSError)` method will be invoked with exact failure reason.
+
+</Tab>
+
+<Tab id='sample-code-1'>
+
+You call `joinSession` on `HMSRoomModel` instance to join the room.
+
+<StepsContainer>
+
+### Create HMSRoomModel Instance
+
+First, create an instance of `HMSRoomModel` class. Store this instance as a property.
+
+```swift
+@ObservedObject var roomModel = HMSRoomModel(roomCode: "qdr-mik-seb")
+```
+
+<details>
+    <summary>Code in context</summary>
+```swift
+import HMSRoomModels
+
+struct MeetingView: View {
+    
+    @ObservedObject var roomModel = HMSRoomModel(roomCode: "qdr-mik-seb")
+    
+    var body: some View {
+        ...
+    }
+}
+```
+</details>
+
+### Call joinSession
+
+All you have to do is call `joinSession`. You can optionally pass username param.
+
+```swift
+try await roomModel.joinSession(userName: "iOS User")
+```
+
+<details>
+    <summary>Code in context</summary>
+```swift
+import HMSRoomModels
+
+struct MeetingView: View {
+    
+    @ObservedObject var roomModel = HMSRoomModel(roomCode: "qdr-mik-seb")
+    
+    var body: some View {
+        
+        switch roomModel.roomState {
+
+        case .notJoined, .leftMeeting:
+            // Button to join the room
+            Button {
+                Task {
+                    try await roomModel.joinSession(userName: "iOS User")
+                }
+            } label: {
+                Text("Join")
+            }
+        case .inMeeting:
+            // Button to leave the room
+            ...
+        }
+    }
+}
+```
+</details>
+
+</StepsContainer>
+
+<details>
+    <summary>Simple Meeting View with join and leave example</summary>
+```swift
+
+import HMSRoomModels
+
+struct MeetingView: View {
+    
+    @ObservedObject var roomModel = HMSRoomModel(roomCode: "qdr-mik-seb")
+    
+    var body: some View {
+        
+        switch roomModel.roomState {
+
+        case .notJoined, .leftMeeting:
+            // Button to join the room
+            Button {
+                Task {
+                    try await roomModel.joinSession(userName: "iOS User")
+                }
+            } label: {
+                Text("Join")
+            }
+        case .inMeeting:
+            VStack {
+                // Button to leave the room
+                Button {
+                    Task {
+                        try await roomModel.leaveSession()
+                    }
+                } label: {
+                    Text("Leave")
+                }
+            }
+        }
+    }
+}
+```
+</details>
+</Tab>
