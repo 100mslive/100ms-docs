@@ -21,6 +21,35 @@ curl --location --request POST 'https://api.100ms.live/v2/live-streams/room/<roo
     "recording": {
         "hls_vod": true,
         "single_file_per_layer": true
+    },
+    "transcription": {
+        "enabled": true,
+        "modes": ["recorded", "live"],
+        "output_modes": ["txt", "srt", "json"],
+        "custom_vocabulary": ["100ms", "WebSDK", "Flutter", "Sundar", "Pichai", "DALL-E"],
+        "summary": {
+            "enabled": true,
+            "context": "this is a general call",
+            "sections": [
+                {
+                    "title": "Agenda",
+                    "format": "bullets"
+                },
+                {
+                    "title": "Key Points",
+                    "format": "bullets"
+                },
+                {
+                    "title": "Action Items",
+                    "format": "bullets"
+                },
+                {
+                    "title": "Short Summary",
+                    "format": "paragraph"
+                }
+            ],
+            "temperature": 0.5
+        }
     }
 }'
 ```
@@ -58,12 +87,12 @@ curl --location --request POST 'https://api.100ms.live/v2/live-streams/room/<roo
 
 ## Parameters
 
-| Name         | Type     | Description    | Required |
-|--------------|----------|--------------- |----------|
-| meeting_url  | `string` | Single click meeting URL for the stream  | No[1]       |
-| recording    | `object` | Flags to enable recording  |  No       |
-| destination  | `string` | Name of destination from template to pick up configuration | No[2]       |
-
+| Name          | Type     | Description                                                   | Required |
+| ------------- | -------- | ------------------------------------------------------------- | -------- |
+| meeting_url   | `string` | Single click meeting URL for the stream                       | No[1]    |
+| recording     | `object` | Flags to enable recording                                     | No       |
+| destination   | `string` | Name of destination from template to pick up configuration    | No[2]    |
+| transcription | `object` | Transcription object to configure recorded/live transcription | No       |
 
 > [1] `meeting_url` is **required** when
 > - Live streaming is not enabled on the dashboard
@@ -80,7 +109,33 @@ curl --location --request POST 'https://api.100ms.live/v2/live-streams/room/<roo
 
 ##### recording
 
-| Name         | Type   | Description | Required |
-| :----------- | :----- | :---------- | :------- |
-| hls_vod      | `bool` | Generate a `room-vod` asset for on-demand playback use-case | No  |
-| single_file_per_layer | `bool` | Generate `room-composite` assets, one for each layer | No  |
+| Name                  | Type   | Description                                                 | Required |
+| --------------------- | ------ | ----------------------------------------------------------- | -------- |
+| hls_vod               | `bool` | Generate a `room-vod` asset for on-demand playback use-case | No       |
+| single_file_per_layer | `bool` | Generate `room-composite` assets, one for each layer        | No       |
+
+### transcription
+
+| Name              | Type      | Description                                                                                                                                                     | Required |
+| ----------------- | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| enabled           | `boolean` | Set this to `true` to enable transcription.                                                                                                                     | No       |
+| modes             | `array`   | Array of modes for transcription. Valid values: [ `recorded`, `live` ] (recorded: Transcribe recording post call, live: Closed caption for live stream viewers) | No       |
+| output_modes      | `array`   | Array of ouput modes for transcript. Valid values: [ txt, srt, json ] (txt: Plain text, srt: SubRip text, json: Granular timestamped words and sentences).      | No       |
+| custom_vocabulary | `array`   | Array of words that might be spoken during the call. This can consist of non-dictionary words like names, slang, abbreviations and domain specific words.       | No       |
+| summary           | `object`  | Object of type `summary`, This can be used to enable and configure summary.                                                                                     | No       |
+
+#### transcription - summary
+
+| Name        | Type      | Description                                                                                                                                                                      | Required |
+| ----------- | --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| enabled     | `boolean` | Set this to `true` to enable summary.                                                                                                                                            | No       |
+| context     | `string`  | Provide context of the meetings to help AI get a holistic understanding about the call to generate a better summary. (limit: 300 characters)                                     | No       |
+| temperature | `float`   | Temperature determines creativity. Higher values makes AI be more creative, lower values makes it more deterministic and predictable. (default: 0.5, accepted range : 0.1 - 1.0) | No       |
+| sections    | `array`   | Sections has list of objects. This refers to sections in summary like `Agenda`, `Short Summary`, `Questions raised by participants`. (max count: 6)                              | No       |
+
+#### transcription - summary - section
+
+| Name   | Type     | Description                                                                                                        | Required |
+| ------ | -------- | ------------------------------------------------------------------------------------------------------------------ | -------- |
+| title  | `string` | Title of the section `Agenda`, `Short Summary`, `Follow Up Action Items`, `Short Summary`. (limit: 100 characters) | Yes      |
+| format | `string` | Format of the section. Valid values: [`bullets`, `paragraph`]                                                      | Yes      |
