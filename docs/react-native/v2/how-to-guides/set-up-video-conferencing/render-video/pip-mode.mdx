@@ -16,7 +16,9 @@ Currently this functionality is only available on Android.
 
 ### How to add PiP support
 
-1. You need to update the activity tag in the `AndroidManifest.xml`
+<div className="steps-container">
+
+### Update the activity tag in the AndroidManifest.xml
 
 ```xml
   <activity
@@ -25,8 +27,29 @@ Currently this functionality is only available on Android.
     android:configChanges="keyboard|keyboardHidden|orientation|screenSize|smallestScreenSize|screenLayout|uiMode"
     ... />
 ```
+### Update MainActivity.java file
 
-2. Call `enablePipMode` method on "HMS Instance" when you want to start PIP mode.
+```kt
+import com.reactnativehmssdk.HMSManager;
+public class MainActivity extends ReactActivity {
+
+  ...
+
+  @Override
+  public void onPictureInPictureModeChanged(boolean isInPictureInPictureMode, Configuration newConfig) {
+    super.onPictureInPictureModeChanged(isInPictureInPictureMode, newConfig);
+    HMSManager.Companion.onPictureInPictureModeChanged(isInPictureInPictureMode, newConfig);
+  }
+
+  @Override
+  protected void onUserLeaveHint() {
+    super.onUserLeaveHint();
+    HMSManager.Companion.onUserLeaveHint();
+  }
+}
+```
+
+### Call enablePipMode method to manually start PIP Mode (Optional)
 
 ```js
 // You can also check if PIP is supported on device or not.
@@ -38,6 +61,8 @@ if (isEnabled) {
     setPIPModeActive(true);
 }
 ```
+
+</div>
 
 
 While enabling PIP Mode you can configure the PIP Window Aspect Ratio & buttons shown to perform actions.
