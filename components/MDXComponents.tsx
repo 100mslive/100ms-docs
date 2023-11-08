@@ -27,8 +27,6 @@ import { PortraitImage } from './PortraitImage';
 
 const CodeCustom = (props: any) => <Code {...props}>{props.children}</Code>;
 
-const NoteCustom = (props: any) => <Note type="success">{props.children}</Note>;
-
 const TableCustom = (props: any) => (
     <div className="table-wrapper">
         <table>{props.children}</table>
@@ -93,7 +91,7 @@ const MDXComponents = {
     Note,
     Callout,
     Image,
-    blockquote: NoteCustom,
+    blockquote: Note,
     pre: CodeCustom,
     table: TableCustom,
     Code,
