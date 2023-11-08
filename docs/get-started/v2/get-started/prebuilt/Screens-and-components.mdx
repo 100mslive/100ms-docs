@@ -23,46 +23,35 @@ By default, components are enabled based on the role associated with the use cas
 
 ### Preview Screen
 
-<StepsContainer id="room-code-auth">
-
 #### Header
-Set up a custom header for each roles using `Title` and `Subtitle` fields.
+Set up a custom header for each roles using Title and Subtitle fields.
 #### Join
 Choose how peers join the room
 	- **Join Now** - Peers from this role will see "Join Now" and would be able join after entering their name.
 	- **Join and Start Streaming** - Peers from this role will see "Go Live" and would be able to join and start streaming when they join the room. Ensure that this role has the permission to "Start/Stop HLS streaming" as `enabled` under Role permissions on its template configuration.
 
-</StepsContainer>
-
 ### Room Screen
-Prebuilt's room screen provides components that enables interactivity an within a room. Select a role to start customizing.
+The Prebuilt room screen offers a set of components designed to enhance interactivity within a room. Choose a role to kickstart your customization journey.
 
 #### Chat
-By default, Chat is enabled for all templates. Enable or disable chat functionality for a role. If enabled, you can further configure deeper functionalities on your Prebuilt UI.
-
-<StepsContainer id="room-code-auth">
+Toggle the chat functionality on or off for a specific role. When chat is disabled for a role, that role won't have access to the chat component within the room. If enabled, you can further fine-tune and customize the functionalities of the Prebuilt UI for chat.
 
 ##### Initial State
-This defines initial of Chat component when a peer joins a room. 
+This setting determines whether the chat component is initially open or closed when a participant joins a session. Keeping the initial state as open can be particularly useful when using the chat overlay view on mobile devices.
 
 ##### Enable Overlay View
-Enabling a chat overlay view. (Default state: `false`)
-This view is only available on mobile views. Not supported on large screen apps.
+In an overlay view, the chat component overlays on top of video tiles, delivering an immersive chat experience for mobile livestreaming scenarios. Please note that this chat view is exclusively available on mobile devices and is not supported on large-screen applications.
 
 ##### Allow Pinning messages
-Enabling this allows the selected role to pin chat messages in Prebuilt.  
-
-</StepsContainer>
+Enabling this feature allows the selected role to pin important chat messages in Prebuilt.
 
 
 ### Participant List
-Make participants list accessible for roles who need to see it. Scenarios where a role(for instance, viewers in a large room) don't need to see other participants, but a Host/Broadcasters would want to keep a tab on the participant list. By default, participant list is enabled by default for all roles for any template.
-
+Ensure participant list accessibility for roles that require visibility. In certain scenarios, such as large room viewers, there may be no need for them to view other participants, but Hosts or Broadcasters might find it essential to maintain oversight of the participant list. By default, the participant list is enabled for all roles across all templates.
 
 ### Video Tile Layout
 100ms Prebuilt UI allows tweaks on its default grid layout and supports multiple video layouts.
 
-<StepsContainer id="room-code-auth">
 #### Enable local tile inset
 Enabling this makes the local peer's *(for the selected role)* tile in a smaller inset window as default, alternatively if it's disabled, the local tile will be part of the grid view. Join with atleast two peers to preview this configuration in action.
 
@@ -90,7 +79,6 @@ Enabling this for a role allows its peers to send emoji reactions in the room.
 ### Bring others on Stage
 This component allows the selected role to allow/deny stage request from off stage participants. This component is available on both conferencing and live-streaming templates. By default, this feature is enabled for Hosts, Broadcasters and Co-broadcasters, where viewer(non-publishing) roles would have a hand-raise option to request stage access. If your use case doesn't require this feature, simply disable this component. Read more on Bring on stage feature. 
 
-<StepsContainer id="room-code-auth">
 
 #### Bring on Stage Label
 
