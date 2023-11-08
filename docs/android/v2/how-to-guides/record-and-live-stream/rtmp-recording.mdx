@@ -158,9 +158,9 @@ data class HMSRtmpStreamingState(
 
 This represents a livestream to one or more RTMP urls.
 
-`startedAt` is the unix epoch timestamp of when this recording was started.
+`startedAt` is the UNIX epoch timestamp of when this recording was started.
 
-`stoppedAt` is the unix epoch timestamp of when the recording was ended.
+`stoppedAt` is the UNIX epoch timestamp of when the recording was ended.
 
 Both may be present and this means the recording was started at some point and stopped at a later date. If the recording is then restarted, it's possible for the `stoppedAt` to be before the `startedAt`.
 
@@ -177,9 +177,9 @@ data class HMSBrowserRecordingState(
 
 This represents the recording that can be requested to start.
 
-`startedAt` is the unix epoch timestamp of when this recording was started.
+`startedAt` is the UNIX epoch timestamp of when this recording was started.
 
-`stoppedAt` is the unix epoch timestamp of when the recording was ended.
+`stoppedAt` is the UNIX epoch timestamp of when the recording was ended.
 
 Both may be present and this means the recording was started at some point and stopped at a later date. If the recording is then restarted, it's possible for the `stoppedAt` to be before the `startedAt`.
 
@@ -195,7 +195,7 @@ data class HMSServerRecordingState(
 
 This represents that the room was set to be recorded when it was created and all sessions within it will always be recorded for archival by the server.
 
-`startedAt` is the unix epoch timestamp of when this recording was started. However server-side has a special case for recording. It is considered started when the current room's session has begun. A session is defined as the time from which the room goes from zero peers in it, to one, until the time at which the room contains no peers. (note: beam bots which join for recording will leave after a timeout if no other peers are present.)
+`startedAt` is the UNIX epoch timestamp of when this recording was started. However server-side has a special case for recording. It is considered started when the current room's session has begun. A session is defined as the time from which the room goes from zero peers in it, to one, until the time at which the room contains no peers. (note: beam bots which join for recording will leave after a timeout if no other peers are present.)
 
 Because the server side recording always begins when there's someone in the room the room creation time and this recording type's start time will be the same. Also there can't be a `stoppedAt` since that would mean the room has ended.
 
