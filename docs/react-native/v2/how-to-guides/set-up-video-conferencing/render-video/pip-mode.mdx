@@ -55,7 +55,7 @@ public class MainActivity extends ReactActivity {
 // You can also check if PIP is supported on device or not.
 const isPIPSupported = await hmsInstance.isPipModeSupported();
 
-const isEnabled = await hmsInstance.enablePipMode();
+const isEnabled = await hmsInstance.enterPipMode();
 if (isEnabled) {
     // App has entered into PIP Mode
     setPIPModeActive(true);
@@ -81,7 +81,7 @@ Actionable buttons like Mute/Unmute Audio/Video, Leave Room for local peers can 
 
 
 ```js
-const isEnabled = await hmsInstance?.enablePipMode({
+const isEnabled = await hmsInstance?.enterPipMode({
                           aspectRatio: [9, 16],   // for 9:16 aspect ratio
                           endButton: true,        // for showing/hiding leave room button
                           videoButton: true,      // for showing/hiding local Video button
