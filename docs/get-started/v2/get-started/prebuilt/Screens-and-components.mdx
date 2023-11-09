@@ -46,48 +46,48 @@ In an overlay view, the chat component overlays on top of video tiles, deliverin
 Enabling this feature allows the selected role to pin important chat messages on the chat component, making them visible to everyone.
 
 
-### Participant List
+#### Participant List
 Ensure participant list accessibility for roles that require visibility. In certain scenarios, such as large room viewers, there may be no need for them to view other participants, but Hosts or Broadcasters might find it essential to maintain oversight of the participant list. By default, the participant list is enabled for all roles across all templates.
 
-### Video Tile Layout
+#### Video Tile Layout
 100ms Prebuilt UI allows tweaks on its default grid layout and supports multiple video layouts.
 
-#### Enable local tile inset
+##### Enable local tile inset
 Enabling this makes the local peer's *(for the selected role)* tile in a smaller inset window as default, alternatively if it's disabled, the local tile will be part of the grid view. Join with at least two peers to preview this configuration in action.
 
-#### Prominent roles
+##### Prominent roles
 Defining one or more roles as prominent gives them higher tile view prominence for the selected role. For example:
 - For a 1:1 call, define Host as prominent tile for Guest and vice-versa. 
 - For a webinar, set Host as the prominent tile for all other roles. Every role would see Host as the primary tile in the room
 - For a mobile-first livestreaming view, set Broadcaster as prominent tile for every other role, including Broadcaster themselves.
 
-#### Can spotlight peer
+##### Can spotlight peer
 Allow this config for roles who can spotlight others or themselves in the room. Spotlighting a tile reflects for everyone in the room.
 
 <Note title ="Different in Prominence and Spotlight">
 Assigning a role as "prominent" for either themselves or other roles establishes a fixed layout that remains unchanged for the entire session. This is particularly well-suited for scenarios where a specific role needs to maintain a constant presence, as seen in webinars and livestreaming. Conversely, spotlighting either their own tile or the tiles of others permits specific participant tiles to temporarily take center stage within the session, allowing for more adaptable layout adjustments as needed.
 </Note>
 
-### Be Right Back (BRB)
+#### Be Right Back (BRB)
 Depending on your use case, allow roles to set themselves on BRB mode. If disabled, this component will not be visible to the selected role.
 
 
-### Emoji Reactions
+#### Emoji Reactions
 Enabling this for a role allows its peers to send emoji reactions in the room. 
 
-### Bring others on Stage
+#### Bring others on Stage
 Stage is a virtual space within a room that enables participants to actively engage with their audio and video, and publish it with a much larger audience. With the 'Bring on Stage' feature enabled, viewers who are not on stage can easily interact with the participants on stage, once they have been granted access to the stage.
 Enable Bring on stage for roles that require the ability to allow or deny stage requests from off-stage participants. By default, this feature is enabled for Hosts, Broadcasters and Co-broadcasters, while viewers with non-publishing roles can use the hand-raise option to request stage access. This component can extend its support to conferencing, webinars and livestreaming scenarios. However, if your use case does not require this feature, you can simply disable it to ensure a seamless experience for all users. 
 
-#### Bring on Stage Label
+##### Bring on Stage Label
 
 Customize text label that Hosts and Broadcasters will see when they receive on stage requests. The default text is "Bring to stage".
 
-#### Remove from Stage Label
+##### Remove from Stage Label
 
 Customize text label that Hosts and Broadcasters will see when they receive on stage requests. The default text is "Remove from stage".
 
-#### On Stage and Off Stage Role
+##### On Stage and Off Stage Role
 An off stage participant becomes an on stage participant once their stage access has been accepted. For instance, an off stage role, say Viewer requests a Broadcaster to go on stage. Once their request is accepted, the Viewer can transition to an on stage role, which could be a Viewer-on-stage, a Guest, or a Co-broadcaster. 
 
 Let's take a quick example to understand this better. 
