@@ -249,7 +249,7 @@ The room status should be checked in following two places -
 2. In the `onRoomUpdate(type: HMSRoomUpdate, hmsRoom: HMSRoom)` callback of `HMSUpdateListener`.
    The `HMSRoomUpdate` type will be `HMSRoomUpdate.HLS_STREAMING_STATE_UPDATED`.
 
-In most cases it's enough to take the url from the first of the variants like so:
+In most cases it's enough to take the URL from the first of the variants like so:
 
 ```kotlin
 val hlsUrl = room.hlsStreamingState?.variants?.get(0)?.hlsStreamUrl
