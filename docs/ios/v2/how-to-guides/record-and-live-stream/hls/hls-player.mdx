@@ -67,7 +67,7 @@ You should handle both cases by listening to onJoin and onRoomUpdate callbacks r
 
 ```swift
 
-// Case 1 - play the hls stream if room has an active hls url
+// Case 1 - play the hls stream if room has an active hls URL
 func on(join room: HMSRoom) {
   if let hlsUrl = room.hlsStreamingState.variants.first?.url {
     hmsPlayer.play(hlsUrl)
@@ -295,9 +295,9 @@ You instantiate `HMSHLSPlayerView()` instance to render the HLS stream from the 
 HMSHLSPlayerView()
 ```
 
-## How to play HLS stream when you have a url of hls stream
+## How to play HLS stream when you have a URL of hls stream
 
-You instantiate `HMSHLSPlayerView()` instance passing the url as parameter to render the HLS stream from the url.
+You instantiate `HMSHLSPlayerView()` instance passing the URL as parameter to render the HLS stream from the URL.
 ```swift
 HMSHLSPlayerView(url: /* pass stream url here */)
 ```

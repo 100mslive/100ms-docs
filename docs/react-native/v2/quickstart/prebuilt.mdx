@@ -198,7 +198,7 @@ npm install --save @100mslive/react-native-room-kit
 
 ```bash
 npm install @100mslive/react-native-hms
-  @100mslive/types-prebuilt@0.0.4
+  @100mslive/types-prebuilt@0.12.0
   @react-native-community/blur@^4.3.2
   @react-native-masked-view/masked-view@^0.2.9
   @shopify/flash-list@1.4.3
@@ -213,9 +213,9 @@ npm install @100mslive/react-native-hms
 Ensure that the final `package.json` file contains the following dependencies -
 
 ```json
-  "@100mslive/react-native-room-kit": "^0.0.4",
-  "@100mslive/react-native-hms": "^1.7.2",
-  "@100mslive/types-prebuilt": "^0.0.4",
+  "@100mslive/react-native-room-kit": "^1.0.3",
+  "@100mslive/react-native-hms": "^1.9.2",
+  "@100mslive/types-prebuilt": "^0.12.0",
   "@react-native-community/blur": "^4.3.2",
   "@react-native-masked-view/masked-view": "^0.2.9",
   "@shopify/flash-list": "1.4.3",
@@ -245,7 +245,7 @@ Ensure that the final `package.json` file contains the following dependencies -
   ```
   </Tab>
 
-Follow official installation steps of these libraries if you encounter any problem in setup.
+Follow the official installation steps of these libraries if you encounter any problems in setup.
 
 > Note: If you already have the setup for any of the listed package, then you may continue with your existing setup. If some problem occurs then try using specified version for the package.
 
@@ -288,7 +288,29 @@ After doing changes related to ScreenShare feature, To use screenshare feature o
   }}
 />
 ```
+### Prebuilt Properties 
 
+```js
+ <HMSPrebuilt
+      roomCode={roomCode}
+      options={{
+        userName: "John Appleseed",
+        userId: "My_Unique_UserId",    
+        ios: {
+            appGroup: 'group.rnroomkit',
+            preferredExtension: 'live.100ms.reactnative.RNExampleBroadcastUpload',
+        },
+      }}
+      onLeave={handleRoomLeave}
+      handleBackButton={isScreenFocused}
+      autoEnterPipMode={true}
+/>
+
+const handleRoomLeave: OnLeaveHandler = useCallback((reason) => {
+    console.log(':: Reason for Leaving the Room > ', reason);
+    navigation.navigate('HomeScreen');
+}, []);
+```
 
 ### Complete code example
 
