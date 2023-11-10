@@ -154,7 +154,7 @@ Released: `@100mslive/hms-video-store@0.10.5`, `@100mslive/react-sdk@0.8.5`, `@1
 
 ### Fixed:
 - High memory footprint issue
-- Black tile when reusing the same video element frequently e.g. ActiveSpeaker
+- Black tile when reusing the same video element frequently. For example ActiveSpeaker
 - Video not getting published when you turn on the camera just before join
 
 ## 2023-05-19
@@ -234,7 +234,7 @@ Released: `@100mslive/hms-video-store@0.9.0`, `@100mslive/react-sdk@0.7.0`
 - The SDK now handles auto subscribing/unsubscribing while [rendering video](../how--to-guides/set-up-video-conferencing/render-video/overview) based on the element's visibility. If Simulcast is enabled, the appropriate resolution based on the video element's dimensions will also be auto-selected. Note that this was already available for react-sdk via the useVideo hook. With this release, we've also added it for the core SDK.
 
 #### Breaking:
-- SDK now handles subscribing and unsubscribing to video based on the element's visibility. If you're using hmsActions.detachVideo function to unsubscribe to video for e.g. when it's not visible, you may have to pass the flag `autoManageVideo: false` in join config. This will avoid any conflict between SDK and your app's code by disabling SDK's functionality. For more details, please check our docs for [rendering video](../how--to-guides/set-up-video-conferencing/render-video/overview).
+- SDK now handles subscribing and unsubscribing to video based on the element's visibility. If you're using hmsActions.detachVideo function to unsubscribe to video for example when it's not visible, you may have to pass the flag `autoManageVideo: false` in join config. This will avoid any conflict between SDK and your app's code by disabling SDK's functionality. For more details, please check our docs for [rendering video](../how--to-guides/set-up-video-conferencing/render-video/overview).
 
 ## 2023-02-22
 
@@ -406,7 +406,7 @@ Released: `@100mslive/hms-video-store@0.3.4`, `@100mslive/react-sdk@0.1.4`
 
 -   `clearList` and `removeItem` actions in playlist
 -   `getContextType` in video plugin interface
--   joining without webrtc connection for hls stream viewer
+-   joining without WebRTC connection for hls stream viewer
 
 ## 2022-06-14
 
@@ -848,7 +848,7 @@ export interface PublishParams {
 #### Known Issues
 
 -   Safari on Mac gives echo with some wired headphones
--   With some bluetooth headphones(eg: OnePlus Bullets) with stereo output option, the default audioOutput doesn't work on windows.
+-   With some bluetooth headphones(for example OnePlus Bullets) with stereo output option, the default audioOutput doesn't work on windows.
     (Quick Fix: Change device to another option of same device)
 
 ## 2021-07-17
@@ -1056,7 +1056,7 @@ This release might still have bugs, some interfaces can change \(we will keep th
 
 This release has
 
--   Simplified SDK interfaces that can power a fully-featured video conferencing application
+-   Simplified SDK interfaces that can power a fully featured video conferencing application
     -   `join`
     -   `leave`
     -   `getPeers, getLocalPeer` for tracks/peers/other data
@@ -1066,6 +1066,6 @@ This release has
     -   Handling second order publish network degradations
     -   Detailed analytics
     -   Recording
--   Our sample app is currently a React edtech app to demonstrate how roles work, and also how our UI-components work. Documentation for these roles will be released soon
+-   Our sample app is currently a React ed-tech app to demonstrate how roles work, and also how our UI-components work. Documentation for these roles will be released soon
 -   Browser coverage is limited to latest versions of Chrome on desktop. We will improve this over the next few releases
--   Please contact @akash goswami in your Slack channel if you have any questions
+-   Please contact @Akash Goswami in your Slack channel if you have any questions

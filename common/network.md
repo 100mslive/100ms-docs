@@ -18,9 +18,9 @@ The usual recourse in these exceptions is to prompt a user action - "Grant permi
 
 ## Network disconnection/Switching networks
 
-Another set of common issues are minor network blips. Common causes are when a user moves from one room to another, or switches from wifi to data.
+Another set of common issues are minor network blips. Common causes are when a user moves from one room to another, or switches from Wi-Fi to data.
 
-100ms will send a notification within 10s of detecting a network disconnection and will automatically retry when connection is available upto 60s. After 60s, a terminal error is thrown to the client.
+100ms will send a notification within 10 s of detecting a network disconnection and will automatically retry when connection is available up to 60 s. After 60 s, a terminal error is thrown to the client.
 
 ## Network bandwidth limitation/large rooms
 
@@ -28,4 +28,4 @@ A common occurrence in large rooms, or constrained networks is dropped frames. T
 
 100ms will automatically prioritize connections if network limits are reached. This prioritization can be controlled by developers using the dashboard or 100ms APIs.
 
-eg. A developer can prioritize host's screenshare higher than guests' videos. In low bandwidth constraints, guests' videos will be turned off, while host's screenshare will remain.
+For example, a developer can prioritize host's screenshare higher than guests' videos. In low bandwidth constraints, guests' videos will be turned off, while host's screenshare will remain.
