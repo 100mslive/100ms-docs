@@ -791,14 +791,14 @@ Minimum between `width` and `height` should be in range [144, 1080] and Maximum 
 
 ### transcriptions object
 
-| Name             | Type     | Description                                                                                                                                                                | Required |
-| ---------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| name             | `string` | The name you can assign to identify transcription destination.                                                                                                             | Yes      |
-| modes            | `array`  | Array of modes for transcription. Valid values: [ `recorded`, `live` ] (recorded: Transcribe recording post call completion, live: Closed caption for live stream viewers) | No       |
-| role             | `string` | Indicates the role used to transcribe. Roles which are subscribed by the given role will be transcribed.                                                                   | Yes      |
-| outputModes      | `array`  | Array of output modes for transcript. Valid values: [ txt, srt, json ] (txt: Plain text, srt: SubRip text, json: Granular timestamped words and sentences)                  | No       |
-| customVocabulary | `array`  | Array of words that might be spoken during the call. This can consist of non-dictionary words like names, slang, abbreviations and domain specific words.                  | No       |
-| summary          | `object` | Object of type `summary`. This can be used to enable and configure summary.                                                                                                | No       |
+| Name             | Type     | Description                                                                                                                                                                      | Required |
+| ---------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| name             | `string` | The name you can assign to identify transcription destination.                                                                                                                   | Yes      |
+| modes            | `array`  | Array of modes for transcription. Valid values: [ `recorded`, `live` ] (recorded: Transcribe recording post call completion, live: Closed caption for live stream viewers)       | No       |
+| role             | `string` | Indicates the role used to transcribe. Roles which are subscribed by the given role will be transcribed.                                                                         | Yes      |
+| outputModes      | `array`  | Array of transcript output modes, valid for recorded mode. Valid values: [ txt, srt, json ] (txt: Plain text, srt: SubRip text, json: Granular timestamped words and sentences) | No       |
+| customVocabulary | `array`  | Array of words that might be spoken during the call. This can consist of non-dictionary words like names, slang, abbreviations and domain specific words.                        | No       |
+| summary          | `object` | Object of type `summary`. This can be used to enable and configure summary, valid for recorded mode.                                                                             | No       |
 
 #### transcriptions - summary object
 

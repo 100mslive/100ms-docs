@@ -116,13 +116,13 @@ curl --location --request POST 'https://api.100ms.live/v2/live-streams/room/<roo
 
 ### transcription
 
-| Name              | Type      | Description                                                                                                                                                                | Required |
-| ----------------- | --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| enabled           | `boolean` | Set this to `true` to enable transcription.                                                                                                                                | No       |
-| modes             | `array`   | Array of modes for transcription. Valid values: [ `recorded`, `live` ] (recorded: Transcribe recording post call completion, live: Closed caption for live stream viewers) | No       |
-| output_modes      | `array`   | Array of ouput modes for transcript. Valid values: [ txt, srt, json ] (txt: Plain text, srt: SubRip text, json: Granular timestamped words and sentences).                 | No       |
-| custom_vocabulary | `array`   | Array of words that might be spoken during the call. This can consist of non-dictionary words like names, slang, abbreviations and domain specific words.                  | No       |
-| summary           | `object`  | Object of type `summary`, This can be used to enable and configure summary.                                                                                                | No       |
+| Name              | Type      | Description                                                                                                                                                                      | Required |
+| ----------------- | --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| enabled           | `boolean` | Set this to `true` to enable transcription.                                                                                                                                      | No       |
+| modes             | `array`   | Array of modes for transcription. Valid values: [ `recorded`, `live` ] (recorded: Transcribe recording post call completion, live: Closed caption for live stream viewers)       | No       |
+| output_modes      | `array`   | Array of transcript output modes, valid for recorded mode. Valid values: [ txt, srt, json ] (txt: Plain text, srt: SubRip text, json: Granular timestamped words and sentences). | No       |
+| custom_vocabulary | `array`   | Array of words that might be spoken during the call. This can consist of non-dictionary words like names, slang, abbreviations and domain specific words.                        | No       |
+| summary           | `object`  | Object of type `summary`, This can be used to enable and configure summary, valid for recorded mode.                                                                             | No       |
 
 #### transcription - summary
 
