@@ -64,6 +64,7 @@ async stopHLS() {
     }
 }
 ```
+
 ## HLS State configuration
 
 Below explain what data you can expect from HLS state when you start or stop.
@@ -90,6 +91,41 @@ export interface HLSVariant {
     startedAt?: Date;
     initialisedAt?: Date;
     state?: HMSStreamingState;
+}
+
+```
+
+## Recording State configuration
+
+Below explain what data you can expect from RTMP state when you start or stop.
+
+```ts
+
+enum HMSRecordingState {
+    NONE = "none",
+    INITIALISED = "initialised",
+    STARTED = "started",
+    PAUSED = "paused",
+    RESUMED = "resumed",
+    STOPPED = "stopped",
+    FAILED = "failed"
+}
+
+// recording state
+export interface HMSHLSRecording {
+    running: boolean;
+    initialisedAt?: Date;
+    startedAt?: Date;
+    state?: HMSRecordingState;
+    error?: ServerError;
+    /**
+     * if the final output is one file or one file per hls layer
+     */
+    singleFilePerLayer?: boolean;
+    /**
+     * if video on demand needs to be turned on, false by default
+     */
+    hlsVod?: boolean;
 }
 
 ```
