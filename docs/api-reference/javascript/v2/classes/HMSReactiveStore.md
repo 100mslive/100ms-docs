@@ -106,7 +106,7 @@ all data related to the corresponding HMS Room.
 By default store.subscribe does not call the handler with the current state at time of subscription,
 this behaviour can be modified by calling this function. What it means is that instead of calling the
 handler only for changes which happen post subscription we'll also call it exactly once at the time
-of subscription with the current state. This behaviour is similar to that of BehaviourSubject in RxJS.
+of subscription with the current state. This behaviour is similar to that of BehaviourSubject in rxjs.
 This will be an irreversible change
 
 Note: you don't need this if you're using our react hooks, it takes care of this requirement.

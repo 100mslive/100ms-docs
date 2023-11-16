@@ -665,7 +665,7 @@ Send a plain text message to all the other participants in the room.
 | Name      | Type     | Description                                                       |
 | :-------- | :------- | :---------------------------------------------------------------- |
 | `message` | `string` | string message to broadcast                                       |
-| `type?`   | `string` | type of message. For example: image, video etc. - optional defaults to chat |
+| `type?`   | `string` | type of message eg: image, video etc. - optional defaults to chat |
 
 #### Returns
 
@@ -683,7 +683,7 @@ Send a plain text message to all the other participants in the room.
 | :-------- | :------- | :---------------------------------------------------------------- |
 | `message` | `string` |                                                                   |
 | `peerID`  | `string` | id of the peer to which message has to be sent                    |
-| `type?`   | `string` | type of message. For example: image, video etc. - optional defaults to chat |
+| `type?`   | `string` | type of message eg: image, video etc. - optional defaults to chat |
 
 #### Returns
 
@@ -701,7 +701,7 @@ Send a plain text message to all the other participants in the room.
 | :-------- | :--------- | :---------------------------------------------------------------- |
 | `message` | `string`   | string message to send                                            |
 | `roles`   | `string`[] | roles to which to send the message                                |
-| `type?`   | `string`   | type of message. For example: image, video etc. - optional defaults to chat |
+| `type?`   | `string`   | type of message eg: image, video etc. - optional defaults to chat |
 
 #### Returns
 
@@ -962,7 +962,7 @@ found in store, no change in store will take place.
 | Name         | Type      | Description                                                            |
 | :----------- | :-------- | :--------------------------------------------------------------------- |
 | `readStatus` | `boolean` | boolean value which you want to set as read flag for message/messages. |
-| `messageId?` | `string`  | message id whose read flag you want to set.                            |
+| `messageId?` | `string`  | message id whose read falg you want to set.                            |
 
 #### Returns
 
@@ -1013,7 +1013,7 @@ This can be used to mute/unmute a remote peer's track
 
 ▸ **setRemoteTracksEnabled**(`params`): `Promise`<`void`\>
 
-Use this to mute/unmute multiple tracks by source, role or type
+Use this to mute/unmute multipe tracks by source, role or type
 
 #### Parameters
 
