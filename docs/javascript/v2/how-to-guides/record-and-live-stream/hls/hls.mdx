@@ -64,6 +64,35 @@ async stopHLS() {
     }
 }
 ```
+## HLS State configuration
+
+Below explain what data you can expect from HLS state when you start or stop.
+
+```ts
+
+enum HMSStreamingState {
+    NONE = "none",
+    INITIALISED = "initialised",
+    STARTED = "started",
+    STOPPED = "stopped",
+    FAILED = "failed"
+}
+
+export interface HMSHLS {
+    running: boolean;
+    variants: Array<HLSVariant>;
+    error?: HMSException;
+}
+export interface HLSVariant {
+    url: string;
+    meetingURL?: string;
+    metadata?: string;
+    startedAt?: Date;
+    initialisedAt?: Date;
+    state?: HMSStreamingState;
+}
+
+```
 
 ## Current room status
 

@@ -67,6 +67,27 @@ async stop() {
 }
 
 ```
+## Recording/RTMP State configuration
+
+Below explain what data you can expect from RTMP/Recording state when you start or stop.
+
+```ts
+
+enum HMSStreamingState {
+    NONE = "none",
+    STARTED = "started",
+    STOPPED = "stopped",
+    FAILED = "failed"
+}
+
+interface HMSRTMP {
+    running: boolean;
+    startedAt?: Date;
+    state?: HMSStreamingState;
+    error?: HMSException;
+}
+
+```
 
 ## Current Recording/RTMP State
 
