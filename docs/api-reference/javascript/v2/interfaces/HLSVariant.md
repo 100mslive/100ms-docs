@@ -29,6 +29,12 @@ nav: '4.4'
 
 ---
 
+### state
+
+• `Optional` **state**: `HMSStreamingState`
+
+---
+
 ### url
 
 • **url**: `string`

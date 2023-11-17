@@ -665,7 +665,7 @@ Send a plain text message to all the other participants in the room.
 | Name      | Type     | Description                                                       |
 | :-------- | :------- | :---------------------------------------------------------------- |
 | `message` | `string` | string message to broadcast                                       |
-| `type?`   | `string` | type of message. For example: image, video etc. - optional defaults to chat |
+| `type?`   | `string` | type of message, for example image, video etc. - optional defaults to chat |
 
 #### Returns
 
@@ -683,7 +683,7 @@ Send a plain text message to all the other participants in the room.
 | :-------- | :------- | :---------------------------------------------------------------- |
 | `message` | `string` |                                                                   |
 | `peerID`  | `string` | id of the peer to which message has to be sent                    |
-| `type?`   | `string` | type of message. For example: image, video etc. - optional defaults to chat |
+| `type?`   | `string` | type of message, for example image, video etc. - optional defaults to chat |
 
 #### Returns
 
@@ -701,7 +701,7 @@ Send a plain text message to all the other participants in the room.
 | :-------- | :--------- | :---------------------------------------------------------------- |
 | `message` | `string`   | string message to send                                            |
 | `roles`   | `string`[] | roles to which to send the message                                |
-| `type?`   | `string`   | type of message. For example: image, video etc. - optional defaults to chat |
+| `type?`   | `string`   | type of message, for example: image, video etc. - optional defaults to chat |
 
 #### Returns
 
