@@ -67,6 +67,57 @@ async stop() {
 }
 
 ```
+## Recording State configuration
+
+
+```ts
+
+export enum HMSRecordingState {
+    NONE = "none",
+    STARTED = "started",
+    STOPPED = "stopped",
+    FAILED = "failed"
+}
+
+// recording state
+export interface HMSBrowserRecording {
+    running: boolean;
+    startedAt?: Date;
+    state?: HMSRecordingState;
+    error?: HMSException;
+}
+
+```
+
+## RTMP State configuration
+
+
+```ts
+
+export enum HMSStreamingState {
+    NONE = "none",
+    STARTED = "started",
+    STOPPED = "stopped",
+    FAILED = "failed"
+}
+// rtmp state
+export interface HMSRTMP {
+    running: boolean;
+    startedAt?: Date;
+    state?: HMSStreamingState;
+    error?: HMSException;
+}
+
+// recording state
+
+export interface HMSBrowserRecording {
+    running: boolean;
+    startedAt?: Date;
+    state?: HMSRecordingState;
+    error?: HMSException;
+}
+
+```
 
 ## Current Recording/RTMP State
 
