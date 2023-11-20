@@ -20,3 +20,9 @@ nav: '4.47'
 ### startedAt
 
 • `Optional` **startedAt**: `Date`
+
+---
+
+### state
+
+• `Optional` **state**: `HMSStreamingState`
