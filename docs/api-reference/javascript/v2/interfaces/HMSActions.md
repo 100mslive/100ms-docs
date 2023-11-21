@@ -154,10 +154,10 @@ pluginFrameRate is the rate at which the output plugin will do processing
 
 #### Parameters
 
-| Name               | Type             | Description    |
-| :----------------- | :--------------- | :------------- |
-| `plugin`           | `HMSVideoPlugin` | HMSVideoPlugin |
-| `pluginFrameRate?` | `number`         | number         |
+| Name               | Type                                                                       | Description    |
+| :----------------- | :------------------------------------------------------------------------- | :------------- |
+| `plugin`           | [`HMSVideoPlugin`](/api-reference/javascript/v2/interfaces/HMSVideoPlugin) | HMSVideoPlugin |
+| `pluginFrameRate?` | `number`                                                                   | number         |
 
 #### Returns
 
@@ -621,9 +621,9 @@ addPluginToAudioTrack
 
 #### Parameters
 
-| Name     | Type             |
-| :------- | :--------------- |
-| `plugin` | `HMSVideoPlugin` |
+| Name     | Type                                                                       |
+| :------- | :------------------------------------------------------------------------- |
+| `plugin` | [`HMSVideoPlugin`](/api-reference/javascript/v2/interfaces/HMSVideoPlugin) |
 
 #### Returns
 
@@ -662,10 +662,10 @@ Send a plain text message to all the other participants in the room.
 
 #### Parameters
 
-| Name      | Type     | Description                                                       |
-| :-------- | :------- | :---------------------------------------------------------------- |
-| `message` | `string` | string message to broadcast                                       |
-| `type?`   | `string` | type of message, for example image, video etc. - optional defaults to chat |
+| Name      | Type     | Description                                                                 |
+| :-------- | :------- | :-------------------------------------------------------------------------- |
+| `message` | `string` | string message to broadcast                                                 |
+| `type?`   | `string` | type of message. For example: image, video etc. - optional defaults to chat |
 
 #### Returns
 
@@ -679,11 +679,11 @@ Send a plain text message to all the other participants in the room.
 
 #### Parameters
 
-| Name      | Type     | Description                                                       |
-| :-------- | :------- | :---------------------------------------------------------------- |
-| `message` | `string` |                                                                   |
-| `peerID`  | `string` | id of the peer to which message has to be sent                    |
-| `type?`   | `string` | type of message, for example image, video etc. - optional defaults to chat |
+| Name      | Type     | Description                                                                 |
+| :-------- | :------- | :-------------------------------------------------------------------------- |
+| `message` | `string` |                                                                             |
+| `peerID`  | `string` | id of the peer to which message has to be sent                              |
+| `type?`   | `string` | type of message. For example: image, video etc. - optional defaults to chat |
 
 #### Returns
 
@@ -697,11 +697,11 @@ Send a plain text message to all the other participants in the room.
 
 #### Parameters
 
-| Name      | Type       | Description                                                       |
-| :-------- | :--------- | :---------------------------------------------------------------- |
-| `message` | `string`   | string message to send                                            |
-| `roles`   | `string`[] | roles to which to send the message                                |
-| `type?`   | `string`   | type of message, for example: image, video etc. - optional defaults to chat |
+| Name      | Type       | Description                                                                 |
+| :-------- | :--------- | :-------------------------------------------------------------------------- |
+| `message` | `string`   | string message to send                                                      |
+| `roles`   | `string`[] | roles to which to send the message                                          |
+| `type?`   | `string`   | type of message. For example: image, video etc. - optional defaults to chat |
 
 #### Returns
 
@@ -1192,7 +1192,7 @@ Toggle the camera between front and back if the both the camera's exist
 
 ### validateAudioPluginSupport
 
-▸ **validateAudioPluginSupport**(`plugin`): `HMSPluginSupportResult`
+▸ **validateAudioPluginSupport**(`plugin`): [`HMSPluginSupportResult`](/api-reference/javascript/v2/interfaces/HMSPluginSupportResult)
 
 To check the support of the plugin, based on browser, os and audio devices
 
@@ -1204,7 +1204,7 @@ To check the support of the plugin, based on browser, os and audio devices
 
 #### Returns
 
-`HMSPluginSupportResult`
+[`HMSPluginSupportResult`](/api-reference/javascript/v2/interfaces/HMSPluginSupportResult)
 
 **`See`**
 
@@ -1214,19 +1214,19 @@ HMSPluginSupportResult
 
 ### validateVideoPluginSupport
 
-▸ **validateVideoPluginSupport**(`plugin`): `HMSPluginSupportResult`
+▸ **validateVideoPluginSupport**(`plugin`): [`HMSPluginSupportResult`](/api-reference/javascript/v2/interfaces/HMSPluginSupportResult)
 
 To check the support of the plugin, based on browser, os and audio devices
 
 #### Parameters
 
-| Name     | Type             | Description    |
-| :------- | :--------------- | :------------- |
-| `plugin` | `HMSVideoPlugin` | HMSVideoPlugin |
+| Name     | Type                                                                       | Description    |
+| :------- | :------------------------------------------------------------------------- | :------------- |
+| `plugin` | [`HMSVideoPlugin`](/api-reference/javascript/v2/interfaces/HMSVideoPlugin) | HMSVideoPlugin |
 
 #### Returns
 
-`HMSPluginSupportResult`
+[`HMSPluginSupportResult`](/api-reference/javascript/v2/interfaces/HMSPluginSupportResult)
 
 **`See`**
 

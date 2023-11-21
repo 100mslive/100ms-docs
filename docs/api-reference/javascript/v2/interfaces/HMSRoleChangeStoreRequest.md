@@ -1,6 +1,6 @@
 ---
 title: HMSRoleChangeStoreRequest
-nav: '4.53'
+nav: '4.55'
 ---
 
 ## Properties

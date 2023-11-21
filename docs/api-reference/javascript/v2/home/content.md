@@ -11,6 +11,8 @@ nav: '1.1'
 - [HMSNotificationSeverity](/api-reference/javascript/v2/enums/HMSNotificationSeverity)
 - [HMSNotificationTypes](/api-reference/javascript/v2/enums/HMSNotificationTypes)
 - [HMSPlaylistType](/api-reference/javascript/v2/enums/HMSPlaylistType)
+- [HMSPluginUnsupportedTypes](/api-reference/javascript/v2/enums/HMSPluginUnsupportedTypes)
+- [HMSRecordingState](/api-reference/javascript/v2/enums/HMSRecordingState)
 - [HMSRoomState](/api-reference/javascript/v2/enums/HMSRoomState)
 - [HMSSimulcastLayer](/api-reference/javascript/v2/enums/HMSSimulcastLayer)
 - [HMSVideoPluginCanvasContextType](/api-reference/javascript/v2/enums/HMSVideoPluginCanvasContextType)
@@ -45,6 +47,7 @@ nav: '1.1'
 - [HMSDeviceChangeEventNotification](/api-reference/javascript/v2/interfaces/HMSDeviceChangeEventNotification)
 - [HMSException](/api-reference/javascript/v2/interfaces/HMSException)
 - [HMSExceptionNotification](/api-reference/javascript/v2/interfaces/HMSExceptionNotification)
+- [HMSFrameworkInfo](/api-reference/javascript/v2/interfaces/HMSFrameworkInfo)
 - [HMSGenericTypes](/api-reference/javascript/v2/interfaces/HMSGenericTypes)
 - [HMSHLS](/api-reference/javascript/v2/interfaces/HMSHLS)
 - [HMSLeaveRoomRequest](/api-reference/javascript/v2/interfaces/HMSLeaveRoomRequest)
@@ -65,6 +68,7 @@ nav: '1.1'
 - [HMSPlaylistItemNotification](/api-reference/javascript/v2/interfaces/HMSPlaylistItemNotification)
 - [HMSPlaylistSelection](/api-reference/javascript/v2/interfaces/HMSPlaylistSelection)
 - [HMSPlaylistSelector](/api-reference/javascript/v2/interfaces/HMSPlaylistSelector)
+- [HMSPluginSupportResult](/api-reference/javascript/v2/interfaces/HMSPluginSupportResult)
 - [HMSPoll](/api-reference/javascript/v2/interfaces/HMSPoll)
 - [HMSPollCreateParams](/api-reference/javascript/v2/interfaces/HMSPollCreateParams)
 - [HMSPollNotification](/api-reference/javascript/v2/interfaces/HMSPollNotification)
@@ -90,6 +94,7 @@ nav: '1.1'
 - [HMSStore](/api-reference/javascript/v2/interfaces/HMSStore)
 - [HMSTrackNotification](/api-reference/javascript/v2/interfaces/HMSTrackNotification)
 - [HMSTrackStats](/api-reference/javascript/v2/interfaces/HMSTrackStats)
+- [HMSVideoPlugin](/api-reference/javascript/v2/interfaces/HMSVideoPlugin)
 - [HMSVideoTrack](/api-reference/javascript/v2/interfaces/HMSVideoTrack)
 - [HMSVideoTrackSettings](/api-reference/javascript/v2/interfaces/HMSVideoTrackSettings)
 - [IHMSInteractivityCenter](/api-reference/javascript/v2/interfaces/IHMSInteractivityCenter)
@@ -1306,6 +1311,22 @@ Select the track ID of your local peer's primary video track
 #### Returns
 
 `undefined` \| `string`
+
+---
+
+### selectMessageByMessageID
+
+▸ **selectMessageByMessageID**(`id`): `OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, [`HMSMessage`](/api-reference/javascript/v2/interfaces/HMSMessage), (`res`: `Record`<`string`, [`HMSMessage`](/api-reference/javascript/v2/interfaces/HMSMessage)\>) => [`HMSMessage`](/api-reference/javascript/v2/interfaces/HMSMessage)\>
+
+#### Parameters
+
+| Name | Type     |
+| :--- | :------- |
+| `id` | `string` |
+
+#### Returns
+
+`OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, [`HMSMessage`](/api-reference/javascript/v2/interfaces/HMSMessage), (`res`: `Record`<`string`, [`HMSMessage`](/api-reference/javascript/v2/interfaces/HMSMessage)\>) => [`HMSMessage`](/api-reference/javascript/v2/interfaces/HMSMessage)\>
 
 ---
 

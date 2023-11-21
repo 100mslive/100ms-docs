@@ -1,6 +1,6 @@
 ---
 title: HMSScreenShareConfig
-nav: '4.56'
+nav: '4.58'
 ---
 
 Config to have control over screenshare being captured. Note that
