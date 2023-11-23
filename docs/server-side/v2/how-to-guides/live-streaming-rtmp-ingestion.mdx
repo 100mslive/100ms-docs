@@ -91,6 +91,8 @@ Stream key along with RTMP Ingest endpoint for a room can be generated and fetch
 
 <Tab id='fetching-stream-details-2'>
 
+**Stream Key APIs**
+
 1. Use the [Create Stream Key API](/server-side/v2/api-reference/stream-key/create-rtmp-stream-key) to create the stream key for a specific room. 
 
 2. Existing stream key for a room can be fetched using the [Get Stream Key API](/server-side/v2/api-reference/stream-key/get-rtmp-stream-key).  
@@ -136,13 +138,13 @@ Once the RTMP connection request is initiated from OBS/external application, the
 
 | Webhook                                                                                                | What does it signify                                                                                                                                                                                 |
 |---------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [`ingest.start.success`](/server-side/v2/how-to-guides/configure-webhooks/webhook#ingeststartsuccess)   | Connection with 100ms Ingest server is successfully established. Our server will internally initiate a request to start a live stream on the room.                                                   |
-| [`hls.started.success`](/server-side/v2/how-to-guides/configure-webhooks/webhook#hlsstartedsuccess)     | Live stream on the room has successfully started. Playback is active from this point onwards. Application can enable the viewer to join the room with the viewer role.                               |
-| [`ingest.start.failure`](/server-side/v2/how-to-guides/configure-webhooks/webhook#ingestfailure)        | Connection with 100ms Ingest server has failed. The exact reason can be inferred from the error code and error message                                                                               |
+| [`ingest.start.success`](/server-side/v2/how-to-guides/configure-webhooks/webhook#ingeststartsuccess)   | Connection with 100ms ingest server is successfully established. 100ms server will internally initiate a request to start a live stream on the room.                                                   |
+| [`hls.started.success`](/server-side/v2/how-to-guides/configure-webhooks/webhook#hlsstartedsuccess)     | Live stream on the room has successfully started. Playback is active from this point onwards. Application can enable the viewer to join the room with the 'viewer' role.                               |
+| [`ingest.start.failure`](/server-side/v2/how-to-guides/configure-webhooks/webhook#ingestfailure)        | Connection with 100ms ingest server has failed. The exact reason can be inferred from the error code and error message.                                                                               |
 | [`hls.failure`](/server-side/v2/how-to-guides/configure-webhooks/webhook#hlsfailure)                    | Any internal failure in the live stream start up process.                                                                                                                                            |
-| [`ingest.end.success`](/server-side/v2/how-to-guides/configure-webhooks/webhook#ingestendsuccess)       | Connection with 100ms Ingest has successfully terminated. This is sent on stopping the stream from OBS / external application. Our server will internally signal to stop the live stream on the room |
-| [`hls.stopped.success`](/server-side/v2/how-to-guides/configure-webhooks/webhook#hlsstoppedsuccess)     | Live Stream has stopped. Playback is not active from this point onwards                                                                                                                              |
-| [`hls.recording.success`](/server-side/v2/how-to-guides/configure-webhooks/webhook#hlsrecordingsuccess) | Recording for the live stream is successfully generated                                                                                                                                              |
+| [`ingest.end.success`](/server-side/v2/how-to-guides/configure-webhooks/webhook#ingestendsuccess)       | Connection with 100ms ingest server has been successfully terminated. This is sent on stopping the stream from OBS / external application. Our server will internally signal to stop the live stream on the room |
+| [`hls.stopped.success`](/server-side/v2/how-to-guides/configure-webhooks/webhook#hlsstoppedsuccess)     | Live stream has been successfully stopped. Playback is not active from this point onwards.                                                                                                                              |
+| [`hls.recording.success`](/server-side/v2/how-to-guides/configure-webhooks/webhook#hlsrecordingsuccess) | Recording of the live stream is successfully generated.                                                                                                                                              |
 
 > **Previewing your live stream**
 > 
@@ -173,8 +175,8 @@ The duration of  the live stream’s reconnection window can be configured using
 
 #### After the live stream
 Based on your live streaming use-case, you can choose to do any of the following after the live stream has ended.
-- Continue using the same room for your live streams. The older stream key and RTMP URL will be valid to start future live streams as well since they do not have an expiry.
-- Reset or disable the stream key for the given room.
+- Continue using the same room for your live streams. The older stream key and RTMP URL endpoint will be valid to start future live streams since they do not have an expiry.
+- Reset or disable the stream key for the given room. This can be done using the following methods.
     <Tabs id="reset-stream-key" items={['Dashboard' ,'REST APIs']} />
 
     <Tab id='reset-stream-key-0'>
