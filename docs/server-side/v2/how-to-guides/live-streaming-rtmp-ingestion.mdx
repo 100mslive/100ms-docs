@@ -20,7 +20,7 @@ This guide will help you to start a live stream in 100ms from OBS or any externa
 
 ### Create a Template
 
-The first step is to create a template which is suitable for RTMP media ingestion followed by live streaming through HLS.
+The first step is to create a template which is suitable for live streaming using RTMP Ingestion.
 
 1. On the 100ms Dashboard, click on ‘Create Template’.
 
@@ -43,14 +43,14 @@ The first step is to create a template which is suitable for RTMP media ingestio
 
 > **Note on editing an existing templates (Not recommended)**
 > 
-> Live Streaming over RTMP-In can also be enabled on creating new rooms with existing templates that have live streaming enabled. RTMP Stream keys can be generated on these  rooms using the steps mentioned below. However, this is not recommended as other modifications need to be made for the broadcaster role to join the room without going live from the browser. 
+> Live streaming over RTMP-In can also be enabled for rooms with existing templates that have live streaming enabled. However, this is not recommended as other modifications need to be made for the broadcaster role to join the room without going live from the browser. 
 > 
 
 ### Getting stream details
 
-Since the live stream is started for a specific room, a room needs to be created using the [Create Room API](/server-side/v2/api-reference/Rooms/create-via-api) or through the [100ms Dashboard](/server-side/v2/api-reference/Rooms/create-via-dashboard). Once a room is created, a stream key needs to be generated for the room. Using the stream key and the RTMP Ingest end point, any third party application can send a media stream to the room over RTMP. Once a stream key is generated, it remains valid until explicitly reset or disabled by the user.
+Since the live stream is started for a specific room, a room needs to be created using the [Create Room API](/server-side/v2/api-reference/Rooms/create-via-api) or through the [100ms Dashboard](/server-side/v2/api-reference/Rooms/create-via-dashboard). Once a room is created, a stream key needs to be generated for the room. Using the stream key and the RTMP Ingest endpoint (URL), any third party application can send a media stream to the room over RTMP. Once a stream key is generated, it remains valid until explicitly reset or disabled by the user.
 
-Stream key along with RTMP Ingest Endpoint for a room can be generated and fetched using the below methods.
+Stream key along with RTMP Ingest endpoint for a room can be generated and fetched using the below methods.
 
 <Tabs id="fetching-stream-details" items={['Dashboard - Joining a Room', 'Dashboard - Room Details' ,'REST APIs']} />
 
@@ -81,8 +81,6 @@ Stream key along with RTMP Ingest Endpoint for a room can be generated and fetch
 
 ![rtmp stream key functions](/docs/v2/rtmp-ingestion/rtmp-in-key-functions.png)
 
-To navigate to all the rooms under a particular template, click on ‘Templates’ section in the left menu on 100ms Dashboard and go to the desired template. Use the overflow menu in the top right to view all rooms under that template. 
-
 > **Note**
 >
 > 1. Stream keys and RTMP URL cannot be generated for disabled rooms. Learn more about managing room statuses [here](/server-side/v2/api-reference/Rooms/disable-or-enable).
@@ -107,9 +105,8 @@ To navigate to all the rooms under a particular template, click on ‘Templates�
 </Tab>
 
 
-
 ### Input stream details
-We’re using the example of OBS Studio although you can use any software that supports RTMP-Out.
+Once stream key and RTMP endpoint have been fetched and copied, these need to be inputted in a streaming software that supports RTMP-Out. We’ll be using OBS Studio for our example although you can use any software that supports RTMP-Out.
 
 1. Click on ‘**Settings**’ in the software interface.
 
@@ -132,12 +129,12 @@ Start your live stream directly from the broadcasting software. In case of OBS S
 
 > **Note on starting the live stream**
 > 
-> While starting a live stream with RTMP Ingest, do not use ‘Start live stream’ API or SDK functionality. The live stream will commence automatically upon a successful connection to 100ms Ingest servers by OBS or the external application.
+> While starting a live stream with RTMP Ingest, **do not use** ‘Start live stream’ API or SDK functionality. The live stream will commence automatically upon a successful connection to 100ms Ingest servers by OBS or the external application.
 >
 
 Once the RTMP connection request is initiated from OBS/external application, the following webhooks will be dispatched to indicate the progression of the live stream. 
 
-| Web hook                                                                                                | What does it signify                                                                                                                                                                                 |
+| Webhook                                                                                                | What does it signify                                                                                                                                                                                 |
 |---------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | [`ingest.start.success`](/server-side/v2/how-to-guides/configure-webhooks/webhook#ingeststartsuccess)   | Connection with 100ms Ingest server is successfully established. Our server will internally initiate a request to start a live stream on the room.                                                   |
 | [`hls.started.success`](/server-side/v2/how-to-guides/configure-webhooks/webhook#hlsstartedsuccess)     | Live stream on the room has successfully started. Playback is active from this point onwards. Application can enable the viewer to join the room with the viewer role.                               |
@@ -162,7 +159,7 @@ The interactivity between the broadcaster and the viewers will be very limited i
 #### Ending the live stream
 To instantly terminate the live stream, use 100ms SDK methods or [REST APIs](/server-side/v2/api-reference/live-streams/stop-live-stream-for-room), 
 
-On stopping the stream from OBS/external streaming application, only the RTMP connection to 100ms Ingestion servers will terminate. Note that this will merely stop the ingest from the external streaming application into 100ms room. **The live stream will NOT end** and continue to run with a disconnected slate shown in the playback until the reconnection window expires. The same behaviour applies when the external streaming application faces disconnection with 100ms Ingest servers due to any network interruptions.
+On stopping the stream from OBS / external streaming application, only the RTMP connection to 100ms ingestion servers will be terminate. Note that this will merely stop the ingest from the external streaming application into 100ms room. **The live stream will NOT end** and continue to run while a **'disconnection slate'** is shown in the playback until the reconnection window expires. The same behaviour applies when the external streaming application faces disconnection with 100ms Ingest servers due to any network interruptions.
 
 ![disconnection slate](/docs/v2/disconnection-slate.png)
 
@@ -170,7 +167,7 @@ The duration of  the live stream’s reconnection window can be configured using
 
 > **Note**
 > 
-> Any new RTMP connection initiated from OBS / external streaming application within the live stream’s reconnect window will be treated as a reconnection of ingest to the existing live stream. Once the reconnection is established successfully,  the disconnection slate in the live stream will be replaced with the incoming feed from the broadcaster. 
+> Any new RTMP connection initiated from OBS or another streaming app while the live stream is still trying to reconnect, it will be seen as a reconnection attempt to the existing live stream. Once the reconnection is successful, the "disconnection slate" in the live stream will be replaced by the incoming feed from the broadcaster.
 >
 
 
