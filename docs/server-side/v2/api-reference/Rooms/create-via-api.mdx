@@ -15,8 +15,7 @@ curl --location --request POST 'https://api.100ms.live/v2/rooms' \
 --data-raw '{
     "name": "new-room-1662723668",
     "description": "This is a sample description for the room",
-    "template_id": "<template_id of the template you wish to associate with the room>",
-    "polls": ["631b2654f771854d9bf633dg", "631b2654f771854d9bf633dh"] 
+    "template_id": "<template_id of the template you wish to associate with the room>"
 }'
 ```
 
@@ -38,8 +37,7 @@ curl --location --request POST 'https://api.100ms.live/v2/rooms' \
     "template": "sample-template-name",
     "region": "us",
     "created_at": "2022-09-09T11:41:08.082Z",
-    "updated_at": "2022-09-09T11:41:08.074Z",
-    "polls": ["631b2654f771854d9bf633dg", "631b2654f771854d9bf633dh"] 
+    "updated_at": "2022-09-09T11:41:08.074Z"
 }
 ```
 
@@ -68,7 +66,7 @@ curl --location --request POST 'https://api.100ms.live/v2/rooms' \
 | :---------- | :-------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
 | enabled     | `boolean` | Enable SFU recording. Disabled by default. <br/><br/> **Note:** This argument is only applicable to enable/disable [SFU recording](/server-side/v2/Destinations/recording). Refer to [RTMP Streaming & Browser Recording](/server-side/v2/api-reference/external-streams/overview) guide for other options.    | No       |
 | upload_info | `object`  | Object of type `upload_info`. This object contains information on recordings storage location. <br/><br/>If you want to store recording with 100ms, and not use your own storage (s3/gs/oss), don't add this to the object. <br/><br/>Check the [upload_info object](#upload-info-arguments) below for more information. | No       |
-| polls  | Array of poll ids that this room will have.                                                                                                                                                                                                                                                                                                                                                    | No |
+| polls  |  `array` | Array of poll ids that this room will have.                                                                                                                                                                                                                                                                                                                                                    | No |
 
 
 `recording_info` in the room acts as an atomic property. It depends on the recording settings defined in a template as below:
