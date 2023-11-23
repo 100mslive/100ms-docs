@@ -3,16 +3,15 @@ title: Update polls via API
 nav: 3.84
 ---
 
-This endpoint is used to update polls. A recommended way is to provide a list of questions while creating poll, then update those questions by modifying them using update/delete question/option API.
+This endpoint is used to update polls.
 
-## Understand sub-objects hierarchy
 
 <PostRequest title="https://api.100ms.live/v2/polls/<poll_id>" />
 
 <Request id="req-0">
 
 ```bash
-curl --location --request POST 'https://api.100ms.live/v2/polls/<poll_id>' \
+curl --location --request POST 'https://api.100ms.live/v2/polls/655bffeecd34739a72637305' \
 --header 'Authorization: Bearer <management_token>' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -254,3 +253,9 @@ curl --location --request POST 'https://api.100ms.live/v2/polls/<poll_id>' \
 | index | `int`    | unique index for option       | No       |
 | text   | `string` | option index               | No       |
 | weight  | `int` | weight for the option           | No       |
+
+## Path parameters
+
+| Name               | Description                                                                                   |
+| :-----------------  :------- |
+| poll_id <br/>         | poll id       |

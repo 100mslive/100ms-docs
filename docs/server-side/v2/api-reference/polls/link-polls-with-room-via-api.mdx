@@ -3,107 +3,19 @@ title: Link room with polls
 nav: 3.82
 ---
 
-This endpoint is used to create polls. A recommended way is to provide a list of questions while creating poll, then update those questions by modifying them using update/delete question/option API.
+This endpoint is used to link rooms with polls. Polls can be linked when creating or updating rooms. These polls will be auto started at session start if start = auto.
 
-## Understand sub-objects hierarchy
 
-<PostRequest title="https://api.100ms.live/v2/polls" />
+<PostRequest title="https://api.100ms.live/v2/rooms" />
 
 <Request id="req-0">
 
 ```bash
-curl --location --request POST 'https://api.100ms.live/v2/polls' \
+curl --location --request POST 'https://api.100ms.live/v2/rooms' \
 --header 'Authorization: Bearer <management_token>' \
 --header 'Content-Type: application/json' \
 --data-raw '{
-    "title": "first poll",
-    "duration": 235,
-    "anonymous": true,
-    "mode": "userid",
-    "type": "poll",
-    "start": "auto",
-    "questions": [
-        {
-            "index": 1,
-            "text": "q1",
-            "format": "text",
-            "attachment": [
-                {
-                    "type": "mimetype",
-                    "url": "url"
-                }
-            ],
-            "skippable": true,
-            "duration": 0,
-            "once": false,
-            "weight": 2,
-            "answer_min_len": 1,
-            "answer_max_len": 1024,
-            "type": "single-choice",
-            "answer": {
-                "hidden": false,
-                "options": [
-                    1,
-                    2
-                ],
-                "text": "optoin1",
-                "case": false,
-                "trim": true
-            },
-            "options": [
-                {
-                    "index": 1,
-                    "text": "optoin1",
-                    "weight": 1
-                },
-                {
-                    "index": 2,
-                    "text": "optoin1",
-                    "weight": 1
-                }
-            ]
-        },
-        {
-            "index": 2,
-            "text": "q2",
-            "format": "text",
-            "attachment": [
-                {
-                    "type": "mimetype",
-                    "url": "url"
-                }
-            ],
-            "skippable": true,
-            "duration": 0,
-            "once": false,
-            "weight": 1,
-            "answer_min_len": 1,
-            "answer_max_len": 1024,
-            "type": "single-choice",
-            "answer": {
-                "hidden": false,
-                "options": [
-                    1,
-                    2
-                ],
-                "text": "optoin1",
-                "case": false,
-                "trim": true
-            },
-            "options": [
-                {
-                    "index": 1,
-                    "text": "optoin1",
-                    "weight": 1
-                },
-                {
-                    "index": 2,
-                    "text": "optoin1",
-                    "weight": 1
-                }
-            ]
-        }
-    ]
+    "polls": ["655bffeecd34739a72637305"]
 }'
 ```
 
@@ -113,94 +25,22 @@ curl --location --request POST 'https://api.100ms.live/v2/polls' \
 
 ```json
 {
-    "id": "
-    "title": "first poll",
-    "duration": 235,
-"anonymous": true,
-    "mode": "userid",
-    "type": "poll",
-    "start": "auto",
-    "questions": [
-    {
-            "index": 1,
-            "text": "q1",
-            "format": "text",
-            "attachment": [
-                {
-                    "type": "mimetype",
-                    "url": "url"
-                }
-            ],
-            "skippable": true,
-            "duration": 0,
-            "once": false,
-            "weight": 2,
-            "answer_min_len": 1,
-            "answer_max_len": 1024,
-            "type": "single-choice",
-            "answer": {
-                "hidden": false,
-                "options": [
-                    1,
-                    2
-                ],
-                "text": "optoin1",
-                "case": false,
-                "trim": true
-            },
-            "options": [
-                {
-                    "index": 1,
-                    "text": "optoin1",
-                    "weight": 1
-                },
-                {
-                    "index": 2,
-                    "text": "optoin1",
-                    "weight": 1
-                }
-            ]
-        },
-        {
-            "index": 2,
-            "text": "q2",
-            "format": "text",
-            "attachment": [
-                {
-                    "type": "mimetype",
-                    "url": "url"
-                }
-            ],
-            "skippable": true,
-            "duration": 0,
-            "once": false,
-            "weight": 1,
-            "answer_min_len": 1,
-            "answer_max_len": 1024,
-            "type": "single-choice",
-            "answer": {
-                "hidden": false,
-                "options": [
-                    1,
-                    2
-                ],
-                "text": "optoin1",
-                "case": false,
-                "trim": true
-            },
-            "options": [
-                {
-                    "index": 1,
-                    "text": "optoin1",
-                    "weight": 1
-                },
-                {
-                    "index": 2,
-                    "text": "optoin1",
-                    "weight": 1
-                }
-            ]
-        }
+    "id": "655bffeecd34739a72637305",
+    "name": "d619124b-e587-45be-bf02-13126b3782f4",
+    "enabled": true,
+    "description": "",
+    "customer_id": "606ee2af994e65fe1fe8c8ae",
+    "app_id": "606ee2af994e65fe1fe8c8b0",
+    "recording_info": null,
+    "template_id": "61671d6ed1ac808524613859",
+    "template": "default_videoconf_de9ef8ab-91e2-4f1b-b1e8-7d08511c0520",
+    "region": "in",
+    "created_at": "2023-11-21T00:55:10.976Z",
+    "updated_at": "2023-11-21T04:55:10.916472015Z",
+    "customer": "606ee2af994e65fe1fe8c8ae",
+    "large_room": false,
+    "polls": [
+        "655c37fa36031e687dc28b0c"
     ]
 }
 ```
@@ -211,46 +51,5 @@ curl --location --request POST 'https://api.100ms.live/v2/polls' \
 
 | Name               | Type      | Description                                                                                                                                                                                                                                                                                                                                | Required |
 | :----------------- | :-------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| title <br/>         | `string`  | title for poll.<br/> | No       |
-| duration <br/>        | `int`  | number of second for which poll is active after start, 0 means poll can only be stopped by command or session end                                                                                                                                                                                                   | No       |
-| anonymous <br/>     | `bool`  | poll is anonymous, peer id or user id is not stored, default: false                                                                                                                                                                                                                                                                                                         | No       |
-| mode <br/> | `string`  | polling mode, userid, peerid, default: userid                                                                                                                                                                       | No       |
-| type <br/> | `string`  | type = quiz or poll, default=poll.                                                                                                                                                                       | No       |
-| start <br/> | `string`  | auto, manual, default=auto                                                                                                                                                                       | No       |
-| questions <br/> | `array`  | array of questions                                                                                                                                                                      | No       |
+| polls <br/>         | `array`  | list of polls ids to link to room.<br/> | No       |
 
-
-## question object
-
-| Name            | Type     | Description                                                                                                                                                                                                                                                    | Required |
-| --------------- | :------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| index            | `int` | unique index of question                                                                                                                                                                                   | No       |
-| text   | `string` | Publish parameters for this role. <br/><br/>Object of type [publishParams](#publishparams-object) with the collection of objects such as `allowed`, `audio`, `video`, `screen`, etc                                                                            | No       |
-| format | `string` | text format, default text                                                      | No       |
-| attachment     | `array` | list of URLs for attachement                                                                           | No       |
-| skippable        | `bool`    | true if question can be skipped, default: true     | No       |
-| duration    | `int`    | number of seconds for which this question will be shown | No       |
-| once   | `bool` | if true the response can not be updated, default: false                                | No       |
-| weight | `int` | weight for the question, default: 1                                              | No       |
-| answer_min_len     | `int` | minimum length for short/long answers                                    | No       |
-| answer_max_len        | `int`    | maximum length for short/long answers     | No       |
-| answer    | `object`    | answer object  | No       |
-| options   | `array` | options object         | No       |
-
-### answer object
-
-| Name    | Type     | Description                                                            | Required |
-| :------ | :------- | :--------------------------------------------------------------------- | :------- |
-| hidden | `bool`  | if true answer will not be returned when poll is running | No       |
-| options   | `array` | list of options that shoould be in answer                                              | No       |
-| text   | `string` | answer text for answer.                                        | No       |
-| case  | `bool` | if false case is ignored when comparing.                                  | No       |
-| trim  | `bool` | if true, empty space is trimmed from start and end of asnwer.                               | No       |
-
-#### option object
-
-| Name    | Type     | Description                                                      | Required |
-| :------ | :------- | :-------------------------------------------------------------- |  :------- |
-| index | `int`    | unique index for option       | No       |
-| text   | `string` | option index               | No       |
-| weight  | `int` | weight for the option           | No       |
