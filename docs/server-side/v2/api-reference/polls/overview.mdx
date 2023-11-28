@@ -3,9 +3,22 @@ title: Polls Overview
 nav: 3.8
 ---
 
-Polls and quizzes can be created/updated using these APIs. A recommended way to create a poll is to provide a list of questions while creating poll, then update those questions by modifying them using update/delete question/option API. To fetch results/responses use get results/result and response/responses APIs. 
+The Poll API on the server side allows you to create, manage, and participate in polls and quizzes. Polls are an effective way to gather opinions, feedback, and insights from a group of people in a quick and convenient manner. With the Polls APIs you can create polls and gather information about polls sessions, results and responses.
 
-To enable auto start of polls and to import/link polls in a room, use rooms update api with polls field.
+This feature can also be used to create quizzes. Under the hood, quizzes are like polls where questions have right or wrong answers.
+
+This document provides guidance on how to use the Poll APIs to create a poll, update polls, fetch results, responses and sessions.
+
+![PollAPI](/docs/v2/pollsapi.png)
+
+
+
+Polls and quizzes can be created/updated using these APIs. 
+A recommended way to create a poll is to provide a list of questions while [creating poll](/server-side/v2/api-reference/polls/create-polls-via-api), then update those questions by modifying them using [update question](/server-side/v2/api-reference/polls/update-polls-question-via-api)/[delete question](/server-side/v2/api-reference/polls/delete-polls-question-via-api) or update/delete opions API. 
+
+To fetch results/responses use get results/result and response/responses APIs. 
+
+To enable auto start of polls and to [import/link](/server-side/v2/api-reference/polls/link-polls-with-room-via-api) polls in a room, use rooms update/create api with polls field.
 
 ## Postman collection
 
