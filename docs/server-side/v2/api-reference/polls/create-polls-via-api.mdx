@@ -3,11 +3,11 @@ title: Create/Update polls via API
 nav: 3.81
 ---
 
-# Create polls 
+## Create polls 
 
 This endpoint is used to create polls. Using this polls can be created that can be later linked to rooms for autostart or start by sdk.
 
-A recommended way to create a poll is to provide a list of questions while [creating poll](/server-side/v2/api-reference/polls/create-polls-via-api), then update those questions by modifying them using [update question](/server-side/v2/api-reference/polls/update-polls-question-via-api)/[delete question](/server-side/v2/api-reference/polls/delete-polls-question-via-api) or update/delete opions API.
+A recommended way to create a poll is to provide a list of questions while creating poll, then update those questions by modifying them using update question/delete question or update/delete opions API.
 
 <PostRequest title="https://api.100ms.live/v2/polls" />
 
@@ -209,56 +209,8 @@ curl --location --request POST 'https://api.100ms.live/v2/polls' \
 
 </ResponseBox>
 
-## Main arguments
 
-| Name               | Type      | Description                                                                                                                                                                                                                                                                                                                                | Required |
-| :----------------- | :-------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| title <br/>         | `string`  | title for poll.<br/> | No       |
-| duration <br/>        | `int`  | number of second for which poll is active after start, 0 means poll can only be stopped by command or session end                                                                                                                                                                                                   | No       |
-| anonymous <br/>     | `bool`  | poll is anonymous, peer id or user id is not stored, default: false                                                                                                                                                                                                                                                                                                         | No       |
-| mode <br/> | `string`  | polling mode, userid, peerid, default: userid                                                                                                                                                                       | No       |
-| type <br/> | `string`  | type = quiz or poll, default=poll.                                                                                                                                                                       | No       |
-| start <br/> | `string`  | auto, manual, default=auto                                                                                                                                                                       | No       |
-| questions <br/> | `array`  | array of questions                                                                                                                                                                      | No       |
-
-
-## question object
-
-| Name            | Type     | Description                                                                                                                                                                                                                                                    | Required |
-| --------------- | :------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| index            | `int` | unique index of question                                                                                                                                                                                   | No       |
-| text   | `string` | Publish parameters for this role. <br/><br/>Object of type [publishParams](#publishparams-object) with the collection of objects such as `allowed`, `audio`, `video`, `screen`, etc                                                                            | No       |
-| format | `string` | text format, default text                                                      | No       |
-| attachment     | `array` | list of URLs for attachement                                                                           | No       |
-| skippable        | `bool`    | true if question can be skipped, default: true     | No       |
-| duration    | `int`    | number of seconds for which this question will be shown | No       |
-| once   | `bool` | if true the response can not be updated, default: false                                | No       |
-| weight | `int` | weight for the question, default: 1                                              | No       |
-| answer_min_len     | `int` | minimum length for short/long answers                                    | No       |
-| answer_max_len        | `int`    | maximum length for short/long answers     | No       |
-| answer    | `object`    | answer object  | No       |
-| options   | `array` | options object         | No       |
-
-### answer object
-
-| Name    | Type     | Description                                                            | Required |
-| :------ | :------- | :--------------------------------------------------------------------- | :------- |
-| hidden | `bool`  | if true answer will not be returned when poll is running | No       |
-| options   | `array` | list of options that shoould be in answer                                              | No       |
-| text   | `string` | answer text for answer.                                        | No       |
-| case  | `bool` | if false case is ignored when comparing.                                  | No       |
-| trim  | `bool` | if true, empty space is trimmed from start and end of asnwer.                               | No       |
-
-#### option object
-
-| Name    | Type     | Description                                                      | Required |
-| :------ | :------- | :-------------------------------------------------------------- |  :------- |
-| index | `int`    | unique index for option       | No       |
-| text   | `string` | option index               | No       |
-| weight  | `int` | weight for the option           | No       |
-
-
-# Update polls
+## Update polls
 
 This endpoint is used to update polls. Given poll will be rewritten with new information.
 
@@ -463,13 +415,13 @@ curl --location --request POST 'https://api.100ms.live/v2/polls/655bffeecd34739a
 
 </ResponseBox>
 
-## Path parameters
+### Path parameters
 
 | Name               | Description                                                                                   |
 | :-----------------  |:------- |
 | poll_id <br/>         | poll id       |
 
-# Update polls question
+## Update polls question
 
 This endpoint is used to update polls question via API. Given question_id will be rewritten using new information.
 
@@ -572,7 +524,7 @@ curl --location --request POST 'https://api.100ms.live/v2/polls/655bffeecd34739a
 
 </ResponseBox>
 
-## Path parameters
+### Path parameters
 
 | Name               | Description                                                                                   |
 | :----------------- | :------- |
@@ -580,7 +532,7 @@ curl --location --request POST 'https://api.100ms.live/v2/polls/655bffeecd34739a
 | question_id <br/>        | question_id starting from 1    |
 
 
-# Update polls option
+## Update polls option
 
 This endpoint is used to update polls option via API. Given option_id will be rewritten with new infromation.
 
@@ -613,7 +565,7 @@ curl --location --request POST 'https://api.100ms.live/v2/polls/655bffeecd34739a
 
 </ResponseBox>
 
-## Path parameters
+### Path parameters
 
 | Name               | Description                                                                                   |
 | :-----------------  |:------- |
@@ -621,7 +573,7 @@ curl --location --request POST 'https://api.100ms.live/v2/polls/655bffeecd34739a
 | question_id <br/>        | question_id starting from 1    |
 | option_id <br/>     | option_id starting from 1       |
 
-# Delete polls question
+## Delete polls question
 
 This endpoint is used to delete polls question. This option can be used if you know which question indexes to delete. Other questions are re-indexed when the given question is deleted i.e. larger indexes are pushed one index backwards.
 
@@ -641,14 +593,14 @@ curl --location --request DELETE 'https://api.100ms.live/v2/polls/655bffeecd3473
 
 </ResponseBox>
 
-## Path parameters
+### Path parameters
 
 | Name               | Description                                                                                   |
 | :----------------- | :------- |
 | poll_id <br/>         | poll id       |
 | question_id <br/>        | question_id starting from 1    |
 
-# Delete polls option
+## Delete polls option
 
 
 This endpoint is used to delete polls option. This option can be used if you know which option indexes to delete. Other options are re-indexed when the given option is deleted i.e. larger indexes are pushed one index backwards.
@@ -669,7 +621,7 @@ curl --location --request DELETE 'https://api.100ms.live/v2/polls/655bffeecd3473
 
 </ResponseBox>
 
-## Path parameters
+### Path parameters
 
 | Name               | Description                                                                                   |
 | :----------------- |  :------- |
