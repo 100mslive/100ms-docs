@@ -1,7 +1,9 @@
 ---
-title: Create polls via API
+title: Create/Update polls via API
 nav: 3.81
 ---
+
+# Create polls 
 
 This endpoint is used to create polls. Using this polls can be created that can be later linked to rooms for autostart or start by sdk.
 
@@ -254,3 +256,424 @@ curl --location --request POST 'https://api.100ms.live/v2/polls' \
 | index | `int`    | unique index for option       | No       |
 | text   | `string` | option index               | No       |
 | weight  | `int` | weight for the option           | No       |
+
+
+# Update polls
+
+This endpoint is used to update polls. Given poll will be rewritten with new information.
+
+
+<PostRequest title="https://api.100ms.live/v2/polls/<poll_id>" />
+
+<Request id="req-0">
+
+```bash
+curl --location --request POST 'https://api.100ms.live/v2/polls/655bffeecd34739a72637305' \
+--header 'Authorization: Bearer <management_token>' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "title": "first poll",
+    "duration": 235,
+    "anonymous": true,
+    "mode": "userid",
+    "type": "poll",
+    "start": "auto",
+    "questions": [
+        {
+            "index": 1,
+            "text": "q1",
+            "format": "text",
+            "attachment": [
+                {
+                    "type": "mimetype",
+                    "url": "url"
+                }
+            ],
+            "skippable": true,
+            "duration": 0,
+            "once": false,
+            "weight": 2,
+            "answer_min_len": 1,
+            "answer_max_len": 1024,
+            "type": "single-choice",
+            "answer": {
+                "hidden": false,
+                "options": [
+                    1,
+                    2
+                ],
+                "text": "optoin1",
+                "case": false,
+                "trim": true
+            },
+            "options": [
+                {
+                    "index": 1,
+                    "text": "optoin1",
+                    "weight": 1
+                },
+                {
+                    "index": 2,
+                    "text": "optoin1",
+                    "weight": 1
+                }
+            ]
+        },
+        {
+            "index": 2,
+            "text": "q2",
+            "format": "text",
+            "attachment": [
+                {
+                    "type": "mimetype",
+                    "url": "url"
+                }
+            ],
+            "skippable": true,
+            "duration": 0,
+            "once": false,
+            "weight": 1,
+            "answer_min_len": 1,
+            "answer_max_len": 1024,
+            "type": "single-choice",
+            "answer": {
+                "hidden": false,
+                "options": [
+                    1,
+                    2
+                ],
+                "text": "optoin1",
+                "case": false,
+                "trim": true
+            },
+            "options": [
+                {
+                    "index": 1,
+                    "text": "optoin1",
+                    "weight": 1
+                },
+                {
+                    "index": 2,
+                    "text": "optoin1",
+                    "weight": 1
+                }
+            ]
+        }
+    ]
+}'
+```
+
+</Request>
+
+<ResponseBox id="res-0" status="200 OK">
+
+```json
+{
+    "id": "
+    "title": "first poll",
+    "duration": 235,
+"anonymous": true,
+    "mode": "userid",
+    "type": "poll",
+    "start": "auto",
+    "questions": [
+    {
+            "index": 1,
+            "text": "q1",
+            "format": "text",
+            "attachment": [
+                {
+                    "type": "mimetype",
+                    "url": "url"
+                }
+            ],
+            "skippable": true,
+            "duration": 0,
+            "once": false,
+            "weight": 2,
+            "answer_min_len": 1,
+            "answer_max_len": 1024,
+            "type": "single-choice",
+            "answer": {
+                "hidden": false,
+                "options": [
+                    1,
+                    2
+                ],
+                "text": "optoin1",
+                "case": false,
+                "trim": true
+            },
+            "options": [
+                {
+                    "index": 1,
+                    "text": "optoin1",
+                    "weight": 1
+                },
+                {
+                    "index": 2,
+                    "text": "optoin1",
+                    "weight": 1
+                }
+            ]
+        },
+        {
+            "index": 2,
+            "text": "q2",
+            "format": "text",
+            "attachment": [
+                {
+                    "type": "mimetype",
+                    "url": "url"
+                }
+            ],
+            "skippable": true,
+            "duration": 0,
+            "once": false,
+            "weight": 1,
+            "answer_min_len": 1,
+            "answer_max_len": 1024,
+            "type": "single-choice",
+            "answer": {
+                "hidden": false,
+                "options": [
+                    1,
+                    2
+                ],
+                "text": "optoin1",
+                "case": false,
+                "trim": true
+            },
+            "options": [
+                {
+                    "index": 1,
+                    "text": "optoin1",
+                    "weight": 1
+                },
+                {
+                    "index": 2,
+                    "text": "optoin1",
+                    "weight": 1
+                }
+            ]
+        }
+    ]
+}
+```
+
+</ResponseBox>
+
+## Path parameters
+
+| Name               | Description                                                                                   |
+| :-----------------  |:------- |
+| poll_id <br/>         | poll id       |
+
+# Update polls question
+
+This endpoint is used to update polls question via API. Given question_id will be rewritten using new information.
+
+<PostRequest title="https://api.100ms.live/v2/polls/<poll_id>/questions/<question_id>" />
+
+<Request id="req-0">
+
+```bash
+curl --location --request POST 'https://api.100ms.live/v2/polls/655bffeecd34739a72637305/questions/1' \
+--header 'Authorization: Bearer <management_token>' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "index": 1,
+    "text": "q1",
+    "format": "text",
+    "attachment": [
+        {
+            "type": "mimetype",
+            "url": "url"
+        }
+    ],
+    "skippable": true,
+    "duration": 0,
+    "once": false,
+    "weight": 2,
+    "answer_min_len": 1,
+    "answer_max_len": 1024,
+    "type": "single-choice",
+    "answer": {
+        "hidden": false,
+        "options": [
+            1,
+            2
+        ],
+        "text": "optoin1",
+        "case": false,
+        "trim": true
+    },
+    "options": [
+        {
+            "index": 1,
+            "text": "optoin1",
+            "weight": 1
+        },
+        {
+            "index": 2,
+            "text": "optoin1",
+            "weight": 1
+        }
+    ]
+}'
+```
+
+</Request>
+
+<ResponseBox id="res-0" status="200 OK">
+
+```json
+{
+    "index": 1,
+    "text": "q1",
+    "format": "text",
+    "attachment": [
+        {
+            "type": "mimetype",
+            "url": "url"
+        }
+    ],
+    "skippable": true,
+    "duration": 0,
+    "once": false,
+    "weight": 2,
+    "answer_min_len": 1,
+    "answer_max_len": 1024,
+    "type": "single-choice",
+    "answer": {
+        "hidden": false,
+        "options": [
+            1,
+            2
+        ],
+        "text": "optoin1",
+        "case": false,
+        "trim": true
+    },
+    "options": [
+        {
+            "index": 1,
+            "text": "optoin1",
+            "weight": 1
+        },
+        {
+            "index": 2,
+            "text": "optoin1",
+            "weight": 1
+        }
+    ]
+}'
+```
+
+</ResponseBox>
+
+## Path parameters
+
+| Name               | Description                                                                                   |
+| :----------------- | :------- |
+| poll_id <br/>         | poll id       |
+| question_id <br/>        | question_id starting from 1    |
+
+
+# Update polls option
+
+This endpoint is used to update polls option via API. Given option_id will be rewritten with new infromation.
+
+<PostRequest title="https://api.100ms.live/v2/polls/<poll_id>/questions/<question_id>/options/<option_id>" />
+
+<Request id="req-0">
+
+```bash
+curl --location --request POST 'https://api.100ms.live/v2/polls/655bffeecd34739a72637305/questions/1/options/1' \
+--header 'Authorization: Bearer <management_token>' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "index": 1,
+    "text": "option1",
+    "weight": 1
+}'
+```
+
+</Request>
+
+<ResponseBox id="res-0" status="200 OK">
+
+```json
+{
+    "index": 1,
+    "text": "option1",
+    "weight": 1
+}
+```
+
+</ResponseBox>
+
+## Path parameters
+
+| Name               | Description                                                                                   |
+| :-----------------  |:------- |
+| poll_id <br/>         | poll id       |
+| question_id <br/>        | question_id starting from 1    |
+| option_id <br/>     | option_id starting from 1       |
+
+# Delete polls question
+
+This endpoint is used to delete polls question. This option can be used if you know which question indexes to delete. Other questions are re-indexed when the given question is deleted i.e. larger indexes are pushed one index backwards.
+
+<DeleteRequest title="https://api.100ms.live/v2/polls/<poll_id>/questions/<question_id>" />
+
+<Request id="req-0">
+
+```bash
+curl --location --request DELETE 'https://api.100ms.live/v2/polls/655bffeecd34739a72637305/questions/1' \
+--header 'Authorization: Bearer <management_token>' \
+--header 'Content-Type: application/json'
+```
+
+</Request>
+
+<ResponseBox id="res-0" status="204 No Content">
+
+</ResponseBox>
+
+## Path parameters
+
+| Name               | Description                                                                                   |
+| :----------------- | :------- |
+| poll_id <br/>         | poll id       |
+| question_id <br/>        | question_id starting from 1    |
+
+# Delete polls option
+
+
+This endpoint is used to delete polls option. This option can be used if you know which option indexes to delete. Other options are re-indexed when the given option is deleted i.e. larger indexes are pushed one index backwards.
+
+<DeleteRequest title="https://api.100ms.live/v2/polls/<poll_id>/questions/<question_id>/options/<option_id>" />
+
+<Request id="req-0">
+
+```bash
+curl --location --request DELETE 'https://api.100ms.live/v2/polls/655bffeecd34739a72637305/questions/1/options/1' \
+--header 'Authorization: Bearer <management_token>' \
+--header 'Content-Type: application/json'
+```
+
+</Request>
+
+<ResponseBox id="res-0" status="204 No Content">
+
+</ResponseBox>
+
+## Path parameters
+
+| Name               | Description                                                                                   |
+| :----------------- |  :------- |
+| poll_id <br/>         | poll id       |
+| question_id <br/>        | question_id starting from 1    |
+| option_id <br/>     | option_id starting from 1       |
+
