@@ -24,5 +24,5 @@ pass in this field if recording needs to be turned on as well
 
 • `Optional` **variants**: [`HLSMeetingURLVariant`](/api-reference/javascript/v2/interfaces/HLSMeetingURLVariant)[]
 
-A list of meeting url which needs to be streamed as HLS feed, only one url is currently supported, all entries
+A list of meeting URL which needs to be streamed as HLS feed, only one URL is currently supported, all entries
 except the first one will be ignored.

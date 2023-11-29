@@ -4,6 +4,19 @@ nav: 6.1
 description: Release Notes for 100ms iOS SDK
 ---
 
+## 1.3.0 - 2023-11-16
+### Added
+- State property for streaming and recording room states.
+
+### Fixed
+- createdBy property not populated for HMSPoll
+
+
+## 1.2.1 - 2023-11-10
+### Fixed:
+- Auto simulcast layer selection not picking highest layer for large tiles.
+
+
 ## 1.2.0 - 2023-11-03
 ### Added
 - Analytics improvements
@@ -286,7 +299,7 @@ sdk.trackSettings = HMSTrackSettings.build { videoSettingsBuilder, audioSettings
 - Custom video plugins API
 - Analytics capturing improvements
 #### Breaking change
-- Removed tracksErrorAudioShouldBeSilenced error that was used to signal that other app is playing unmixable audio, it is now up to the app to detect for example using CallKit
+- Removed tracksErrorAudioShouldBeSilenced error that was used to signal that other app is playing audio that cannot be mixed, it is now up to the app to detect for example using CallKit
 
 ## 0.2.13 - 2022-05-16
 #### Fixed
@@ -406,7 +419,7 @@ sdk.trackSettings = HMSTrackSettings.build { videoSettingsBuilder, audioSettings
 - Swift package manager support
 - Bitcode support
 #### Changed
-- Moved to xcframework
+- Moved to XCFramework
 
 
 ## 0.0.11 - 2021-08-25
@@ -474,7 +487,7 @@ sdk.trackSettings = HMSTrackSettings.build { videoSettingsBuilder, audioSettings
 
 ## 0.0.1 - 2021-06-04
 
--   Simplified SDK interfaces that can power a fully-featured video conferencing application
+-   Simplified SDK interfaces that can power a fully featured video conferencing application
     -   `join`
     -   `leave`
     -   `listeners` for tracks/peers/other data

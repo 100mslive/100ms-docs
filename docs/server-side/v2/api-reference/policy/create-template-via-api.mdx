@@ -199,7 +199,7 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
                 "width": 1080,
                 "height": 1920,
                 "maxDuration": 1800,
-                "rtmpUrls": ["<rtmp url>", "<rtmp url>"],
+                "rtmpUrls": ["<rtmp URL>", "<rtmp URL>"],
                 "recordingEnabled": true
             }
         },
@@ -532,6 +532,7 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
             "<destination name>": {
                 "name": "<destination name>",
                 "role": "host",
+                "modes": ["recorded", "live"]
                 "outputModes": [ "txt", "srt", "json" ],
                 "customVocabulary": ["100ms", "WebSDK", "Flutter", "Sundar", "Pichai", "DALL-E"],
                 "summary": {
@@ -658,15 +659,15 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
 ### permissions object
 
 | Name             | Type      | Description                                                                                                                                                                 | Required | Default |
-| :--------------- | :-------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- | :------ |
+|:-----------------|:----------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:---------|:--------|
 | endRoom          | `boolean` | Permission to end room for all.                                                                                                                                             | No       | `false` |
 | removeOthers     | `boolean` | Permission to remove others from the room.                                                                                                                                  | No       | `false` |
 | mute             | `boolean` | Permission to request others to mute them.                                                                                                                                  | No       | `false` |
 | unmute           | `boolean` | Permission to request others to unmute them.                                                                                                                                | No       | `false` |
 | changeRole       | `boolean` | Permission to request others to change their role.                                                                                                                          | No       | `false` |
 | sendRoomState    | `boolean` | Permission to receive room state like peer-count and peer-list                                                                                                              | No       | `false` |
-| pollRead    | `boolean` | Permission whether poll/quiz information can be read and responses can be made to a poll/quiz    | No       | `false` |
-| pollWrite    | `boolean` | Permission whether poll/quiz information can be modified. PollWrite is a superset of pollRead and enables all pollRead functionalities.  | No       | `false` |
+| pollRead         | `boolean` | Permission whether poll/quiz information can be read and responses can be made to a poll/quiz                                                                               | No       | `false` |
+| pollWrite        | `boolean` | Permission whether poll/quiz information can be modified. PollWrite is a superset of pollRead and enables all pollRead functionalities.                                     | No       | `false` |
 | browserRecording | `boolean` | Permission to start/stop browser (beam) recording. <br/><br/> This is also required to start/stop RTMP + browser recording in conjunction with `rtmpStreaming` permissions. | No       | `true`  |
 | rtmpStreaming    | `boolean` | Permission to start/stop RTMP streaming. <br/><br/> This is also required to start/stop RTMP + browser recording in conjunction with `browserRecording` permissions.        | No       | `true`  |
 | hlsStreaming     | `boolean` | Permission to start/stop HLS streaming (with or without recording). <br/><br/>This is also required to - pause/unpause HLS recording or insert metadata in HLS stream.      | No       | `true`  |
@@ -790,13 +791,14 @@ Minimum between `width` and `height` should be in range [144, 1080] and Maximum 
 
 ### transcriptions object
 
-| Name             | Type     | Description                                                                                                                                               | Required |
-| ---------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| name             | `string` | The name you can assign to identify transcription destination. (Note: Transcription here refers to post call transcription)                               | Yes      |
-| role             | `string` | Indicates the role used to transcribe. Roles which are subscribed by the given role will be transcribed.                                                  | Yes      |
-| outputModes      | `array`  | Array of ouput modes for transcript. Valid values: [ txt, srt, json ] (txt: Plain text, srt: SubRip text, json: Granular timestamped words and sentences) | No       |
-| customVocabulary | `array`  | Array of words that might be spoken during the call. This can consist of non-dictionary words like names, slang, abbreviations and domain specific words. | No       |
-| summary          | `object` | Object of type `summary`. This can be used to enable and configure summary.                                                                               | No       |
+| Name             | Type     | Description                                                                                                                                                                      | Required |
+| ---------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| name             | `string` | The name you can assign to identify transcription destination.                                                                                                                   | Yes      |
+| modes            | `array`  | Array of modes for transcription. Valid values: [ `recorded`, `live` ] <br/> (recorded: Transcribe recording post call completion, live: Closed caption for live stream viewers)       | No       |
+| role             | `string` | Indicates the role used to transcribe. Roles which are subscribed by the given role will be transcribed.                                                                         | Yes      |
+| outputModes      | `array`  | Array of transcript output modes, valid for recorded mode. Valid values: [ txt, srt, json ] (txt: Plain text, srt: SubRip text, json: Granular timestamped words and sentences) | No       |
+| customVocabulary | `array`  | Array of words that might be spoken during the call. This can consist of non-dictionary words like names, slang, abbreviations and domain specific words.                        | No       |
+| summary          | `object` | Object of type `summary`. This can be used to enable and configure summary, valid for recorded mode.                                                                             | No       |
 
 #### transcriptions - summary object
 

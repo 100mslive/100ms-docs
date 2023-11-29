@@ -10,7 +10,7 @@ Read our [Code of Conduct](CODE_OF_CONDUCT.md) before contributing
 
 ## Getting started guides
 
-We have created a very detailed guide to setup this repo locally you can checkout it out [here](https://github.com/100mslive/100ms-docs#-getting-started)
+We have created a very detailed guide to setup this repository locally you can checkout it out [here](https://github.com/100mslive/100ms-docs#-getting-started)
 
 ### Issues
 

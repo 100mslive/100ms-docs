@@ -4,7 +4,7 @@ nav: 3.62
 ---
 
 Track Events can be used to understand the participant's activity during the session, It would get you the reference points in time
-e.g. when the user has unmuted audio, shared screen, or stopped the video. Every event has a `mute` property to determine mute status at the time of the event.
+for example when the user has unmuted audio, shared screen, or stopped the video. Every event has a `mute` property to determine mute status at the time of the event.
 
 Following are the three types of events published for a track,
 
@@ -14,7 +14,7 @@ Following are the three types of events published for a track,
 
 **track.remove.success**: Published when the track has ended
 
-Kind of a track (e.g. audio, video, video screenshare) can be determined by `type` and `source` parameter in the [track event object](/server-side/v2/api-reference/analytics/track-events#track-event-object).
+Kind of a track (for example audio, video, video screenshare) can be determined by `type` and `source` parameter in the [track event object](/server-side/v2/api-reference/analytics/track-events#track-event-object).
 
 <GetRequest title="https://api.100ms.live/v2/analytics/events" />
 <Request id="req-0">
@@ -32,7 +32,7 @@ To be specified as query parameters
 
 | Name       | Type     | Description                                                                                                                                                                                                                                             | Required |
 | ---------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| type       | `string` | Type of events to be fetched (valid values `track.add.success`, `track.update.success`, `track.remove.success`) <br /><br /> Can be specified multiple times to include more than one event (e.g. `type=track.add.success&` `type=track.update.success`) | yes      |
+| type       | `string` | Type of events to be fetched (valid values `track.add.success`, `track.update.success`, `track.remove.success`) <br /><br /> Can be specified multiple times to include more than one event (for example `type=track.add.success&` `type=track.update.success`) | yes      |
 | room_id    | `string` | Unique identifier of the room you wish to fetch events for                                                                                                                                                                                              | yes      |
 | session_id | `string` | Unique session identifier (Can be found in using [sessions APIs](/server-side/v2/api-reference/Sessions/object))                                                                                                                                        | no       |
 | peer_id    | `string` | Unique identifier of peer/participant                                                                                                                                                                                                                   | no       |
@@ -51,15 +51,15 @@ To be specified as query parameters
 | peer_id    | `string`             | Unique identifier of the peer/participant                                                                          |
 | user_id    | `string`             | Your internal user identifier                                                                                      |
 | user_name  | `string`             | User name of the user                                                                                              |
-| joined_at  | `timestamp (in UTC)` | Timestamp when the peer joined the session in RFC3339 format e.g. `2022-02-09T05:53:23.375Z`                       |
+| joined_at  | `timestamp (in UTC)` | Timestamp when the peer joined the session in RFC3339 format for example `2022-02-09T05:53:23.375Z`                       |
 | role       | `string`             | Peer role                                                                                                          |
 | track_id   | `string`             | Track id                                                                                                           |
 | stream_id  | `string`             | Reference to internal stream object                                                                                |
 | type       | `string`             | Type of track (values: `audio`, `video`)                                                                           |
 | source     | `string`             | Source of input (values: `regular`, `screen`)                                                                      |
 | mute       | `bool`               | Mute state of track at the time of event                                                                           |
-| started_at | `timestamp (in UTC)` | Track start time in RFC3339 format e.g. `2022-02-09T05:53:23.375Z`.                                                |
-| stopped_at | `timestamp (in UTC)` | Track stop time in RFC3339 format e.g. `2022-02-09T05:53:23.375Z` (only specified in `track.remove.success` event) |
+| started_at | `timestamp (in UTC)` | Track start time in RFC3339 format for example `2022-02-09T05:53:23.375Z`.                                                |
+| stopped_at | `timestamp (in UTC)` | Track stop time in RFC3339 format for example `2022-02-09T05:53:23.375Z` (only specified in `track.remove.success` event) |
 
 <ResponseBox id="res-0" status="200 OK">
 
