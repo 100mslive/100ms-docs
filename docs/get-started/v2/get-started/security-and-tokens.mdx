@@ -47,7 +47,7 @@ Auth token can be generated with:
 
 #### Sample code
 
-<Tabs id="client-code-token" items={['Node.js', 'Python', 'Java', 'Ruby', 'PHP']} />
+<Tabs id="client-code-token" items={['Node.js', 'Python', 'Java', 'Ruby', 'PHP', 'Go']} />
 
 <Tab id='client-code-token-0'>
 
@@ -227,6 +227,57 @@ $token = JWT::encode(
 
 </Tab>
 
+<Tab id='client-code-token-5'>
+
+```go
+package main
+
+import (
+	"time"
+
+	"github.com/golang-jwt/jwt/v4"
+	"github.com/google/uuid"
+)
+
+type params struct {
+	userId    string
+	roomId    string
+	role      string
+	expiresIn int
+}
+
+func GenerateClientToken(p *params) string {
+	var expiresIn uint32
+	mySigningKey := []byte(<appSecret>)
+	if p.expiresIn == 0 {
+		expiresIn = uint32(24 * 3600)
+	} else {
+		expiresIn = uint32(p.expiresIn)
+	}
+
+	now := uint32(time.Now().UTC().Unix())
+	exp := now + expiresIn
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+		"access_key": <appAccessKey>,
+		"type":       "app",
+		"version":    2,
+		"room_id":    p.roomId,
+		"user_id":    p.userId,
+		"role":       p.role,
+		"jti":        uuid.New().String(),
+		"iat":        now,
+		"exp":        exp,
+		"nbf":        now,
+	})
+
+	signedToken, _ := token.SignedString(mySigningKey)
+
+	return signedToken
+}
+```
+
+</Tab>
+
 ## Management token for REST API
 
 100ms uses management tokens to authenticate REST APIs. Use `app_access_key` and `app_secret` from the [dashboard](https://dashboard.100ms.live/developer) to create the management token.
@@ -235,7 +286,7 @@ The management token is not to be exposed on the client-side.
 
 #### Sample code
 
-<Tabs id="test-code" items={['Node.js', 'Python', 'Java', 'Ruby', 'PHP']} />
+<Tabs id="test-code" items={['Node.js', 'Python', 'Java', 'Ruby', 'PHP', 'Go']} />
 
 <Tab id='test-code-0'>
 
@@ -383,6 +434,41 @@ $payload = [
 
 $token = JWT::encode($payload, $app_secret, 'HS256');
 ?>
+```
+
+</Tab>
+
+<Tab id="test-code-5">
+
+```go
+package main
+
+import (
+	"time"
+
+	"github.com/golang-jwt/jwt/v4"
+	"github.com/google/uuid"
+)
+
+func GenerateManagementToken() string {
+
+	mySigningKey := []byte("<appSecret>")
+	expiresIn := uint32(24 * 3600)
+	now := uint32(time.Now().UTC().Unix())
+	exp := now + expiresIn
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+		"access_key": "<appAccessKey>",
+		"type":       "management",
+		"version":    2,
+		"jti":        uuid.New().String(),
+		"iat":        now,
+		"exp":        exp,
+		"nbf":        now,
+	})
+
+	signedToken, _ := token.SignedString(mySigningKey)
+	return signedToken
+}
 ```
 
 </Tab>
