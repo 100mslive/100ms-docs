@@ -5,7 +5,7 @@ nav: 3.83
 
 ## Get poll
 
-This endpoint is used to get polls for a given poll_id. The poll information contains all the questions, options and answers made using create/update poll/question/options API.
+This endpoint is used to get polls data for a given `poll_id`. The poll information contains all the questions, options and answers made using create/update poll/question/options API.
 
 
 <GetRequest title="https://api.100ms.live/v2/polls/<poll_id>" />
@@ -231,7 +231,7 @@ curl --location --request POST 'https://api.100ms.live/v2/polls/655bffeecd34739a
 ## Get polls response
 
 
-This endpoint is used to get response submitted by users for a given poll_id. The response includes duration required by user to submit the given response.
+This endpoint is used to get a specific response submitted by a user using a `response_id`. This `response_id` is the id received in Get Polls responses API
 
 <GetRequest title="https://api.100ms.live/v2/polls/<poll_id>/responses/<repsonse_id>" />
 
@@ -295,7 +295,7 @@ curl --location --request POST 'https://api.100ms.live/v2/polls/655bffeecd34739a
 {
     "last": "655bffeecd34739a726373056",
     "limit": 10,
-    "responses": [
+    "results": [
         {
             "id": "655bffeecd34739a72637306",
             "poll_id": "655bffeecd34739a72637305",
@@ -305,6 +305,16 @@ curl --location --request POST 'https://api.100ms.live/v2/polls/655bffeecd34739a
             "peer_id": "62610e46-89a0-11ee-b9d1-0242ac120002",
             "user_id": "user1",
             "score": 200
+        },
+        {
+            "id": "655bffeecd34739a72637306",
+            "poll_id": "655bffeecd34739a72637305",
+            "session_id": "655bffeecd34739a72637304",
+            "question": 3,
+            "duration": 5000,
+            "peer_id": "62610e46-89a0-11ee-b9d1-0242ac120002",
+            "user_id": "user2",
+            "score": 300
         }
     ]
 }
