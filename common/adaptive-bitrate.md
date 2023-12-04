@@ -97,7 +97,7 @@ The 100ms client-side SDKs provide methods to set a preferred quality layer for 
     - **JavaScript**: The `useVideo` hook in the 100ms React SDK auto-selects the appropriate video quality layer.
     - **iOS**: `HMSVideoView` can auto-select video quality layer.
     - **Android**: `HMSVideoView` ([see docs](/android/v2/migrations/surfaceview-migration)) can auto-select video quality layer.
-- Based on network quality: ABR will work alongside subscribe degradation and auto-downgrade video quality for peers. This is _coming soon_.
+- Based on network quality: ABR will work alongside subscribe degradation and auto-downgrade video quality for peers.
 
 ## ABR in live streaming
 
