@@ -133,9 +133,9 @@ Please follow the below instructions to test the app for iOS target platform
 
 1. Add the target platform version as (`platform :ios, '12.0'`) in "ios/Podfile"
 
-```json
-platform :ios, '12.0'
-```
+    ```json
+    platform :ios, '12.0'
+    ```
 
 2. Allow camera, recording audio and internet permissions by adding the below snippet to the `ios/Runner/info.plist` file.
 
@@ -157,21 +157,21 @@ platform :ios, '12.0'
 
 3. Add the below snippet to the `ios/Podfile` in post_install section:
 
-```json
-target.build_configurations.each do |config|
-  config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= [
-    '$(inherited)',
-    ## dart: PermissionGroup.camera
-    'PERMISSION_CAMERA=1',
+    ```json
+    target.build_configurations.each do |config|
+    config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= [
+        '$(inherited)',
+        ## dart: PermissionGroup.camera
+        'PERMISSION_CAMERA=1',
 
-    ## dart: PermissionGroup.microphone
-    'PERMISSION_MICROPHONE=1',
+        ## dart: PermissionGroup.microphone
+        'PERMISSION_MICROPHONE=1',
 
-    ## dart: PermissionGroup.bluetooth
-    'PERMISSION_BLUETOOTH=1',
-  ]
-end
-```
+        ## dart: PermissionGroup.bluetooth
+        'PERMISSION_BLUETOOTH=1',
+    ]
+    end
+    ```
 
 For more details regarding permission handling checkout the `permission_handler` docs [here](https://pub.dev/packages/permission_handler).
 
@@ -192,16 +192,16 @@ After you receive permission from Apple, add the Entitlement to your app by open
 
 6. Pass the `iOSScreenshareConfig` in `HMSPrebuiltOptions` parameter of `HMSPrebuilt` widget to enable screen share in your app.
 
-```dart
-// Pass the correct App Group & Preferred Extension parameters in HMSIOSScreenshareConfig class.
-HMSPrebuilt(
-    roomCode: meetingLinkController.text.trim(),
-    options: HMSPrebuiltOptions(
-        iOSScreenshareConfig:  HMSIOSScreenshareConfig(
-    appGroup: "appGroup", // App Group value linked to your Apple Developer Account
-    preferredExtension: "preferredExtension" // Name of the Broadcast Upload Extension Target created in Xcode
-)));
-```
+    ```dart
+    // Pass the correct App Group & Preferred Extension parameters in HMSIOSScreenshareConfig class.
+    HMSPrebuilt(
+        roomCode: meetingLinkController.text.trim(),
+        options: HMSPrebuiltOptions(
+            iOSScreenshareConfig:  HMSIOSScreenshareConfig(
+        appGroup: "appGroup", // App Group value linked to your Apple Developer Account
+        preferredExtension: "preferredExtension" // Name of the Broadcast Upload Extension Target created in Xcode
+    )));
+    ```
 
 </Tab>
 
