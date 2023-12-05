@@ -130,7 +130,7 @@ You will also need to request camera and record audio permissions at runtime bef
 
 Please follow the below instructions to test the app for iOS target platform:
 
-1. Allow camera, recording audio and internet permissions by adding the below snippet to the `info.plist` file.
+1. Allow camera, recording audio and internet permissions by adding the below snippet to the `ios/Runner/info.plist` file.
 
     <br />
 
@@ -143,6 +143,9 @@ Please follow the below instructions to test the app for iOS target platform:
 
     <key>NSLocalNetworkUsageDescription</key>
     <string>{YourAppName} App wants to use your local network</string>
+
+    <key>NSBluetoothAlwaysUsageDescription</key>
+	  <string>{YourAppName} needs access to bluetooth to connect to nearby devices.</string>
     ```
 
 2. Add the target platform version as (`platform :ios, '12.0'`) in "ios/Podfile."
@@ -150,6 +153,26 @@ Please follow the below instructions to test the app for iOS target platform:
 ```json
 platform :ios, '12.0'
 ```
+
+3. Add the below snippet to the `ios/Podfile` in post_install section:
+
+```json
+target.build_configurations.each do |config|
+  config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= [
+    '$(inherited)',
+    ## dart: PermissionGroup.camera
+    'PERMISSION_CAMERA=1',
+
+    ## dart: PermissionGroup.microphone
+    'PERMISSION_MICROPHONE=1',
+
+    ## dart: PermissionGroup.bluetooth
+    'PERMISSION_BLUETOOTH=1',
+  ]
+end
+```
+
+For more details regarding permission handling checkout the `permission_handler` docs [here](https://pub.dev/packages/permission_handler).
 
 </Tab>
 
