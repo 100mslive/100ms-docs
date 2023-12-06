@@ -7,15 +7,7 @@ nav: '4.49'
 
 ### browser
 
-• **browser**: `Object`
-
-#### Type declaration
-
-| Name         | Type           |
-| :----------- | :------------- |
-| `error?`     | `HMSException` |
-| `running`    | `boolean`      |
-| `startedAt?` | `Date`         |
+• **browser**: `HMSBrowserRecording`
 
 ---
 
@@ -27,12 +19,4 @@ nav: '4.49'
 
 ### server
 
-• **server**: `Object`
-
-#### Type declaration
-
-| Name         | Type           |
-| :----------- | :------------- |
-| `error?`     | `HMSException` |
-| `running`    | `boolean`      |
-| `startedAt?` | `Date`         |
+• **server**: `HMSSFURecording`

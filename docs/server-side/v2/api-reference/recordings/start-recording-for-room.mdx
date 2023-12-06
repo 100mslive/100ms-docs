@@ -87,13 +87,13 @@ curl --location --request POST 'https://api.100ms.live/v2/recordings/room/<room_
 
 ## Parameters
 
-| Name          | Type      | Description     | Required |
-| ------------- | --------- | --------------- | -------- |
-| meeting_url   | `string`  | Single click meeting URL for the stream     | No[1]   |
-| resolution    | `object`  | Video resolution for stream                 | No       |
-| destination   | `string`  | Name of destination from template to pick up configuration | No[2]     |
-| audio_only    | `boolean` | Pass `true` to get an audio-only recording  | No       |
-| transcription | `object`  | Post call transcription configuration       | No       |
+| Name          | Type      | Description                                                | Required |
+| ------------- | --------- | ---------------------------------------------------------- | -------- |
+| meeting_url   | `string`  | Single click meeting URL for the stream                    | No[1]    |
+| resolution    | `object`  | Video resolution for stream                                | No       |
+| destination   | `string`  | Name of destination from template to pick up configuration | No[2]    |
+| audio_only    | `boolean` | Pass `true` to get an audio-only recording                 | No       |
+| transcription | `object`  | Transcribe recording post call completion                  | No       |
 
 
 > [1] `meeting_url` is **required** when
@@ -128,7 +128,7 @@ curl --location --request POST 'https://api.100ms.live/v2/recordings/room/<room_
 
 #### transcription - summary - section
 
-| Name   | Type     | Description                                                                                                            | Required |
-| ------ | -------- | ---------------------------------------------------------------------------------------------------------------------- | -------- |
-| title  | `string` | Title of the section `Agenda`, `Short Summary`, `Follow Up Action Items`, `Short Summary`. (limit: 100 characters) | Yes      |
-| format | `string` | Format of the section. Valid values: [`bullets`, `paragraph`]                                                          | Yes      |
+| Name   | Type     | Description                                                                                                                                                                                      | Required |
+|--------|----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------|
+| title  | `string` | Title of the section `Agenda`, `Short Summary`, `Follow Up Action Items`, `Short Summary`. (limit: 100 characters). <br/> It can take custom section names and accordingly the output will vary. | Yes      |
+| format | `string` | Format of the section. Valid values: [`bullets`, `paragraph`]                                                                                                                                    | Yes      |
