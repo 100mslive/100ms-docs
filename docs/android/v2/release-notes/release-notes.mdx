@@ -17,6 +17,38 @@ import AndroidSdkVersionShield from '@/common/android-sdk-version-shield.md';
 | live.100ms:hls-player-stats: |<AndroidSdkVersionShield /> 
 | live.100ms:virtual-background: |<AndroidSdkVersionShield />|
 
+## v2.8.3 2023-12-06
+### Fixed
+- `HMSTextureRenderer` class was sending wrong values in `onResolutionChange` of `VideoViewStateChangeListener` in certain cases
+
+## v2.8.2 2023-12-01
+### Added
+- Support for using TextureView to render webrtc video
+
+### Fixed
+- Issue where camera was publishing in 1:1 aspect ratio if 9:16 publish is set on some devices
+
+## v2.8.1 2023-11-16
+### Fixed
+- Publisher and Subscriber stats are sent according to whether they're enabled in flags on the dashboard.
+
+### Added
+- Intermediate stages of Beam - The states have been updated to include the following:
+-  Recording states:
+    - NONE,
+    -  STARTING
+    - STARTED
+    - PAUSED
+    - RESUMED
+    - STOPPED
+    - FAILED
+- Streaming states are:
+    - NONE,
+    -  STARTING
+    - STARTED
+    - STOPPED
+    - FAILED
+
 ## v2.8.0 - 2023-11-3
 ### Added
 - Added subscribe side analytics

@@ -1,196 +1,71 @@
 ---
 title: Overview
-nav: 4.3
+nav: 2.0
 ---
+Set up customized audio/video 100ms hosted rooms using a low-code integration.
 
-100ms Prebuilt is a feature-rich live video app that can be embedded in your web or mobile apps.
 
-Prebuilt is a high-level abstraction that enables you to embed video conferencing and/or live streaming UI—with a few lines of code. Prebuilt abstracts out nuances regarding audio/video integration which enables your end-users to get reliable live video without the hassles of integration.
+100ms Prebuilt is a feature-rich live video app that can be embedded in your web or mobile apps. Prebuilt is a high-level abstraction that enables you to embed video conferencing and/or live streaming UI—with a few lines of code. It abstracts out nuances regarding audio/video integration which enables your end-users to get reliable live video without the hassles of integration.
 
-100ms Prebuilt is available as **links** that can be shared with end-users or **components** that can be embedded inside existing apps.
 
-![Pre-built concept image](/docs/v2/prebuilt-intro.jpg)
+![PreHero](/docs/v2/PreHero.png)
 
-[**Demo 100ms Pre-built link →**](https://examples-videoconferencing.app.100ms.live/meeting/tmz-qdi-cyp)
 
-## Get started with Prebuilt
-
-Depending on the desired user experience, you can use Prebuilt as shareable links or embeddable components.
+## Guides
 
 <FlexContainer>
-<Callout icon="link" title="Share or embed Prebuilt Links">
 
-Create role specific Prebuilt links and share it with you users or embed them as iframe.
+<Callout title="Quickstart">
+Plug and play Prebuilt links or embed a native video component.
 
-[Get Started with Prebuilt Links →](#prebuilt-links)
 
+[Set up Prebuilt →](/get-started/v2/get-started/prebuilt/quickstart)
 </Callout>
 
-<Callout icon="link" title="Embed natively">
-Embed the Prebuilt component natively in your iOS, Android or web app.
+<Callout title="Customize Prebuilt">
+From behavior for roles, appearance and features as per your use case.
 
-[Embed as a component →](#embed-as-component)
-
+[A no-code way to customize Prebuilt. →](/get-started/v2/get-started/prebuilt/overview#customize-prebuilt)
 </Callout>
+
 </FlexContainer>
 
-## Prebuilt links
 
-In this guide, we will create role-specific Prebuilt link and share/embed the link as an iframe.
+## Experience Prebuilt
 
-<StepsContainer id="use-prebuilt-links">
+100ms Prebuilt inherits its behaviour from its template configuration; using this template as its core, it creates a default Prebuilt UI for each role in the template, where
+- The template defines the roles and the permissions they join a room with, and supports features like recording, livestreaming, transcriptions etc
+- Prebuilt UI extends its features as components like chat, participant list, emojis etc. which are available across different Prebuilt screens, such as preview and room screens.
 
-### Get room code and template subdomain
+Head to [100ms dashboard](https://dashboard.100ms.live/dashboard) to create a new template. Choose a use case such as video conferencing, livestreaming, webinars or audio rooms during the template setup. The template settings points to the use case you selected with default roles and features enabled. Experience Prebuilt from each role's POV by joining as different roles. 
 
-<FlexContainer>
-<Callout icon="link" title="Prebuilt Link Structure">
-Prebuilt links are role specific room links with a format `https://<template-subdomain>/<room-code>` where,
-    - `template-subdomain`- is the subdomain that you’ve defined at the time of template creation on [100ms Dashboard](https://dashboard.100ms.live/dashboard). Copy `subdomain` from Template details page on 100ms Dashboard
-    - `room-code`- is a [room code](/concepts/v2/concepts/rooms/room-codes/room-codes) that belongs to a unique`room_id` and `role` for which you're creating the room link. Get room codes for each role 
-            - Copy role specific room code from Join Room section for a role in a room
-            - [Create Room Codes API](/server-side/v2/api-reference/room-codes/create-room-code-api) to create room codes
-</Callout>
-</FlexContainer>
+<video loop="true" autoplay="autoplay" id="vid" muted>
+<source src="/docs/docs/v2/prebuiltwebinar.mp4" type="video/mp4" />
+</video>
 
-### Construct the link
 
-Once you have the template-subdomain and room code ready, append these to the link structure for all roles in your room.
+## Customize Prebuilt 
+100ms Prebuilt abstracts complex nuances around building audio/video use cases; these are built on top of two core entities which help build customized experiences using:
+    - **Templates** - Customize how your rooms function, such as which roles can join with what permissions, features like recording, livestreaming, transcriptions, and more. Read more on [Templates and Roles](/get-started/v2/get-started/concepts/templates-and-roles)
+    - **Prebuilt Customizer** - A no-code customization tool that allows for quick and powerful adjustments using straightforward enable/disable toggles. With its real-time preview feature, you can conveniently review changes as you make them on the fly. There are two levels of no-code customization available:
+        - [Appearance](/get-started/v2/get-started/prebuilt/Appearance) - Customize 100ms Prebuilt's default appearance to match it with your brand theme
+        - [Screens and Components](/get-started/v2/get-started/prebuilt/Screens-and-components)  - Customize 100ms Prebuilt's features and behavior for each role in your template
 
-<FlexContainer>
-  <Callout icon="link" title="Prebuilt Link for roles">
-    - Host Prebuilt Link :
-    https://`template-subdomain`/meeting/`room-code-for-host`<br/>
-    - Guest Prebuilt Link : https://`template-subdomain`/meeting/`room-code-for-guest`
-  </Callout>
-</FlexContainer>
 
-### Share or Embed as iFrame
+<video loop="true" autoplay="autoplay" id="vid" muted>
+<source src="/docs/docs/v2/customiser.mp4" type="video/mp4" />
+</video>
 
-Once you have a Prebuilt link ready, you can share it with your users on the fly as push notification, SMS, email etc or directly embed the link in your application.
-Refer the sample code snippet to embed the Prebuilt link as an iframe.
 
-```html
-<iframe
-  title="100ms-app"
-  allow="camera *;microphone *;display-capture *"
-  src="https://<your-template-subdomain>/meeting/<room-code>"
-  style="height: 100vh; width: 100%; border:0;"
->
-</iframe>
-```
+## 100ms Prebuilt apps
+We have built production ready apps that uses the embedded `HMSPrebuilt` component from 100ms Prebuilt. You can utilize these apps to explore Prebuilt by either joining with a room code or room link or to preview the customizations you've made.
 
-</StepsContainer>
+<video loop="true" autoplay="autoplay" id="vid" muted>
+<source src="/docs/docs/v2/prebuiltApps.mp4" type="video/mp4" />
+</video>
 
-## Embed as Component
+Link to Prebuilt Apps
 
-100ms Prebuilt can be embedded as a native component `HMSPrebuilt` by importing 100ms Room Kit package in your app.
-
-<FlexContainer>
-<Callout icon="link" title="Component Basics">
-- The `HMSPrebuilt` component is available across React, iOS, Android, Flutter, and React Native
-  - This is the highest-level UI component of a room, covering all screens and functionality
-- This component is shipped through `RoomKit` packages
-  - The `RoomKit` package will contain more (lower-level) UI components
-  - If you need a specific UI component, share your feedback on [our Discord](https://100ms.live/discord)
-</Callout>
-</FlexContainer>
-
-<StepsContainer id="embed-prebuilt-component">
-
-### Create room code
-
-HMSPrebuilt uses [room code](/concepts/v2/concepts/rooms/room-codes/room-codes) to get initialised, it allow users to uniquely join a `room_id` with a specifc `role`. Head over to guides for [create room codes](/server-side/v2/api-reference/room-codes/create-room-code-api) and [get room code](/server-side/v2/api-reference/room-codes/get-room-code-api).
-
-### Embedding HMSPrebuilt component
-
-- Import - HMSPrebuilt component requires importing RoomKit package
-- Initialise - Along with room code, you can additionally set `userName` and `userID` of the user joining the room
-    - `userName` - prefills the user name on HMSPrebuilt preview screen
-    - `userID` - use your user IDs to track user of your app
-
-Sample code snippet to embed Prebuilt component. Head over for a step by step guides for [React](/javascript/v2/quickstart/prebuilt-quickstart), [Flutter](/flutter/v2/quickstart/prebuilt), [React Native](/react-native/v2/quickstart/prebuilt), [Android](/android/v2/quickstart/prebuilt-android), [iOS](https://www.100ms.live/docs/ios/v2/quickstart/prebuilt).
-
-<Tabs
-  id="sample-code"
-  items={["React", "Flutter", "React Native", "Android", "iOS"]}
-/>
-
-<Tab id='sample-code-0'>
-```jsx section=SampleCode tab=React
-
-// import HMSPrebuilt component from Roomkit package
-import { HMSPrebuilt } from '@100mslive/roomkit-react';
-
-// add pre-built component
-function App() {
-    return (
-        <div style={{ height: "100vh" }}>
-            <HMSPrebuilt roomCode="<room-code>" />
-        </div>
-    );
- }
-
- export default App;
-```
-</Tab>
-
-<Tab id='sample-code-1'>
-```dart section=SampleCode tab=Flutter
-
-// import roomkit package
-import 'package:hms_room_kit/hms_room_kit.dart';
-
-// add pre-built component
-HMSPrebuilt(roomCode: "<room-code>");
-```
-</Tab>
-
-<Tab id='sample-code-2'>
-
-```jsx section=SampleCode tab=React Native
-// import roomkit package
-import { HMSPrebuilt } from "@100mslive/react-native-room-kit";
-
-// add pre-built component
-const ConferencingScreen = () => {
-  return <HMSPrebuilt roomCode="<room-code>" />;
-};
-```
-
-</Tab>
-
-<Tab id='sample-code-3'>
-```kotlin section=SampleCode sectionIndex=2 tab=Android
-
-// add roomkit dependency in gradle file
-implementation "live.100ms:room-kit:$roomKitVersion"
-
-// import roomkit package
-import live.hms.roomkit.ui.HMSRoomKit
-
-// launch prebuilt from your activity or fragment
-HMSRoomKit.launchPrebuilt(roomCode = "<room-code>", context = Activity)
-
-```
-</Tab>
-
-<Tab id='sample-code-4'>
-```swift section=SampleCode tab=iOS
-
-// add roomkit sdk dependency with swift package manager: https://github.com/100mslive/100ms-roomkit-ios
-
-// import roomkit sdk
-import HMSRoomKit
-
-// embed prebuilt view as a swiftui view with room-code
-HMSPrebuiltView(roomCode: /*pass room code as string here*/)
-
-Or
-
-// embed prebuilt view as a swiftui view with auth-token
-HMSPrebuiltView(token: /*pass role's auth token as string here*/)
-
-```
-</Tab>
-
-</StepsContainer>
+- Get native [Android app here](https://github.com/100mslive/AndroidPrebuiltDemo/commit/7e4150df9b708d63b2e678ce8fc6aa81f64bdd6c/checks) and [iOS app here](https://testflight.apple.com/join/Pb4aTS0t) 
+- Get React [Android App here](https://appdistribution.firebase.dev/i/7b7ab3b30e627c35) and the [iOS App here](https://testflight.apple.com/join/v4bSIPad)
+- Get Flutter [Android app here](https://play.google.com/store/apps/details?id=live.hms.flutter) and [iOS app here](https://apps.apple.com/app/100ms-live/id1576541989).  

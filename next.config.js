@@ -1536,6 +1536,11 @@ const nextConfig = {
                 source: '/:slug*/how--to-guides/:path*',
                 destination: '/:slug*/how-to-guides/:path*',
                 permanent: true
+            },
+            {
+                source: '/javascript/v2/quickstart/react-sample-app/embed-with-iframe',
+                destination: '/javascript/v2/quickstart/embed-with-iframe',
+                permanent: true
             }
         ];
     },
