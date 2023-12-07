@@ -1,0 +1,55 @@
+---
+title: Link room with polls
+nav: 3.82
+---
+
+This endpoint is used to link rooms with polls. Polls can be linked when creating or updating rooms. These polls will be auto started at session start if start = auto. Created polls can also be started using sdk later using poll_id.
+
+
+<PostRequest title="https://api.100ms.live/v2/rooms" />
+
+<Request id="req-0">
+
+```bash
+curl --location --request POST 'https://api.100ms.live/v2/rooms' \
+--header 'Authorization: Bearer <management_token>' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "polls": ["655bffeecd34739a72637305"]
+}'
+```
+
+</Request>
+
+<ResponseBox id="res-0" status="200 OK">
+
+```json
+{
+    "id": "655bffeecd34739a72637305",
+    "name": "d619124b-e587-45be-bf02-13126b3782f4",
+    "enabled": true,
+    "description": "",
+    "customer_id": "606ee2af994e65fe1fe8c8ae",
+    "app_id": "606ee2af994e65fe1fe8c8b0",
+    "recording_info": null,
+    "template_id": "61671d6ed1ac808524613859",
+    "template": "default_videoconf_de9ef8ab-91e2-4f1b-b1e8-7d08511c0520",
+    "region": "in",
+    "created_at": "2023-11-21T00:55:10.976Z",
+    "updated_at": "2023-11-21T04:55:10.916472015Z",
+    "customer": "606ee2af994e65fe1fe8c8ae",
+    "large_room": false,
+    "polls": [
+        "655c37fa36031e687dc28b0c"
+    ]
+}
+```
+
+</ResponseBox>
+
+## Main arguments
+
+| Name               | Type      | Description                                                                                                                                                                                                                                                                                                                                | Required |
+| :----------------- | :-------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| polls <br/>         | `array`  | list of polls ids to link to room.<br/> | No       |
+
