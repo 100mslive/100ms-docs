@@ -23,7 +23,7 @@ HMSTextureView(
 
 To set the video scaling type. Default is `SCALE_ASPECT_FIT`
 
-/// Add scaleType image here, fit vs fill
+![Scale Type](/docs/v2/flutter-scale-type.png)
 
 ### 2. setMirror
 
@@ -32,11 +32,28 @@ To mirror the video. Default is `false`. For local video tracks, it is recommend
 ### 3. disableAutoSimulcastLayerSelect
 
 To disable auto simulcast (Adaptive Bitrate). Default is `false` i.e. auto simulcast is enabled by default.
+Checkout the [adaptive bitrate](/flutter/v2/how--to-guides/set-up-video-conferencing/adaptive-bitrate) guide for more info.
 
 ### 4. controller
 
 To control the video view, this is useful for custom usecases when you wish to control the `addTrack` and `removeTrack`
-track functionalities on your own. Default value is `null`
+track functionalities on your own. Default value is `null`. `controller` can be initialized as:
+
+```dart
+///Initialising controller without track
+HMSTextureViewController(addTrackByDefault: false);
+```
+
+`HMSTextureViewController` contains following parameters:
+
+- `track` : To set the track to be added by default. Default value is `null`.
+
+- `addTrackByDefault` : To call `addTrack` by default as HMSTextureViewController object is created. If `addTrackByDefault` is set as true, track parameter also needs to be set. Default value is `true`.
+
+- `disableAutoSimulcastLayerSelect`: To disable auto simulcast (Adaptive Bitrate). Default is `false` i.e. auto simulcast is enabled by default.
+Checkout the [adaptive bitrate](/flutter/v2/how--to-guides/set-up-video-conferencing/adaptive-bitrate) guide for more info.
+
+How 100ms uses `HMSTextureViewController` in its prebuilt, check it out [here](https://github.com/100mslive/100ms-flutter/blob/main/packages/hms_room_kit/lib/src/meeting/meeting_store.dart)
 
 ### 5. addTrackByDefault
 
