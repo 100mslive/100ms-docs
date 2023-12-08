@@ -1,6 +1,6 @@
 ---
 title: IHMSInteractivityCenter
-nav: '4.68'
+nav: '4.69'
 ---
 
 ## Methods
@@ -52,6 +52,24 @@ nav: '4.68'
 #### Returns
 
 `Promise`<`void`\>
+
+---
+
+### fetchLeaderboard
+
+▸ **fetchLeaderboard**(`poll`, `offset`, `count`): `Promise`<[`HMSPollLeaderboardResponse`](/api-reference/javascript/v2/interfaces/HMSPollLeaderboardResponse)\>
+
+#### Parameters
+
+| Name     | Type                                                         |
+| :------- | :----------------------------------------------------------- |
+| `poll`   | [`HMSPoll`](/api-reference/javascript/v2/interfaces/HMSPoll) |
+| `offset` | `number`                                                     |
+| `count`  | `number`                                                     |
+
+#### Returns
+
+`Promise`<[`HMSPollLeaderboardResponse`](/api-reference/javascript/v2/interfaces/HMSPollLeaderboardResponse)\>
 
 ---
 
