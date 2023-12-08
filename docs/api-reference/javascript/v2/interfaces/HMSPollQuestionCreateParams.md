@@ -1,6 +1,6 @@
 ---
 title: HMSPollQuestionCreateParams
-nav: '4.44'
+nav: '4.45'
 ---
 
 ## Hierarchy
@@ -60,3 +60,9 @@ Pick.text
 #### Inherited from
 
 Pick.type
+
+---
+
+### weight
+
+• `Optional` **weight**: `number`
