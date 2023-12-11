@@ -14,6 +14,37 @@ description: Release Notes for 100ms JavaScript SDK
 | @100mslive/hls-player                  | [![npm version](https://badge.fury.io/js/%40100mslive%2Fhls-player.svg)](https://badge.fury.io/js/%40100mslive%2Fhls-player)           |
 | @100mslive/hms-video-react(deprecated) | [![npm version](https://badge.fury.io/js/%40100mslive%2Fhms-video-react.svg)](https://badge.fury.io/js/%40100mslive%2Fhms-video-react) |
 
+## 2023-12-08
+Released: `@100mslive/hms-video-store@0.10.24`, `@100mslive/react-sdk@0.8.24`, `@100mslive/hls-player@0.1.24`, `@100mslive/roomkit-react@0.1.15`
+
+### Added:
+- Added `fetchLeaderboard` function to fetch the leaderboard once the quiz has ended. Read more about it [here](/javascript/v2/how-to-guides/build-interactive-features/polls#fetching-the-quiz-leaderboard)
+- Roomkit Prebuilt: Peers with poll write permissions can view the peer leaderboard after the quiz has ended
+- Roomkit Prebuilt: HLS Viewers can view closed captions in the stream after enabling it in the dashboard
+- Roomkit Prebuilt: HLS Viewers will get poll and quiz notifications via timed metadata
+
+### Fixed:
+- Fixed low call volume due to media volume being picked up in mweb
+
+## 2023-12-01
+Released: `@100mslive/hms-video-store@0.10.23`, `@100mslive/react-sdk@0.8.23`, `@100mslive/hls-player@0.1.23`, `@100mslive/roomkit-react@0.1.14`
+
+### Added:
+- Roomkit Prebuilt now supports more chat based controls like pausing, hiding messages, blocking peers, and private/public messaging which can be configured from the dashboard
+- Name input in the preview is now disabled if the `userName` prop is provided to the Roomkit Prebuilt component. The `Change Name` option is also disabled from the local peer tile menu
+
+## 2023-11-28
+Released: `@100mslive/hms-video-store@0.10.22`, `@100mslive/react-sdk@0.8.22`, `@100mslive/hls-player@0.1.22`, `@100mslive/roomkit-react@0.1.13`
+
+### Added:
+- Roomkit Prebuilt: Upto 3 messages can now be pinned in the chat
+
+### Fixed:
+- Fixed poll votes being lost on page reload
+
+### Deprecated:
+- The Prebuilt component no longer supports room id and role props
+
 ## 2023-11-17
 Released: `@100mslive/hms-video-store@0.10.21`, `@100mslive/react-sdk@0.8.21`, `@100mslive/hls-player@0.1.21`, `@100mslive/roomkit-react@0.1.12`
 
@@ -31,7 +62,7 @@ Released: `@100mslive/hms-video-store@0.10.20`, `@100mslive/react-sdk@0.8.20`, `
 - Not able to use 100ms sdk when local storage permissions are denied
 - FPS of video with virtual background enabled and the tab in background
 
-Note: Pause/Resume can be done only using api for now.
+Note: Pause/Resume can be done only using API for now.
 
 ## 2023-11-06
 Released: `@100mslive/hms-video-store@0.10.19`, `@100mslive/react-sdk@0.8.19`, `@100mslive/hls-player@0.1.19`, `@100mslive/roomkit-react@0.1.10`

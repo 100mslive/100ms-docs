@@ -1,0 +1,136 @@
+---
+title: Texture View
+nav: 4.45
+---
+
+HMSTextureView is an alternative and recommended way that can be used to display video streams. Flutter frameworks has a performance issue while using
+SurfaceView in android devices. Check the issue [here](https://github.com/flutter/flutter/issues/118384).
+
+To display we can simply pass a video track object to `HMSTextureView` widget.
+
+```dart
+///videoTrack is an instance of [HMSVideoTrack]
+HMSTextureView(
+  track: videoTrack,
+)
+```
+
+### Configuring HMSTextureView
+
+`HMSTextureView` with default parameters is perfectly optimized for most of the use cases, still for customizing it you can pass the following parameters:
+
+### 1. scaleType
+
+To set the video scaling type. Default is `SCALE_ASPECT_FIT`
+
+![Scale Type](/docs/v2/flutter-scale-type.png)
+
+### 2. setMirror
+
+To mirror the video. Default is `false`. For local video tracks, it is recommended to set it to `true`
+
+### 3. disableAutoSimulcastLayerSelect
+
+To disable auto simulcast (Adaptive Bitrate). Default is `false` i.e. auto simulcast is enabled by default.
+Checkout the [Adaptive Bitrate (Simulcast)](/flutter/v2/how--to-guides/set-up-video-conferencing/render-video/adaptive-bitrate) guide for more info.
+
+### 4. controller
+
+To control the video view, this is useful for custom usecases when you wish to control the `addTrack` and `removeTrack`
+track functionalities on your own. Default value is `null`. `controller` can be initialized as:
+
+```dart
+///Initialising controller without track
+HMSTextureViewController(addTrackByDefault: false);
+```
+
+`HMSTextureViewController` contains following parameters:
+
+- `track` : To set the track to be added by default. Default value is `null`.
+
+- `addTrackByDefault` : To call `addTrack` by default as HMSTextureViewController object is created. If `addTrackByDefault` is set as true, track parameter also needs to be set. Default value is `true`.
+
+- `disableAutoSimulcastLayerSelect`: To disable auto simulcast (Adaptive Bitrate). Default is `false` i.e. auto simulcast is enabled by default.
+Checkout the [adaptive bitrate](/flutter/v2/how--to-guides/set-up-video-conferencing/render-video/adaptive-bitrate) guide for more info.
+
+How 100ms uses `HMSTextureViewController` in its prebuilt, check it out [here](https://github.com/100mslive/100ms-flutter/blob/main/packages/hms_room_kit/lib/src/meeting/meeting_store.dart)
+
+### 5. addTrackByDefault
+
+To call `addTrack` by default as HMSTextureView is attached to the tree. Default value is `true`. If you are passing this as well ensure that you have the instance of `HMSTextureViewController` as well.
+
+## How to get HMSVideoTrack
+
+This section contains info about how to get video tracks so that we can display them on screen.
+
+`HMSVideoTrack` is used to render video in HMSVideoView. Single `HMSTextureView` can be attached to only one `HMSVideoTrack`.
+
+> For resetting the track just call `addTrack` method on the `HMSTextureViewController` with new track.
+
+To get tracks we will be listening to HMSUpdateListener's `onTrackUpdate`.
+
+`onTrackUpdate` provides updates for both Audio & Video tracks so to segregate them we can put a check like below:
+
+```dart
+/// check if the track is video or audio
+
+/// For Audio
+track.kind == HMSTrackKind.kHMSTrackKindAudio
+
+/// For Video
+track.kind == HMSTrackKind.kHMSTrackKindVideo
+```
+
+Let's see an example of how we can extract the video tracks from `onTrackUpdate`:
+
+```dart
+class Meeting implements HMSUpdateListener{
+
+  late HMSSDK hmsSDK;
+  ...
+
+  void onTrackUpdate(
+      {required HMSTrack track,
+      required HMSTrackUpdate trackUpdate,
+      required HMSPeer peer}) {
+
+        if (track.kind == HMSTrackKind.kHMSTrackKindVideo) {
+          //We will get all the video tracks
+          if(track.source == "REGULAR"){
+            //We will get only camera feed(Normal Video) tracks of peer here
+            if(peer.isLocal){
+              //We will get the local peer video track here
+            }
+            else{
+              //We will get the remote peer video tracks here
+            }
+          }
+          else{
+            //To get screenshare or other video tracks from peers
+            //For screenshare
+            if(track.source == "SCREEN"){
+              //We will get screen share track here
+            }
+          }
+        }
+      }
+}
+```
+
+Now, once we have the video tracks we can pass the video track to `HMSTextureView` to get live video on the screen.
+Screenshare as well as normal video tracks can be rendered in the same way which we will see below.
+
+> `HMSSDK` automatically handles audio tracks. So they are not required to be handled in the application. Although [mute/unmute](/flutter/v2/how--to-guides/set-up-video-conferencing/mute) or [set audio volume](/flutter/v2/how--to-guides/interact-with-room/track/set-volume) features are provided
+> by SDK.
+
+## Render Video
+
+This section contains information about how we can render the video once we have the track.
+
+To display video tracks `HMSSDK` provides the `HMSTextureView` widget.
+We just need to pass the `track` which is `HMSVideoTrack` instance to get our video running as:
+
+```dart
+//videoTrack is an instance of HMSVideoTrack
+HMSTextureView(track: videoTrack);
+```

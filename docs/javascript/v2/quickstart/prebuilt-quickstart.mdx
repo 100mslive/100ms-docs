@@ -126,27 +126,21 @@ npm run dev
 
 The Prebuilt component behaves like the 100ms sample app which can be forked from this [GitHub repository](https://github.com/100mslive/100ms-web).
 
-There are two ways to join the room - using the roomCode prop, or using the roomId and role in combination instead. The props are listed in the below section.
+The supported props are listed in the below section.
 
 ## Props for HMSPrebuilt
 
 <br />
 HMSPrebuilt accepts the following props:
 
-`roomCode` (optional if roomId and role are being used instead)
-- The room code of the room you want to join. You can get the room code from the [100ms dashboard](https://dashboard.100ms.live). This prop can be skipped if the roomId and role are being provided instead.
+`roomCode` 
+- The room code of the room you want to join. You can get the room code from the [100ms dashboard](https://dashboard.100ms.live).
 
 `logo` (optional)
 - An image URL as a string which is displayed in the preview screen and header.
 
 `authToken` (optional)
 - This token is room and role specific. It can be copied from the join room modal on the [dashboard](https://dashboard.100ms.live). Read more about it [here](/get-started/v2/get-started/security-and-tokens#auth-token-for-client-sdks).
-
-`roomId` (optional unless roomCode is not being used)
-- The room ID of the room you want to join. You can get the room ID from the [dashboard](https://dashboard.100ms.live). It should be specified with the role prop if the room code is not being provided.
-
-`role` (optional unless roomId is specified)
-- A string specifying the role of the peer. Should be specified if the roomId is being used to join the room.
 
 `onJoin` (optional)
 - A callback function that will be executed after the peer joins the call. 

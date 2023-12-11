@@ -1,6 +1,6 @@
 ---
 title: HMSPublishAllowed
-nav: '4.46'
+nav: '4.47'
 ---
 
 ## Properties

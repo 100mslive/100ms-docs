@@ -1,6 +1,6 @@
 ---
 title: HMSReconnectionNotification
-nav: '4.48'
+nav: '4.49'
 ---
 
 ## Hierarchy

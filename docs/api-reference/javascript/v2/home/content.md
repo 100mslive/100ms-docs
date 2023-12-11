@@ -67,6 +67,7 @@ nav: '1.1'
 - [HMSPlaylistSelector](/api-reference/javascript/v2/interfaces/HMSPlaylistSelector)
 - [HMSPoll](/api-reference/javascript/v2/interfaces/HMSPoll)
 - [HMSPollCreateParams](/api-reference/javascript/v2/interfaces/HMSPollCreateParams)
+- [HMSPollLeaderboardResponse](/api-reference/javascript/v2/interfaces/HMSPollLeaderboardResponse)
 - [HMSPollNotification](/api-reference/javascript/v2/interfaces/HMSPollNotification)
 - [HMSPollQuestionAnswer](/api-reference/javascript/v2/interfaces/HMSPollQuestionAnswer)
 - [HMSPollQuestionCreateParams](/api-reference/javascript/v2/interfaces/HMSPollQuestionCreateParams)
@@ -736,6 +737,22 @@ Select the current [[]](/api-reference/javascript/v2/interfaces/HMSException) ob
 
 ---
 
+### selectHMSBroadcastMessages
+
+▸ **selectHMSBroadcastMessages**(`state`): [`HMSMessage`](/api-reference/javascript/v2/interfaces/HMSMessage)[]
+
+#### Parameters
+
+| Name    | Type                                                                                                            |
+| :------ | :-------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+
+#### Returns
+
+[`HMSMessage`](/api-reference/javascript/v2/interfaces/HMSMessage)[]
+
+---
+
 ### selectHMSMessages
 
 ▸ **selectHMSMessages**(`state`): [`HMSMessage`](/api-reference/javascript/v2/interfaces/HMSMessage)[]
@@ -1306,6 +1323,22 @@ Select the track ID of your local peer's primary video track
 #### Returns
 
 `undefined` \| `string`
+
+---
+
+### selectMessageByMessageID
+
+▸ **selectMessageByMessageID**(`id`): `OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, [`HMSMessage`](/api-reference/javascript/v2/interfaces/HMSMessage), (`res`: `Record`<`string`, [`HMSMessage`](/api-reference/javascript/v2/interfaces/HMSMessage)\>) => [`HMSMessage`](/api-reference/javascript/v2/interfaces/HMSMessage)\>
+
+#### Parameters
+
+| Name | Type     |
+| :--- | :------- |
+| `id` | `string` |
+
+#### Returns
+
+`OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, [`HMSMessage`](/api-reference/javascript/v2/interfaces/HMSMessage), (`res`: `Record`<`string`, [`HMSMessage`](/api-reference/javascript/v2/interfaces/HMSMessage)\>) => [`HMSMessage`](/api-reference/javascript/v2/interfaces/HMSMessage)\>
 
 ---
 
@@ -2327,6 +2360,24 @@ Select the [HMSTrack](/api-reference/javascript/v2/home/content#hmstrack) object
 #### Returns
 
 `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `null` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack) \| [`HMSVideoTrack`](/api-reference/javascript/v2/interfaces/HMSVideoTrack) \| [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack)\>
+
+---
+
+### selectUnreadHMSBroadcastMessagesCount
+
+▸ **selectUnreadHMSBroadcastMessagesCount**(`state`): `number`
+
+Select the number of unread broadcast messages
+
+#### Parameters
+
+| Name    | Type                                                                                                            |
+| :------ | :-------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+
+#### Returns
+
+`number`
 
 ---
 

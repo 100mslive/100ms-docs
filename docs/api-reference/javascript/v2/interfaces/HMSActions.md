@@ -662,10 +662,10 @@ Send a plain text message to all the other participants in the room.
 
 #### Parameters
 
-| Name      | Type     | Description                                                       |
-| :-------- | :------- | :---------------------------------------------------------------- |
-| `message` | `string` | string message to broadcast                                       |
-| `type?`   | `string` | type of message, for example image, video etc. - optional defaults to chat |
+| Name      | Type     | Description                                                                 |
+| :-------- | :------- | :-------------------------------------------------------------------------- |
+| `message` | `string` | string message to broadcast                                                 |
+| `type?`   | `string` | type of message. For example: image, video etc. - optional defaults to chat |
 
 #### Returns
 
@@ -679,11 +679,11 @@ Send a plain text message to all the other participants in the room.
 
 #### Parameters
 
-| Name      | Type     | Description                                                       |
-| :-------- | :------- | :---------------------------------------------------------------- |
-| `message` | `string` |                                                                   |
-| `peerID`  | `string` | id of the peer to which message has to be sent                    |
-| `type?`   | `string` | type of message, for example image, video etc. - optional defaults to chat |
+| Name      | Type     | Description                                                                 |
+| :-------- | :------- | :-------------------------------------------------------------------------- |
+| `message` | `string` |                                                                             |
+| `peerID`  | `string` | id of the peer to which message has to be sent                              |
+| `type?`   | `string` | type of message. For example: image, video etc. - optional defaults to chat |
 
 #### Returns
 
@@ -697,11 +697,11 @@ Send a plain text message to all the other participants in the room.
 
 #### Parameters
 
-| Name      | Type       | Description                                                       |
-| :-------- | :--------- | :---------------------------------------------------------------- |
-| `message` | `string`   | string message to send                                            |
-| `roles`   | `string`[] | roles to which to send the message                                |
-| `type?`   | `string`   | type of message, for example: image, video etc. - optional defaults to chat |
+| Name      | Type       | Description                                                                 |
+| :-------- | :--------- | :-------------------------------------------------------------------------- |
+| `message` | `string`   | string message to send                                                      |
+| `roles`   | `string`[] | roles to which to send the message                                          |
+| `type?`   | `string`   | type of message. For example: image, video etc. - optional defaults to chat |
 
 #### Returns
 
@@ -963,6 +963,24 @@ found in store, no change in store will take place.
 | :----------- | :-------- | :--------------------------------------------------------------------- |
 | `readStatus` | `boolean` | boolean value which you want to set as read flag for message/messages. |
 | `messageId?` | `string`  | message id whose read flag you want to set.                            |
+
+#### Returns
+
+`void`
+
+---
+
+### setPlaylistSettings
+
+▸ **setPlaylistSettings**(`settings`): `void`
+
+Method to override the default settings for playlist tracks
+
+#### Parameters
+
+| Name       | Type                  |
+| :--------- | :-------------------- |
+| `settings` | `HMSPlaylistSettings` |
 
 #### Returns
 

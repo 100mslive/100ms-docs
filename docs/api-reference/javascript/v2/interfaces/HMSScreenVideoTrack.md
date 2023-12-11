@@ -1,6 +1,6 @@
 ---
 title: HMSScreenVideoTrack
-nav: '4.57'
+nav: '4.58'
 ---
 
 ## Hierarchy
@@ -17,7 +17,7 @@ nav: '4.57'
 
 this can be used to identify the shared tab, if
 the shared tab has set a captureHandle on its end as well as communicate
-with the tab for example using broadcast channel.
+with the tab, for example using broadcast channel.
 
 ---
 
