@@ -5,19 +5,14 @@ nav: 12.1
 
 ![Network Icons](/docs/v2/network-icons.png)
 
-Video/Audio conferencing is by nature a data intensive operation. The 100ms SDK attempts to stabilize connections especially if subscribe degradation
-is turned on in the template but it's possible for really bad connections that users will still have problems.
+Audio Video Conferencing is by nature a network data-intensive operation. The 100ms SDK attempts to stabilize connections especially if subscribe degradation is turned on in the template but it's possible for really bad connections users will still have problems.
 
-It can be helpful to measure a user's connection speed before joining a room in order to set expectations or decide to have them join with video off etc. Letting the participants know of each other's connection
-status is also a great value addition.
+It can be helpful to measure a user's connection speed before joining a Room to set expectations or decide to have them join with video off etc. Letting the participants know of each other's connection status is also a great value addition.
 
-Once you have joined the room, you can get a network quality score for all the peers including yourself.
-You can also get current user's connection quality score when in preview.
-The score ranges from -1 to 5, 5 being the hightest(Good Network) and 0 being the lowest(No Network).
--1 indicates an undefined state that is either the score hasn't yet been determined or it couldn't be determined.
-
-> ⚠️ The downlink speed is measured by having the user download a file (1mb as of this writing) after the websocket connection is established during a
-> preview.
+Once you have joined the room, you can get a network quality score for all the Peers including yourself.
+You can also get the current user's connection quality score when in preview.
+The score ranges from -1 to 5, 5 being the highest(Good Network) and 0 being the lowest(No Network).
+-1 indicates an undefined state that  either the score hasn't yet been determined or it couldn't be determined.
 
 The download will be continued for at most a fixed number of seconds (for example: 10 seconds) and the speed during that interval is calculated.
 The entire file may not be downloaded if it exceeds the timeout.
@@ -25,6 +20,22 @@ The entire file may not be downloaded if it exceeds the timeout.
 DNS time is not counted in this, only throughput is measured.
 
 ## Requesting/Reading Network Quality Updates
+
+By default, network quality updates are only sent if requested. To request for getting network quality call `enableNetworkQualityUpdates` like so -
+
+```js
+export const useHMSNetworkQualityUpdate = () => {
+  const hmsInstance = useHMSInstance();
+
+  useEffect(() => {
+    // To Start receiving network quality updates
+    hmsInstance.enableNetworkQualityUpdates();
+
+    // To Stop receiving network quality updates
+    return () => hmsInstance.disableNetworkQualityUpdates();
+  }, [hmsInstance]);
+};
+```
 
 Network Quality information for every peer is available on `networkQuality` property of `HMSPeer` object. `networkQuality` property value is an instance of `HMSNetworkQuality` class -
 
@@ -36,7 +47,7 @@ interface HMSNetworkQuality {
 
 On `networkQuality` property value, we have `downlinkQuality` property which represents the peers' network quality. This is a number ranging from -1 to 5. To know about the meaning of each value refer to [Interpreting the Values](#interpreting-the-values) section.
 
-Whenever network quality of a peer changes, `HMSUpdateListenerActions.ON_PEER_UPDATE` event is emitted with `HMSPeerUpdate.NETWORK_QUALITY_UPDATED` update type. Then inside the function subscribed to this event, you can can check `networkQuality` property on the updated `HMSPeer` object and update the UI accordingly.
+Whenever the network quality of a peer changes, `HMSUpdateListenerActions.ON_PEER_UPDATE` event is emitted with `HMSPeerUpdate.NETWORK_QUALITY_UPDATED` update type. Then inside the function subscribed to this event, you can check `networkQuality` property on the updated `HMSPeer` object and update the UI accordingly.
 
 ```js
 const onPeerListener = (data: { peer: HMSPeer, type: HMSPeerUpdate }) => {
