@@ -127,6 +127,12 @@ class Meeting implements HMSUpdateListener{
         {HMSSessionStore? hmsSessionStore}) {
             /// Get notified when the Session Store is available for usage. Read more about Session Store here: https://www.100ms.live/docs/flutter/v2/how-to-guides/interact-with-room/room/session-store
     }
+
+    @override
+    void onPeerListUpdate(
+        {required List<HMSPeer> addedPeers, required List<HMSPeer> removedPeers}) {
+        /// Get notified when the Peer List is updated in Large Rooms. Read more about Peer List here: https://www.100ms.live/docs/flutter/v2/how-to-guides/interact-with-room/peer/large-room
+    }
 }
 ```
 
