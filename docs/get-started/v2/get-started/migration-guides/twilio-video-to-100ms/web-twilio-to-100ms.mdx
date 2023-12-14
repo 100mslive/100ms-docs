@@ -1,0 +1,387 @@
+---
+title: Migration for Web
+nav: 8.1.3
+---
+
+This guide is designed to assist developers in migrating their video conferencing applications from Twilio's Programmable Video SDK to the 100ms Video SDK on web.
+
+Before we get started here, you are required to create an account on 100ms. 
+
+Learn more about the fundamental differences and parities between 100ms and Twilio Programmable Video here. 
+
+100ms uses a single SDK for all features, including audio/video conferencing, chat, and recording.
+
+# Migrating core functionalities
+
+## Install
+
+1. **Remove Twilio SDK Dependencies:**
+    
+Remove the Twilio SDK from your project by uninstalling the package.
+
+```bash
+$ npm uninstall twilio-video
+```
+
+Or, if using the Twilio CDN, remove the script tag from index.html.
+
+2. **Install 100ms SDK:**
+    
+Install the 100ms Video SDK.
+
+```bash
+$ npm install @100mslive/hms-video-store
+```
+
+More on it [here](https://www.100ms.live/docs/javascript/v2/how-to-guides/install-the-sdk/integration).
+
+
+## Authentication
+
+On your auth server, replace your [Twilio Video JWT](https://www.twilio.com/docs/video/tutorials/user-identity-access-tokens) generation logic with the [100ms Auth Tokens](https://www.100ms.live/docs/get-started/v2/get-started/security-and-tokens#auth-token-for-client-sdks) generation logic.
+
+> **Note**
+>
+> Alternatively, you can use the 100ms dashboard to fetch a temporary token that will automatically expire in 24hrs.
+>
+
+## Initialization
+
+Replace Twilio's `Video` object with 100ms' `hmsStore` , `hmsActions` and `hmsNotifications`.
+
+- `hmsStore` - this contains the complete state of the room at any given time. This includes for example, participant details, messages and track states.
+- `hmsActions` - this is used to perform any action such as joining, muting and sending a message.
+- `hmsNotifications` - this can be used to get notified on peer join/leave and new messages in order to show toast notifications to the user.
+
+`hms.js` file is a JavaScript file where you initialize and export three main entities of the 100ms SDK, so they can be used as required in your application.
+
+```jsx
+import { HMSReactiveStore } from '@100mslive/hms-video-store';
+
+const hms = new HMSReactiveStore();
+
+// by default subscriber is notified about store changes post subscription only, this can be
+// changed to call it right after subscribing too using this function.
+hms.triggerOnSubscribe(); // optional, recommended
+
+const hmsActions = hms.getActions();
+const hmsStore = hms.getStore();
+const hmsNotifications = hms.getNotifications();
+
+export { hmsActions, hmsStore, hmsNotifications };
+```
+
+## Join Room and Start Session
+
+Replace your Twilio Video import and connect functions with the 100ms SDK `import` and `init`, and `join` functions.
+
+- Both 100ms and Twilio require a token to join a session. But you also have an option of using a room-code on 100ms. Room code represents a unique `role` and `room_id` combination.
+- Auth tokens can be generated using room codes as well.
+- No explicit action is required to start a session on 100ms. The session starts when the first user joins the room.
+
+**Twilio**
+
+```jsx
+import * as TwilioVideo from 'twilio-video'
+
+var twilioVideo = TwilioVideo
+var twilioRoom
+
+twilioRoom = await twilioVideo.connect(TOKEN, {
+   name: 'yourName',
+   audio: false,
+   video: false,
+   dominantSpeaker: true
+})
+```
+
+**100ms**
+
+```jsx
+import {hmsActions} from './hms';
+
+const config = {
+   userName: '<yourName>',
+   authToken: '<Auth token>', // client-side token generated from your token service
+   settings: {
+      isAudioMuted: true, //optional
+      isVideoMuted: false //optional
+   },
+   rememberDeviceSelection: true, // remember manual device change
+};
+
+await hmsActions.join(config);
+```
+
+You can optionally pass any user’s [`metadata`](/api-reference/javascript/v2/interfaces/HMSConfig#metadata) that you might require in your setup. 
+
+## Video
+
+Twilio has a concept of multiple video and audio tracks, which is always an array. To render the self view, Twilio appends a video element inside the specified `div` element.
+
+- **Twilio** requires manual control over the video tracks, which gives you flexibility but requires more code for track management.
+- **100ms** simplifies the process by managing the tracks internally. This reduces the amount of code but also abstracts away some level of control.
+- In **Twilio**, you have to handle the attachment of the video element to the DOM. In **100ms**, this is handled by the SDK, and you only need to manage the rendering part.
+- It's important to handle permissions and user interactions correctly in both SDKs. Ensure that the camera is accessed only after the user grants permission, usually in response to a user action like a button click.
+
+### Video Quality Management
+
+**Twilio**
+
+Twilio allows explicit configuration for video quality.
+
+```jsx
+
+twilioVideo.createLocalVideoTrack({
+    width: { ideal: 1280, min: 640, max: 1920 },
+    height: { ideal: 720, min: 480, max: 1080 },
+    aspectRatio: 16/9
+}).then(localVideoTrack => {
+    // Use the video track
+});
+
+```
+
+**100ms**
+
+100ms SDK optimizes video quality automatically based on network conditions and device capabilities. You can configure aspect ratios, resolution and additional settings through the 100ms dashboard.
+
+### Turn the Camera On
+
+**Twilio**
+
+In Twilio, you create a local video track and publish it to the room for self-view.
+
+```html
+<!-- Twilio: HTML structure for self view -->
+<div id="twilio-self-view-div" style="width: 1920px; height: 1080px;"></div>
+```
+
+```jsx
+// Twilio: Start camera and publish video track
+twilioVideo.createLocalVideoTrack({
+    width: 1280,
+    height: 720,
+    aspectRatio: 16/9
+}).then(localVideoTrack => {
+    twilioRoom.localParticipant.publishTrack(localVideoTrack);
+    document.getElementById('twilio-self-view-div').appendChild(localVideoTrack.attach());
+});
+```
+
+**100ms**
+
+In 100ms, the process is more streamlined. When joining a room, if video is enabled, it automatically starts the camera.
+
+```jsx
+// 100ms: Join a room with video enabled
+hmsActions.join({
+    authToken: 'Your Auth Token',
+    settings: {
+        isVideoMuted: false // Ensures the video starts upon joining
+    }
+});
+```
+
+### Turn the Camera Off
+
+**Twilio**
+
+In Twilio, you loop through each video track to stop the camera.
+
+```jsx
+// Twilio: Turn off the camera
+twilioRoom.localParticipant.videoTracks.forEach(publication => {
+    publication.unpublish();
+    publication.track.stop();
+    document.getElementById('twilio-self-view-div').querySelector('video').remove();
+});
+```
+
+**100ms**
+
+100ms simplifies this process with a single function call.
+
+```jsx
+// 100ms: Turn off the camera
+async function turnOffCamera() {
+    await hmsActions.setLocalVideoEnabled(false);
+}
+```
+
+> **Notes and Best Practices**
+>
+> - **Track Management**: Twilio requires explicit track management, while 100ms abstracts this, focusing on higher-level functionalities like enabling or disabling video.
+> - **Event Handling**: Handle events like turning on/off the camera in response to user interactions to comply with browser security policies regarding media devices.
+
+### Rendering the Video
+
+#### Rendering Local Video
+
+**Twilio**
+
+In Twilio, you create a local video track and attach it to a DOM element for self-view.
+
+```html
+<!-- Twilio: HTML structure for local video -->
+<div id="twilio-local-video"></div>
+```
+
+```jsx
+// Twilio: Create and display local video track
+import TwilioVideo from 'twilio-video';
+
+TwilioVideo.createLocalVideoTrack().then(localVideoTrack => {
+    const localVideoElement = localVideoTrack.attach();
+    document.getElementById('twilio-local-video').appendChild(localVideoElement);
+});
+
+```
+
+**100ms**
+
+100ms SDK abstracts away the direct handling of media tracks, providing a more straightforward approach. It automatically handles local video tracks when you join a room. However, you need to manage the rendering part.
+
+```html
+<!-- 100ms: HTML structure for local video -->
+<video id="hms-local-video" autoplay muted></video>
+```
+
+```jsx
+// 100ms: Subscribe to local video track and render
+// 100ms: Subscribe to local video track and render
+import { selectLocalPeer } from "@100mslive/hms-video-store";
+
+
+hmsStore.subscribe(() => {
+    const localPeer = hmsStore.getState(selectLocalPeer);
+    if (localPeer && localPeer.videoTrack) {
+        const localVideoElement = document.getElementById('hms-local-video');
+        hmsActions.attachVideo(localPeer.videoTrack, localVideoElement);
+    }
+}, selectLocalPeer);
+```
+
+#### Rendering Remote Video
+
+**Twilio**
+
+You subscribe to the video tracks of remote participants and render them in the DOM.
+
+```html
+<!-- Twilio: HTML structure for remote video -->
+<div id="twilio-remote-video"></div>
+```
+
+```jsx
+// Twilio: Display remote video tracks
+twilioRoom.on('participantConnected', participant => {
+    participant.on('trackSubscribed', track => {
+        if (track.kind === 'video') {
+            const remoteVideoElement = track.attach();
+            document.getElementById('twilio-remote-video').appendChild(remoteVideoElement);
+        }
+    });
+});
+```
+
+**100ms**
+
+Similar to local video on 100ms, you subscribe to remote peers' video tracks.
+
+```html
+<!-- 100ms: HTML structure for remote video -->
+<div id="hms-remote-videos"></div>
+```
+
+```jsx
+// 100ms: Subscribe to remote peers and render their videos
+import { selectRemotePeers } from "@100mslive/hms-video-store";
+
+const renderedPeers = new Set();
+
+function renderRemoteVideos() {
+    const peers = hmsStore.getState(selectPeers);
+    const remoteVideosContainer = document.getElementById('hms-remote-videos');
+
+    peers.forEach(peer => {
+        if (peer.videoTrack && !renderedPeers.has(peer.id)) {
+            renderedPeers.add(peer.id);
+            const remoteVideoElement = document.createElement('video');
+						remoteVideoElement.autoplay = true;
+						remoteVideoElement.muted = true;
+						remoteVideoElement.playsinline = true;
+            hmsActions.attach(peer.videoTrack, remoteVideoElement);
+            remoteVideosContainer.appendChild(remoteVideoElement);
+        }
+    });
+}
+
+hmsStore.subscribe(renderRemoteVideos, selectRemotePeers);
+```
+
+## Audio
+
+### Mute and Unmute Audio
+
+**Twilio**
+
+To mute the microphone using Twilio Video, you need to iterate through each audio track.
+
+```jsx
+twilioRoom.localParticipant.audioTracks.forEach((publication) => {
+    publication.track.disable()
+})
+// Enable track to unmute
+```
+
+**100ms**
+
+```jsx
+await hmsActions.setLocalAudioEnabled(false);
+
+//set boolean to true to unmute
+```
+
+## Leave or End Session
+
+Replace the Twilio `disconnect` function with the 100ms `leave` function. This will effectively help the user leave the room
+
+**Twilio**
+
+```jsx
+twilioVideo.disconnect()
+```
+
+**100ms**
+
+```jsx
+await hmsActions.leave()
+```
+
+In case you wish to end the room for everyone on 100ms.
+
+```jsx
+const lock = false; // set to true to disallow rejoins in the room
+const reason = 'party is over'; // reason for ending the room
+await hmsActions.endRoom(lock, reason);
+```
+
+# **More SDK features**
+
+While migrating from Twilio to 100ms, it's important to understand that 100ms abstracts many lower-level operations, providing a more streamlined API for developers. This guide should assist in understanding key differences and making migration smoother. Remember to refer to the respective SDKs' detailed documentation for more comprehensive guidance. 100ms has a number of additional features including post call transcription and AI-generated summaries, chat, screen-sharing, session store, virtual background, pip-mode and more.
+
+For the complete feature map of Twilio Video to 100ms SDK, split by platform, see the [feature map]([/get-started/v2/get-started/migration-guides/twilio-video-to-100ms/overview#feature-map-comparison](https://www.notion.so/Video-Recording-d3328e995eea4ae6ad32a071dc52d240?pvs=21)) on our overview page. 
+
+# A faster way to go live - 100ms Prebuilt
+
+100ms Prebuilt allows you to go live faster without the hassle of rewriting code for all your media handling logic, custom UI and plugin integration.
+
+**Benefits of 100ms Prebuilt:**
+
+- **Faster development:** Prebuilt offers a pre-built React component, reducing development time compared to building from scratch.
+- **Simplified setup:** Joining a room requires only the room code, eliminating the need for server-side room management.
+- **Reduced code complexity:** Prebuilt handles essential functionalities like media handling and UI updates, requiring less custom code.
+
+Refer to our [Prebuilt documentation](/get-started/v2/get-started/prebuilt/overview) to learn more.
+
