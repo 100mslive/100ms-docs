@@ -47,11 +47,29 @@ On your auth server, replace your [Twilio Video JWT](https://www.twilio.com/doc
 
 ## Initialization
 
-Replace Twilio's **`Video`** object with 100ms' `hmsStore` and  `hmsActions`.
+Replace Twilio's `Video` object with 100ms' `hmsStore` , `hmsActions` and `hmsNotifications`.
 
 - `hmsStore` - this contains the complete state of the room at any given time. This includes for example, participant details, messages and track states.
 - `hmsActions` - this is used to perform any action such as joining, muting and sending a message.
 - `hmsNotifications` - this can be used to get notified on peer join/leave and new messages in order to show toast notifications to the user.
+
+`hms.js` file is a JavaScript file where you initialize and export three main entities of the 100ms SDK, so they can be used as required in your application.
+
+```jsx
+import { HMSReactiveStore } from '@100mslive/hms-video-store';
+
+const hms = new HMSReactiveStore();
+
+// by default subscriber is notified about store changes post subscription only, this can be
+// changed to call it right after subscribing too using this function.
+hms.triggerOnSubscribe(); // optional, recommended
+
+const hmsActions = hms.getActions();
+const hmsStore = hms.getStore();
+const hmsNotifications = hms.getNotifications();
+
+export { hmsActions, hmsStore, hmsNotifications };
+```
 
 ## Join Room and Start Session
 
@@ -95,7 +113,7 @@ const config = {
 await hmsActions.join(config);
 ```
 
-You can optionally pass any user `metadata` that you might require in your setup. 
+You can optionally pass any user’s [`metadata`](/api-reference/javascript/v2/interfaces/HMSConfig#metadata) that you might require in your setup. 
 
 ## Video
 
@@ -157,10 +175,6 @@ In 100ms, the process is more streamlined. When joining a room, if video is enab
 
 ```jsx
 // 100ms: Join a room with video enabled
-import { HMSReactiveStore } from "@100mslive/hms-video-store";
-
-const hmsActions = new HMSReactiveStore().getActions();
-
 hmsActions.join({
     authToken: 'Your Auth Token',
     settings: {
@@ -190,8 +204,6 @@ twilioRoom.localParticipant.videoTracks.forEach(publication => {
 
 ```jsx
 // 100ms: Turn off the camera
-const hmsActions = new HMSReactiveStore().getActions();
-
 async function turnOffCamera() {
     await hmsActions.setLocalVideoEnabled(false);
 }
@@ -202,11 +214,11 @@ async function turnOffCamera() {
 > - **Track Management**: Twilio requires explicit track management, while 100ms abstracts this, focusing on higher-level functionalities like enabling or disabling video.
 > - **Event Handling**: Handle events like turning on/off the camera in response to user interactions to comply with browser security policies regarding media devices.
 
-## Rendering the video
+### Rendering the Video
 
-### Twilio: Rendering Local and Remote Video
+#### Rendering Local Video
 
-**Rendering Local Video:**
+**Twilio**
 
 In Twilio, you create a local video track and attach it to a DOM element for self-view.
 
@@ -226,7 +238,33 @@ TwilioVideo.createLocalVideoTrack().then(localVideoTrack => {
 
 ```
 
-**Rendering Remote Video:**
+**100ms**
+
+100ms SDK abstracts away the direct handling of media tracks, providing a more straightforward approach. It automatically handles local video tracks when you join a room. However, you need to manage the rendering part.
+
+```html
+<!-- 100ms: HTML structure for local video -->
+<video id="hms-local-video" autoplay muted></video>
+```
+
+```jsx
+// 100ms: Subscribe to local video track and render
+// 100ms: Subscribe to local video track and render
+import { selectLocalPeer } from "@100mslive/hms-video-store";
+
+
+hmsStore.subscribe(() => {
+    const localPeer = hmsStore.getState(selectLocalPeer);
+    if (localPeer && localPeer.videoTrack) {
+        const localVideoElement = document.getElementById('hms-local-video');
+        hmsActions.attachVideo(localPeer.videoTrack, localVideoElement);
+    }
+}, selectLocalPeer);
+```
+
+#### Rendering Remote Video
+
+**Twilio**
 
 You subscribe to the video tracks of remote participants and render them in the DOM.
 
@@ -247,65 +285,39 @@ twilioRoom.on('participantConnected', participant => {
 });
 ```
 
-### 100ms: Rendering Local and Remote Video
+**100ms**
 
-100ms SDK abstracts away the direct handling of media tracks, providing a more straightforward approach.
-
-**Rendering Local Video:**
-
-100ms automatically handles local video tracks when you join a room. However, you need to manage the rendering part.
+Similar to local video on 100ms, you subscribe to remote peers' video tracks.
 
 ```html
-<!-- 100ms: HTML structure for local video -->
-<video id="hms-local-video" autoplay muted></video>
-```
-
-```jsx
-// 100ms: Subscribe to local video track and render
-import { HMSReactiveStore, selectLocalPeer } from "@100mslive/hms-video-store";
-
-const hmsStore = new HMSReactiveStore().getStore();
-
-hmsStore.subscribe(() => {
-    const localPeer = hmsStore.getState(selectLocalPeer);
-    if (localPeer && localPeer.videoTrack) {
-        const localVideoElement = document.getElementById('hms-local-video');
-        localVideoElement.srcObject = new MediaStream([localPeer.videoTrack.track]);
-    }
-}, selectLocalPeer);
-```
-
-**Rendering Remote Video:**
-
-Similar to local video, you subscribe to remote peers' video tracks.
-
-```html
-
 <!-- 100ms: HTML structure for remote video -->
 <div id="hms-remote-videos"></div>
-
 ```
 
 ```jsx
-
 // 100ms: Subscribe to remote peers and render their videos
-import { selectPeers } from "@100mslive/hms-video-store";
+import { selectRemotePeers } from "@100mslive/hms-video-store";
+
+const renderedPeers = new Set();
 
 function renderRemoteVideos() {
     const peers = hmsStore.getState(selectPeers);
     const remoteVideosContainer = document.getElementById('hms-remote-videos');
 
     peers.forEach(peer => {
-        if (!peer.isLocal && peer.videoTrack) {
+        if (peer.videoTrack && !renderedPeers.has(peer.id)) {
+            renderedPeers.add(peer.id);
             const remoteVideoElement = document.createElement('video');
-            remoteVideoElement.autoplay = true;
-            remoteVideoElement.srcObject = new MediaStream([peer.videoTrack.track]);
+						remoteVideoElement.autoplay = true;
+						remoteVideoElement.muted = true;
+						remoteVideoElement.playsinline = true;
+            hmsActions.attach(peer.videoTrack, remoteVideoElement);
             remoteVideosContainer.appendChild(remoteVideoElement);
         }
     });
 }
 
-hmsStore.subscribe(renderRemoteVideos, selectPeers);
+hmsStore.subscribe(renderRemoteVideos, selectRemotePeers);
 ```
 
 ## Audio
