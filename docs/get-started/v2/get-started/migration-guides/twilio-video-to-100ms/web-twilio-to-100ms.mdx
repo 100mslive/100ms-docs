@@ -296,7 +296,7 @@ Similar to local video on 100ms, you subscribe to remote peers' video tracks.
 
 ```jsx
 // 100ms: Subscribe to remote peers and render their videos
-import { selectRemotePeers } from "@100mslive/hms-video-store";
+import {selectRemotePeers} from "@100mslive/hms-video-store";
 
 const renderedPeers = new Set();
 
@@ -308,10 +308,10 @@ function renderRemoteVideos() {
         if (peer.videoTrack && !renderedPeers.has(peer.id)) {
             renderedPeers.add(peer.id);
             const remoteVideoElement = document.createElement('video');
-						remoteVideoElement.autoplay = true;
-						remoteVideoElement.muted = true;
-						remoteVideoElement.playsinline = true;
-            hmsActions.attach(peer.videoTrack, remoteVideoElement);
+            remoteVideoElement.autoplay = true;
+            remoteVideoElement.muted = true;
+            remoteVideoElement.playsinline = true;
+            hmsActions.attachVideo(peer.videoTrack, remoteVideoElement);
             remoteVideosContainer.appendChild(remoteVideoElement);
         }
     });
