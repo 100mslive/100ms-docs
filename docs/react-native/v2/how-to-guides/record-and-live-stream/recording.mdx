@@ -169,6 +169,19 @@ interface HMSRtmpStreamingState {
     error?: HMSException; // Gets populated if there is some error in starting the stream or recording
     startedAt: Date; // time at which RTMP streaming was started
     stoppedAt: Date; // time at which RTMP streaming was stopped
+    state: HMSStreamingState; // indicates the current state of RTMP Streaming
+}
+```
+
+`HMSStreamingState` is a `enum` which can have the following values:
+
+```js
+enum HMSStreamingState {
+    NONE,
+    STARTING,
+    STARTED,
+    STOPPED,
+    FAILED,
 }
 ```
 
@@ -180,6 +193,7 @@ interface HMSBrowserRecordingState {
     error?: HMSException; // Gets populated if there is some error in starting the browser recording
     startedAt: Date; // time at which browser recording was started
     stoppedAt: Date; // time at which browser recording was stopped
+    state: HMSRecordingState; // indicates the current state of Browser Recording
 }
 ```
 
@@ -192,6 +206,21 @@ interface HMSServerRecordingState {
     running: boolean; // `true` indicates that server recording is running
     error?: HMSException; // Gets populated if there is some error in starting the server recording
     startedAt: Date; // time at which server recording was started
+    state: HMSRecordingState; // indicates the current state of Server Recording
+}
+```
+
+Here is a listing of all possible values for `HMSRecordingState` -
+
+```js
+enum HMSRecordingState {
+    NONE,
+    STARTING,
+    STARTED,
+    PAUSED,
+    RESUMED,
+    STOPPED,
+    FAILED,
 }
 ```
 
