@@ -160,10 +160,6 @@ const Sidebar: React.FC<Props> = ({
 
     const { ['@md']: cssMd, ...cssRest } = css;
 
-    if (!nav) {
-        return null;
-    }
-
     return (
         <Box
             ref={baseRef}
