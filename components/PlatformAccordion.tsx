@@ -1,10 +1,22 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { ChevronDownIcon } from '@100mslive/react-icons';
 import { Flex, Text } from '@100mslive/react-ui';
 import { titleCasing } from '../lib/utils';
 import { SidebarAPIReference } from './SidebarAPIReference';
 import { references } from '../api-references';
+
+const recursivelyGetLink = (data, item) => {
+    const currentLevel = data?.[Object.keys(data)[0]];
+
+    if (currentLevel?.url) {
+        return currentLevel.url;
+    }
+    if (typeof currentLevel === 'object') {
+        return recursivelyGetLink(currentLevel, Object.keys(currentLevel)[0]);
+    }
+    return undefined;
+};
 
 const PlatformAccordion = ({
     title,
@@ -48,16 +60,11 @@ const PlatformAccordion = ({
             </div>
 
             <div className={`plat-accordion-content ${open ? 'active-plat-accordion' : ''}`}>
-                {Object.keys(data['v2']).map((item) => (
+                {Object.keys(data.v2).map((item) => (
                     // For when all children are accordions
                     <Link
                         passHref
-                        href={`${
-                            data['v2'][item][Object.keys(data['v2'][item])[0]]?.url ||
-                            data['v2'][item][Object.keys(data['v2'][item])[0]][
-                                Object.keys(data['v2'][item][Object.keys(data['v2'][item])[0]])[0]
-                            ].url
-                        }`}
+                        href={`${recursivelyGetLink(data.v2[item], item)}`}
                         key={`${title}-${item}`}>
                         <Text
                             as="a"
