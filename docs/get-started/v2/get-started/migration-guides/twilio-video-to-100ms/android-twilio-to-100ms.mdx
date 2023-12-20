@@ -128,12 +128,15 @@ class MyHmsUpdateListener : HMSUpdateListener {
     override fun onMessageReceived(message: HMSMessage) {}
     override fun onRoleChangeRequest(request: HMSRoleChangeRequest) {}
     override fun onRoomUpdate(type: HMSRoomUpdate, hmsRoom: HMSRoom) {}
-		override fun onReconnecting(error: HMSException) {}
-		override fun onReconnected() {}
-		override fun onRemovedFromRoom(notification: HMSRemovedFromRoom) {}
-		override fun onChangeTrackStateRequest(details: HMSChangeTrackStateRequest)
-		override fun peerListUpdated(addedPeers: ArrayList<HMSPeer>?, removedPeers: ArrayList<HMSPeer>?) {}
-		override fun onSessionStoreAvailable(sessionStore: HmsSessionStore) {}
+    override fun onReconnecting(error: HMSException) {}
+    override fun onReconnected() {}
+    override fun onRemovedFromRoom(notification: HMSRemovedFromRoom) {}
+    override fun onChangeTrackStateRequest(details: HMSChangeTrackStateRequest)
+    override fun peerListUpdated(
+        addedPeers: ArrayList<HMSPeer>?,
+        removedPeers: ArrayList<HMSPeer>?
+    ) {}
+    override fun onSessionStoreAvailable(sessionStore: HmsSessionStore) {}
     override fun onError(error: HMSException) {}
 }
 
@@ -169,6 +172,7 @@ enum class HMSRoomUpdate {
     BROWSER_RECORDING_STATE_UPDATED,
     ROOM_PEER_COUNT_UPDATED,
 }
+
 ```
 
 ## Step 6:  Video
@@ -315,9 +319,9 @@ End the room with `hmsSdk.endRoom`
 
 `endRoom` takes three parameters.
 
-- reason: Optional message you want to pass along the end room notification to other peers
-- lock: Whether you want to prevent anyone from rejoining the room. If false, they will be allowed to enter the room again if the client called join. If this is false, they will not able to join this room again.
-- completion handler: Lets you know whether the end room operation executed. was ended successfully or not.
+- `reason`: Optional message you want to pass along the end room notification to other peers
+- `lock`: Whether you want to prevent anyone from rejoining the room. If false, they will be allowed to enter the room again if the client called join. If this is false, they will not able to join this room again.
+- `HMSActionResulListener`: Lets you know whether the end room operation executed. was ended successfully or not.
     
     ```kotlin
     hmssdk.endRoom(reason : String, lock : Boolean, hmsActionResultListener: HMSActionResultListener) {}
