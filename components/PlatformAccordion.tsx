@@ -6,14 +6,13 @@ import { titleCasing } from '../lib/utils';
 import { SidebarAPIReference } from './SidebarAPIReference';
 import { references } from '../api-references';
 
-const recursivelyGetLink = (data, item) => {
+const recursivelyGetLink = (data) => {
     const currentLevel = data?.[Object.keys(data)[0]];
-
     if (currentLevel?.url) {
         return currentLevel.url;
     }
     if (typeof currentLevel === 'object') {
-        return recursivelyGetLink(currentLevel, Object.keys(currentLevel)[0]);
+        return recursivelyGetLink(currentLevel);
     }
     return undefined;
 };
@@ -64,7 +63,7 @@ const PlatformAccordion = ({
                     // For when all children are accordions
                     <Link
                         passHref
-                        href={`${recursivelyGetLink(data.v2[item], item)}`}
+                        href={`${recursivelyGetLink(data.v2[item])}`}
                         key={`${title}-${item}`}>
                         <Text
                             as="a"
