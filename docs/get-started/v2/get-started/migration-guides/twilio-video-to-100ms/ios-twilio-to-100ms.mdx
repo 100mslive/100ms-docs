@@ -106,15 +106,23 @@ Both SDKs use delegates/listeners to detect and stay in sync with state changes.
 
 ```swift
 class YourClass: TVIRoomDelegate {
-  // Add any of the callback functions here as needed.
+    // Add any of the callback functions here as needed.
 
-	func roomDidConnect(room: Room) { ... }
+    func roomDidConnect(room: Room) {
+        ...
+    }
 
-	func participantDidConnect(room: Room, participant: RemoteParticipant) { ... }
+    func participantDidConnect(room: Room, participant: RemoteParticipant) {
+        ...
+    }
 
-	func participantDidDisconnect(room: Room, participant: RemoteParticipant) { ... }
+    func participantDidDisconnect(room: Room, participant: RemoteParticipant) {
+        ...
+    }
 
-	func roomDidDisconnect(room: Room, error: Error?) { ... }
+    func roomDidDisconnect(room: Room, error: Error ? ) {
+        ...
+    }
 }
 
 let room = TwilioVideo.connect(with: connectOptions, delegate: self)
@@ -126,22 +134,23 @@ The 100ms SDK sends updates to the application about any change in Room , Peer a
 
 ```swift
 class MyMeetingClass: HMSUpdateListener {
-		
-		public func on(join room: HMSRoom) {
-				...
-		}
 
-		public func on(room: HMSRoom, update: HMSRoomUpdate) {
-				...
+    public func on(join room: HMSRoom) {
+        ...
     }
 
-		public func on(peer: HMSPeer, update: HMSPeerUpdate) {
+    public func on(room: HMSRoom, update: HMSRoomUpdate) {
+        ...
+    }
 
-		}
+    public func on(peer: HMSPeer, update: HMSPeerUpdate) {
 
-		public func on(track: HMSTrack, update: HMSTrackUpdate, for peer: HMSPeer) {
+    }
 
-		}
+    public func on(track: HMSTrack, update: HMSTrackUpdate,
+        for peer: HMSPeer) {
+
+    }
 }
 ```
 
@@ -398,7 +407,7 @@ On 100ms, allow certain peers to end the call for everyone.
     ```
     
 
-# **REST APIs and Webhooks**
+# REST APIs and Webhooks
 
 100ms has a full suite of [REST APIs](/server-side/v2/api-reference/Rooms/overview) and [webhooks](/server-side/v2/how-to-guides/configure-webhooks/overview).
 
