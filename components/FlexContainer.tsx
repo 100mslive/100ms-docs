@@ -5,7 +5,7 @@ const FlexContainer = ({ children }) => {
         <Flex
             align="center"
             className="flex-container"
-            css={{ alignItems: "stretch", gap: '$8', '@xl': { flexWrap: 'wrap' } }}>
+            css={{ alignItems: 'stretch', gap: '$8', '@xl': { flexWrap: 'wrap' } }}>
             {children}
         </Flex>
     );
