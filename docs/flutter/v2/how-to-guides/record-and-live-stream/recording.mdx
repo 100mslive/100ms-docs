@@ -149,13 +149,51 @@ This can be used to show the stream or recording status on UI something similar 
 
 ![stream-state](/docs/v2/flutter-stream-state.jpg)
 
+Room recording can be in one of the state at any given time:
+
+```dart
+enum HMSRecordingState {
+  none,
+
+  starting,
+
+  started,
+
+  paused,
+
+  resumed,
+
+  stopped,
+
+  failed,
+}
+```
+
+Similarly, room streaming can be in one of the state at any given time:
+
+```dart
+enum HMSStreamingState {
+  none,
+
+  starting,
+
+  started,
+
+  stopped,
+
+  failed,
+}
+```
+
 Here are the relevant properties inside the `HMSRoom` object which we can read to get the current recording/streaming status of the room namely:
 
--   `hmsRtmpStreamingState` - Contains info about RTMP Streaming, `running` attribute if true indicates streaming is ON currently
--   `hmsBrowserRecordingState` - Contains info about Browser Recording, `running` attribute if true indicates browser recording is ON currently
--   `hmsServerRecordingState` - Contains info about Server Recording, `running` attribute if true indicates server recording is ON currently
+-   `hmsRtmpStreamingState` - Contains info about RTMP Streaming, `state` attribute if set to `HMSStreamingState.started` indicates streaming is ON currently
+-   `hmsBrowserRecordingState` - Contains info about Browser Recording, `state` attribute if set to `HMSRecordingState.started` indicates browser recording is ON currently
+-   `hmsServerRecordingState` - Contains info about Server Recording, `state` attribute if set to `HMSRecordingState.started` indicates server recording is ON currently
+-   `hmshlsRecordingState` - Contains info about HLS Recording, `state` attribute if set to `HMSRecordingState.started` indicates HLS recording is ON currently
+-   `hmshlsStreamingState` - Contains info about HLS Streaming, `state` attribute if set to `HMSStreamingState.started` indicates HLS streaming is ON currently
 
-Each of them is an object which contains a boolean `running` which lets you know if it's active in the room right now and `error` which lets you know if there was an error.
+Each of them is an object which contains a boolean `state` which lets you know the streaming or recording state in the room and `error` which lets you know if there was an error.
 
 1. **HMSRtmpStreamingState** an instance of `HMSRtmpStreamingState`, which looks like:
 
@@ -164,10 +202,13 @@ class HMSRtmpStreamingState {
   ///[error]: Gets populated if there is some error in starting the stream
   ///[running]: bool value `true` indicates that RTMP streaming is running
   ///[startedAt]: time at which RTMP streaming was started
+  ///[state]: Contains info about current state of RTMP streaming
   final HMSException? error;
   final bool running;
   DateTime? startedAt;
-  HMSRtmpStreamingState({required this.error, required this.running, this.startedAt});
+  HMSStreamingState state;
+  
+  HMSRtmpStreamingState({required this.error, required this.running, this.startedAt, required this.state});
 }
 ```
 
@@ -179,11 +220,14 @@ class HMSBrowserRecordingState {
   ///[running]: bool value `true` indicates that browser recording is running
   ///[startedAt]: time at which browser recording was started
   ///[initialising]: flag to identify the recording initialisation status
+  ///[state]: Contains info about current state of browser recording
   final HMSException? error;
   final bool running;
   final bool initialising;
   DateTime? startedAt;
-  HMSBrowserRecordingState({required this.error, required this.running, this.startedAt});
+  HMSRecordingState state;
+
+  HMSBrowserRecordingState({required this.error, required this.running, this.startedAt, required this.state});
 }
 ```
 
@@ -194,10 +238,47 @@ class HMSServerRecordingState {
   ///[error]: Gets populated if there is some error in starting the server recording
   ///[running]: bool value `true` indicates that server recording is running
   ///[startedAt]: time at which server recording was started
+  ///[state]: Contains info about current state of server recording
   final HMSException? error;
   final bool running;
   DateTime? startedAt;
-  HMSServerRecordingState({required this.error,required this.running, this.startedAt});
+  HMSRecordingState state;
+
+  HMSServerRecordingState({required this.error,required this.running, this.startedAt, required this.state});
+}
+```
+
+4. **hlsRecordingState** an instance of `HMSHlsRecordingState`, which looks like:
+
+```dart
+class HMSHLSRecordingState {
+  ///[error]: Gets populated if there is some error in starting the server recording
+  ///[running]: bool value `true` indicates that hls recording is running
+  ///[startedAt]: time at which server recording was started
+  ///[state]: Contains info about current state of hls recording
+  final HMSException? error;
+  final bool running;
+  DateTime? startedAt;
+  HMSRecordingState state;
+
+  HMSHLSRecordingState({required this.error, required this.running, this.startedAt, required this.state});
+}
+```
+
+5. **hlsStreamingState** an instance of `HMSHlsStreamingState`, which looks like:
+
+```dart
+class HMSHLSStreamingState {
+
+  ///[running]: bool value `true` indicates that hls recording is running
+  ///[variants] contains the information about HLS Streaming Url, meeting Url, metadata and startedAt.
+  ///[state]: Contains info about current state of hls streaming
+  final bool running;
+  final List<HMSHLSVariant?> variants;
+  HMSStreamingState state;
+ 
+  
+  HMSHLSStreamingState({required this.running, required this.variants, required this.state});
 }
 ```
 

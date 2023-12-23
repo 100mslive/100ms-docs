@@ -228,6 +228,8 @@ The object contains a boolean `running` which lets you know if it's active on th
 data class HMSHLSStreamingState(
         val running : Boolean,
         val variants : ArrayList<HMSHLSVariant>?,
+        val error: HMSException?,
+        val state: HMSStreamingState
 )
 ```
 
@@ -238,7 +240,8 @@ data class HMSHLSVariant(
         val hlsStreamUrl: String?,
         val meetingUrl: String?,
         val metadata: String?,
-        val startedAt: Long?
+        val startedAt: Long?,
+        val state: BeamStreamingStates?
 )
 ```
 
