@@ -10,8 +10,8 @@ This is a guide to enable live transcription for your live streams. This feature
     descriptions={[
         "Understanding how 100ms' live transcription works and its pre-requisites.",
         'Enabling and configuring live transcription through various methods.',
-        "Understanding the generated output files.",
-        "Accessing and consuming the generated output."
+        "Accessing and consuming the generated output.",
+        "Understanding the generated output files."
     ]}
 />
 
@@ -89,6 +89,27 @@ There are two advanced configuration that are currently offered.
 
 ![advanced transcription config](/docs/v2/advanced-transcription-config.png)
 
+
+### Consumption
+
+#### Prebuilt
+Our Prebuilt player on web supports HLS with live transcription out of the box. It allows the functionality of enabling and disabling this feature using the `CC` button on the player.
+
+<video loop="true" autoplay="autoPlay" controls="false" id="vid" muted>
+    <source src="/docs/docs/v2/cc-on-hls-player-web.mp4" type="video/mp4" />
+</video>
+
+Learn more about live streaming [here](/get-started/v2/get-started/features/live-streaming) and get started with integrating Prebuilt using [this](/get-started/v2/get-started/prebuilt/overview).
+
+#### Within your player
+
+The transcript `.vtt` files are delivered as part of the HLS manifest itself. If a HLS compatible player is used, it should support closed captioning by default.
+
+All that is required is to input the URL to `master.m3u8` into a compatible HLS player.
+
+The functionality of turning live transcription on or off for the user should be supported by the player itself.
+
+
 ### Example Output
 
 The captions are generated in the `webvtt` format and are plugged in the HLS manifest itself. 
@@ -142,26 +163,6 @@ If you if you are at some event here and you shoot the light ray,
 If you if you are at some event here and you shoot the light ray,
 ```
 
-
-### Consumption
-
-#### Prebuilt
-Our Prebuilt player on web supports HLS with live transcription out of the box. It allows the functionality of enabling and disabling this feature using the CC button on the player.
-
-<video loop="true" autoplay="autoPlay" controls="false" id="vid" muted>
-    <source src="/docs/docs/v2/cc-on-hls-player-web.mp4" type="video/mp4" />
-</video>
-
-Learn more about live streaming [here](/get-started/v2/get-started/features/live-streaming) and get started with integrating Prebuilt using [this](/get-started/v2/get-started/prebuilt/overview).
-
-#### Within your player
-
-The transcript `.vtt` files are delivered as part of the HLS manifest itself. If a HLS compatible player is used, it should support closed captioning by default.
-
-All that is required is to input the URL to `master.m3u8` into a compatible HLS player.
-
-The functionality of turning live transcription on or off for the user should be supported by the player itself.
-
 </StepsContainer>
 
 
@@ -190,7 +191,7 @@ The functionality of turning live transcription on or off for the user should be
     
 6. **What all players are supported?**
     
-    Almost all HLS players will support `webvtt` based transcripts. We have internally tested with hls.js, Avo player,
+    Almost all HLS players will support `webvtt` based transcripts. We have internally tested with hls.js, AV Player, Avo player and Exoplayer.
     
 7. **Do you support speaker labels with the live transcription?**
     
@@ -203,5 +204,9 @@ The functionality of turning live transcription on or off for the user should be
 8. **What is the expected latency or delay in generation of the transcript?**
     
     This will be between 500 ms to 1 s. 
+
+9. **Is this a paid feature?**
+    
+    Yes, live transcription is a paid feature. We offer 300 free minutes of live transcription in live streams per month. You can check your monthly usage on the dashboard in 'Usage Overview' section. Additionally, check out the pricing [here](https://www.100ms.live/pricing).
     
 
