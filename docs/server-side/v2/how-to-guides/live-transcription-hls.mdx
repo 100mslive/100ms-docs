@@ -23,6 +23,10 @@ This is a guide to enable live transcription for your live streams. This feature
 
 ![create template](/docs/v2/live-transcription-workflow.png)
 
+<Note type='warning'>
+   Note that the live transcription is only supported for the live streams' audience (consuming via HLS). It doesn’t appear for the webRTC viewers. 
+</Note>
+
 
 ### Enabling and Configuring Live Transcription
 
@@ -66,13 +70,14 @@ Read up more on the live streaming experience [here](/get-started/v2/get-started
 <Tab id='implementation-1'>
 You can refer to our [Live Streaming API documentation](/server-side/v2/api-reference/live-streams/start-live-stream-for-room) to start recording.
 
-1. You are required to mark the transcription `enabled` flag in the request as `true` and select `live` in `modes`to transcribe unless you’ve already enabled transcription for the given room template. Refer Dashboard.
+1. You are required to mark the transcription `enabled` flag in the request as `true` and select `live` in `modes`to transcribe.
 2. You can override the live transcription settings given in the template when starting the live stream through the Live Stream API.
-3. If no input is given, the API will pick up the transcription configuration from the template policy / configuration.
+3. If no transcription input is given within the API request, the API will pick up the transcription configuration from the template policy / configuration by default when starting the live stream.
 
 
 </Tab>
 
+Live stream can be started using the Live Streaming REST API, 100ms SDK or through 100ms Prebuilt.
 
 
 #### Advanced Configuration
@@ -80,11 +85,13 @@ You can refer to our [Live Streaming API documentation](/server-side/v2/api-ref
 There are two advanced configuration that are currently offered.
 
 1. **Custom Vocabulary**: Add non-dictionary words like names, abbreviations, slang, and technical jargon which may not be recognised by the AI model for better transcription accuracy.
-2. **Language:** Select the language that needs to be transcribed. This will be the spoken language and not for the purpose of translation. Transcription only supports **English** language at this point of time. Support for more languages will come soon.
+2. **Language:** Configure the primary spoken language that has to be transcribed. This will hint the AI model to perform transcription more accurately.  Currently, only **English** is supported, which is the default. Support for more languages will follow soon.
 
 ![advanced transcription config](/docs/v2/advanced-transcription-config.png)
 
 ### Example Output
+
+The captions are generated in the `webvtt` format and are plugged in the HLS manifest itself. 
 
 #### Master manifest (master.m3u8)
 ```
@@ -137,7 +144,7 @@ The transcript `.vtt` files are delivered as part of the HLS manifest itself. If
 
 All that is required is to input the URL to `master.m3u8` into a compatible HLS player.
 
-The functionality of turning live transcription on / off on the player itself for the user is something that might have to be built by you.
+The functionality of turning live transcription on or off for the user should be supported by the player itself.
 
 </StepsContainer>
 
