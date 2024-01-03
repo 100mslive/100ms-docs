@@ -127,21 +127,30 @@ Once the quiz has ended, the leaderboard can be fetched which has the quiz summa
 ```js
 
 const fetchLeaderboardData = async () => {
-        const leaderboardData = await hmsActions.interactivityCenter.fetchLeaderboard(poll, 0, 50);
-        setPollLeaderboard(leaderboardData);
+        const leaderboardData = await hmsActions.interactivityCenter.fetchLeaderboard(quiz, 0, 50);
+        setQuizLeaderboard(leaderboardData);
     };
 
 ```
 
 The props accepted are:
-- `poll` :HMSPoll - The poll object
+- `quiz` :HMSPoll - The quiz object
 - `offset` :number - The position offset after which the peer level entries should be fetched
 - `count` :number - The number of peer entries that should be fetched at a time
 
-The response contains an array of entries of type `HMSPollLeaderboardEntry` and a boolean `hasNext` to know there are more entries
+The response contains an array of entries of type `HMSQuizLeaderboardEntry`, a boolean `hasNext` to know there are more entries and 
+a summary object of type `HMSQuizLeaderboardSummary` containing details like the average score, average time taken to answer a question and more.
+
 ```
 {
   entries: [...],
+  summary: {
+    totalUsers: number,
+    votedUsers: number,
+    avgScore: number,
+    avgTime: number,
+    correctAnswers: number,
+  };
   hasNext: false
 }
 ```
