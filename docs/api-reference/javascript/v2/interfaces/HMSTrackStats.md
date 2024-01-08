@@ -1,6 +1,6 @@
 ---
 title: HMSTrackStats
-nav: '4.66'
+nav: '4.73'
 ---
 
 Extends RTCOutboundRtpStreamStats

@@ -1,6 +1,6 @@
 ---
 title: HMSPeer
-nav: '4.28'
+nav: '4.30'
 ---
 
 HMSPeer stores the details of individual participants in the room

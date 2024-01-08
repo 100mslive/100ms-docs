@@ -1,6 +1,6 @@
 ---
 title: HMSPollNotification
-nav: '4.43'
+nav: '4.45'
 ---
 
 ## Hierarchy

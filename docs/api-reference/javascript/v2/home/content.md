@@ -11,6 +11,9 @@ nav: '1.1'
 - [HMSNotificationSeverity](/api-reference/javascript/v2/enums/HMSNotificationSeverity)
 - [HMSNotificationTypes](/api-reference/javascript/v2/enums/HMSNotificationTypes)
 - [HMSPlaylistType](/api-reference/javascript/v2/enums/HMSPlaylistType)
+- [HMSPluginUnsupportedTypes](/api-reference/javascript/v2/enums/HMSPluginUnsupportedTypes)
+- [HMSPollQuestionType](/api-reference/javascript/v2/enums/HMSPollQuestionType)
+- [HMSRecordingState](/api-reference/javascript/v2/enums/HMSRecordingState)
 - [HMSRoomState](/api-reference/javascript/v2/enums/HMSRoomState)
 - [HMSSimulcastLayer](/api-reference/javascript/v2/enums/HMSSimulcastLayer)
 - [HMSVideoPluginCanvasContextType](/api-reference/javascript/v2/enums/HMSVideoPluginCanvasContextType)
@@ -45,12 +48,14 @@ nav: '1.1'
 - [HMSDeviceChangeEventNotification](/api-reference/javascript/v2/interfaces/HMSDeviceChangeEventNotification)
 - [HMSException](/api-reference/javascript/v2/interfaces/HMSException)
 - [HMSExceptionNotification](/api-reference/javascript/v2/interfaces/HMSExceptionNotification)
+- [HMSFrameworkInfo](/api-reference/javascript/v2/interfaces/HMSFrameworkInfo)
 - [HMSGenericTypes](/api-reference/javascript/v2/interfaces/HMSGenericTypes)
 - [HMSHLS](/api-reference/javascript/v2/interfaces/HMSHLS)
 - [HMSLeaveRoomRequest](/api-reference/javascript/v2/interfaces/HMSLeaveRoomRequest)
 - [HMSLeaveRoomRequestNotification](/api-reference/javascript/v2/interfaces/HMSLeaveRoomRequestNotification)
 - [HMSLocalTrackStats](/api-reference/javascript/v2/interfaces/HMSLocalTrackStats)
 - [HMSMediaSettings](/api-reference/javascript/v2/interfaces/HMSMediaSettings)
+- [HMSMediaStreamPlugin](/api-reference/javascript/v2/interfaces/HMSMediaStreamPlugin)
 - [HMSMessage](/api-reference/javascript/v2/interfaces/HMSMessage)
 - [HMSMessageNotification](/api-reference/javascript/v2/interfaces/HMSMessageNotification)
 - [HMSPeer](/api-reference/javascript/v2/interfaces/HMSPeer)
@@ -65,14 +70,19 @@ nav: '1.1'
 - [HMSPlaylistItemNotification](/api-reference/javascript/v2/interfaces/HMSPlaylistItemNotification)
 - [HMSPlaylistSelection](/api-reference/javascript/v2/interfaces/HMSPlaylistSelection)
 - [HMSPlaylistSelector](/api-reference/javascript/v2/interfaces/HMSPlaylistSelector)
+- [HMSPluginSupportResult](/api-reference/javascript/v2/interfaces/HMSPluginSupportResult)
 - [HMSPoll](/api-reference/javascript/v2/interfaces/HMSPoll)
 - [HMSPollCreateParams](/api-reference/javascript/v2/interfaces/HMSPollCreateParams)
-- [HMSPollLeaderboardResponse](/api-reference/javascript/v2/interfaces/HMSPollLeaderboardResponse)
 - [HMSPollNotification](/api-reference/javascript/v2/interfaces/HMSPollNotification)
+- [HMSPollQuestion](/api-reference/javascript/v2/interfaces/HMSPollQuestion)
 - [HMSPollQuestionAnswer](/api-reference/javascript/v2/interfaces/HMSPollQuestionAnswer)
 - [HMSPollQuestionCreateParams](/api-reference/javascript/v2/interfaces/HMSPollQuestionCreateParams)
+- [HMSPollQuestionOption](/api-reference/javascript/v2/interfaces/HMSPollQuestionOption)
+- [HMSPollQuestionOptionCreateParams](/api-reference/javascript/v2/interfaces/HMSPollQuestionOptionCreateParams)
 - [HMSPreviewConfig](/api-reference/javascript/v2/interfaces/HMSPreviewConfig)
 - [HMSPublishAllowed](/api-reference/javascript/v2/interfaces/HMSPublishAllowed)
+- [HMSQuizLeaderboardResponse](/api-reference/javascript/v2/interfaces/HMSQuizLeaderboardResponse)
+- [HMSQuizLeaderboardSummary](/api-reference/javascript/v2/interfaces/HMSQuizLeaderboardSummary)
 - [HMSRTMP](/api-reference/javascript/v2/interfaces/HMSRTMP)
 - [HMSReconnectionNotification](/api-reference/javascript/v2/interfaces/HMSReconnectionNotification)
 - [HMSRecording](/api-reference/javascript/v2/interfaces/HMSRecording)
@@ -91,9 +101,9 @@ nav: '1.1'
 - [HMSStore](/api-reference/javascript/v2/interfaces/HMSStore)
 - [HMSTrackNotification](/api-reference/javascript/v2/interfaces/HMSTrackNotification)
 - [HMSTrackStats](/api-reference/javascript/v2/interfaces/HMSTrackStats)
+- [HMSVideoPlugin](/api-reference/javascript/v2/interfaces/HMSVideoPlugin)
 - [HMSVideoTrack](/api-reference/javascript/v2/interfaces/HMSVideoTrack)
 - [HMSVideoTrackSettings](/api-reference/javascript/v2/interfaces/HMSVideoTrackSettings)
-- [IHMSInteractivityCenter](/api-reference/javascript/v2/interfaces/IHMSInteractivityCenter)
 - [IHMSPlaylistActions](/api-reference/javascript/v2/interfaces/IHMSPlaylistActions)
 - [IHMSSessionStoreActions](/api-reference/javascript/v2/interfaces/IHMSSessionStoreActions)
 - [IHMSStatsStore](/api-reference/javascript/v2/interfaces/IHMSStatsStore)
@@ -703,6 +713,22 @@ Select the peer who's speaking the loudest at the moment
 
 ---
 
+### selectEffectsKey
+
+▸ **selectEffectsKey**(`state`): `undefined` \| `string`
+
+#### Parameters
+
+| Name    | Type                                                                                                            |
+| :------ | :-------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+
+#### Returns
+
+`undefined` \| `string`
+
+---
+
 ### selectErrors
 
 ▸ **selectErrors**(`store`): [`HMSException`](/api-reference/javascript/v2/interfaces/HMSException)[]
@@ -909,6 +935,22 @@ NOTE: Returns true only after join, returns false during preview.
 #### Returns
 
 `undefined` \| `boolean`
+
+---
+
+### selectIsEffectsEnabled
+
+▸ **selectIsEffectsEnabled**(`state`): `boolean`
+
+#### Parameters
+
+| Name    | Type                                                                                                            |
+| :------ | :-------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+
+#### Returns
+
+`boolean`
 
 ---
 
@@ -1761,7 +1803,7 @@ Select an array of peers who are currently sharing their screen.
 
 ### selectPermissions
 
-▸ **selectPermissions**(`state`): `undefined` \| { `browserRecording`: `boolean` ; `changeRole`: `boolean` ; `endRoom`: `boolean` ; `hlsStreaming`: `boolean` ; `mute`: `boolean` ; `pollRead`: `boolean` ; `pollWrite`: `boolean` ; `removeOthers`: `boolean` ; `rtmpStreaming`: `boolean` ; `unmute`: `boolean` }
+▸ **selectPermissions**(`state`): `undefined` \| { `browserRecording`: `boolean` ; `changeRole`: `boolean` ; `endRoom`: `boolean` ; `hlsStreaming`: `boolean` ; `mute`: `boolean` ; `pollRead`: `boolean` ; `pollWrite`: `boolean` ; `removeOthers`: `boolean` ; `rtmpStreaming`: `boolean` ; `unmute`: `boolean` ; `whiteboard?`: `HMSPermissionType`[] }
 
 Select the permissions which determine what actions the local peer can do.
 
@@ -1773,7 +1815,7 @@ Select the permissions which determine what actions the local peer can do.
 
 #### Returns
 
-`undefined` \| { `browserRecording`: `boolean` ; `changeRole`: `boolean` ; `endRoom`: `boolean` ; `hlsStreaming`: `boolean` ; `mute`: `boolean` ; `pollRead`: `boolean` ; `pollWrite`: `boolean` ; `removeOthers`: `boolean` ; `rtmpStreaming`: `boolean` ; `unmute`: `boolean` }
+`undefined` \| { `browserRecording`: `boolean` ; `changeRole`: `boolean` ; `endRoom`: `boolean` ; `hlsStreaming`: `boolean` ; `mute`: `boolean` ; `pollRead`: `boolean` ; `pollWrite`: `boolean` ; `removeOthers`: `boolean` ; `rtmpStreaming`: `boolean` ; `unmute`: `boolean` ; `whiteboard?`: `HMSPermissionType`[] }
 
 ---
 
@@ -2472,3 +2514,39 @@ Select the primary video track of a peer given a peer ID.
 #### Returns
 
 `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `undefined` \| [`HMSVideoTrack`](/api-reference/javascript/v2/interfaces/HMSVideoTrack)\>
+
+---
+
+### selectWhiteboard
+
+▸ **selectWhiteboard**(`state`): `undefined` \| `HMSWhiteboard`
+
+select the primary/first whiteboard of a session
+
+#### Parameters
+
+| Name    | Type                                                                                                            |
+| :------ | :-------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+
+#### Returns
+
+`undefined` \| `HMSWhiteboard`
+
+---
+
+### selectWhiteboards
+
+▸ **selectWhiteboards**(`store`): `Record`<`string`, `HMSWhiteboard`\>
+
+select a map of all the whiteboards in the session
+
+#### Parameters
+
+| Name    | Type                                                                                                            |
+| :------ | :-------------------------------------------------------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+
+#### Returns
+
+`Record`<`string`, `HMSWhiteboard`\>

@@ -1,6 +1,6 @@
 ---
 title: HMSLeaveRoomRequest
-nav: '4.21'
+nav: '4.22'
 ---
 
 ## Properties

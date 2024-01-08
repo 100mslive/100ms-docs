@@ -1,6 +1,6 @@
 ---
 title: HMSStore<T>
-nav: '4.63'
+nav: '4.70'
 ---
 
 ## Type parameters
@@ -136,3 +136,9 @@ use `sessionStore` instead
 ### tracks
 
 • **tracks**: `Record`<`string`, [`HMSTrack`](/api-reference/javascript/v2/home/content#hmstrack)\>
+
+---
+
+### whiteboards
+
+• **whiteboards**: `Record`<`string`, `HMSWhiteboard`\>

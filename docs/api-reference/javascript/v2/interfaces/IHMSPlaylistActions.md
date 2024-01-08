@@ -1,6 +1,6 @@
 ---
 title: IHMSPlaylistActions
-nav: '4.70'
+nav: '4.77'
 ---
 
 ## Methods
