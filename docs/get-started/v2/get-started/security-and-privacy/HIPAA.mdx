@@ -1,0 +1,38 @@
+---
+title: HIPAA
+nav: 9.3
+---
+100ms allows our customers to build HIPAA (Health Insurance Portability and Accountability Act) -compliant applications for the healthcare market. 100ms will sign BAAs with companies to support their compliance due diligence.
+
+This document outlines the steps 100ms follows, and your responsibility as the developer to ensure HIPAA compliance for 100ms’ APIs.
+
+To sign a BAA (Business Associate Addendum), please contact our sales team [here](https://100ms.live/contact).
+
+## Overview of 100ms’ security architecture
+
+100ms’ adheres to rigorous audited standards for data privacy, access, security and availability. This includes
+
+- All 100ms calls or data transmissions are conducted through the WebRTC standard which mandates encryption on all communication channels. All data is encrypted in encrypted in transit and at rest.
+- 100ms never stores, or records audio-video or data streams unless the client explicitly asks 100ms to store recordings. In the most common configuration, recordings are uploaded directly to the customer’s storage bucket. This minimizes collection of Protected Health Information (PHI).
+- For recordings that are stored with 100ms, access is strictly controlled to authorized users with audited logs.
+- 100ms has controls and processes to monitor and removes any unauthorised access/removal of data, alteration/destruction/misuse of software and unapproved disclosure of confidential information.
+- 100ms never discloses any PHI to third-party providers unless we have disclosure policies in place with them
+
+## Your responsibilities as the developer
+
+### PHI masking in APIs
+
+Customers are responsible to mask or ensure that no PHI in any 100ms APIs that they use. This includes `room names`, `user_ids`, `display names`, and chat. 100ms can implement scrubbing of certain fields (including `user_id`, and `display name`), for enterprise customers. Pls contact sales to know more.
+
+### Recordings
+
+Customers are recommended to store recordings in their own storage buckets.
+
+### Secure webhooks
+
+Customers building HIPAA compliant workflows on 100ms webhook events are required to ensure
+that requests coming to your application are indeed coming from 100ms. To achieve this, customers can use request header strings defined on the 100ms dashboard or whitelist 100ms IP addresses that are used to send webhooks. Contact sales to know more about setting up IP whitelists.
+
+### PHI masing in support
+
+Customers are responsible to mask any PHIs in any support tickets, Slack conversations, emails used for any support conversations
