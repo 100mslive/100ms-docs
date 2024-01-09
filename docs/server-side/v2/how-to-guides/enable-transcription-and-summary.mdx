@@ -287,7 +287,7 @@ You can always use 100ms’ Recording Assets API to access the transcripts and s
 ## Limitations
 
 1. The transcription and summary won't be available immediately. The processing and delivery will take a minimum of 5 minutes and 20% of the recording duration to be generated.
-2. This feature does not work with SFU Recordings.
+2. This feature does not work with SFU Recordings (`room-composite-legacy`).
 3. Presently, you can only input a maximum of 6 sections in the summary through the API.
 4. There are chances of incomplete summary generation in case of recordings which are longer than 90 minutes.
 5. This feature only supports the **English** language as of now.
@@ -313,26 +313,26 @@ You can always use 100ms’ Recording Assets API to access the transcripts and s
   There are two possible options here:
   1. If you are using an older webSDK version, please update to the latest. Refer to our web documentation [here](/javascript/v2/release-notes/release-notes).
   2. Add the following snippet to enable speaker logging.
-    - Create a new file `src/components/AudioLevel/BeamSpeakerLabelsLogging.jsx` with below code.
-    ``` jsx
-    import { useEffect } from "react";
-    import { useHMSActions } from "@100mslive/react-sdk";
-    import { useIsHeadless } from "../AppData/useUISettings";
+      - Create a new file `src/components/AudioLevel/BeamSpeakerLabelsLogging.jsx` with below code.
+      ```jsx
+      import { useEffect } from "react";
+      import { useHMSActions } from "@100mslive/react-sdk";
+      import { useIsHeadless } from "../AppData/useUISettings";
 
-    export function BeamSpeakerLabelsLogging() {
-      const hmsActions = useHMSActions();
-      const isHeadless = useIsHeadless();
+      export function BeamSpeakerLabelsLogging() {
+        const hmsActions = useHMSActions();
+        const isHeadless = useIsHeadless();
 
-      useEffect(() => {
-        if (isHeadless) {
-          hmsActions.enableBeamSpeakerLabelsLogging();
-        }
-      }, [hmsActions, isHeadless]);
-      return null;
-    }
-    ```
-    - Register `<BeamSpeakerLabelsLogging />` in Approutes along with import statement
-    `import { BeamSpeakerLabelsLogging } from "./components/AudioLevel/BeamSpeakerLabelsLogging";`
+        useEffect(() => {
+          if (isHeadless) {
+            hmsActions.enableBeamSpeakerLabelsLogging();
+          }
+        }, [hmsActions, isHeadless]);
+        return null;
+      }
+      ```
+      - Register `<BeamSpeakerLabelsLogging />` in Approutes along with import statement
+      `import { BeamSpeakerLabelsLogging } from "./components/AudioLevel/BeamSpeakerLabelsLogging";`
 
 
 
