@@ -47,8 +47,9 @@ You can enable transcription for all the rooms under a particular template.
 6. Save the configuration.
 7. Join a room to initiate a session. Start recording (or live stream with recording enabled) using the SDK or API. If it's your first time joining a 100ms room, you'll find the option to `Start Recording` in the created room. For more information on creating room templates, refer to [this documentation](/server-side/v2/api-reference/policy/create-template-via-dashboard).
 
-
-![](/docs/v2/transcription-dashboard-config.gif)
+<video loop="true" autoplay="autoPlay" controls="false" id="vid" muted>
+    <source src="/docs/docs/v2/transcription-dashboard-config.mov" type="video/mp4" />
+</video>
 
 **Advanced Transcription Settings**
 
@@ -292,7 +293,7 @@ You can always use 100ms’ Recording Assets API to access the transcripts and s
 5. This feature only supports the **English** language as of now.
 
 
-### Frequently Asked Questions (FAQ)
+### Frequently Asked Questions (FAQs)
 
 
 1. **How many languages are supported?**
@@ -302,4 +303,36 @@ You can always use 100ms’ Recording Assets API to access the transcripts and s
 2. **What happens if multiple languages are being spoken in the live stream?**
     
   The bits which are spoken in the selected language will be transcribed. There might be some gibberish text though due to hallucinations by the AI.
+
+3. **Can multiple summaries be generated or re-generated with different prompts for the same transcript?**
+
+  This is not possible at this point of time. But we intend to bring the functionality of re-running transcription and summarization functions to enable users to test and build their own summaries.
+
+4. **What can be done if the speaker label is not working?**
+    
+  There are two possible options here:
+  1. If you are using an older webSDK version, please update to the latest. Refer to our web documentation [here](/javascript/v2/release-notes/release-notes).
+  2. Add the following snippet to enable speaker logging.
+    - Create a new file `src/components/AudioLevel/BeamSpeakerLabelsLogging.jsx` with below code.
+    ```jsx
+    import { useEffect } from "react";
+    import { useHMSActions } from "@100mslive/react-sdk";
+    import { useIsHeadless } from "../AppData/useUISettings";
+
+    export function BeamSpeakerLabelsLogging() {
+      const hmsActions = useHMSActions();
+      const isHeadless = useIsHeadless();
+
+      useEffect(() => {
+        if (isHeadless) {
+          hmsActions.enableBeamSpeakerLabelsLogging();
+        }
+      }, [hmsActions, isHeadless]);
+      return null;
+    }
+    ```
+    - Register `<BeamSpeakerLabelsLogging />` in Approutes along with import statement
+    `import { BeamSpeakerLabelsLogging } from "./components/AudioLevel/BeamSpeakerLabelsLogging";`
+
+
 
