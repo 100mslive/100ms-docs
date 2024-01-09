@@ -20,13 +20,13 @@ Released: `@100mslive/hms-video-store@0.10.28`, `@100mslive/react-sdk@0.8.28`, `
 #### Fixed:
 - Fixed name being set to "Beam" instead of the value being passed via the name URL param when skip_preview is set to true
 - Roomkit Prebuilt: The block option is now hidden if the peer has already been blocked
-- Roomkit Prebuilt: All peers should be able to view the results of a quiz on completion if it is not anonymous
 
 #### Added:
-- Added `HMSEffectsPlugin` class to integrate effects SDK for virtual background in custom implementation
+- `HMSEffectsPlugin` class to integrate effects SDK for virtual background in custom implementation
+- Roomkit Prebuilt: All peers should be able to view the results of a quiz on completion if it is not anonymous
 - Roomkit Prebuilt: Quiz leaderboard also shows the summary - average score, participation percentage, total correct responses
-- Added selectors for getting the effects SDK key for virtual background and checking if it is enabled: `selectIsEffectsEnabled` and `selectEffectsKey`
-- Added batching for chat messages to improve performance under heavy loads (10+ messages/second)
+-  Selectors for getting the effects SDK key for virtual background and checking if it is enabled: `selectIsEffectsEnabled` and `selectEffectsKey`
+- Batching for chat messages to improve performance under heavy loads (20+ messages/second)
 
 #### Breaking:
 - The type for quiz leaderboard response has been renamed from `HMSPollLeaderboardResponse` to `HMSQuizLeaderboardResponse`
