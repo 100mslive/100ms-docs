@@ -50,3 +50,36 @@ localPeer.localVideoTrack().setMute(!videoMuted); // passing opposite value of v
 ```
 
 For muting remote peer refer to [Change Track State](/react-native/v2/how--to-guides/interact-with-room/track/remote-mute) docs and for muting remote peers locally refer to [Playback Allowed](/react-native/v2/how--to-guides/interact-with-room/track/playback-allowed) docs.
+
+## Switch Camera
+
+The `switchCamera` API allows you to switch between front and back camera. This can be used to toggle the video captured from front to back & vice versa. This API is available on `HMSLocalVideoTrack` object.
+
+```js{2,25}
+// a reference to localVideoTrack
+localVideoTrack.switchCamera();
+
+
+// Example
+const switchCamera = useCallback(async () => {
+
+    // Redux state
+    const state: ReduxState = store.getState();
+
+    // get a reference to localPeer
+    const localPeer = state.hmsStates.localPeer;
+
+    if (!localPeer) {
+        return Promise.reject('Local Peer Instance is not available!');
+    }
+    const localVideoTrack = localPeer.localVideoTrack();
+    if (!localVideoTrack) {
+        return Promise.reject(
+            'Local Peer Video Track Instance is not available!'
+        );
+    }
+
+    // this API switches the current camera from front to back and vice versa
+    localVideoTrack.switchCamera();
+    }, []);
+```
