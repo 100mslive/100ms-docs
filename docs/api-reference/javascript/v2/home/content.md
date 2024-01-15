@@ -67,6 +67,7 @@ nav: '1.1'
 - [HMSPlaylistSelector](/api-reference/javascript/v2/interfaces/HMSPlaylistSelector)
 - [HMSPoll](/api-reference/javascript/v2/interfaces/HMSPoll)
 - [HMSPollCreateParams](/api-reference/javascript/v2/interfaces/HMSPollCreateParams)
+- [HMSPollLeaderboardResponse](/api-reference/javascript/v2/interfaces/HMSPollLeaderboardResponse)
 - [HMSPollNotification](/api-reference/javascript/v2/interfaces/HMSPollNotification)
 - [HMSPollQuestionAnswer](/api-reference/javascript/v2/interfaces/HMSPollQuestionAnswer)
 - [HMSPollQuestionCreateParams](/api-reference/javascript/v2/interfaces/HMSPollQuestionCreateParams)

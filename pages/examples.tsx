@@ -1,3 +1,4 @@
+import React, { useEffect, useMemo, useState } from 'react';
 import categories from '@/common/categories';
 import examples from '@/common/examples';
 import Category, { CATEGORIES, Categories } from '@/components/Category';
@@ -9,7 +10,6 @@ import Sidebar from '@/components/Sidebar';
 import TechnologySelect, { TECHNOLOGIES, Technologies } from '@/components/TechnologySelect';
 import { getAllDocs, getNavfromDocs } from '@/lib/mdxUtils';
 import { Box, Button, Flex, Text } from '@100mslive/react-ui';
-import { useEffect, useMemo, useState } from 'react';
 
 export default function Examples({ allNav }) {
     const [menu, setMenu] = useState(false);

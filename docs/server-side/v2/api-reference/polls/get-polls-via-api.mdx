@@ -1,0 +1,381 @@
+---
+title: Get Polls
+nav: 3.83
+---
+
+## Get poll
+
+This endpoint is used to get polls data for a given `poll_id`. The poll information contains all the questions, options and answers made using create/update poll/question/options API.
+
+
+<GetRequest title="https://api.100ms.live/v2/polls/<poll_id>" />
+
+<Request id="req-0">
+```bash
+curl --location --request POST 'https://api.100ms.live/v2/polls/655bffeecd34739a72637305' \
+--header 'Authorization: Bearer <management_token>' \
+--header 'Content-Type: application/json' \
+```
+</Request>
+
+<ResponseBox id="res-0" status="200 OK">
+
+```json
+{
+    "id": "655bffeecd34739a72637305",
+    "title": "first poll",
+    "duration": 235,
+    "anonymous": true,
+    "mode": "userid",
+    "type": "poll",
+    "start": "auto",
+    "questions": [
+    {
+            "index": 1,
+            "text": "q1",
+            "format": "text",
+            "attachment": [
+                {
+                    "type": "mimetype",
+                    "url": "url"
+                }
+            ],
+            "skippable": true,
+            "duration": 0,
+            "once": false,
+            "weight": 2,
+            "answer_min_len": 1,
+            "answer_max_len": 1024,
+            "type": "single-choice",
+            "answer": {
+                "hidden": false,
+                "options": [
+                    1,
+                    2
+                ],
+                "text": "optoin1",
+                "case": false,
+                "trim": true
+            },
+            "options": [
+                {
+                    "index": 1,
+                    "text": "optoin1",
+                    "weight": 1
+                },
+                {
+                    "index": 2,
+                    "text": "optoin1",
+                    "weight": 1
+                }
+            ]
+        },
+        {
+            "index": 2,
+            "text": "q2",
+            "format": "text",
+            "attachment": [
+                {
+                    "type": "mimetype",
+                    "url": "url"
+                }
+            ],
+            "skippable": true,
+            "duration": 0,
+            "once": false,
+            "weight": 1,
+            "answer_min_len": 1,
+            "answer_max_len": 1024,
+            "type": "single-choice",
+            "answer": {
+                "hidden": false,
+                "options": [
+                    1,
+                    2
+                ],
+                "text": "optoin1",
+                "case": false,
+                "trim": true
+            },
+            "options": [
+                {
+                    "index": 1,
+                    "text": "optoin1",
+                    "weight": 1
+                },
+                {
+                    "index": 2,
+                    "text": "optoin1",
+                    "weight": 1
+                }
+            ]
+        }
+    ]
+}
+```
+
+</ResponseBox>
+
+## Get polls sessions
+
+This endpoint is used to get sessions in which given poll was run. The session_id is a useful information to get other information about the room using [sessions API](server-side/v2/api-reference/Sessions/retrieve-a-session)
+
+<GetRequest title="https://api.100ms.live/v2/polls/<poll_id>/sessions" />
+
+<Request id="req-0">
+```bash
+curl --location --request POST 'https://api.100ms.live/v2/polls/655bffeecd34739a72637305/sessions/655bffeecd34739a72637304?limit=10&start=655bffeecd34739a72637304' \
+--header 'Authorization: Bearer <management_token>' \
+--header 'Content-Type: application/json' \
+```
+</Request>
+
+<ResponseBox id="res-0" status="200 OK">
+
+```json
+{
+    "last": "655bffeecd34739a726373056",
+    "limit": 10,
+    "responses": [
+        {
+            "id": "655bffeecd34739a72637306",
+            "poll_id": "655bffeecd34739a72637305",
+            "session_id": "655bffeecd34739a72637304",
+            "started_at": "2023-11-21T04:55:10.916472015Z",
+            "stopped_at": "2023-11-21T04:55:20.916472015Z",
+            "total_responses": 1000,
+            "unique_participants": 20,
+        }
+    ]
+}
+```
+
+</ResponseBox>
+
+
+
+### Path parameters
+
+| Name               | Description                                                                                   |
+| :----------------- | :------- |
+| poll_id <br/>         | poll id       |
+| session_id <br/> | session id |
+
+### Query parameters
+
+| Name               | Description                                                                                   |
+| :-----------------  | :------- |
+| start <br/>         | last result id      |
+| limit <br/>        | number of responses   |
+
+## Get polls responses
+
+
+This endpoint is used to get responses submitted by users for a given poll_id.
+
+<GetRequest title="https://api.100ms.live/v2/polls/<poll_id>/responses" />
+
+<Request id="req-0">
+```bash
+curl --location --request POST 'https://api.100ms.live/v2/polls/655bffeecd34739a72637305/responses?limit=10&all=false&question=3' \
+--header 'Authorization: Bearer <management_token>' \
+--header 'Content-Type: application/json' \
+```
+</Request>
+
+<ResponseBox id="res-0" status="200 OK">
+
+```json
+{
+    "last": "655bffeecd34739a726373056",
+    "limit": 10,
+    "responses": [
+        {
+            "id": "655bffeecd34739a726373056",
+            "poll_id": "655bffeecd34739a72637305",
+            "session_id": "655bffeecd34739a72637304",
+            "duration": 500,
+            "question": 3,
+            "skipped": false,
+            "text": "text",
+            "update": true,
+            "original_response": "655bffeecd34739a726373053",
+            "retries": 0,
+            "sent_at": "2023-11-21T04:55:10.916472015Z",
+            "peer_id": "62610e46-89a0-11ee-b9d1-0242ac120002",
+            "user_id": "user1"
+        }
+    ]
+}
+```
+
+</ResponseBox>
+
+
+
+### Path parameters
+
+| Name               | Description                                                                                   |
+| :----------------- | :------- |
+| poll_id <br/>         | poll id       |
+
+### Query parameters
+
+| Name               | Description                                                                                   |
+| :----------------- | :------- |
+| start <br/>         | last response id      |
+| limit <br/>        | number of responses   |
+| all <br/>        | when all is true, original responses for updates are also returned, default is false    |
+| question <br/>        | when question index is provided only response for given question in returned   |
+
+## Get polls response
+
+
+This endpoint is used to get a specific response submitted by a user using a `response_id`. This `response_id` is the id received in Get Polls responses API
+
+<GetRequest title="https://api.100ms.live/v2/polls/<poll_id>/responses/<repsonse_id>" />
+
+<Request id="req-0">
+```bash
+curl --location --request POST 'https://api.100ms.live/v2/polls/655bffeecd34739a72637305/responses/655bffeecd34739a72637306' \
+--header 'Authorization: Bearer <management_token>' \
+--header 'Content-Type: application/json' \
+```
+</Request>
+
+<ResponseBox id="res-0" status="200 OK">
+
+```json
+{
+    "id": "655bffeecd34739a726373056",
+    "poll_id": "655bffeecd34739a72637305",
+    "session_id": "655bffeecd34739a72637304",
+    "duration": 500,
+    "question": 3,
+    "skipped": false,
+    "text": "text",
+    "update": true,
+    "original_response": "655bffeecd34739a726373053",
+    "retries": 0,
+    "sent_at": "2023-11-21T04:55:10.916472015Z",
+    "peer_id": "62610e46-89a0-11ee-b9d1-0242ac120002",
+    "user_id": "user1"
+}
+```
+
+</ResponseBox>
+
+
+
+### Path parameters
+
+| Name               | Description                                                                                   |
+| :----------------- | :------- |
+| poll_id <br/>         | poll id       |
+| response_id <br/>        | response id    |
+
+## Get polls results
+
+
+This endpoint is used to get results about a given poll_id. The information includes score received by user about a given poll_id.
+
+<GetRequest title="https://api.100ms.live/v2/polls/<poll_id>/results" />
+
+<Request id="req-0">
+```bash
+curl --location --request POST 'https://api.100ms.live/v2/polls/655bffeecd34739a72637305/results?limit=10&all=false&question=3' \
+--header 'Authorization: Bearer <management_token>' \
+--header 'Content-Type: application/json' \
+```
+</Request>
+
+<ResponseBox id="res-0" status="200 OK">
+
+```json
+{
+    "last": "655bffeecd34739a726373056",
+    "limit": 10,
+    "results": [
+        {
+            "id": "655bffeecd34739a72637306",
+            "poll_id": "655bffeecd34739a72637305",
+            "session_id": "655bffeecd34739a72637304",
+            "question": 3,
+            "duration": 5000,
+            "peer_id": "62610e46-89a0-11ee-b9d1-0242ac120002",
+            "user_id": "user1",
+            "score": 200
+        },
+        {
+            "id": "655bffeecd34739a72637306",
+            "poll_id": "655bffeecd34739a72637305",
+            "session_id": "655bffeecd34739a72637304",
+            "question": 3,
+            "duration": 5000,
+            "peer_id": "62610e46-89a0-11ee-b9d1-0242ac120002",
+            "user_id": "user2",
+            "score": 300
+        }
+    ]
+}
+```
+
+</ResponseBox>
+
+
+
+### Path parameters
+
+| Name               | Description                                                                                   |
+| :----------------- | :------- |
+| poll_id <br/>         | poll id       |
+
+### Query parameters
+
+| Name               | Description                                                                                   |
+| :----------------- | :------- |
+| start <br/>         | last result id      |
+| limit <br/>        | number of responses   |
+| question <br/>        | when question index is provided only response for given question in returned   |
+
+
+## Get polls result
+
+
+This endpoint is used to get result for a given result_id. The information includes score received by user about a given poll_id.
+ 
+<GetRequest title="https://api.100ms.live/v2/polls/<poll_id>/results" />
+
+<Request id="req-0">
+```bash
+curl --location --request POST 'https://api.100ms.live/v2/polls/655bffeecd34739a72637305/results/655bffeecd34739a72637306' \
+--header 'Authorization: Bearer <management_token>' \
+--header 'Content-Type: application/json' \
+```
+</Request>
+
+<ResponseBox id="res-0" status="200 OK">
+
+```json
+{
+    "id": "655bffeecd34739a72637306",
+    "poll_id": "655bffeecd34739a72637305",
+    "session_id": "655bffeecd34739a72637304",
+    "question": 3,
+    "duration": 5000,
+    "peer_id": "62610e46-89a0-11ee-b9d1-0242ac120002",
+    "user_id": "user1",
+    "score": 200
+}
+```
+
+</ResponseBox>
+
+
+
+### Path parameters
+
+| Name               | Description                                                                                   |
+| :----------------- | :------- |
+| poll_id <br/>         | poll id       |
+| response_id <br/> | response id |
