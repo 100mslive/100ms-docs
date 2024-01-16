@@ -17,6 +17,29 @@ import AndroidSdkVersionShield from '@/common/android-sdk-version-shield.md';
 | live.100ms:hls-player-stats: |<AndroidSdkVersionShield /> 
 | live.100ms:virtual-background: |<AndroidSdkVersionShield />|
 
+## v2.8.8 - 2024-01-15
+### Fixed
+- Applications now do not need to take `BLUETOOTH_CONNECT` permission from user for Android 12 and above
+
+### Changed
+- Upgraded tarketSDKVersion and compileSDKVersion to 31 from 30
+- Type of `availableAudioDevices` in `onAudioDeviceChanged` of `AudioManagerDeviceChangeListener` is changed from `MutableSet` to `Set` if you are using Kotlin. It remains `Set` for java applications
+
+## v2.8.7 - 2024-01-05
+### Added
+- getResponse of HMSInteractivity center would map self answers to the questions as well
+
+### Fixed
+- Crash fix : `SDKStore.getLocalPeer()`` throwing null pointer exception while leaving very fast after joining
+
+## v2.8.6 - 2023-12-28
+### Fixed
+- Possible crash while joining. `java.lang.IllegalStateException: Property factory should be initialized before get`
+
+## v2.8.5 - 2023-12-20
+### Fixed
+- Crash in android 5.0 when receiving timed metadata
+
 ## v2.8.4 - 2023-12-15
 ### Added
 - Prebuilt now contains an option to skip previews.
