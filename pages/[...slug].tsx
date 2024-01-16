@@ -20,6 +20,7 @@ import remarkA11yEmoji from '@fec/remark-a11y-emoji';
 import { MDXProvider, useMDXComponents } from '@mdx-js/react';
 import imagePlugin from '@/lib/image';
 import DocLayout from '@/layouts/DocLayout';
+import SuggestedBlogs from '@/components/SuggestedBlogs';
 
 type NavRoute = {
     url: string;
@@ -136,6 +137,8 @@ const DocSlugs = ({ source, frontMatter, pagination, showToc = true }: Props) =>
                 <MDXProvider components={components}>
                     <Component />
                 </MDXProvider>
+                <hr />
+                <SuggestedBlogs />
                 <hr />
                 {pagination.previousPost && showPagination && (
                     <Pagination next={pagination.nextPost} prev={pagination.previousPost} />
