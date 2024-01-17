@@ -59,7 +59,8 @@ const SuggestedBlogs: React.FC<Props> = () => (
                                 height: '30vh',
                                 '@md': {
                                     width: '100%',
-                                    maxWidth: 'unset'
+                                    maxWidth: 'unset',
+                                    height: 'unset'
                                 }
                             }}>
                             <Box
@@ -71,7 +72,7 @@ const SuggestedBlogs: React.FC<Props> = () => (
                                 }}>
                                 <ExternalLinkIcon style={{ width: '100%' }} />
                             </Box>
-                            <Box css={{ maxWidth: '80%' }}>
+                            <Box css={{ maxWidth: '80%', marginBottom: '$6' }}>
                                 <Text
                                     variant={'h6'}
                                     style={{
