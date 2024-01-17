@@ -24,6 +24,7 @@ import View from './View';
 import Callout from './Callout';
 import FlexContainer from './FlexContainer';
 import { PortraitImage } from './PortraitImage';
+import SuggestedBlogs from './SuggestedBlogs';
 
 const CodeCustom = (props: any) => <Code {...props}>{props.children}</Code>;
 
@@ -105,7 +106,8 @@ const MDXComponents = {
     APILink,
     StepsToc,
     StepsContainer,
-    PortraitImage
+    PortraitImage,
+    SuggestedBlogs
 };
 
 export default MDXComponents;
