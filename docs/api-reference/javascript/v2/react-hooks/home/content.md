@@ -180,7 +180,7 @@ isAllowedToPublish can be used to decide whether to show the toggle buttons in t
 This hook can be used to apply css properties on an element based on the current audio level for the passed in track.
 It doesn't return the audio level as it's optimised for performance. As audio level could be changing frequently we
 want to minimise the number of components an audio level change causes to re render.
-An example use of this hook will be to apply box-shadow on parent tile based on audio level.
+An e.g. use of this hook will be to apply box-shadow on parent tile based on audio level.
 
 #### Parameters
 
@@ -594,3 +594,27 @@ Please check the documentation of input and output types for more details.
 #### Returns
 
 [`useVideoResult`](/api-reference/javascript/v2/react-hooks/interfaces/useVideoResult)
+
+---
+
+### useWhiteboard
+
+▸ **useWhiteboard**(`isMobile?`): `Object`
+
+#### Parameters
+
+| Name       | Type      | Default value |
+| :--------- | :-------- | :------------ |
+| `isMobile` | `boolean` | `false`       |
+
+#### Returns
+
+`Object`
+
+| Name        | Type                                               |
+| :---------- | :------------------------------------------------- |
+| `iframeRef` | `MutableRefObject`<`null` \| `HTMLIFrameElement`\> |
+| `isAdmin`   | `boolean`                                          |
+| `isOwner`   | `boolean`                                          |
+| `open`      | `boolean`                                          |
+| `toggle`    | `undefined` \| () => `Promise`<`void`\>            |
