@@ -90,7 +90,7 @@ processAudio is called.
 ▸ **processAudioTrack**(`ctx`, `source`): `Promise`<`AudioNode`\>
 
 This function will be called by the SDK for audio track which the plugin needs to process.
-The reason audio context is also part of the interface is that it's recommeneded to reuse on audio context
+The reason audio context is also part of the interface is that it's recommended to reuse on audio context
 instead of creating new for every use - https://developer.mozilla.org/en-US/docs/Web/API/AudioContext
 
 #### Parameters
