@@ -41,13 +41,17 @@ const SuggestedBlogs: React.FC<Props> = ({ suggestedBlogs = suggestedBlogsDefaul
             <Box
                 css={{
                     width: '100%',
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    gap: '$8',
-                    padding: '$6',
-                    flexGrow: 1
+                    display: 'grid',
+                    gridGap: '$12',
+                    gridTemplateColumns: '1fr 1fr 1fr',
+                    '@xl': {
+                        gridTemplateColumns: '1fr 1fr'
+                    },
+                    '@lg': {
+                        gridTemplateColumns: '1fr'
+                    }
                 }}>
-                {suggestedBlogs?.map((blog) => {
+                {suggestedBlogs?.map((blog, index, array) => {
                     return (
                         <Link href={blog.url}>
                             <Box
@@ -62,13 +66,16 @@ const SuggestedBlogs: React.FC<Props> = ({ suggestedBlogs = suggestedBlogsDefaul
                                     flexDirection: 'column',
                                     justifyContent: 'space-between',
                                     cursor: 'pointer',
-                                    maxWidth: '30%',
-                                    minWidth: '250px',
-                                    height: '30vh',
+                                    width: '100%',
+                                    '@xl': {
+                                        gridColumn: index === array.length - 1 ? '1 / -1' : ''
+                                    },
                                     '@md': {
-                                        width: '100%',
                                         maxWidth: 'unset',
                                         height: 'unset'
+                                    },
+                                    '&:hover': {
+                                        background: 'var(--docs_bg_home_page_card_hover)'
                                     }
                                 }}>
                                 <Box
@@ -87,8 +94,8 @@ const SuggestedBlogs: React.FC<Props> = ({ suggestedBlogs = suggestedBlogsDefaul
                                             display: '-webkit-box',
                                             WebkitBoxOrient: 'vertical',
                                             boxOrient: 'vertical',
-                                            WebkitLineClamp: '5',
-                                            lineClamp: '5',
+                                            WebkitLineClamp: '3',
+                                            lineClamp: '3',
                                             overflow: 'hidden',
                                             textOverflow: 'ellipsis'
                                         }}
