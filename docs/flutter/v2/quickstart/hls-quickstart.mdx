@@ -16,6 +16,17 @@ This guide contains instructions for two approaches to get you started with 100m
 
 Checkout the github repository for quickstart application [here](https://github.com/100mslive/100ms-flutter/tree/main/sample%20apps)
 
+### When to use HLS?
+
+-   HLS Streaming content is delayed by 8 to 10 seconds behind the live edge.
+-   To view HLS content you have to create an instance of `VideoPlayerController` and pass it the .m3u8 URL.
+-   This is useful in scenarios where there is a large number of Peers in Room and you don't need everyone to be in sync.
+-   For example, in a large scale webinar where there are 1000s of viewers, you can use HLS to view the stream with a delay of 8 to 10 seconds.
+-   This will reduce the load on the server and the client.
+-   If you want to always view the live stream instead of the delayed stream then use the `HMSVideoView` instead of `VideoPlayerController`.
+-   Ensure that you have the correct Authentication Token for the Real Time Viewer role.
+-   [Refer this Guide](./quickstart) if you want to always view the live stream instead of the delayed stream.
+
 ## Create a sample app
 
 This section contains instructions to create a simple Flutter video conferencing app. We will help you with instructions to understand the project setup and complete code sample to implement this quickly.
@@ -879,17 +890,18 @@ class _HLSViewerPageState extends State<HLSViewerPage>
 }
 
 ```
+
 ### Fetch token to join the room
 
-
-#### Fetch token using room-code method(Recommended) 
+#### Fetch token using room-code method(Recommended)
 
 We can get the authentication token using room-code from meeting URL.
 
 Let's understand the subdomain and code from the sample URL
 In this URL: `http://100ms-rocks.app.100ms.live/meeting/abc-defg-hij`
- -  Subdomain is `100ms-rocks`
- -  Room code is `abc-defg-ghi`
+
+-   Subdomain is `100ms-rocks`
+-   Room code is `abc-defg-ghi`
 
 Now to get the room-code from meeting URL we can write our own logic or use the `getCode` method from [here](https://github.com/100mslive/100ms-flutter/blob/main/example/lib/service/room_service.dart)
 
@@ -955,7 +967,6 @@ After adding the required code let's run the app
 Now, after you click `Join as Broadcaster`, you should be able to see yourself (android emulator doesn't support actual video, you can connect an actual device to see your video in real-time). You can join the room using a browser as the second peer to check audio/video transactions between two or more peers.
 If you click `Join as HLS Viewer`, you should be able to watch the stream if it's started or the text `Please wait for the stream to start` if it's not started yet
 
-
 </Tab>
 
 <Tab id="platform-1">
@@ -1019,6 +1030,7 @@ class HomePage extends StatelessWidget {
   }
 }
 ```
+
 ### Implement join screen
 
 This section will help you create the join screen user interface. To keep it simple for the quickstart, we have not created many UI elements; you can refer to the [sample app implementation](https://github.com/100mslive/100ms-flutter/tree/main/example/lib/preview) for a complete Preview/Join user interface.
@@ -1264,7 +1276,7 @@ We will add these methods in `MeetingPage` class as they need to override the `H
   }
 ```
 
-### Listen to room updates 
+### Listen to room updates
 
 100ms SDK also sends updates to the application about any change in the `roomState` i.e. whether `peerCount` is updated, `HLS Stream` is started or ended, `Recording` is started or ended etc.
 Our application must listen to the corresponding updates in `onRoomUpdate`. Check the [Update Listeners documentation](/flutter/v2/how--to-guides/listen-to-room-updates/update-listener-enums##hms-room-update) to understand the types of updates emitted by the SDK for room updates.
@@ -1484,7 +1496,7 @@ class _HLSViewerPageState extends State<HLSViewerPage>
     _controller = null;
     super.dispose();
   }
-  
+
 }
 ```
 
@@ -1603,9 +1615,9 @@ void onUpdateSpeakers({required List<HMSSpeaker> updateSpeakers}) {
 }
 ```
 
-### Display HLS Stream 
+### Display HLS Stream
 
-To display HLS Stream we will be using `video_player` package. To display the HLS stream we need m3u8 URL, which we 
+To display HLS Stream we will be using `video_player` package. To display the HLS stream we need m3u8 URL, which we
 are fetching above in `onRoomUpdate`.
 
 ```dart section=stepByStepDisplayHLSStream
@@ -1671,5 +1683,3 @@ You can download & check out the 100ms Flutter app -
 🤖 Flutter Android app from [Google Play Store](https://play.google.com/store/apps/details?id=live.hms.flutter).
 
 📱 Flutter iOS app from [Apple App Store](https://apps.apple.com/app/100ms-live/id1576541989).
-
-

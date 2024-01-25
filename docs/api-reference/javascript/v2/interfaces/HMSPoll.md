@@ -1,6 +1,6 @@
 ---
 title: HMSPoll
-nav: '4.40'
+nav: '4.44'
 ---
 
 ## Properties
@@ -49,7 +49,7 @@ nav: '4.40'
 
 ### questions
 
-• `Optional` **questions**: `HMSPollQuestion`[]
+• `Optional` **questions**: [`HMSPollQuestion`](/api-reference/javascript/v2/interfaces/HMSPollQuestion)[]
 
 ---
 

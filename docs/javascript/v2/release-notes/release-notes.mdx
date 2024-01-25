@@ -14,6 +14,49 @@ description: Release Notes for 100ms JavaScript SDK
 | @100mslive/hls-player                  | [![npm version](https://badge.fury.io/js/%40100mslive%2Fhls-player.svg)](https://badge.fury.io/js/%40100mslive%2Fhls-player)           |
 | @100mslive/hms-video-react(deprecated) | [![npm version](https://badge.fury.io/js/%40100mslive%2Fhms-video-react.svg)](https://badge.fury.io/js/%40100mslive%2Fhms-video-react) |
 
+## 2024-01-19
+Released: `@100mslive/hms-video-store@0.11.1`, `@100mslive/react-sdk@0.9.1`, `@100mslive/hls-player@0.2.1`, `@100mslive/roomkit-react@0.2.1`
+
+
+#### Fixed:
+- Roomkit Prebuilt: Zoom for whiteboard on mweb
+- Roomkit Prebuilt: Participation summary view for voters
+- Roomkit Prebuilt: Missing CSS reset on some components
+- Echo in Firefox versions above 116
+
+
+## 2024-01-12
+Released: `@100mslive/hms-video-store@0.11.0`, `@100mslive/react-sdk@0.9.0`, `@100mslive/hls-player@0.2.0`, `@100mslive/roomkit-react@0.2.0`
+
+#### Added:
+- Roomkit Prebuilt: Chat supports reply to peer and reply to group for group messages
+- Roomkit Prebuilt: Pinned messages display the name of the peer who pinned the message
+- 100ms prebuilt links now accept `userId` param in the URL to set the userId of a peer
+
+#### Fixed:
+- Audio not audible to remote peers when you join as muted and then unmute on mweb
+- Roomkit Prebuilt: Pinning, spacing issues with inset mode
+- Roomkit Prebuilt: Virtual background not working after toggling video
+
+## 2024-01-05
+Released: `@100mslive/hms-video-store@0.10.28`, `@100mslive/react-sdk@0.8.28`, `@100mslive/hls-player@0.1.28`, `@100mslive/roomkit-react@0.1.19`
+
+#### Fixed:
+- Fixed name being set to "Beam" instead of the value being passed via the name URL param when skip_preview is set to true
+- Roomkit Prebuilt: Long chat messages being overlapped
+- Roomkit Prebuilt: CSS leak - Prebuilt CSS was overriding global CSS
+- Roomkit Prebuilt: The block option is now hidden if the peer has already been blocked
+
+#### Added:
+- Roomkit Prebuilt: Quiz leaderboard also shows the summary - average score, participation percentage, total correct responses
+- Roomkit Prebuilt: All peers should be able to view the results of a quiz on completion if it is not anonymous
+- `HMSEffectsPlugin` class to integrate effects SDK for virtual background in custom implementation
+- Selectors for getting the effects SDK key for virtual background and checking if it is enabled: `selectIsEffectsEnabled` and `selectEffectsKey`
+- Batching for chat messages to improve performance under heavy loads (20+ messages/second)
+
+#### Breaking:
+- The type for quiz leaderboard response has been renamed from `HMSPollLeaderboardResponse` to `HMSQuizLeaderboardResponse`
+
 ## 2023-12-28
 Released: `@100mslive/hms-video-store@0.10.27`, `@100mslive/react-sdk@0.8.27`, `@100mslive/hls-player@0.1.27`, `@100mslive/roomkit-react@0.1.18`
 
