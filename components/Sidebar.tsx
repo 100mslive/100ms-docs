@@ -82,6 +82,7 @@ const Sidebar: React.FC<Props> = ({
     const [renderComponents, setRenderComponents] = useState(false);
     const [openPlatformAccordion, setOpenPlatformAccordion] = useState(platformlist[0]);
     const [helperState, setHelperState] = useState(0);
+    const slugsToHideInPlatformSelector = ['get-started', 'prebuilt'];
 
     useEffect(() => {
         if (escPressed) {
@@ -130,8 +131,7 @@ const Sidebar: React.FC<Props> = ({
         }
     } else nav = false;
 
-    const showPlatformSelector = slug?.[0] !== 'get-started' && slug?.[0] !== 'prebuilt';
-    console.log(slug?.[0]);
+    const showPlatformSelector = !slugsToHideInPlatformSelector.includes(slug?.[0]);
 
     let indexOf = menuItem.findIndex((e) => e.key === slug?.[0]);
     if (slug?.[0] === 'api-reference') indexOf = menuItem.findIndex((e) => e.key === slug?.[1]);
