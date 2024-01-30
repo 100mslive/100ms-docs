@@ -20,7 +20,8 @@ import {
     JavascriptIcon as JavaScript,
     RocketIcon,
     PlayIcon,
-    SearchIcon
+    SearchIcon,
+    BrushDesignIcon
 } from '@100mslive/react-icons';
 import { Listbox } from '@headlessui/react';
 import { Flex, Box, Text, CSS } from '@100mslive/react-ui';
@@ -129,7 +130,8 @@ const Sidebar: React.FC<Props> = ({
         }
     } else nav = false;
 
-    const showPlatformSelector = slug?.[0] !== 'get-started';
+    const showPlatformSelector = slug?.[0] !== 'get-started' && slug?.[0] !== 'prebuilt';
+    console.log(slug?.[0]);
 
     let indexOf = menuItem.findIndex((e) => e.key === slug?.[0]);
     if (slug?.[0] === 'api-reference') indexOf = menuItem.findIndex((e) => e.key === slug?.[1]);
@@ -216,7 +218,7 @@ const Sidebar: React.FC<Props> = ({
                             mb: '$8',
                             cursor: 'pointer',
                             '@md': {
-                                pt: '90px'
+                                pt: '65px'
                             }
                         }}
                         onClick={() => setShowBaseView(false)}>
@@ -242,6 +244,21 @@ const Sidebar: React.FC<Props> = ({
                         <PlayIcon style={{ color: 'inherit' }} />
                         <Text as="span" css={{ fontWeight: '$semiBold', color: '$textHighEmp' }}>
                             Get started
+                        </Text>
+                    </Flex>
+                </Link>
+                <Link passHref href="/prebuilt/v2/prebuilt/overview">
+                    <Flex
+                        as="a"
+                        gap="2"
+                        align="center"
+                        css={{
+                            color: '$primaryLight',
+                            mt: '$10'
+                        }}>
+                        <BrushDesignIcon style={{ color: 'inherit' }} />
+                        <Text as="span" css={{ fontWeight: '$semiBold', color: '$textHighEmp' }}>
+                            Prebuilt
                         </Text>
                     </Flex>
                 </Link>
