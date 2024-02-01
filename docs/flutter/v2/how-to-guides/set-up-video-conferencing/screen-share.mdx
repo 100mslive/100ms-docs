@@ -37,6 +37,9 @@ super.onActivityResult(requestCode, resultCode, data)
 
 ```kotlin
 <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+<!---- Required for android 14 and above --->
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION" />
 ```
 
 > If your application uses `FlutterFragmentActivity` instead of `FlutterActivity`, then you need to replace `activity` with `this` in the above code.
