@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
+import UtmLinkWrapper from './UtmLinkWrapper';
 import { ChevronDownIcon } from '@100mslive/react-icons';
 import { Flex, Text } from '@100mslive/react-ui';
 import { titleCasing } from '../lib/utils';
@@ -61,7 +61,7 @@ const PlatformAccordion = ({
             <div className={`plat-accordion-content ${open ? 'active-plat-accordion' : ''}`}>
                 {Object.keys(data.v2).map((item) => (
                     // For when all children are accordions
-                    <Link
+                    <UtmLinkWrapper
                         passHref
                         href={`${recursivelyGetLink(data.v2[item])}`}
                         key={`${title}-${item}`}>
@@ -76,7 +76,7 @@ const PlatformAccordion = ({
                             }}>
                             {titleCasing(item)}
                         </Text>
-                    </Link>
+                    </UtmLinkWrapper>
                 ))}
                 {title !== 'Server side' ? (
                     <SidebarAPIReference reference={references[title]} />

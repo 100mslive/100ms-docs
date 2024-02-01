@@ -1,9 +1,9 @@
-import Link from 'next/link';
+import UtmLinkWrapper from '../UtmLinkWrapper';
 import { Flex, Box, Text } from '@100mslive/react-ui';
 
 const Item = ({ title, subText, icon, link, release = false }) => (
     <Box css={{ mb: '$4' }}>
-        <Link href={link}>
+        <UtmLinkWrapper href={link}>
             <Flex
                 gap="2"
                 css={{
@@ -40,7 +40,7 @@ const Item = ({ title, subText, icon, link, release = false }) => (
                     </Text>
                 </Box>
             </Flex>
-        </Link>
+        </UtmLinkWrapper>
     </Box>
 );
 
