@@ -19,7 +19,7 @@ true when any Prebuilt Kit on any framework is used
 
 • **sdkVersion**: `string`
 
-version of the SDK being used - hms-video-store or react-sdk
+version of the SDK being used, that is, version of hms-video-store or react-sdk
 
 ---
 
@@ -33,5 +33,5 @@ version of the SDK being used - hms-video-store or react-sdk
 
 • `Optional` **version**: `string`
 
-version of the framework being used - react in this case
+version of the framework being used, that is, version of react
 optional since there's no framework version required for JS SDK usage
