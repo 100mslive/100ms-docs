@@ -106,8 +106,8 @@ const MDXComponents = {
     APILink,
     StepsToc,
     StepsContainer,
-    PortraitImage,
-    SuggestedBlogs
+    SuggestedBlogs,
+    PortraitImage
 };
 
 export default MDXComponents;
