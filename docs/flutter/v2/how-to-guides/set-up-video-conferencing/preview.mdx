@@ -196,7 +196,7 @@ These options are available in advanced settings:
 
 ## What if you leave the call after preview
 
-If a user leaves room after preview before calling join, `leave` needs to be called inorder to ensure cleanup.
+In the event that a user exits the room after initiating the `preview` but before proceeding to `join`, it is recommended to invoke the `leave` method to guarantee proper cleanup.
 
 ```dart
 class Preview implements HMSUpdateListener{
@@ -205,6 +205,8 @@ class Preview implements HMSUpdateListener{
    ...
 
 
+   ///Call leave method when a user leaves after preview
+   ///The execution of the 'leave' method should also be triggered when the user presses the back button in the application.
    void leave(){
       hmsSDK.leave();
    }
