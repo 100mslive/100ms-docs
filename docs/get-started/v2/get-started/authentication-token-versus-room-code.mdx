@@ -3,7 +3,7 @@ title: Auth Token vs Room Code
 nav: 5.3
 ---
 
-When setting up video sessions, developers can choose between two options for granting access and authenticating peers: room codes or authentication tokens. But when is each appropriate? Here's a comparison, along with recommendations for common use cases.
+When setting up video sessions, developers can choose between two options for access control: room codes or authentication tokens. Both can enable joining a session, but serve different use cases. Here's a comparison, along with recommendations for common use cases.
 
 
 - **Room codes are recommended** for creating shareable join links for sessions. They can also power authentication for peers joining a session, eliminating the need to generate an authentication token.
@@ -16,21 +16,27 @@ Before integrating, it's important to define your implementation stack. Let's ex
 
 |  | Room Codes | Authentication Token |
 | --- | --- | --- |
-| Parity | 10 character short codes; unique to a `role` and `room_id` combination. Additional user context can be passed to make these codes user specific. | JWT token. Auth token is unique to a `role`, `user_id` and `room_id`. |
+| Parity | Encrypted code representing a unique `role` and `room_id` combination. Additional user context can be passed to make these codes user specific. | JWT token. Auth token is unique to a `role`, `user_id` and `room_id`. |
 | Set-up | Use server-side [Room Codes APIs](https://www.100ms.live/docs/server-side/v2/api-reference/room-codes/create-room-code-api). Management Token is required | [Server-side set up](https://www.100ms.live/docs/get-started/v2/get-started/security-and-tokens#set-up-your-token-server) to generate auth token. Management token is not required |
-| Expiry | [Room Codes do not expire](https://www.100ms.live/docs/prebuilt/v2/prebuilt/room-codes/overview#room-codes-do-not-expire). Peers can access rooms using links created with room codes, unless disabled.  | Set a desired expiry for auth token. Default expiry duration is 24 hours. Peers cannot join a session if their auth token is expires. |
+| Expiry | [Room Codes do not expire](https://www.100ms.live/docs/prebuilt/v2/prebuilt/room-codes/overview#room-codes-do-not-expire). Peers can access rooms using links created with room codes, unless disabled.  | Set a desired expiry for auth token. Peers cannot join a session if their auth token expires. |
 
 ## Key Recommendations
 
 Let’s take a closer look on deciding which method to use when you’ve opted to build your user using 100ms Prebuilt and custom UI
 
-| Implementation |	Room Codes | Auth Tokens |
-| ------- | ---------- | ------------|
-| Prebuilt Links |	Use room codes to create shareable Prebuilt links; can pass additional user context like user name and user ID	| Not required; as 100ms Prebuilt handles room codes implicitly handles authentication |
-| Prebuilt Component |	Authenticate peers and join using room codes |	Authenticate peers and join using auth token |
-| Custom Links | Use room codes to create shareable custom links; can pass additional user context like user name and user ID |	Use SDK method `getAuthTokenByRoomCode` to fetch auth token to join sessions. Alternatively, you can set up auth token setup at your end |
-| Custom UI | Authenticate peers and join using room codes | Can use authentication token to authenticate peers |
+When using 100ms Prebuilt UI:
 
-In simpler terms,
-1. Room codes simplify link creation
-2. Both room codes & auth tokens work for authenticating peers and joining a session
+1. When your use case requires joining via Prebuilt links:
+    1. Use room codes - Create shareable Prebuilt links; handles auth token creation implicitly. Supports additional user context like username and user ID
+    2. Authentication is implicitly handled by the Prebuilt UI
+2. When you're using the native Prebuilt component:
+    1. You can directly use room codes to join or authentication tokens
+    
+
+When building Custom UI:
+
+1. When your use case requires joining via links:
+    1. Use room codes to create custom links; can pass additional user context like username and user ID
+2. When building an embedded custom UI for joining without links, authenticate users using:
+    1. Room codes - Use SDK method `getAuthTokenByRoomCode` to fetch auth token to join sessions. Alternatively, you can set up auth token setup on your end. Refer to this guide
+    2. Authentication tokens - Set up an auth token server on your end
