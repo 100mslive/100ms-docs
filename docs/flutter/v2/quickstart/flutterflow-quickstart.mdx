@@ -4,10 +4,10 @@ nav: 2.7
 ---
 
 This Flutter template provides a solid foundation for building feature-rich mobile applications by combining the power of FlutterFlow and HMS Room Kit for real-time communication capabilities.
-This guide will walk you through simple instructions to create a video conferencing/streaming application using flutterflow and 100ms prebuilt.
+This guide will walk you through simple instructions to create a video conferencing/streaming application using Flutterflow and 100ms prebuilt.
 
-> Explore the HMSRoomKit X Flutterflow sample project [here](https://app.flutterflow.io/project/hms-room-kit-sample-lvsfde?tab=customCode&customCodeTab=widgets).
-> Checkout the github repo with flutterflow integration [here](https://github.com/100mslive/100ms-flutter/tree/FLUT-204/sample%20apps/flutterflow-prebuilt-quickstart)
+> Explore the HMSRoomKit x Flutterflow sample project [here](https://app.flutterflow.io/project/hms-room-kit-sample-lvsfde?tab=customCode&customCodeTab=widgets).
+> Check out the GitHub repo with Flutterflow integration [here](https://github.com/100mslive/100ms-flutter/tree/FLUT-204/sample%20apps/flutterflow-prebuilt-quickstart)
 
 <video controls height="500">
     <source
@@ -32,13 +32,13 @@ This guide will walk you through simple instructions to create a video conferenc
 
 ## Getting started
 
-Follow these steps to setup and run the project:
+Follow these steps to set up and run the project:
 
-1. Setup basic widgets required for your application in flutterflow, Follow the flutterflow docs [here](https://docs.flutterflow.io/getting-started/resources)
+1. Setup basic widgets required for your application in Flutterflow, follow the Flutterflow docs [here](https://docs.flutterflow.io/getting-started/resources)
 
-2. Create a custom widget in flutterflow, checkout the docs to create custom widget [here](https://docs.flutterflow.io/customizing-your-app/custom-functions/custom-widgets)
+2. Create a custom widget in Flutterflow, check out the docs to create a custom widget [here](https://docs.flutterflow.io/customizing-your-app/custom-functions/custom-widgets)
 
-3. Add `hms_room_kit` in `Pubspec dependencies` section.
+3. Add `hms_room_kit` in the `Pubspec dependencies` section.
 
 4. In your custom widget add the `HMSPrebuilt` widget and pass the room code:
 
@@ -48,18 +48,18 @@ HMSPrebuilt(roomCode: "Enter your room code here");
 
 That's it now you can run the  application and test it out.
 
-> Flutterflow currently runs the application on flutter web, since `hms_room_kit` does not support flutter web you will need to 
+> Flutterflow currently runs the application on Flutter Web, since `hms_room_kit` does not support Flutter Web you will need to 
 > download the code and run it locally on your machine.
 
 ## Known issues
 
-`hms_room_kit` manages state and UI out of the box, but there are some conflicts with flutterflow. So, we need to make some changes in the app layer. Please follow the steps below to run the app:
+`hms_room_kit` manages state and UI out of the box, but there are some conflicts with Flutterflow. So, we need to make some changes in the app layer. Please follow the steps below to run the app:
 
 1. Solving dependency conflicts:
 
 <img width="526" alt="Screenshot 2023-11-20 at 11 00 18 AM" src="https://github.com/100mslive/100ms-flutter/assets/93931528/810b96ca-d268-4681-b073-56b4df35de51"/>
 
-There are several packages which are common in both `flutterflow` and `hms_room_kit`, but with different versions. So, we need to make sure that the versions of these packages are same in both `pubspec.yaml` files. For conflict in packages you will get error like this:
+There are several packages which are common in both `flutterflow` and `hms_room_kit`, but with different versions. So, we need to ensure that the versions of these packages are the same in both `pubspec.yaml` files. For conflict in packages, you will get an error like this:
 
 ```bash
 Error: Failed running flutter pub get...
@@ -73,13 +73,13 @@ You can try the following suggestion to make the pubspec resolve:
 
 This can be solved by updating to the higher version of the package. For example, in the above error, we need to update `flutter_cache_manager` to `^3.3.1` in `pubspec.yaml` file.
 
-> 🔑 Note: Flutterflow UI doesn't directly allow changing the package version, either you need to do it in `Custom Widgets` section or you can download the code from Flutterflow and change the version in `pubspec.yaml` file locally. We recommend doing the later since it's much easier.
+> 🔑 Note: Flutterflow UI doesn't directly allow changing the package version, either you need to do it in `Custom Widgets` section or you can download the code from Flutterflow and change the version in `pubspec.yaml` file locally. We recommend doing the latter since it's much easier.
 
 2. Issues with Navigator:
 
-Flutterflow uses `go_router` whereas `hms_room_kit` uses `MaterialPageRoute` for navigation. So, you might face issues while navigating from app screen to `hms_room_kit` screen. To solve this, you will need to use `MaterialPageRoute` while pushing the `hms_room_kit` path while you can continue using `go_router` for other paths.
+Flutterflow uses `go_router` whereas `hms_room_kit` uses `MaterialPageRoute` for navigation. So, you might face issues while navigating from the app screen to `hms_room_kit` screen. To solve this, you will need to use `MaterialPageRoute` while pushing the `hms_room_kit` path while you can continue using `go_router` for other paths.
 
-That's it. You can now use the amazing Prebuilt UI with speed of Flutterflow in your application.
+That's it. You can now use the amazing Prebuilt UI with the speed of Flutterflow in your application.
 
 If you face any issues or have any questions, please reach out to us on [Discord](https://discord.gg/jD94Fp74Ea)
 
@@ -87,18 +87,13 @@ If you face any issues or have any questions, please reach out to us on [Discord
 
 We have multiple example apps to get you started with 100ms Flutter SDK.
 
-### HLS Streaming blog
-
-Checkout the HLS Streaming blog [here](https://www.100ms.live/blog/flutter-streaming).
-Checkout the repository [here](https://github.com/adityathakurxd/flutter-live)
-
 ### Basic example
 
 For a basic example, see the [sample app](https://github.com/100mslive/100ms-flutter/tree/main/sample%20apps/flutter-quickstart-app) on GitHub.
 
-### Full-fledged example
+### Full featured example
 
-You can also check out the full-fledged example app implementation in the 100ms Flutter SDK [GitHub repository](https://github.com/100mslive/100ms-flutter/tree/main/example) showcasing multiple features provided by 100ms. This uses the [provider package](https://pub.dev/packages/provider) as the state management library.
+You can also check out the full-featured example app implementation in the 100ms Flutter SDK [GitHub repository](https://github.com/100mslive/100ms-flutter/tree/main/example) showcasing multiple features provided by 100ms. This uses the [provider package](https://pub.dev/packages/provider) as the state management library.
 
 ### Examples with other state management libraries
 
