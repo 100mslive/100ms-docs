@@ -10,29 +10,7 @@ interface Props {
     }>;
 }
 
-const suggestedBlogsDefault = [
-    {
-        title: 'Meet all new 100ms RoomKit SDK on iOS',
-        content: 'Exhaustive guide on 100ms Prebuilt setup using SwiftUI',
-        date: 'January 21, 2022 • 4 min read',
-        url: 'www.abc.com'
-    },
-    {
-        title: 'Embedding Prebuilt as a native component',
-        content:
-            'Embed and ship faster with HMSPrebuilt component. And some more exciting updates coming your way in the form of Prebuilt upgrades.',
-        date: 'January 21, 2022 • 4 min read',
-        url: 'www.abc.com'
-    },
-    {
-        title: 'Engage Your Audience with Interactive Polls and Quizzes - A Step-by-Step Guide',
-        content: 'Exhaustive guide on 100ms Prebuilt setup using SwiftUI',
-        date: 'January 21, 2022 • 4 min read',
-        url: 'www.abc.com'
-    }
-];
-
-const SuggestedBlogs: React.FC<Props> = ({ suggestedBlogs = suggestedBlogsDefault }) => {
+const SuggestedBlogs: React.FC<Props> = ({ suggestedBlogs }) => {
     return (
         <>
             <h2 style={{ marginBottom: '16px', marginTop: '0px' }}>Suggested Reads</h2>
