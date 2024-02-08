@@ -1,9 +1,22 @@
 import { getUtmParams } from '@/lib/getUtmParams';
 import Link from 'next/link';
 import React from 'react';
+function isRelativeUrl(url: string): boolean {
+    try {
+        new URL(url);
+        // If creating a URL object doesn't throw an error, it's an absolute URL
+        return false;
+    } catch (error) {
+        // If creating a URL object throws an error, it's likely a relative URL
+        return true;
+    }
+}
 
 const UtmLinkWrapper = ({ children, ...rest }) => {
     const updateUrl = (originalUrl: string) => {
+        if (!isRelativeUrl(originalUrl)) {
+            return originalUrl;
+        }
         const utmParams = getUtmParams();
         const queryParamsString = Object.entries(utmParams)
             .filter(([key, value]) => key.startsWith('utm') && value !== undefined)
