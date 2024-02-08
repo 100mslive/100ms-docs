@@ -14,9 +14,6 @@ function isRelativeUrl(url: string): boolean {
 
 const UtmLinkWrapper = ({ children, ...rest }) => {
     const updateUrl = (originalUrl: string) => {
-        if (!isRelativeUrl(originalUrl)) {
-            return originalUrl;
-        }
         const utmParams = getUtmParams();
         const queryParamsString = Object.entries(utmParams)
             .filter(([key, value]) => key.startsWith('utm') && value !== undefined)
@@ -34,10 +31,14 @@ const UtmLinkWrapper = ({ children, ...rest }) => {
     const originalUrl = rest.href || rest.to;
     const updatedUrl = updateUrl(originalUrl);
 
-    return (
+    return isRelativeUrl(originalUrl) ? (
         <Link {...rest} href={updatedUrl}>
             {children}
         </Link>
+    ) : (
+        <a {...rest} href={originalUrl}>
+            {children}
+        </a>
     );
 };
 
