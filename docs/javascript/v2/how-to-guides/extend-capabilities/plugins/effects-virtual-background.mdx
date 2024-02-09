@@ -22,27 +22,38 @@ npm install --save @100mslive/hms-virtual-background@latest
 The following features are currently supported under the `HMSEffectsPlugin` class:
 
 ```js
-setBlur(blurPower: number)
 // The blur intensity is determined by the blurPower, which can range from 0 to 1
+setBlur(blurPower: number)
 
-setBackground(mediaURL: string)
 // Accepts the media URL to set as the virtual background
+setBackground(mediaURL: string)
 
-getName()
 // returns 'HMSEffects', can be used to check if the plugin has been initialised
+getName()
 
-getBackground()
 /* 
   Returns the background type currently enabled or the media URL.
   Represented by the HMSVirtualBackgroundTypes enum which is present in 
   @100mslive/hms-virtual-background. Useful to show active selection in the UI. 
 */
+getBackground()
 
-removeEffects()
+
+/*
+  Can be used to set the quality of VB. The default is "balanced"
+  Options: "lightning" | "speed" | "balanced" | "quality"
+  The quality of the VB and CPU usage increases from left to right
+ */
+setPreset()
+
+// returns the active preset
+getPreset()
+
 // Clears all applied filters
+removeEffects()
 
-stop()
 // Stops the plugin
+stop()
 ```
 
 
@@ -97,9 +108,6 @@ export class VBPlugin {
     this.effectsPlugin?.setBackground(mediaURL);
   };
 
-  // Can be used to set the quality of VB. The default is "balanced"
-  // Options: "lightning" | "speed" | "balanced" | "quality"
-  // The quality of the VB and CPU usage increases from left to right
   setPreset = (preset: string) => {
     this.effectsPlugin.setPreset(preset);
   };
