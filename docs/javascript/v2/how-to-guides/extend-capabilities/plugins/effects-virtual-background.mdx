@@ -33,9 +33,9 @@ getName()
 
 getBackground()
 /* 
-	Returns the background type currently enabled or the media URL.
-	Represented by the HMSVirtualBackgroundTypes enum which is present in 
-	@100mslive/hms-virtual-background. Useful to show active selection in the UI. 
+  Returns the background type currently enabled or the media URL.
+  Represented by the HMSVirtualBackgroundTypes enum which is present in 
+  @100mslive/hms-virtual-background. Useful to show active selection in the UI. 
 */
 
 removeEffects()
@@ -78,7 +78,7 @@ export class VBPlugin {
   };
 
   getBlurAmount = () => {
-      return this.effectsPlugin?.getBlurAmount();
+    return this.effectsPlugin?.getBlurAmount();
   };
 
   getVBObject = () => {
@@ -94,14 +94,14 @@ export class VBPlugin {
   };
 
   setBackground = async (mediaURL: string) => {
-      this.effectsPlugin?.setBackground(mediaURL);
+    this.effectsPlugin?.setBackground(mediaURL);
   };
 
   // Can be used to set the quality of VB. The default is "balanced"
   // Options: "lightning" | "speed" | "balanced" | "quality"
   // The quality of the VB and CPU usage increases from left to right
   setPreset = (preset: string) => {
-      this.effectsPlugin.setPreset(preset);
+    this.effectsPlugin.setPreset(preset);
   };
 
   getPreset = () => {
@@ -128,11 +128,14 @@ The following snippet illustrates how to add the plugin to the video and manage 
 ```jsx
 
 import {
-	selectLocalVideoTrackID,
-	selectEffectsKey,
+  selectLocalVideoTrackID,
+  selectEffectsKey,
   useHMSStore,
 } from '@100mslive/react-sdk';
-import { HMSEffectsPlugin, HMSVirtualBackgroundTypes } from '@100mslive/hms-virtual-background';
+import { 
+  HMSEffectsPlugin, 
+  HMSVirtualBackgroundTypes
+  } from '@100mslive/hms-virtual-background';
 import { VBHandler } from './VBHandler';
 
 export const VirtualBackgroundPicker = () => {
@@ -162,7 +165,7 @@ export const VirtualBackgroundPicker = () => {
         }
     }, [hmsActions, isPluginAdded, effectsKey, track?.id]);
 
-	// UI code for media picker can go here
+  // UI code for media picker can go here
 }
 ```
 
@@ -172,19 +175,19 @@ The methods can be called via the `VBHandler` object:
 ```jsx
 
 const setBackground = async(mediaURL : string) => {
-    await VBHandler?.setBackground(mediaURL);
-    // The selection can be highlighted using the activeBackground state
-    setActiveBackground(mediaURL);
+  await VBHandler?.setBackground(mediaURL);
+  // The selection can be highlighted using the activeBackground state
+  setActiveBackground(mediaURL);
 }
 
 const setBlur = async(blurAmount: number) => {
-    await VBHandler?.setBlur(blurAmount);
-    setActiveBackground(HMSVirtualBackgroundTypes.BLUR);
+  await VBHandler?.setBlur(blurAmount);
+  setActiveBackground(HMSVirtualBackgroundTypes.BLUR);
 }
 
 const removeEffects = async() => {
-    await VBHandler.removeEffects();
-    setActiveBackground(HMSVirtualBackgroundTypes.NONE);
+  await VBHandler.removeEffects();
+  setActiveBackground(HMSVirtualBackgroundTypes.NONE);
 }
 
 ```
