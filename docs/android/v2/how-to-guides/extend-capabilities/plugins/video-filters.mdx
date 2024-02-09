@@ -1,0 +1,146 @@
+---
+title: Video Filters (Beta)
+nav: 14.2
+---
+
+import AndroidSdkVersionShield from '@/common/android-sdk-version-shield.md';
+
+## Introduction
+
+Video filter plugin helps in altering brightness, contrast, sharpeness or smoothness of a video frame
+This guide provides an overview of usage of the Video Filter plugin of 100ms.
+
+
+## Supported Versions/Resolutions
+
+-   Minimum 100ms SDK version it can work with is `2.9.2`
+-   Maximum supported resolution for this feature is 720p
+
+
+## Add dependency
+
+-   Adding the Beauty filtet plugin and SDK dependency to your app-level `build.gradle`.
+
+<AndroidSdkVersionShield />
+
+<Tabs id="sdk-imports" items={['Maven Central']} />
+
+<Tab id='sdk-imports-0'>
+
+```json{5-8}:build.gradle section=AddSDKDependencies sectionIndex=1
+dependencies {
+ // See the version in the badge above.
+
+ def hmsVersion = "x.x.x"
+ implementation "live.100ms:android-sdk:$hmsVersion"    // Essential
+ implementation "live.100ms:video-filters:$hmsVersion" // Optional
+}
+```
+
+</Tab>
+
+
+## How to Integrate Video Filters
+
+### Instantiate 
+
+Instantiate the 100ms Video Filter plugin like this:
+
+<Tabs id="instanstiate-VirtualBackgroundPlugin" items={['Kotlin']} />
+
+<Tab id='instanstiate-VirtualBackgroundPlugin-0'>
+
+```kotlin
+     val hmsSDK = HMSSDK
+        .Builder(application)
+        .build()
+
+     val videoFilterPlugin  by lazy { HMSVideoFilter(hmsSDK) }
+
+     //call this after onJoin()
+     fun addBeautyFilterPlugin() {
+
+        if (hmsSDK.getLocalPeer()?.videoTrack != null) {
+            videoFilterPlugin.init()
+
+            hmsSDK.addPlugin(videoFilterPlugin, object : HMSActionResultListener {
+                override fun onError(error: HMSException) {}
+
+                override fun onSuccess() { }
+
+            }, 30)
+        }
+    }
+```
+
+</Tab>
+
+
+Now let's take a look at the method signature of `HMSVideoFilter`.
+
+## Brightness
+
+### Set Brightness
+
+Adjust Brightness of a video frame. Value is from `0` to `100` default is `50`.
+
+```kotlin
+videoFilterPlugin.setBrightness(progress: Int)
+```
+
+### Set Contrast
+
+Adjust Contrast of a video frame. Value is from `0` to `100` default is `50`.
+
+```kotlin
+videoFilterPlugin.setContrast(progress: Int)
+```
+
+### Set Sharpeness
+
+Adjust sharpness of a video frame. Value is from `0` to `100` default is `50`.
+
+```kotlin
+videoFilterPlugin.setSharpness(progress: Int)
+```
+
+### Set Redness
+
+Adjust redness in a video frame. Value is from `0` to `100` default is `0`.
+
+```kotlin
+videoFilterPlugin.setRedness(progress: Int)
+```
+
+### Set Smoothness
+
+Adjust smoothness in a video frame. Value is from `0` to `100` default is `0`.
+
+```kotlin
+videoFilterPlugin.setSmoothness(progress: Int)
+```
+
+## Remove/Detach Video Filter Plugin
+
+To remove/detach video plugin at runtime:
+
+<Tabs id="remove-plugin" items={['Kotlin']} />
+
+<Tab id='remove-plugin-0'>
+
+```kotlin
+
+            videoFilterPlugin.stop()
+            hmsSDK.removePlugin(videoFilterPlugin, object : HMSActionResultListener {
+                override fun onError(error: HMSException) {}
+
+                override fun onSuccess() {}
+
+            })
+
+
+```
+
+</Tab>
+
+
