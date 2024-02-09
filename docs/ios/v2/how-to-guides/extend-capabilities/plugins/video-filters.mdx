@@ -5,7 +5,7 @@ nav: 12.3
 
 ## Introduction
 
-The HMSVideoFilterPlugin is a customizable video filter plugin designed to allow developers to adjust various properties of a video stream in real-time. This plugin utilizes several Core Image filters to apply different effects to the video content. Below is the documentation for the public parameters available in the HMSVideoFilterPlugin.
+The HMSVideoFilterPlugin is a customizable video filter plugin designed to allow developers to apply various filters to a video stream in real-time. This plugin utilizes several Core Image filters to apply different effects to the video content. Below is the documentation for the parameters available to adjust in the HMSVideoFilterPlugin.
 
 ## Minimum Requirements
 -   Minimum 100ms SDK version required is `1.5.0`
@@ -74,40 +74,61 @@ let's take a look at the method signature of `HMSVideoFilterPlugin`.
 
 ### Set Brightness
 
-Adjust Brightness of a video frame. Value is from `0` to `1` default is `0.5`.
+Adjust brightness of the video. Value is from `0` to `1` default is `0.5`.
 
-```kotlin
+```swift
 videoFilterPlugin.brightness = 1
 ```
 
 ### Set Contrast
 
-Adjust Contrast of a video frame. Value is from `0` to `infinity` default is `1`.
+Adjust contrast of the video. Value is from `0` to `infinity` default is `1`.
 
-```kotlin
+```swift
 videoFilterPlugin.contrast = 2
 ```
 
 ### Set Sharpeness
 
-Adjust sharpness of a video frame. Value is from `0` to `infinite` default is `0`.
+Adjust sharpness of the video. Value is from `0` to `infinite` default is `0`.
 
-```kotlin
+```swift
 videoFilterPlugin.sharpness = 1
 ```
 
 ### Set Redness
 
-Adjust redness in a video frame. Value is from `0` to `infinite` default is `1`.
+Adjust redness in the video. Value is from `0` to `infinite` default is `1`.
 
-```kotlin
+```swift
 videoFilterPlugin.redness = 2
 ```
 
 ### Set Smoothness
 
-Adjust smoothness in a video frame. Value is from `0` to `infinite` default is `0`.
+Adjust smoothness in the video. Value is from `0` to `infinite` default is `0`.
 
-```kotlin
-videoFilterPlugin.smoothness = 1
+## I want to apply my own set of core image filters. How can I do that
+
+You can add your core image filtering logic in **coreImageTransformers** property of videoFilterPlugin like below.
+
+```swift
+videoFilterPlugin?.coreImageTransformers = [{ inputImage in
+     
+     var outputImage: CIImage?
+                
+     if let filter = CIFilter(name: "CIExposureAdjust") {
+                    
+          // Set input image
+          filter.setValue(inputImage, forKey: kCIInputImageKey)
+                    
+          // Set exposure value
+          filter.setValue(2, forKey: "inputEV")
+                    
+          // Get filtered image
+          outputImage = filter.outputImage
+     }
+                
+     return outputImage ?? inputImage
+}]
 ```
