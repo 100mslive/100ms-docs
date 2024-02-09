@@ -139,30 +139,30 @@ import {
 import { VBHandler } from './VBHandler';
 
 export const VirtualBackgroundPicker = () => {
-    const hmsActions = useHMSActions();
-    // Get the effects SDK key here
-    const effectsKey = useHMSStore(selectEffectsKey);
-    const trackId = useHMSStore(selectLocalVideoTrackID);
+  const hmsActions = useHMSActions();
+  // Get the effects SDK key here
+  const effectsKey = useHMSStore(selectEffectsKey);
+  const trackId = useHMSStore(selectLocalVideoTrackID);
     
-    // State can be used to show active selection
-    const [background, setBackground] = useState<string | HMSVirtualBackgroundTypes>(
-        VBHandler.getBackground() as string | HMSVirtualBackgroundTypes,
-    );
+  // State can be used to show active selection
+  const [background, setBackground] = useState<string | HMSVirtualBackgroundTypes>(
+      VBHandler.getBackground() as string | HMSVirtualBackgroundTypes,
+  );
 
 	useEffect(() => {
-        if (!track?.id) {
-            return;
+    if (!track?.id) {
+      return;
+    }
+    if (!isPluginAdded) {
+        let vbObject = VBHandler.getVBObject();
+        if (!vbObject) {
+          VBHandler.initialisePlugin(effectsKey);
+          vbObject = VBHandler.getVBObject();
+          if (effectsKey) {
+          hmsActions.addPluginsToVideoStream([vbObject as HMSEffectsPlugin]);
+          } 
         }
-        if (!isPluginAdded) {
-            let vbObject = VBHandler.getVBObject();
-            if (!vbObject) {
-                VBHandler.initialisePlugin(effectsKey);
-                vbObject = VBHandler.getVBObject();
-                if (effectsKey) {
-                hmsActions.addPluginsToVideoStream([vbObject as HMSEffectsPlugin]);
-                } 
-            }
-        }
+      }
     }, [hmsActions, isPluginAdded, effectsKey, track?.id]);
 
   // UI code for media picker can go here
@@ -173,7 +173,6 @@ This handles initialisation and adding the plugin to the video stream. The plugi
 
 The methods can be called via the `VBHandler` object:
 ```jsx
-
 const setBackground = async(mediaURL : string) => {
   await VBHandler?.setBackground(mediaURL);
   // The selection can be highlighted using the activeBackground state
