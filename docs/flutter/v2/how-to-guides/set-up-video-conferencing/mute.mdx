@@ -18,18 +18,28 @@ Let's look at their implementation:
 ```dart
 class Meeting implements HMSUpdateListener,HMSActionResultListener{
 
-...
-/// To switch local peer's audio on/off.
-hmsSDK.toggleMicMuteState(); //This toggles the current mic status(mute/unmute)
+    ...
+    /// To switch local peer's audio on/off.
+    hmsSDK.toggleMicMuteState(); //This toggles the current mic status(mute/unmute)
 
 
-/// To switch local peer's video on/off.
-hmsSDK.toggleCameraMuteState(); //This toggles current camera status(mute/unmute)
+    /// To switch local peer's video on/off.
+    hmsSDK.toggleCameraMuteState(); //This toggles current camera status(mute/unmute)
 
-/// Switch camera from front or rear mode
-hmsSDK.switchCamera();
+    /// Switch camera from front or rear mode
+    hmsSDK.switchCamera(hmsActionResultListener: this);
 
-...
+    ...
+
+    @override
+    void onSuccess({HMSActionResultListenerMethod methodType = HMSActionResultListenerMethod.unknown, Map<String, dynamic>? arguments}) {
+        switch (methodType) {
+          case HMSActionResultListenerMethod.switchCamera:
+          // Switch Camera called successfully
+          break;
+          ...
+        }
+      }
 
 }
 ```

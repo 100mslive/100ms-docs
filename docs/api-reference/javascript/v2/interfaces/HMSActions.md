@@ -396,6 +396,22 @@ enable sending audio speaker data to beam
 
 ---
 
+### getNativeTrackById
+
+▸ **getNativeTrackById**(`trackId`): `undefined` \| `MediaStreamTrack`
+
+#### Parameters
+
+| Name      | Type     | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| :-------- | :------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `trackId` | `string` | pass the trackId from store (for instance, peer.audioTrack) for which you want the native MediaStreamTrack instance. Be cautious when using this and modifying the underlying MediastreamTrack. Note: In case of local peer, the native audio track will change the first time it is unmuted. In case of video track, the native track changes everytime you mute/unmute. Be cautious when using this. This will not be needed unless you want to do some extra processing on the audio/video tracks. We recommend using our plugins for the same instead |
+
+#### Returns
+
+`undefined` \| `MediaStreamTrack`
+
+---
+
 ### getPeerListIterator
 
 ▸ **getPeerListIterator**(`options?`): [`HMSPeerListIterator`](/api-reference/javascript/v2/interfaces/HMSPeerListIterator)
@@ -409,6 +425,22 @@ enable sending audio speaker data to beam
 #### Returns
 
 [`HMSPeerListIterator`](/api-reference/javascript/v2/interfaces/HMSPeerListIterator)
+
+---
+
+### getTrackById
+
+▸ **getTrackById**(`trackId`): `undefined` \| `HMSTrack`
+
+#### Parameters
+
+| Name      | Type     |
+| :-------- | :------- |
+| `trackId` | `string` |
+
+#### Returns
+
+`undefined` \| `HMSTrack`
 
 ---
 
