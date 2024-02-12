@@ -42,6 +42,7 @@ const UtmLinkWrapper = ({ children, ...rest }) => {
     return updatedUrl;
   };
 
+
     const originalUrl = rest.href || rest.to;
     const updatedUrl = updateUrl(originalUrl);
 
