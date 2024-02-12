@@ -13,20 +13,35 @@ function isRelativeUrl(url: string): boolean {
 }
 
 const UtmLinkWrapper = ({ children, ...rest }) => {
-    const updateUrl = (originalUrl: string) => {
-        const utmParams = getUtmParams();
-        const queryParamsString = Object.entries(utmParams)
-            .filter(([key, value]) => key.startsWith('utm') && value !== undefined)
-            .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
-            .join('&');
+  const updateUrl = (originalUrl:string) => {
+    // Extract the part from # onwards and remove it from the original URL
+    const hashIndex = originalUrl.indexOf("#");
+    const hashPart = hashIndex !== -1 ? originalUrl.slice(hashIndex) : "";
+    originalUrl =
+      hashIndex !== -1 ? originalUrl.slice(0, hashIndex) : originalUrl;
+    const utmParams = getUtmParams();
+    const queryParamsString = Object.entries(utmParams)
+      .filter(([key]) => key.startsWith("utm"))
+      .map(
+        ([key, value]) =>
+          `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
+      )
+      .join("&");
 
-        // Check if the base URL already has a query string
-        const separator = originalUrl.includes('?') ? '&' : '?';
+    // Check if the base URL already has a query string
+    const separator = originalUrl.includes("?") ? "&" : "?";
 
-        // Append the queryParamsString to the originalUrl
-        const updatedUrl = `${originalUrl}${separator}${queryParamsString}`;
-        return updatedUrl;
-    };
+    // Append the queryParamsString to the originalUrl only if there are parameters
+    const queryParams = queryParamsString
+      ? `${separator}${queryParamsString}`
+      : "";
+
+    // Concatenate the originalUrl, queryParams, extracted hashPart, and the hash separator
+    const updatedUrl = `${originalUrl}${queryParams}${hashPart}`;
+
+    return updatedUrl;
+  };
+
 
     const originalUrl = rest.href || rest.to;
     const updatedUrl = updateUrl(originalUrl);
