@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
+import UtmLinkWrapper from './UtmLinkWrapper';
 import { useRouter } from 'next/router';
 import APILink from './APILink';
 import BaseRequest from './BaseRequest';
@@ -39,7 +39,7 @@ const LinkCustom = (props) => {
     const isInternalLink = href && !href.startsWith('http');
     const router = useRouter();
 
-    // FIX for a next/link bug where its not able to resolve relative path for current directory
+    // FIX for a ./UtmLinkWrapper bug where its not able to resolve relative path for current directory
     if (href.startsWith('./')) {
         const { asPath = '' } = router;
         href = asPath.substring(0, asPath.lastIndexOf('/')) + href.replace('./', '/');
@@ -56,9 +56,9 @@ const LinkCustom = (props) => {
 
     if (isInternalLink) {
         return (
-            <Link href={href}>
+            <UtmLinkWrapper href={href}>
                 <a>{props.children}</a>
-            </Link>
+            </UtmLinkWrapper>
         );
     }
     const { hostname } = new URL(href);
