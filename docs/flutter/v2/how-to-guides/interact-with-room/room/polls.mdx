@@ -1,17 +1,16 @@
 ---
  title: Polls
- nav: 8.4
+ nav: 8.3
 ---
 
 The Poll feature in the HMS SDK allows us to create, manage, and participate in polls and quizzes. Polls are an effective way to gather opinions, feedback, and insights from a group of people in a quick and convenient manner. With the Poll feature, we can create custom polls, set their properties, add questions, and manage responses. we can also receive real-time updates on poll status, and view poll results in an organized and easy-to-use format.
 This document provides guidance on how to use the Poll APIs to create a poll, receive updates on a poll, and vote on a poll.
 
-
 ## Prerequisites
 
-- Flutter SDK 1.9.9
-- Poll Read permissions should be enabled for roles that can view polls.
-- Poll Write permission should be enabled for roles that can create polls.
+-   Flutter SDK 1.9.9
+-   Poll Read permissions should be enabled for roles that can view polls.
+-   Poll Write permission should be enabled for roles that can create polls.
 
 ## Listen to poll updates
 
@@ -34,7 +33,7 @@ class Meeting implements HMSUpdateListener, HMSPollListener{
 Let's look at `HMSPollUpdateType` enum:
 
 ```dart
-enum HMSPollUpdateType { 
+enum HMSPollUpdateType {
 
     ///Indicates that a poll has been initiated and is now active.
     started,
@@ -51,7 +50,7 @@ enum HMSPollUpdateType {
 
 ### Quick Create
 
-Here is how to quickly create a poll using poll builder. 
+Here is how to quickly create a poll using poll builder.
 
 Let's consider an example. We'll create a single-choice poll with the title `Survey` and the question `Do you love Dart?` The poll will offer two options: `Yes` and `No`.
 
@@ -105,12 +104,12 @@ class Meeting extends HMSUpdateListener, HMSPollListener{
 
 After calling `quickStartPoll` method we will get `onPollUpdate` with `HMSPollUpdateType` as `started`.
 
-Above code will create a poll with a given title and a single choice question, and share it with the room. 
+Above code will create a poll with a given title and a single choice question, and share it with the room.
 
 ## Voting on a Poll
 
 To participate in a poll, we can vote using `addSingleChoicePollResponse` or `addMultiChoicePollResponse` methods.
-As the name suggests `addSingleChoicePollResponse` can be used to vote for a single choice poll, while `addMultiChoicePollResponse` method 
+As the name suggests `addSingleChoicePollResponse` can be used to vote for a single choice poll, while `addMultiChoicePollResponse` method
 can be used to vote for a multi choice poll.
 
 Let's consider a example, A user wishes to answer `yes` to above poll.
@@ -118,7 +117,7 @@ Let's consider a example, A user wishes to answer `yes` to above poll.
 ```dart
 class Meeting extends HMSUpdateListener, HMSPollListener{
 
-    ... 
+    ...
 
 
 
@@ -134,7 +133,7 @@ class Meeting extends HMSUpdateListener, HMSPollListener{
         hmsPoll: poll,
         pollQuestion: question,
         optionSelected: pollQuestionOption,
-        peer: peer);        
+        peer: peer);
 
     }
 
@@ -151,7 +150,7 @@ class Meeting extends HMSUpdateListener, HMSPollListener{
 }
 ```
 
-Once you have submitted your responses, everyone in the room will get `resultsUpdated` update in `onPollUpdate` callback. 
+Once you have submitted your responses, everyone in the room will get `resultsUpdated` update in `onPollUpdate` callback.
 You can check updated vote counts for each option from the poll object.
 
 ```dart
