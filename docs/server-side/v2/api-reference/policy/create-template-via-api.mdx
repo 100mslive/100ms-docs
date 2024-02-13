@@ -250,10 +250,11 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
         },
         "transcriptions": {
             "<transcription destination name>": {
-                "name": "<transcription destination name>",
+                "name": "<destination name>",
                 "role": "host",
+                "modes": ["recorded", "live"],
                 "outputModes": [ "txt", "srt", "json" ],
-                "customVocabulary": ["100ms", "SDK", "Sundar", "Pichai" ],
+                "customVocabulary": ["100ms", "WebSDK", "Flutter", "Sundar", "Pichai", "DALL-E"],
                 "summary": {
                     "enabled": true,
                     "context": "this is a meeting between 100ms SDK team and a user representative",
@@ -532,7 +533,7 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
             "<destination name>": {
                 "name": "<destination name>",
                 "role": "host",
-                "modes": ["recorded", "live"]
+                "modes": ["recorded", "live"],
                 "outputModes": [ "txt", "srt", "json" ],
                 "customVocabulary": ["100ms", "WebSDK", "Flutter", "Sundar", "Pichai", "DALL-E"],
                 "summary": {

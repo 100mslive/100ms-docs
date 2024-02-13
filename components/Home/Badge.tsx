@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import UtmLinkWrapper from '../UtmLinkWrapper';
 import { Box, Text, Button } from '@100mslive/react-ui';
 import { Url } from 'url';
 
@@ -11,7 +11,7 @@ interface BadgeProps {
 
 const Badge: React.FC<BadgeProps> = ({ icon, title, link }) => (
     <Box>
-        <Link href={link as unknown as Url} passHref>
+        <UtmLinkWrapper href={link as unknown as Url} passHref>
             <a>
                 <Button
                     icon
@@ -24,13 +24,15 @@ const Badge: React.FC<BadgeProps> = ({ icon, title, link }) => (
                         pr: '$5',
                         backgroundColor: '$secondaryDark',
                         borderColor: 'transparent',
-                        color: "$textHighEmp",
+                        color: '$textHighEmp'
                     }}>
                     {icon}
-                    <Text variant={'sub1'} css={{ color: '$textHighEmp', fontWeight: '$semiBold' }}>{title}</Text>
+                    <Text variant={'sub1'} css={{ color: '$textHighEmp', fontWeight: '$semiBold' }}>
+                        {title}
+                    </Text>
                 </Button>
             </a>
-        </Link>
+        </UtmLinkWrapper>
         <style jsx>
             {`
                 a:hover {
