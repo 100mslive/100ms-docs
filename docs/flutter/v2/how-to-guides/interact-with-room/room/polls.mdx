@@ -1,0 +1,196 @@
+---
+ title: Polls
+ nav: 8.4
+---
+
+The Poll feature in the HMS SDK allows us to create, manage, and participate in polls and quizzes. Polls are an effective way to gather opinions, feedback, and insights from a group of people in a quick and convenient manner. With the Poll feature, we can create custom polls, set their properties, add questions, and manage responses. we can also receive real-time updates on poll status, and view poll results in an organized and easy-to-use format.
+This document provides guidance on how to use the Poll APIs to create a poll, receive updates on a poll, and vote on a poll.
+
+
+## Prerequisites
+
+- Flutter SDK 1.9.9
+- Poll Read permissions should be enabled for roles that can view polls.
+- Poll Write permission should be enabled for roles that can create polls.
+
+## Listen to poll updates
+
+To listen to poll updates HMSSDK provides `HMSPollListener`.This listener keeps the application informed about various poll-related events, including when a poll is initiated, concluded, or when participants submit their responses.
+
+> `HMSPollListener` should be implemented in the class wherever poll updates are required. It's essential to note that HMSPollListener follows the singleton pattern, meaning it can only be implemented in one class at a time.
+
+```dart
+class Meeting implements HMSUpdateListener, HMSPollListener{
+
+    @override
+    void onPollUpdate({required HMSPoll poll, required HMSPollUpdateType pollUpdateType}){
+
+        ///[poll] is the HMSPoll object containing info about poll.
+        ///[pollUpdateType] is an enum of type HMSPollUpdateType with type as started, stopped and resultsupdated
+    }
+}
+```
+
+Let's look at `HMSPollUpdateType` enum:
+
+```dart
+enum HMSPollUpdateType { 
+
+    ///Indicates that a poll has been initiated and is now active.
+    started,
+
+    ///Indicates that a poll has concluded and is no longer active.
+    stopped,
+
+    ///Indicates that new results or responses have been submitted for the poll.
+    resultsupdated
+}
+```
+
+## Creating a Poll
+
+### Quick Create
+
+Here is how to quickly create a poll using poll builder. 
+
+Let's consider an example. We'll create a single-choice poll with the title `Survey` and the question `Do you love Dart?` The poll will offer two options: `Yes` and `No`.
+
+```dart
+class Meeting extends HMSUpdateListener, HMSPollListener{
+
+    ...
+
+    ///Create objects for [HMSPollBuilder] and [HMSPollQuestionBuilder]
+    var pollBuilder = HMSPollBuilder();
+    var questionBuilder = HMSPollQuestionBuilder();
+
+    ///Set the poll title
+    pollBuilder.withTitle = "Survey";
+
+    ///Set the category
+    pollBuilder.withCategory = HMSPollCategory.poll;
+
+    ///Set the poll type to single choice
+    questionBuilder.withType = HMSPollQuestionType.singleChoice;
+
+    ///Set the poll question
+    questionBuilder.withText = "Do you love dart?";
+
+    ///Set poll options
+    questionBuilder.withOption = ["yes", "no"];
+
+    ///Add question to poll
+    pollBuilder.addQuestion(questionBuilder);
+
+    ///HMSPollInteractivityCenter is a singleton class containing poll methods
+    ///Here we call the quickStartPoll method
+    void createPoll(){
+        HMSPollInteractivityCenter.quickStartPoll(pollBuilder: pollBuilder);
+    }
+
+    ...
+
+
+
+    @override
+    void onPollUpdate({required HMSPoll poll, required HMSPollUpdateType pollUpdateType}){
+
+        ///We will get the update here with poll object and
+        ///pollUpdateType as HMSPollUpdateType.started
+
+    }
+
+}
+```
+
+After calling `quickStartPoll` method we will get `onPollUpdate` with `HMSPollUpdateType` as `started`.
+
+Above code will create a poll with a given title and a single choice question, and share it with the room. 
+
+## Voting on a Poll
+
+To participate in a poll, we can vote using `addSingleChoicePollResponse` or `addMultiChoicePollResponse` methods.
+As the name suggests `addSingleChoicePollResponse` can be used to vote for a single choice poll, while `addMultiChoicePollResponse` method 
+can be used to vote for a multi choice poll.
+
+Let's consider a example, A user wishes to answer `yes` to above poll.
+
+```dart
+class Meeting extends HMSUpdateListener, HMSPollListener{
+
+    ... 
+
+
+
+    void answerPoll(){
+
+        /**
+        * [poll] - The poll object obtained from `onPollUpdate`.
+        * [question] - The question being answered within the poll.
+        * [pollQuestionOption] - The selected option for the poll question, e.g., `yes`.
+        * [peer] - The participant answering the poll.
+        */
+        HMSPollInteractivityCenter.addSingleChoicePollResponse(
+        hmsPoll: poll,
+        pollQuestion: question,
+        optionSelected: pollQuestionOption,
+        peer: peer);        
+
+    }
+
+    ...
+
+    @override
+    void onPollUpdate({required HMSPoll poll, required HMSPollUpdateType pollUpdateType}){
+
+        ///We will get the update here with poll object and
+        ///pollUpdateType as HMSPollUpdateType.started
+
+    }
+
+}
+```
+
+Once you have submitted your responses, everyone in the room will get `resultsUpdated` update in `onPollUpdate` callback. 
+You can check updated vote counts for each option from the poll object.
+
+```dart
+class Meeting extends HMSUpdateListener, HMSPollListener{
+
+    ///List containing vote count for all the options for a question
+    List<int> voteCountForOptions = [];
+
+    @override
+    void onPollUpdate({required HMSPoll poll, required HMSPollUpdateType pollUpdateType}){
+        ///Here we are storing vote count for options from question 1 i.e. at 0th index
+        poll.questions[0].options.forEach((option) => voteCountForOptions.add(option.voteCount));
+    }
+
+}
+```
+
+## Stopping a Poll
+
+To stop a poll, HMSSDK provides `stopPoll` method.
+
+```dart
+class Meeting extends HMSUpdateListener, HMSPollListener{
+
+
+    void stopPoll(){
+        ///[poll] is the poll object from `onPollUpdate`
+        HMSPollInteractivityCenter.stopPoll(poll: poll);
+    }
+
+
+    @override
+    void onPollUpdate({required HMSPoll poll, required HMSPollUpdateType pollUpdateType}){
+        ///Get poll updates here
+    }
+
+}
+```
+
+After calling the `stopPoll` function, the `onPollUpdate` event is triggered with a type of `stopped`, indicating that the poll has been stopped.
+
+👀 For an example of how to implement polls in an Flutter app with the 100ms SDK, checkout [our example project](https://github.com/100mslive/100ms-flutter/tree/b59e555d3c254b8f292c57c3562f6973a461d4e9/packages/hms_room_kit/lib/src).
