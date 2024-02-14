@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
+import UtmLinkWrapper from './UtmLinkWrapper';
 import { useRouter } from 'next/router';
 import {
     CrossIcon,
@@ -207,7 +207,7 @@ const Header: React.FC<Props> = ({
                         Dashboard
                     </HeaderLink>
 
-                    <Link href={DiscordLink}>
+                    <UtmLinkWrapper href={DiscordLink}>
                         <a
                             target="_blank"
                             rel="noreferrer"
@@ -225,8 +225,8 @@ const Header: React.FC<Props> = ({
                                 />
                             </Text>
                         </a>
-                    </Link>
-                    <Link href={GitHubLink}>
+                    </UtmLinkWrapper>
+                    <UtmLinkWrapper href={GitHubLink}>
                         <a
                             target="_blank"
                             rel="noreferrer"
@@ -240,7 +240,7 @@ const Header: React.FC<Props> = ({
                                 <GithubIcon style={iconStyle} />
                             </Text>
                         </a>
-                    </Link>
+                    </UtmLinkWrapper>
                 </Flex>
                 <Flex
                     align="center"
