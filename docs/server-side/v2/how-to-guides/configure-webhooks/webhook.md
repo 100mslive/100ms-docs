@@ -8,6 +8,8 @@ nav: 4.3
 | [session.open.success](#sessionopensuccess), <br/> [session.close.success](#sessionclosesuccess)                                                                                       | Session                            | Triggered during the start and end of a session                                         |
 | [peer.join.success](#peerjoinsuccess),<br/> [peer.leave.success](#peerleavesuccess), <br/>[peer.join.failure](#peerjoinfailure),<br/> [peer.leave.failure](#peerleavefailure)          | Peer                               | Triggered when a peer join/leave succeeds/fails                                         |
 | [room.end.success](#roomendsuccess)                                                                                                                                                    | Room                               | Triggered when a room ends                                                              |
+| [track.recording.started.success](#trackrecordingstartedsuccess), <br/>[track.recording.success](#trackrecordingsuccess), <br/>[track.recording.failure](#trackrecordingfailure)       | Track Recording                    | Triggered during the start, end, and failure of a track recording                       |
+| [stream.recording.success](#streamrecordingsuccess), <br/>[stream.recording.failure](#streamrecordingfailure)                                                                          | Stream Recording                   | Triggered at the end of a stream recording                                              |
 | [recording.success](#recordingsuccess), <br/>[recording.failed](#recordingfailed)                                                                                                      | SFU Recording                      | Triggered at the end of a SFU recording                                                 |
 | [beam.started.success](#beamstartedsuccess),<br/> [beam.stopped.success](#beamstoppedsuccess),<br/> [beam.recording.success](#beamrecordingsuccess),<br/> [beam.failure](#beamfailure) | RTMP Streaming & Browser Recording | Triggered during the start, end, and failure of RTMP streaming and/or browser recording |
 | [hls.started.success](#hlsstartedsuccess),<br/> [hls.stopped.success](#hlsstoppedsuccess),<br/> [hls.recording.success](#hlsrecordingsuccess),<br/> [hls.failure](#hlsfailure)         | HLS Streaming Events               | Triggered during the start, end, and failure of HLS streaming and/or HLS recording      |
@@ -561,6 +563,229 @@ This event will be sent when the role change for a peer fails. For example:
         "session_started_at": "2021-11-30T12:48:49.97291247Z",
         "joined_at": "2021-11-30T12:58:49.97291247Z",
         "error_message": "role limit reached"
+    }
+}
+```
+
+## Track Recording Events
+
+### track.recording.started.success
+
+This event will be sent when individual track recording is started
+
+#### Attributes
+
+| Name                         | Type                 | Description                                                                                                                                                     |
+| :--------------------------- | :------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| room_id                      | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312dff                                                                                            |
+| session_id                   | `string`             | 100ms assigned id to identify the session <br/><br/> Example: 5f9edc6bd238215aec7700df                                                                          |
+| peer_id                      | `string`             | 100ms assigned id to identify the peer <br/><br/> Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4                                                                 |
+| stream_id                    | `string`             | ID of the stream to which this track belongs <br/><br/> Example: 5a09bf30-c076-469f-bfd4-15eb068366e8                                                           |
+| track_id                     | `string`             | ID of the track being recorded Example: 3c1e5e95-fdd1-49ba-bb08-66a0b7493b5b                                                                                    |
+| track_type                   | `string`             | Type of the track being recorded, either video or audio                                                                                                         |
+
+#### Sample `track.recording.started.success` event
+
+```json
+{
+    "version": "2.0",
+    "id": "********-****-****-****-***********",
+    "account_id": "************************",
+    "app_id": "************************",
+    "timestamp": "2024-02-06T20:01:16Z",
+    "type": "track.recording.started.success",
+    "data": {
+        "peer_id": "********-****-****-****-***********",
+        "room_id": "************************",
+        "session_id": "************************",
+        "stream_id": "********-****-****-****-***********",
+        "track_id": "********-****-****-****-***********",
+        "track_type": "video"
+    }
+}
+```
+
+### track.recording.success
+
+This event will be sent when individual track recording is completed
+
+#### Attributes
+
+| Name                         | Type                 | Description                                                                                                                                                     |
+| :--------------------------- | :------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| room_id                      | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312dff                                                                                            |
+| session_id                   | `string`             | 100ms assigned id to identify the session <br/><br/> Example: 5f9edc6bd238215aec7700df                                                                          |
+| peer_id                      | `string`             | 100ms assigned id to identify the peer <br/><br/> Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4                                                                 |
+| stream_id                    | `string`             | ID of the stream to which this track belongs <br/><br/> Example: 5a09bf30-c076-469f-bfd4-15eb068366e8                                                           |
+| track_id                     | `string`             | ID of the track being recorded Example: 3c1e5e95-fdd1-49ba-bb08-66a0b7493b5b                                                                                    |
+| track_type                   | `string`             | Type of the track being recorded, either video or audio                                                                                                         |
+| size                         | `string`             | Size of the track recording in bytes                                                                                                                            |
+| duration                     | `string`             | Duration of the track recording in seconds                                                                                                                      |
+| recording_id                 | `string`             | 100ms assigned id to the recording  <br/><br/> Example: 5ff5881b80b66969e1fb35f4                                                                                |
+| recording_path               | `string`             | Upload path of the recorded track <br/><br/> Example: <s3://bucket/prefix/ac.webm>                                                                              |
+| recording_presigned_url      | `string`             | Presigned URL for the recorded track <br/><br/> Example: <https://bucket/prefix/ac.webm>                                                                        |
+
+#### Sample `track.recording.success` event
+
+```json
+{
+    "version": "2.0",
+    "id": "********-****-****-****-***********",
+    "account_id": "************************",
+    "app_id": "************************",
+    "timestamp": "2024-02-06T20:01:16Z",
+    "type": "track.recording.success",
+    "data": {
+        "peer_id": "********-****-****-****-***********",
+        "room_id": "************************",
+        "session_id": "************************",
+        "stream_id": "********-****-****-****-***********",
+        "track_id": "********-****-****-****-***********",
+        "track_type": "video",
+        "size": 22989889,
+        "recording_id": "************************",
+        "recording_path": "s3://brytecam-test-bucket-ap-south-1/635a1bab4208780bf666d344/20240212/65ca3a7518fa0be86c3128fc/d9d79d75-3451-4841-a65e-843b514ee242/3dd73a86-d02a-48a7-9abb-be24cecda731/3dd73a86-d02a-48a7-9abb-be24cecda731.mp4",
+        "recording_presigned_url": "https://brytecam-test-bucket-ap-south-1.s3.ap-south-1.amazonaws.com/635a1bab4208780bf666d344/20240212/65ca3a7518fa0be86c3128fc/d9d79d75-3451-4841-a65e-843b514ee242/3dd73a86-d02a-48a7-9abb-be24cecda731/3dd73a86-d02a-48a7-9abb-be24cecda731.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA5QK5MFS4SMZONBH4%2F20240212%2Fap-south-1%2Fs3%2Faws4_request&X-Amz-Date=20240212T153955Z&X-Amz-Expires=259200&X-Amz-SignedHeaders=host&x-id=GetObject&X-Amz-Signature=0091ad642a3ed2994215cdd006a4b9ba6668ac27a1f4445a388e16f20fe37440",
+    }
+}
+```
+
+### track.recording.failure
+
+This event will be sent if an individual track recording fails
+
+#### Attributes
+
+| Name                         | Type                 | Description                                                                                                                                                     |
+| :--------------------------- | :------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| room_id                      | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312dff                                                                                            |
+| session_id                   | `string`             | 100ms assigned id to identify the session <br/><br/> Example: 5f9edc6bd238215aec7700df                                                                          |
+| peer_id                      | `string`             | 100ms assigned id to identify the peer <br/><br/> Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4                                                                 |
+| stream_id                    | `string`             | ID of the stream to which this track belongs <br/><br/> Example: 5a09bf30-c076-469f-bfd4-15eb068366e8                                                           |
+| track_id                     | `string`             | ID of the track being recorded Example: 3c1e5e95-fdd1-49ba-bb08-66a0b7493b5b                                                                                    |
+| track_type                   | `string`             | Type of the track being recorded, either video or audio                                                                                                         |
+| size                         | `string`             | Size of the track recording in bytes                                                                                                                            |
+| duration                     | `string`             | Duration of the track recording in seconds                                                                                                                      |
+| recording_id                 | `string`             | 100ms assigned id to the recording  <br/><br/> Example: 5ff5881b80b66969e1fb35f4                                                                                |
+| recording_path               | `string`             | Upload path of the recorded track <br/><br/> Example: <s3://bucket/prefix/ac.webm>                                                                              |
+| error_message                | `string`             | Error message indicating the reason for failure                                                                                                                 |
+
+#### Sample `track.recording.failure` event
+
+```json
+{
+    "version": "2.0",
+    "id": "********-****-****-****-***********",
+    "account_id": "************************",
+    "app_id": "************************",
+    "timestamp": "2024-02-06T20:01:16Z",
+    "type": "track.recording.success",
+    "data": {
+        "peer_id": "********-****-****-****-***********",
+        "room_id": "************************",
+        "session_id": "************************",
+        "stream_id": "********-****-****-****-***********",
+        "track_id": "********-****-****-****-***********",
+        "track_type": "video",
+        "size": 22989889,
+        "recording_id": "************************",
+        "recording_path": "s3://bucket/prefix/ac.webm",
+        "error_message": "INTERNAL_ERROR"
+    }
+}
+```
+
+## Stream Recording Events
+
+### stream.recording.success
+
+This event will be sent when individual stream recording is completed
+
+#### Attributes
+
+| Name                         | Type                 | Description                                                                                                                                                     |
+| :--------------------------- | :------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| room_id                      | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312dff                                                                                            |
+| session_id                   | `string`             | 100ms assigned id to identify the session <br/><br/> Example: 5f9edc6bd238215aec7700df                                                                          |
+| peer_id                      | `string`             | 100ms assigned id to identify the peer <br/><br/> Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4                                                                 |
+| stream_id                    | `string`             | ID of the stream to which this track belongs <br/><br/> Example: 5a09bf30-c076-469f-bfd4-15eb068366e8                                                           |
+| user_id                      | `string`             | User id assigned by the customer <br/><br/> Example: user.001                                                                                                   |
+| size                         | `string`             | Size of the track recording in bytes                                                                                                                            |
+| duration                     | `string`             | Duration of the track recording in seconds                                                                                                                      |
+| recording_id                 | `string`             | 100ms assigned id to the recording  <br/><br/> Example: 5ff5881b80b66969e1fb35f4                                                                                |
+| recording_path               | `string`             | Upload path of the recorded track <br/><br/> Example: <s3://bucket/prefix/ac.webm>                                                                              |
+| recording_presigned_url      | `string`             | Presigned URL for the recorded track <br/><br/> Example: <https://bucket/prefix/ac.webm>                                                                        |
+| stream_type                  | `string`             | Type of the stream, regular, screen or audio                                                                                                                    |
+
+#### Sample `stream.recording.success` event
+
+```json
+{
+    "version": "2.0",
+    "id": "********-****-****-****-***********",
+    "account_id": "************************",
+    "app_id": "************************",
+    "timestamp": "2024-02-12T15:39:55Z",
+    "type": "stream.recording.success",
+    "data": {
+        "duration": 185,
+        "peer_id": "********-****-****-****-***********",
+        "recording_id": "************************",
+        "recording_path": "s3://brytecam-test-bucket-ap-south-1/635a1bab4208780bf666d344/20240212/65ca3a7518fa0be86c3128fc/d9d79d75-3451-4841-a65e-843b514ee242/3dd73a86-d02a-48a7-9abb-be24cecda731/3dd73a86-d02a-48a7-9abb-be24cecda731.mp4",
+        "recording_presigned_url": "https://brytecam-test-bucket-ap-south-1.s3.ap-south-1.amazonaws.com/635a1bab4208780bf666d344/20240212/65ca3a7518fa0be86c3128fc/d9d79d75-3451-4841-a65e-843b514ee242/3dd73a86-d02a-48a7-9abb-be24cecda731/3dd73a86-d02a-48a7-9abb-be24cecda731.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA5QK5MFS4SMZONBH4%2F20240212%2Fap-south-1%2Fs3%2Faws4_request&X-Amz-Date=20240212T153955Z&X-Amz-Expires=259200&X-Amz-SignedHeaders=host&x-id=GetObject&X-Amz-Signature=0091ad642a3ed2994215cdd006a4b9ba6668ac27a1f4445a388e16f20fe37440",
+        "room_id": "************************",
+        "session_id": "************************",
+        "size": 22989889,
+        "stream_id": "********-****-****-****-***********",
+        "type": "regular",
+        "user_id": "********-****-****-****-***********"
+    }
+}
+```
+
+### stream.recording.failure
+
+This event will be sent when individual stream recording fails
+
+#### Attributes
+
+| Name                         | Type                 | Description                                                                                                                                                     |
+| :--------------------------- | :------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| room_id                      | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312dff                                                                                            |
+| session_id                   | `string`             | 100ms assigned id to identify the session <br/><br/> Example: 5f9edc6bd238215aec7700df                                                                          |
+| peer_id                      | `string`             | 100ms assigned id to identify the peer <br/><br/> Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4                                                                 |
+| stream_id                    | `string`             | ID of the stream to which this track belongs <br/><br/> Example: 5a09bf30-c076-469f-bfd4-15eb068366e8                                                           |
+| user_id                      | `string`             | User id assigned by the customer <br/><br/> Example: user.001                                                                                                   |
+| size                         | `string`             | Size of the track recording in bytes                                                                                                                            |
+| duration                     | `string`             | Duration of the track recording in seconds                                                                                                                      |
+| recording_id                 | `string`             | 100ms assigned id to the recording  <br/><br/> Example: 5ff5881b80b66969e1fb35f4                                                                                |
+| recording_path               | `string`             | Upload path of the recorded track <br/><br/> Example: <s3://bucket/prefix/ac.webm>                                                                              |
+| stream_type                  | `string`             | Type of the stream, regular, screen or audio                                                                                                                    |
+| error_message                | `string`             | Error message indicating the reason for failure                                                                                                                 |
+
+#### Sample `stream.recording.failure` event
+
+```json
+{
+    "version": "2.0",
+    "id": "********-****-****-****-***********",
+    "account_id": "************************",
+    "app_id": "************************",
+    "timestamp": "2024-02-12T15:39:55Z",
+    "type": "stream.recording.success",
+    "data": {
+        "duration": 185,
+        "peer_id": "********-****-****-****-***********",
+        "recording_id": "************************",
+        "recording_path": "s3://brytecam-test-bucket-ap-south-1/635a1bab4208780bf666d344/20240212/65ca3a7518fa0be86c3128fc/d9d79d75-3451-4841-a65e-843b514ee242/3dd73a86-d02a-48a7-9abb-be24cecda731/3dd73a86-d02a-48a7-9abb-be24cecda731.mp4",
+        "recording_presigned_url": "https://brytecam-test-bucket-ap-south-1.s3.ap-south-1.amazonaws.com/635a1bab4208780bf666d344/20240212/65ca3a7518fa0be86c3128fc/d9d79d75-3451-4841-a65e-843b514ee242/3dd73a86-d02a-48a7-9abb-be24cecda731/3dd73a86-d02a-48a7-9abb-be24cecda731.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA5QK5MFS4SMZONBH4%2F20240212%2Fap-south-1%2Fs3%2Faws4_request&X-Amz-Date=20240212T153955Z&X-Amz-Expires=259200&X-Amz-SignedHeaders=host&x-id=GetObject&X-Amz-Signature=0091ad642a3ed2994215cdd006a4b9ba6668ac27a1f4445a388e16f20fe37440",
+        "room_id": "************************",
+        "session_id": "************************",
+        "size": 22989889,
+        "stream_id": "********-****-****-****-***********",
+        "type": "regular",
+        "user_id": "********-****-****-****-***********",
+        "error_message": "INTERNAL_ERROR"
     }
 }
 ```
