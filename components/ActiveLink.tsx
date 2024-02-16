@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
-import Link, { LinkProps } from 'next/link';
+import { LinkProps } from 'next/link';
 import React, { useState, useEffect } from 'react';
+import UtmLinkWrapper from './UtmLinkWrapper';
 
 export type ActiveLinkProps = LinkProps & {
     className?: string;
@@ -66,11 +67,11 @@ const ActiveLink = ({
     }, [asPath, isReady, props.as, props.href, activeClassName, className, computedClassName]);
 
     return (
-        <Link {...props}>
+        <UtmLinkWrapper {...props}>
             <a rel="noreferrer" target={props?.target || '_self'} onClick={onClick}>
                 {children(computedClassName ?? '')}
             </a>
-        </Link>
+        </UtmLinkWrapper>
     );
 };
 

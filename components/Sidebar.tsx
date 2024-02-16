@@ -1,7 +1,7 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/router';
-import Link from 'next/link';
+import UtmLinkWrapper from './UtmLinkWrapper';
 import FlutterIcon from '@/assets/FlutterIcon';
 import AndroidIcon from '@/assets/icons/AndroidIcon';
 import IosIcon from '@/assets/icons/IosIcon';
@@ -20,7 +20,8 @@ import {
     JavascriptIcon as JavaScript,
     RocketIcon,
     PlayIcon,
-    SearchIcon
+    SearchIcon,
+    BrushDesignIcon
 } from '@100mslive/react-icons';
 import { Listbox } from '@headlessui/react';
 import { Flex, Box, Text, CSS } from '@100mslive/react-ui';
@@ -81,6 +82,7 @@ const Sidebar: React.FC<Props> = ({
     const [renderComponents, setRenderComponents] = useState(false);
     const [openPlatformAccordion, setOpenPlatformAccordion] = useState(platformlist[0]);
     const [helperState, setHelperState] = useState(0);
+    const slugsToHideInPlatformSelector = ['get-started', 'prebuilt'];
 
     useEffect(() => {
         if (escPressed) {
@@ -129,7 +131,7 @@ const Sidebar: React.FC<Props> = ({
         }
     } else nav = false;
 
-    const showPlatformSelector = slug?.[0] !== 'get-started';
+    const showPlatformSelector = !slugsToHideInPlatformSelector.includes(slug?.[0]);
 
     let indexOf = menuItem.findIndex((e) => e.key === slug?.[0]);
     if (slug?.[0] === 'api-reference') indexOf = menuItem.findIndex((e) => e.key === slug?.[1]);
@@ -216,7 +218,7 @@ const Sidebar: React.FC<Props> = ({
                             mb: '$8',
                             cursor: 'pointer',
                             '@md': {
-                                pt: '90px'
+                                pt: '65px'
                             }
                         }}
                         onClick={() => setShowBaseView(false)}>
@@ -237,16 +239,31 @@ const Sidebar: React.FC<Props> = ({
                     }}>
                     <DocsSearchBar setHelperState={setHelperState} />
                 </Box>
-                <Link passHref href="/get-started/v2/get-started/overview">
+                <UtmLinkWrapper passHref href="/get-started/v2/get-started/overview">
                     <Flex as="a" gap="2" align="center" css={{ color: '$primaryLight' }}>
                         <PlayIcon style={{ color: 'inherit' }} />
                         <Text as="span" css={{ fontWeight: '$semiBold', color: '$textHighEmp' }}>
                             Get started
                         </Text>
                     </Flex>
-                </Link>
+                </UtmLinkWrapper>
+                <UtmLinkWrapper passHref href="/prebuilt/v2/prebuilt/overview">
+                    <Flex
+                        as="a"
+                        gap="2"
+                        align="center"
+                        css={{
+                            color: '$primaryLight',
+                            mt: '$10'
+                        }}>
+                        <BrushDesignIcon style={{ color: 'inherit' }} />
+                        <Text as="span" css={{ fontWeight: '$semiBold', color: '$textHighEmp' }}>
+                            Prebuilt
+                        </Text>
+                    </Flex>
+                </UtmLinkWrapper>
 
-                <Link passHref href="/examples">
+                <UtmLinkWrapper passHref href="/examples">
                     <Flex
                         as="a"
                         gap="2"
@@ -262,7 +279,7 @@ const Sidebar: React.FC<Props> = ({
                             Examples
                         </Text>
                     </Flex>
-                </Link>
+                </UtmLinkWrapper>
 
                 <hr style={{ margin: '24px 0' }} />
 

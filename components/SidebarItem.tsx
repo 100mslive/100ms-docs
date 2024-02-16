@@ -1,13 +1,14 @@
 import React from 'react';
-import Link from 'next/link';
+import UtmLinkWrapper from './UtmLinkWrapper';
 import { MinusIcon } from '@100mslive/react-icons';
 
 const SidebarItem = ({ route, index, asPath, activeItem }) => {
     const isActive = asPath.split('#')[0] === route.url;
 
     return (
-        <Link prefetch={false} href={route.url || ''} key={`${route.url}-${index}`}>
-            <a className='opaque-link'
+        <UtmLinkWrapper prefetch={false} href={route.url || ''} key={`${route.url}-${index}`}>
+            <a
+                className="opaque-link"
                 ref={isActive ? activeItem : null}
                 style={{
                     cursor: 'pointer',
@@ -34,7 +35,7 @@ const SidebarItem = ({ route, index, asPath, activeItem }) => {
                 />
                 {route.title}
             </a>
-        </Link>
+        </UtmLinkWrapper>
     );
 };
 

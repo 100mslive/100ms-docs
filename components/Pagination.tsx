@@ -1,6 +1,6 @@
 import { PaginationType } from '@/lib/getPagination';
 import React from 'react';
-import Link from 'next/link';
+import UtmLinkWrapper from './UtmLinkWrapper';
 
 interface Props {
     prev: PaginationType;
@@ -8,7 +8,7 @@ interface Props {
 }
 
 const PrevIcon = () => (
-    <svg style={{marginTop: "0.5px"}} viewBox="0 0 24 24" width="24" height="24">
+    <svg style={{ marginTop: '0.5px' }} viewBox="0 0 24 24" width="24" height="24">
         <g fill="var(--primary_light)">
             <path
                 fill="var(--primary_light)"
@@ -19,7 +19,7 @@ const PrevIcon = () => (
 );
 
 const NextIcon = () => (
-    <svg style={{marginTop: "0.5px"}} width="24" height="24" viewBox="0 0 24 24">
+    <svg style={{ marginTop: '0.5px' }} width="24" height="24" viewBox="0 0 24 24">
         <g fill="var(--primary_light)">
             <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
         </g>
@@ -28,19 +28,19 @@ const NextIcon = () => (
 
 const Pagination: React.FC<Props> = ({ prev, next }) => (
     <div className="pag-ctx">
-        <Link href={prev.url}>
+        <UtmLinkWrapper href={prev.url}>
             <a>
                 <PrevIcon />
                 {prev.title}
             </a>
-        </Link>
+        </UtmLinkWrapper>
         {next !== null ? (
-            <Link href={next.url}>
+            <UtmLinkWrapper href={next.url}>
                 <a>
                     {next.title}
                     <NextIcon />
                 </a>
-            </Link>
+            </UtmLinkWrapper>
         ) : null}
 
         <style jsx>{`

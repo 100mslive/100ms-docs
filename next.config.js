@@ -1541,6 +1541,11 @@ const nextConfig = {
                 source: '/javascript/v2/quickstart/react-sample-app/embed-with-iframe',
                 destination: '/javascript/v2/quickstart/embed-with-iframe',
                 permanent: true
+            },
+            {
+                source: '/get-started/v2/get-started/prebuilt/:path*',
+                destination: '/prebuilt/v2/prebuilt/:path*',
+                permanent: true
             }
         ];
     },
