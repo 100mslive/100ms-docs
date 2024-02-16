@@ -4,6 +4,7 @@ nav: 6
 ---
 
 This is a guide to enable 100ms **post call transcription** with **speaker labels** and **AI-generated summary**. The feature is currently in `Beta`.
+In case you're looking to enable **live transcription**, refer to this [documentation](/server-side/v2/how-to-guides/live-transcription-hls).
 
 <StepsToc
     parentId="transcription-flow"
@@ -19,10 +20,7 @@ This is a guide to enable 100ms **post call transcription** with **speaker label
 
 ### Getting Started
 
-Since recording is a pre-requisite to having the transcript, you will need to start the recording either through the SDK during the session,
-    or through the [Recording API](/server-side/v2/api-reference/recordings/start-recording-for-room) or
-    [Live Stream API](/server-side/v2/api-reference/live-streams/start-live-stream-for-room) with recording configured.
-    You can use auto-start in Recordings to auto-transcribe all room sessions condition to transcription being enabled.
+Since recording is a pre-requisite to having the transcript, you will need to start the recording either through the SDK during the session, or through the [Recording API](/server-side/v2/api-reference/recordings/start-recording-for-room) or [Live Stream API](/server-side/v2/api-reference/live-streams/start-live-stream-for-room) with recording configured. You can use auto-start in Recordings to auto-transcribe all room sessions condition to transcription being enabled.
 
 ![Flow](/docs/v2/transcription-flow.png)
 The above flowchart shows the entire workflow of transcript and summary generation and their consumption. 
@@ -38,25 +36,29 @@ You can enable transcription for all the rooms under a particular template.
 
 1. Access an existing template via the sidebar.
 2. Navigate to the `Transcription (Beta)` tab in the template configuration.
-3. Enable the `Transcribe Recordings` toggle. This will also enable the `Room Composite Recording` (if not already enabled) under the `Recording` tab.
-4. Enable the `Summarise Transcripts` toggle. This will take the default settings for summary.
-5. Save the configuration.
-6. Join a room to initiate a session. Start recording (or live stream with recording enabled) using the SDK or API.
-    If it's your first time joining a 100ms room, you'll find the option to `Start Recording` in the created room. For more information on creating room templates, refer to [this documentation](/server-side/v2/api-reference/policy/create-template-via-dashboard).
+3. In the second card which says `Post Call Transcription`, enable the `Transcribe Recordings` toggle.
+4. Enabling `Post Call Transcription` will expose an extra configuration called `Output Modes` just below the toggle. File format of the transcript output can be set using this. Following file formats are offered:
+    - Text (.txt)
+    - Subtitle (.srt)
+    - Structured (.json)
+  The example output for the above can be seen [here](#example-output-files).
 
+5. In the same card, enable the `Summarise Transcripts` toggle. This will take the default settings for summary.
+6. Save the configuration.
+7. Join a room to initiate a session. Start recording (or live stream with recording enabled) using the SDK or API. If it's your first time joining a 100ms room, you'll find the option to `Start Recording` in the created room. For more information on creating room templates, refer to [this documentation](/server-side/v2/api-reference/policy/create-template-via-dashboard).
 
-![](/docs/v2/transcription-dashboard-config.gif)
-
+<video loop="true" autoplay="autoPlay" controls="false" id="vid" muted>
+    <source src="/docs/docs/v2/transcription-dashboard-config.mov" type="video/mp4" />
+</video>
 
 **Advanced Transcription Settings**
 
-When you enable the `Transcribe Recordings` toggle, you will observe an accordion with `Advanced Transcription Settings`.
+When you enable the `Transcribe Recordings` toggle, you will observe an new card pop up below with `Advanced Transcription Configuration` as its heading. This will contain advanced settings which will be applicable for both `Live Transcription (HLS)` as well as `Post Call Transcription`.
 
 ![Advanced settings](/docs/v2/advanced-transcription-settings.png)
 
-- `Roles to be Transcribed`: Selection is currently disabled. It reflects the same role as set in *Room Composite Recording* configurations as transcription is supported only with recording. To transcribe other roles, update *Roles to be Recorded* in *Room Composite Recording* under the *Recording* tab.
 - `Custom Vocabulary`: Add non-dictionary words which are expected to be spoken to enhance recognition. Useful for names, abbreviations, slang, technical jargon, and more.
-
+- `Language`: Configure the primary spoken language that has to be transcribed. This will hint the AI model to perform transcription more accurately.  Currently, only **English** is supported, which is the default. Support for more languages will follow soon.
 
 > **Note - Dashboard Implementation Default Values**
 >
@@ -65,6 +67,7 @@ When you enable the `Transcribe Recordings` toggle, you will observe an accordio
 > ``` json
 >{
 >  "transcription": {
+>    "modes": ["recorded"],
 >    "outputModes": ["txt", "srt","json"],
 >    "customVocabulary": [],
 >    "summary": {
@@ -285,7 +288,52 @@ You can always use 100ms’ Recording Assets API to access the transcripts and s
 ## Limitations
 
 1. The transcription and summary won't be available immediately. The processing and delivery will take a minimum of 5 minutes and 20% of the recording duration to be generated.
-2. This feature does not work with SFU Recordings.
+2. This feature does not work with SFU Recordings (`room-composite-legacy`).
 3. Presently, you can only input a maximum of 6 sections in the summary through the API.
 4. There are chances of incomplete summary generation in case of recordings which are longer than 90 minutes.
 5. This feature only supports the **English** language as of now.
+
+
+### Frequently Asked Questions (FAQs)
+
+
+1. **How many languages are supported?**
+    
+  Presently, only English language is supported. But support for other popular languages like French, Portuguese, Spanish and more is coming soon.
+
+2. **What happens if multiple languages are being spoken in the live stream?**
+    
+  The bits which are spoken in the selected language will be transcribed. There might be some gibberish text though due to hallucinations by the AI.
+
+3. **Can multiple summaries be generated or re-generated with different prompts for the same transcript?**
+
+  This is not possible at this point of time. But we intend to bring the functionality of re-running transcription and summarization functions to enable users to test and build their own summaries.
+
+4. **What can be done if the speaker label is not working?**
+    
+  There are two possible options here:
+  1. If you are using an older webSDK version, please update to the latest. Refer to our web documentation [here](/javascript/v2/release-notes/release-notes).
+  2. Add the following snippet to enable speaker logging.
+      - Create a new file `src/components/AudioLevel/BeamSpeakerLabelsLogging.jsx` containing the following code snippet. 
+      ```jsx
+      import { useEffect } from "react";
+      import { useHMSActions } from "@100mslive/react-sdk";
+      import { useIsHeadless } from "../AppData/useUISettings";
+
+      export function BeamSpeakerLabelsLogging() {
+        const hmsActions = useHMSActions();
+        const isHeadless = useIsHeadless();
+
+        useEffect(() => {
+          if (isHeadless) {
+            hmsActions.enableBeamSpeakerLabelsLogging();
+          }
+        }, [hmsActions, isHeadless]);
+        return null;
+      }
+      ```
+      - Register `<BeamSpeakerLabelsLogging />` in Approutes along with import statement <br/>
+      `import { BeamSpeakerLabelsLogging } from "./components/AudioLevel/BeamSpeakerLabelsLogging";`
+
+
+

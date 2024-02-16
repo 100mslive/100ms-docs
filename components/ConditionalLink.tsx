@@ -1,5 +1,5 @@
 import React from 'react';
-import Link from 'next/link';
+import UtmLinkWrapper from './UtmLinkWrapper';
 import { UrlObject } from 'url';
 
 interface Props {
@@ -12,7 +12,7 @@ const ConditionalLink: React.FC<Props> = ({ children, link }) => {
     return url === `/docs${link}` || link === '' ? (
         <>{children}</>
     ) : (
-        <Link href={link as unknown as UrlObject}>{children}</Link>
+        <UtmLinkWrapper href={link as unknown as UrlObject}>{children}</UtmLinkWrapper>
     );
 };
 

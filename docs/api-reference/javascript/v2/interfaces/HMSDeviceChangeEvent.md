@@ -1,6 +1,6 @@
 ---
 title: HMSDeviceChangeEvent
-nav: '4.15'
+nav: '4.16'
 ---
 
 Test fails when adding InputDeviceInfo[error TS2304: Cannot find name 'InputDeviceInfo'.]
@@ -11,7 +11,7 @@ So, `selection?: MediaDeviceInfo` instead of `selection?: InputDeviceInfo | Medi
 
 ### devices
 
-• **devices**: [`DeviceMap`](/api-reference/javascript/v2/interfaces/DeviceMap)
+• `Optional` **devices**: [`DeviceMap`](/api-reference/javascript/v2/interfaces/DeviceMap)
 
 ---
 
@@ -23,7 +23,7 @@ So, `selection?: MediaDeviceInfo` instead of `selection?: InputDeviceInfo | Medi
 
 ### selection
 
-• `Optional` **selection**: `MediaDeviceInfo`
+• `Optional` **selection**: `Partial`<`MediaDeviceInfo`\>
 
 ---
 

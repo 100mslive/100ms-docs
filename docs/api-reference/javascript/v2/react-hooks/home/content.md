@@ -594,3 +594,27 @@ Please check the documentation of input and output types for more details.
 #### Returns
 
 [`useVideoResult`](/api-reference/javascript/v2/react-hooks/interfaces/useVideoResult)
+
+---
+
+### useWhiteboard
+
+▸ **useWhiteboard**(`isMobile?`): `Object`
+
+#### Parameters
+
+| Name       | Type      | Default value |
+| :--------- | :-------- | :------------ |
+| `isMobile` | `boolean` | `false`       |
+
+#### Returns
+
+`Object`
+
+| Name        | Type                                               |
+| :---------- | :------------------------------------------------- |
+| `iframeRef` | `MutableRefObject`<`null` \| `HTMLIFrameElement`\> |
+| `isAdmin`   | `boolean`                                          |
+| `isOwner`   | `boolean`                                          |
+| `open`      | `boolean`                                          |
+| `toggle`    | `undefined` \| () => `Promise`<`void`\>            |

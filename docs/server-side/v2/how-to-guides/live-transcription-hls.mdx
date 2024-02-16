@@ -1,0 +1,213 @@
+---
+title: Live Transcription in Live Streams (HLS)
+nav: 9
+---
+
+This is a guide to enable live transcription for your live streams. This feature is currently in Beta.
+
+<StepsToc
+    parentId="live-transcription-flow"
+    descriptions={[
+        "Understanding how 100ms' live transcription works and its pre-requisites.",
+        'Enabling and configuring live transcription through various methods.',
+        "Accessing and consuming the generated output.",
+        "Understanding the generated output files."
+    ]}
+/>
+
+<StepsContainer id="live-transcription-flow">
+
+
+### Getting Started
+100ms is excited to offer auto-generated live transcription in English. The following flowchart illustrates the entire workflow of 100ms live transcription.
+
+![create template](/docs/v2/live-transcription-workflow.png)
+
+<Note type='warning'>
+   Note that the live transcription is only supported for the live streams' audience (consuming via HLS). It doesn’t appear for the webRTC viewers. 
+</Note>
+
+
+### Enabling and Configuring Live Transcription
+
+
+<Tabs id="implementation" items={['Dashboard', 'Live Stream API']}/>
+<Tab id='implementation-0'>
+
+
+#### Creating a new template
+1. On the 100ms Dashboard, click on ‘Create Template’.
+
+![create template](/docs/v2/create-a-template.png)
+
+2. Select ‘Live Streaming’ as your use-case and click on ‘Configure’.
+
+![select live streaming](/docs/v2/rtmp-ingestion/rtmp-in-create-template-1.png)
+
+3. Configure the template by answering the set of questions on the first screen and click 'Select Add-ons'.
+
+4. Select 'Yes' to the question 'Do you require live transcription for your live streams?'.
+![select yes to live transcription](/docs/v2/create-template-live-transcription-question.png)
+
+5. Deploy the template and proceed further. On the final screen, use the different roles available to experience the 
+
+Read up more on the live streaming experience [here](/get-started/v2/get-started/features/live-streaming).
+
+
+
+#### Editing an existing template
+1. Go to the template configuration
+    
+2. Click on ‘Transcription (Beta)’ tab.
+
+3. Enable ‘Live Transcription’ toggle.
+
+![enable live transcription](/docs/v2/live-transcription-enable-toggle.png)
+
+</Tab>
+
+
+<Tab id='implementation-1'>
+You can refer to our [Live Streaming API documentation](/server-side/v2/api-reference/live-streams/start-live-stream-for-room) to start recording.
+
+1. You are required to mark the transcription `enabled` flag in the request as `true` and select `live` in `modes`to transcribe.
+2. You can override the live transcription settings given in the template when starting the live stream through the Live Stream API.
+3. If no transcription input is given within the API request, the API will pick up the transcription configuration from the template policy / configuration by default when starting the live stream.
+
+
+</Tab>
+
+Live stream can be started using the Live Streaming REST API, 100ms SDK or through 100ms Prebuilt.
+
+
+#### Advanced Configuration
+
+There are two advanced configuration that are currently offered.
+
+1. **Custom Vocabulary**: Add non-dictionary words like names, abbreviations, slang, and technical jargon which may not be recognised by the AI model for better transcription accuracy.
+2. **Language:** Configure the primary spoken language that has to be transcribed. This will hint the AI model to perform transcription more accurately.  Currently, only **English** is supported, which is the default. Support for more languages will follow soon.
+
+![advanced transcription config](/docs/v2/advanced-transcription-config.png)
+
+
+### Consumption
+
+#### Prebuilt
+Our Prebuilt player on web supports HLS with live transcription out of the box. It allows the functionality of enabling and disabling this feature using the `CC` button on the player.
+
+<video loop="true" autoplay="autoPlay" controls="false" id="vid" muted>
+    <source src="/docs/docs/v2/cc-on-hls-player-web.mp4" type="video/mp4" />
+</video>
+
+Learn more about live streaming [here](/get-started/v2/get-started/features/live-streaming) and get started with integrating Prebuilt using [this](/get-started/v2/get-started/prebuilt/overview).
+
+#### Within your player
+
+The transcript `.vtt` files are delivered as part of the HLS manifest itself. If a HLS compatible player is used, it should support closed captioning by default.
+
+All that is required is to input the URL to the master manifest into a compatible HLS player.
+
+The functionality of turning live transcription on or off for the user should be supported by the player itself.
+
+
+### Example Output
+
+The captions are generated in the `webvtt` format and are plugged in the HLS manifest itself. 
+
+#### Master manifest (master.m3u8)
+Following is the format of the master manifest file for HLS. 
+```
+#EXTM3U
+#EXT-X-VERSION:6
+#EXT-X-MEDIA:TYPE=SUBTITLES,GROUP-ID="subs",LANGUAGE="en-US",NAME="English CC (auto)",AUTOSELECT=YES,DEFAULT=YES,URI="subtitles/subtitles.m3u8",FORCED=NO,CHARACTERISTICS="public.accessibility.transcribes-spoken-dialog"
+#EXT-X-STREAM-INF:RESOLUTION=1280x720,BANDWIDTH=1720400,FRAME-RATE=20.000,SUBTITLES="subs"
+stream_0/stream.m3u8
+#EXT-X-STREAM-INF:RESOLUTION=854x480,BANDWIDTH=1005400,FRAME-RATE=20.000,SUBTITLES="subs"
+stream_1/stream.m3u8
+#EXT-X-STREAM-INF:RESOLUTION=640x360,BANDWIDTH=620400,FRAME-RATE=20.000,SUBTITLES="subs"
+stream_2/stream.m3u8
+```
+
+#### Subtitles manifest
+Following is the format of the manifest file for subtitles. 
+```
+#EXTM3U
+#EXT-X-VERSION:6
+#EXT-X-MEDIA-SEQUENCE:428
+#EXT-X-ALLOW-CACHE:NO
+#EXT-X-TARGETDURATION:2
+#EXTINF:2,
+output00001.vtt
+#EXTINF:2,
+output00002.vtt
+#EXTINF:2,
+output00003.vtt
+#EXTINF:2,
+output00004.vtt
+#EXTINF:2,
+output00005.vtt
+```
+
+#### `Webvtt` file format
+
+```
+WEBVTT
+X-TIMESTAMP-MAP=LOCAL:00:00:00.000,MPEGTS:0
+
+00:00:00.000 --> 00:00:01.022 position:50.00% size:80.00% align:middle
+If you if you're
+
+00:00:01.022 --> 00:00:02.000 position:50.00% size:80.00% align:middle
+If you if you are at some event here and you shoot the light ray,
+
+00:00:02.000 --> 00:00:03.065 position:50.00% size:80.00% align:middle
+If you if you are at some event here and you shoot the light ray,
+```
+
+</StepsContainer>
+
+
+### Frequently Asked Questions (FAQ)
+
+
+1. **Do live captions work within 100ms conferencing rooms (WebRTC based)?**
+    
+    Currently, live transcription is only supported within our HLS streams. 
+    
+2. **How many languages are supported?**
+    
+    Presently, only English language is supported. But support for other popular languages like French, Portuguese, Spanish and more is coming soon.
+    
+3. **Is live translation also supported?**
+    
+    Live translation is not supported right now.
+    
+4. **What happens if multiple languages are being spoken in the live stream?**
+    
+    The bits which are spoken in the selected language will be transcribed. There might be a few hallucinations though.
+    
+5. **When can I edit my live transcription configuration?**
+    
+    Live transcription configuration can be edited either on the room template, or at the start of a live stream.
+    
+6. **What all players are supported?**
+    
+    Almost all HLS players will support `webvtt` based transcripts. We have internally tested with hls.js, AV Player, Avo player and Exoplayer.
+    
+7. **Do you support speaker labels with the live transcription?**
+    
+    No, we don’t support speaker labels in live transcription. We do offer speaker labelled transcription when the recording is transcribed post call. Refer to [this documentation](/server-side/v2/how-to-guides/enable-transcription-and-summary) for more details on post call transcription (with speaker labels) and AI-generated summaries.
+
+8. **Does RTMP-ingested media support live transcription?**
+    
+    Yes, live streams where the media source is RTMP-in supports live transcription.
+
+8. **What is the expected latency or delay in generation of the transcript?**
+    
+    This will be between 500 ms to 1 s. 
+
+9. **Is this a paid feature?**
+    
+    Yes, live transcription is a paid feature. We offer 300 free minutes of live transcription in live streams per month. You can check your monthly usage on the dashboard in 'Usage Overview' section. Additionally, check out the pricing [here](https://www.100ms.live/pricing).
+    
+

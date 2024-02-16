@@ -1,0 +1,335 @@
+---
+title: Migration for Android
+nav: 8.4
+---
+import AndroidSdkVersionShield from '@/common/android-sdk-version-shield.md';
+
+This guide is designed to assist developers in migrating their video conferencing applications from Twilio's Programmable Video SDK to the 100ms Video SDK on Android.
+
+Before we get started here, you are required to create an account on 100ms. 
+
+Learn more about the fundamental differences and parities between 100ms and Twilio Programmable Video [here](/get-started/v2/get-started/migration-guides/twilio-video-to-100ms/overview#feature-map-comparison). 
+
+100ms uses a single SDK for all features, including audio/video conferencing, chat, and recording.
+
+## Step 1: Install
+
+**Twilio**
+
+If you like, you can also remove the Twilio SDK from your project with the following.
+
+```kotlin
+implementation 'com.twilio:video-android:<version>'
+```
+
+**Install 100ms SDK**
+
+We suggest that you add the 100ms SDK to your project through Maven. MavenCentral hosts the  SDK for Android. Use the following code to add it (replace `hmsVersion` with your desired version):
+
+<AndroidSdkVersionShield />
+
+```kotlin
+
+// See the version in the badge above.
+ // There are separate libraries for the sdk, virtual background and hls-player.
+ // Add just the ones you need
+dependencies {
+ def hmsVersion = "x.x.x" // for eg: 2.8.4
+ implementation "live.100ms:android-sdk:$hmsVersion"    // Essential
+ implementation "live.100ms:video-view:$hmsVersion" // Essential
+ implementation "live.100ms:virtual-background:$hmsVersion" // Optional
+ implementation "live.100ms:hls-player:$hmsVersion"   // Optional
+}
+```
+
+**********************Permissions**********************
+
+Camera, recording audio, and internet permissions are required. Add them to your manifest.
+
+```kotlin
+<uses-permission android:name="android.permission.CAMERA" />
+<uses-permission android:name="android.permission.RECORD_AUDIO" />
+<uses-permission android:name="android.permission.INTERNET" />
+<uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+```
+
+You will also need to request `CAMERA`, `RECORD_AUDIO`,  `BLUETOOTH_CONNECT` permissions at runtime before you join a call or display a preview. Please follow **[Android Documentation](https://developer.android.com/training/permissions/requesting#request-permission)** for runtime permissions.
+
+****Proguard**** 
+
+100ms SDK has put all the pro-guard rules in the SDK. Nothing extra needs to be added in the app.
+
+## Step 2: SDK Authentication
+
+On your auth server, replace your [Twilio Video JWT](https://www.twilio.com/docs/video/tutorials/user-identity-access-tokens) generation logic with the [100ms Auth Tokens](https://www.100ms.live/docs/get-started/v2/get-started/security-and-tokens#auth-token-for-client-sdks) generation logic.
+
+> **Note**
+> 
+> Alternatively, you can use the 100ms dashboard to fetch a temporary token that will automatically expire in 24hrs.
+> 
+
+## Step 3: Initialisation
+
+To use 100ms SDK, you must first initialize the SDK instance. This is usually done when your app starts.
+
+There is no equivalent of this in the Twilio Video SDK, so it is important to find the correct place in your app to add initialization logic.
+
+Initialize the 100ms `HMSSDK`
+
+```kotlin
+import live.hms.video.sdk.*
+
+val hmsSdk = HMSSDK
+        .Builder(application)
+        .build() 
+```
+
+## Step 4: Joining a session
+
+**Twillio**
+
+```kotlin
+val connectOptions = ConnectOptions.Builder(joinToken)
+    .videoTracks(localVideoTracks)
+    .audioTracks(localAudioTracks)
+    .roomName(sessionId)
+    .build()
+
+Video.connect(context, connectOptions, roomListener)
+```
+
+**100ms**
+
+```kotlin
+val config = HMSConfig("user display name", authToken)
+
+hmsSdk.join(config, MyHmsUpdateListener())
+```
+
+## Step 5: Listening to events
+
+Both SDKs use delegates/listeners to detect and stay in sync with state changes. Replace your Twilio listeners with 100ms SDK delegates.
+
+**Twillio**
+
+```kotlin
+val roomListener = object : Room.Listener {...}
+```
+
+**100ms**
+
+The 100ms SDK sends updates to the application about any change in Room , Peer and Track via the callbacks in `HMSUpdateListener`. Application need to listen to the corresponding updates.
+
+```kotlin
+class MyHmsUpdateListener : HMSUpdateListener {
+    override fun onJoin(room: HMSRoom) {}
+    override fun onTrackUpdate(type: HMSTrackUpdate, track: HMSTrack, peer: HMSPeer) {}
+    override fun onPeerUpdate(type: HMSPeerUpdate, peer: HMSPeer) {}
+    override fun onMessageReceived(message: HMSMessage) {}
+    override fun onRoleChangeRequest(request: HMSRoleChangeRequest) {}
+    override fun onRoomUpdate(type: HMSRoomUpdate, hmsRoom: HMSRoom) {}
+    override fun onReconnecting(error: HMSException) {}
+    override fun onReconnected() {}
+    override fun onRemovedFromRoom(notification: HMSRemovedFromRoom) {}
+    override fun onChangeTrackStateRequest(details: HMSChangeTrackStateRequest)
+    override fun peerListUpdated(
+        addedPeers: ArrayList<HMSPeer>?,
+        removedPeers: ArrayList<HMSPeer>?
+    ) {}
+    override fun onSessionStoreAvailable(sessionStore: HmsSessionStore) {}
+    override fun onError(error: HMSException) {}
+}
+
+enum class HMSTrackUpdate {
+    TRACK_ADDED,
+    TRACK_REMOVED,
+    TRACK_MUTED,
+    TRACK_UNMUTED,
+    TRACK_DESCRIPTION_CHANGED,
+    TRACK_DEGRADED,
+    TRACK_RESTORED
+}
+
+enum class HMSPeerUpdate {
+    PEER_JOINED,
+    PEER_LEFT,
+    BECAME_DOMINANT_SPEAKER,
+    NO_DOMINANT_SPEAKER,
+    ROLE_CHANGED,
+    NAME_CHANGED,
+    METADATA_CHANGED,
+    NETWORK_QUALITY_UPDATED,
+    HAND_RAISED_CHANGED
+}
+
+enum class HMSRoomUpdate {
+    ROOM_MUTED,
+    ROOM_UNMUTED,
+    SERVER_RECORDING_STATE_UPDATED,
+    RTMP_STREAMING_STATE_UPDATED,
+    HLS_STREAMING_STATE_UPDATED,
+    HLS_RECORDING_STATE_UPDATED,
+    BROWSER_RECORDING_STATE_UPDATED,
+    ROOM_PEER_COUNT_UPDATED,
+}
+
+```
+
+## Step 6:  Video
+
+**Twillio**
+
+To check a user’s video status and start or stop their video.
+
+```kotlin
+val cameraEnumerator = Camera2Enumerator(context)
+
+cameraEnumerator.deviceNames
+    .firstOrNull { cameraEnumerator.isFrontFacing(it) }
+    ?.let {
+        val cameraCapturer = Camera2Capturer(context, it)
+        val localVideoTrack = LocalVideoTrack.create(context, true, cameraCapturer)
+        cameraCapturer.startCapture(width, height, framerate)
+    }
+
+cameraCapturer.stopCapture()
+```
+
+### **Set up local video preview**
+
+**Twilio**
+
+```kotlin
+val previewVideoView = VideoView(context)
+localVideoTrack?.addSink(previewVideoView)
+```
+
+### **Display other user videos**
+
+**Twilio**
+
+```kotlin
+val remoteVideoView = VideoView(context)
+remoteVideoTrack.addSink(remoteVideoView)
+
+remoteVideoTrack.removeSink(remoteVideoView)
+```
+
+**100ms**
+
+100ms SDK provides an easy way to render and manage a user’s video stream. 100ms SDK uses`HMSTrack` as a the super-class of all the tracks that are used inside `HMSSDK`. Its hierarchy looks like this -
+
+```
+HMSTrack
+    - AudioTrack
+        - LocalAudioTrack
+        - RemoteAudioTrack
+    - VideoTrack
+        - LocalVideoTrack
+        - RemoteVideoTrack
+```
+
+To display a video track, first get the `HMSVideoTrack` & pass it on to `HMSVideoView` using `setVideoTrack` function. Ensure to attach the `HMSVideoView` to your UI hierarchy.
+
+```kotlin
+
+// get the video track to be displayed
+val hmsVideoTrack : HMSVideoTrack? = hmsPeer.videoTrack
+
+// get the video view from the xml or create and instance of it
+val hmsVideoView : HMSVideoView = findViewById(R.id.peer_video)
+
+// set the video track of HMSVideoView
+hmsVideoView.addTrack(hmsVideoTrack)
+
+// Removing a video from the HMSVideoView
+hmsVideoView.removeTrack()
+```
+
+## Step 7: Managing Mute/Unmute Local Audio
+
+100ms SDK offers a simpler approach to manage audio.
+
+**Twilio**
+
+```kotlin
+audioTrack.enable(enable)
+```
+
+**100ms**
+
+Use the `HMSLocalAudioTrack` and `HMSLocalVideoTrack` to mute/unmute tracks
+
+Mute/Unmute Local Audio
+
+- **Mute audio**
+    
+    ```kotlin
+    hmsSDK.localPeer?.localAudioTrack()?.setMute(true)
+    ```
+    
+- **Unmute audio**
+    
+    ```kotlin
+    hmsSDK.localPeer?.localAudioTrack()?.setMute(false)
+    ```
+    
+
+Mute/Unmute Local Video
+
+- Mute video
+    
+    ```kotlin
+    hmsSDK.localPeer?.localVideoTrack()?.setMute(true)
+    ```
+    
+- Unmute video
+    
+    ```kotlin
+    hmsSDK.localPeer?.localVideoTrack()?.setMute(false)
+    ```
+    
+
+## Step 8: Leave/End a session
+
+Once you’re done with the call, it’s a good idea to leave the room. 
+
+**Twillio**
+
+```kotlin
+room.disconnect()
+localVideoTrack.release()
+localAudioTrack.release()
+// With Twilio, you're required to release each track individually.
+```
+
+**100ms**
+
+```kotlin
+hmsSDK.leave()
+
+// Cleanup is done by 100ms sdk internally
+```
+
+### **End the session for everyone**
+
+On 100ms, you can allow certain peers to end the call for everyone. 
+
+End the room with `hmsSdk.endRoom`
+
+`endRoom` takes three parameters.
+
+- `reason`: Optional message you want to pass along the end room notification to other peers
+- `lock`: Whether you want to prevent anyone from rejoining the room. If false, they will be allowed to enter the room again if the client called join. If this is false, they will not able to join this room again.
+- `HMSActionResulListener`: Lets you know whether the end room operation executed. was ended successfully or not.
+    
+    ```kotlin
+    hmssdk.endRoom(reason : String, lock : Boolean, hmsActionResultListener: HMSActionResultListener) {}
+    ```
+    
+
+# REST APIs and Webhooks
+
+100ms has a full suite of [REST APIs](/server-side/v2/api-reference/Rooms/overview) and [webhooks](/server-side/v2/how-to-guides/configure-webhooks/overview).
+
+The REST APIs will allow you to perform all server side CRUD operations on [rooms](/server-side/v2/api-reference/Rooms/overview), [sessions](/server-side/v2/api-reference/Sessions/object), [live streams](/server-side/v2/api-reference/live-streams/overview), [recordings](/server-side/v2/api-reference/recordings/overview), transcription, and more.

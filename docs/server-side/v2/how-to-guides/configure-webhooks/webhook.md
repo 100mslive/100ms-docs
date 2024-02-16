@@ -8,6 +8,8 @@ nav: 4.3
 | [session.open.success](#sessionopensuccess), <br/> [session.close.success](#sessionclosesuccess)                                                                                       | Session                            | Triggered during the start and end of a session                                         |
 | [peer.join.success](#peerjoinsuccess),<br/> [peer.leave.success](#peerleavesuccess), <br/>[peer.join.failure](#peerjoinfailure),<br/> [peer.leave.failure](#peerleavefailure)          | Peer                               | Triggered when a peer join/leave succeeds/fails                                         |
 | [room.end.success](#roomendsuccess)                                                                                                                                                    | Room                               | Triggered when a room ends                                                              |
+| [track.recording.started.success](#trackrecordingstartedsuccess), <br/>[track.recording.success](#trackrecordingsuccess), <br/>[track.recording.failure](#trackrecordingfailure)       | Track Recording                    | Triggered during the start, end, and failure of a track recording                       |
+| [stream.recording.success](#streamrecordingsuccess), <br/>[stream.recording.failure](#streamrecordingfailure)                                                                          | Stream Recording                   | Triggered at the end of a stream recording                                              |
 | [recording.success](#recordingsuccess), <br/>[recording.failed](#recordingfailed)                                                                                                      | SFU Recording                      | Triggered at the end of a SFU recording                                                 |
 | [beam.started.success](#beamstartedsuccess),<br/> [beam.stopped.success](#beamstoppedsuccess),<br/> [beam.recording.success](#beamrecordingsuccess),<br/> [beam.failure](#beamfailure) | RTMP Streaming & Browser Recording | Triggered during the start, end, and failure of RTMP streaming and/or browser recording |
 | [hls.started.success](#hlsstartedsuccess),<br/> [hls.stopped.success](#hlsstoppedsuccess),<br/> [hls.recording.success](#hlsrecordingsuccess),<br/> [hls.failure](#hlsfailure)         | HLS Streaming Events               | Triggered during the start, end, and failure of HLS streaming and/or HLS recording      |
@@ -565,6 +567,228 @@ This event will be sent when the role change for a peer fails. For example:
 }
 ```
 
+## Track Recording Events
+
+### track.recording.started.success
+
+This event will be sent when individual track recording is started
+
+#### Attributes
+
+| Name                         | Type                 | Description                                                                                                                                                     |
+| :--------------------------- | :------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| room_id                      | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312dff                                                                                            |
+| session_id                   | `string`             | 100ms assigned id to identify the session <br/><br/> Example: 5f9edc6bd238215aec7700df                                                                          |
+| peer_id                      | `string`             | 100ms assigned id to identify the peer <br/><br/> Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4                                                                 |
+| stream_id                    | `string`             | ID of the stream to which this track belongs <br/><br/> Example: 5a09bf30-c076-469f-bfd4-15eb068366e8                                                           |
+| track_id                     | `string`             | ID of the track being recorded Example: 3c1e5e95-fdd1-49ba-bb08-66a0b7493b5b                                                                                    |
+| track_type                   | `string`             | Type of the track being recorded, either video or audio                                                                                                         |
+
+#### Sample `track.recording.started.success` event
+
+```json
+{
+    "version": "2.0",
+    "id": "********-****-****-****-***********",
+    "account_id": "************************",
+    "app_id": "************************",
+    "timestamp": "2024-02-06T20:01:16Z",
+    "type": "track.recording.started.success",
+    "data": {
+        "peer_id": "********-****-****-****-***********",
+        "room_id": "************************",
+        "session_id": "************************",
+        "stream_id": "********-****-****-****-***********",
+        "track_id": "********-****-****-****-***********",
+        "track_type": "video"
+    }
+}
+```
+
+### track.recording.success
+
+This event will be sent when individual track recording is completed
+
+#### Attributes
+
+| Name                         | Type                 | Description                                                                                                                                                     |
+| :--------------------------- | :------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| room_id                      | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312dff                                                                                            |
+| session_id                   | `string`             | 100ms assigned id to identify the session <br/><br/> Example: 5f9edc6bd238215aec7700df                                                                          |
+| peer_id                      | `string`             | 100ms assigned id to identify the peer <br/><br/> Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4                                                                 |
+| stream_id                    | `string`             | ID of the stream to which this track belongs <br/><br/> Example: 5a09bf30-c076-469f-bfd4-15eb068366e8                                                           |
+| track_id                     | `string`             | ID of the track being recorded Example: 3c1e5e95-fdd1-49ba-bb08-66a0b7493b5b                                                                                    |
+| track_type                   | `string`             | Type of the track being recorded, either video or audio                                                                                                         |
+| size                         | `string`             | Size of the track recording in bytes                                                                                                                            |
+| duration                     | `string`             | Duration of the track recording in seconds                                                                                                                      |
+| recording_id                 | `string`             | 100ms assigned id to the recording  <br/><br/> Example: 5ff5881b80b66969e1fb35f4                                                                                |
+| recording_path               | `string`             | Upload path of the recorded track <br/><br/> Example: <s3://bucket/prefix/ac.webm>                                                                              |
+| recording_presigned_url      | `string`             | Presigned URL for the recorded track <br/><br/> Example: <https://bucket/prefix/ac.webm>                                                                        |
+
+#### Sample `track.recording.success` event
+
+```json
+{
+    "version": "2.0",
+    "id": "********-****-****-****-***********",
+    "account_id": "************************",
+    "app_id": "************************",
+    "timestamp": "2024-02-06T20:01:16Z",
+    "type": "track.recording.success",
+    "data": {
+        "peer_id": "********-****-****-****-***********",
+        "room_id": "************************",
+        "session_id": "************************",
+        "stream_id": "********-****-****-****-***********",
+        "track_id": "********-****-****-****-***********",
+        "track_type": "video",
+        "size": 22989889,
+        "recording_id": "************************",
+        "recording_path": "s3://bucket/prefix/ac.webm",
+        "recording_presigned_url": "https://bucket/prefix/ac.webm",
+    }
+}
+```
+
+### track.recording.failure
+
+This event will be sent if an individual track recording fails
+
+#### Attributes
+
+| Name                         | Type                 | Description                                                                                                                                                     |
+| :--------------------------- | :------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| room_id                      | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312dff                                                                                            |
+| session_id                   | `string`             | 100ms assigned id to identify the session <br/><br/> Example: 5f9edc6bd238215aec7700df                                                                          |
+| peer_id                      | `string`             | 100ms assigned id to identify the peer <br/><br/> Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4                                                                 |
+| stream_id                    | `string`             | ID of the stream to which this track belongs <br/><br/> Example: 5a09bf30-c076-469f-bfd4-15eb068366e8                                                           |
+| track_id                     | `string`             | ID of the track being recorded Example: 3c1e5e95-fdd1-49ba-bb08-66a0b7493b5b                                                                                    |
+| track_type                   | `string`             | Type of the track being recorded, either video or audio                                                                                                         |
+| size                         | `string`             | Size of the track recording in bytes                                                                                                                            |
+| duration                     | `string`             | Duration of the track recording in seconds                                                                                                                      |
+| recording_id                 | `string`             | 100ms assigned id to the recording  <br/><br/> Example: 5ff5881b80b66969e1fb35f4                                                                                |
+| recording_path               | `string`             | Upload path of the recorded track <br/><br/> Example: <s3://bucket/prefix/ac.webm>                                                                              |
+| error_message                | `string`             | Error message indicating the reason for failure                                                                                                                 |
+
+#### Sample `track.recording.failure` event
+
+```json
+{
+    "version": "2.0",
+    "id": "********-****-****-****-***********",
+    "account_id": "************************",
+    "app_id": "************************",
+    "timestamp": "2024-02-06T20:01:16Z",
+    "type": "track.recording.success",
+    "data": {
+        "peer_id": "********-****-****-****-***********",
+        "room_id": "************************",
+        "session_id": "************************",
+        "stream_id": "********-****-****-****-***********",
+        "track_id": "********-****-****-****-***********",
+        "track_type": "video",
+        "size": 22989889,
+        "recording_id": "************************",
+        "recording_path": "s3://bucket/prefix/ac.webm",
+        "error_message": "INTERNAL_ERROR"
+    }
+}
+```
+
+## Stream Recording Events
+
+### stream.recording.success
+
+This event will be sent when individual stream recording is completed
+
+#### Attributes
+
+| Name                         | Type                 | Description                                                                                                                                                     |
+| :--------------------------- | :------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| room_id                      | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312dff                                                                                            |
+| session_id                   | `string`             | 100ms assigned id to identify the session <br/><br/> Example: 5f9edc6bd238215aec7700df                                                                          |
+| peer_id                      | `string`             | 100ms assigned id to identify the peer <br/><br/> Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4                                                                 |
+| stream_id                    | `string`             | ID of the stream to which this track belongs <br/><br/> Example: 5a09bf30-c076-469f-bfd4-15eb068366e8                                                           |
+| user_id                      | `string`             | User id assigned by the customer <br/><br/> Example: user.001                                                                                                   |
+| size                         | `string`             | Size of the track recording in bytes                                                                                                                            |
+| duration                     | `string`             | Duration of the track recording in seconds                                                                                                                      |
+| recording_id                 | `string`             | 100ms assigned id to the recording  <br/><br/> Example: 5ff5881b80b66969e1fb35f4                                                                                |
+| recording_path               | `string`             | Upload path of the recorded track <br/><br/> Example: <s3://bucket/prefix/ac.webm>                                                                              |
+| recording_presigned_url      | `string`             | Presigned URL for the recorded track <br/><br/> Example: <https://bucket/prefix/ac.webm>                                                                        |
+| stream_type                  | `string`             | Type of the stream, regular, screen or audio                                                                                                                    |
+
+#### Sample `stream.recording.success` event
+
+```json
+{
+    "version": "2.0",
+    "id": "********-****-****-****-***********",
+    "account_id": "************************",
+    "app_id": "************************",
+    "timestamp": "2024-02-12T15:39:55Z",
+    "type": "stream.recording.success",
+    "data": {
+        "duration": 185,
+        "peer_id": "********-****-****-****-***********",
+        "recording_id": "************************",
+        "recording_path": "s3://bucket/prefix/ac.mp4",
+        "recording_presigned_url": "https://bucket/prefix/ac.mp4",
+        "room_id": "************************",
+        "session_id": "************************",
+        "size": 22989889,
+        "stream_id": "********-****-****-****-***********",
+        "type": "regular",
+        "user_id": "********-****-****-****-***********"
+    }
+}
+```
+
+### stream.recording.failure
+
+This event will be sent when individual stream recording fails
+
+#### Attributes
+
+| Name                         | Type                 | Description                                                                                                                                                     |
+| :--------------------------- | :------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| room_id                      | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312dff                                                                                            |
+| session_id                   | `string`             | 100ms assigned id to identify the session <br/><br/> Example: 5f9edc6bd238215aec7700df                                                                          |
+| peer_id                      | `string`             | 100ms assigned id to identify the peer <br/><br/> Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4                                                                 |
+| stream_id                    | `string`             | ID of the stream to which this track belongs <br/><br/> Example: 5a09bf30-c076-469f-bfd4-15eb068366e8                                                           |
+| user_id                      | `string`             | User id assigned by the customer <br/><br/> Example: user.001                                                                                                   |
+| size                         | `string`             | Size of the track recording in bytes                                                                                                                            |
+| duration                     | `string`             | Duration of the track recording in seconds                                                                                                                      |
+| recording_id                 | `string`             | 100ms assigned id to the recording  <br/><br/> Example: 5ff5881b80b66969e1fb35f4                                                                                |
+| recording_path               | `string`             | Upload path of the recorded track <br/><br/> Example: <s3://bucket/prefix/ac.webm>                                                                              |
+| stream_type                  | `string`             | Type of the stream, regular, screen or audio                                                                                                                    |
+| error_message                | `string`             | Error message indicating the reason for failure                                                                                                                 |
+
+#### Sample `stream.recording.failure` event
+
+```json
+{
+    "version": "2.0",
+    "id": "********-****-****-****-***********",
+    "account_id": "************************",
+    "app_id": "************************",
+    "timestamp": "2024-02-12T15:39:55Z",
+    "type": "stream.recording.failure",
+    "data": {
+        "duration": 1,
+        "peer_id": "********-****-****-****-***********",
+        "recording_id": "************************",
+        "recording_path": "s3://bucket/prefix/ac.mp4",
+        "room_id": "************************",
+        "session_id": "************************",
+        "size": 2298,
+        "stream_id": "********-****-****-****-***********",
+        "type": "regular",
+        "user_id": "********-****-****-****-***********",
+        "error_message": "INTERNAL_ERROR"
+    }
+}
+```
+
 ## SFU Recording Events
 
 ### recording.success
@@ -820,6 +1044,7 @@ This event is sent when beam successfully records the room and uploads the video
 | stopped_at                   | `timestamp (in UTC)` | Beam recording stopped at <br/><br/> Example: 2020-11-11T17:32:15Z                                                                                                |
 | max_width                    | `int`                | Maximum width of the screen supported for recording in pixels <br/><br/> Example: 1280                                                                            |
 | max_height                   | `int`                | Maximum height of the screen supported for recording in pixels <br/><br/> Example: 720                                                                            |
+| recording_id                 | `string`             | 100ms assigned id to the recording  <br/><br/> Example: 5ff5881b80b66969e1fb35f4                                                                                  |
 | recording_path               | `string`             | Upload path of the recorded video such as s3 URI <br/><br/> Example: s3://bucket/prefix/ac.mp4                                                                    |
 | recording_presigned_url      | `string`             | Presigned URL for the recorded video, for download <br/><br/> Example: <https://upload-location/bucket/ac.mp4>                                                    |
 | chat_recording_path          | `string`             | Upload path of chat recording files such as s3 URI <br/><br/> Example: s3://bucket/prefix/ac.csv                                                                  |
@@ -845,6 +1070,7 @@ This event is sent when beam successfully records the room and uploads the video
         "metadata_id": "********-****-****-****-***********",
         "metadata_timestamp": "2021-11-30T12:59:57.679491494Z",
         "peer_id": "********-****-****-****-***********",
+        "recording_id": "************************",
         "recording_path": "s3://bucket/prefix/ac.mp4",
         "recording_presigned_url": "https://<file access URL>",
         "chat_recording_path": "s3://<chat-recording-address>.csv",
@@ -1165,30 +1391,31 @@ This event will be sent when HLS recordings are successful and uploaded to the s
 
 #### Attributes
 
-| Name                                | Type                 | Description                                                                                                                    |
-|:------------------------------------|:---------------------|:-------------------------------------------------------------------------------------------------------------------------------|
-| beam_id                             | `string`             | Unique beam id <br/><br/> Example: 61d3def54b616982bd80ed83                                                                    |
-| room_id                             | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312df                                                            |
-| metadata_id                         | `string`             | Webhook metadata ID <br/><br/> Example: 14f350f5-18c4-46ca-8a33-71cbcc836600                                                   |
-| metadata_timestamp                  | `timestamp (in UTC)` | Webhook message creation timestamp <br/><br/> Example: 2020-11-11T17:32:17Z                                                    |
-| duration                            | `int`                | Duration of HLS recording in seconds <br/><br/> Example: 12                                                                    |
-| session_id                          | `string`             | 100ms assigned id to identify the session <br/><br/> Example: 5f9edc6bd238215aec7700df                                         |
-| template_id                         | `string`             | Template ID of the room <br/><br/> Example: 66112497abcd52312556c4gg                                                           |
-| hls_vod_recording_path              | `string`             | Upload path of the HLS VOD playlist such as s3 URL <br/><br/> Example: s3://bucket/prefix/ac.mp4                               |
-| hls_vod_recording_presigned_url     | `string`             | This will be a playable CDN URL for the VOD file or the pre-signed URL of the M3U8 file, depending upon the configured storage and the VOD upload format. Learn more about this [here](/get-started/v2/get-started/features/recordings/live-stream-recording#video-on-demand-vod-recording) <br/><br/> Example: <https://upload-location/bucket/hls-vod.zip> , <https://upload-location/bucket/hls-vod.m3u8>                     |
-| chat_recording_path                 | `string`             | Upload path of chat recording files such as s3 URI <br/><br/> Example: s3://bucket/prefix/ac.csv                               |
-| chat_recording_presigned_url        | `string`             | Pre signed url for chat recording files <br/><br/> Example: <https://upload-location/bucket/chat.csv>                          |
-| hls_vod_recording_size              | `int`                | Size of the HLS vod recording (in bytes) <br/><br/> Example: 10024                                                             |
-| max_width                           | `int`                | Maximum width of the screen supported for HLS recording in pixels <br/><br/> Example: 1280                                     |
-| max_height                          | `int`                | Maximum height of the screen supported for HLS recording in pixels <br/><br/> Example: 720                                     |
-| meeting_url                         | `string`             | meeting_url provided at HLS start <br/><br/> Example: "https://app.100ms.live/room_id"                                         |
-| recording_created_at                | `timestamp (in UTC)` | Timestamp at which recording was created <br/><br/> Example: 2020-11-11T17:12:17Z                                              |
-| started_at                          | `timestamp (in UTC)` | Timestamp at which HLS started <br/><br/> Example: 2020-11-11T17:32:18Z                                                        |
-| stopped_at                          | `timestamp (in UTC)` | Timestamp at which HLS stopped <br/><br/> Example: 2020-11-11T17:32:18Z                                                        |
-| recording_single_files              | `array`              | List of recording details per layer. layer="0" is the highest quality layer <br/><br/> Example: < see below >                  |
-| recording_hls_vod_playlist_location | `string`             | (Deprecated, use hls_vod_recording_presigned_url) Pre signed url for HLS vod playlist url. <br/><br/> Example: < see below >\* |
-| recording_thumbnails                | `array`              | List of thumbnails generated <br/><br/> Example: < see below >                                                                 |
-| session_started_at                  | `timestamp (in UTC)` | Timestamp when session started <br/><br/> Example: 2020-11-11T16:32:17Z                                                        |
+| Name                                | Type                 | Description                                                                                                                                                                                                                                                                                                                                                                                                  |
+|:------------------------------------|:---------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| beam_id                             | `string`             | Unique beam id <br/><br/> Example: 61d3def54b616982bd80ed83                                                                                                                                                                                                                                                                                                                                                  |
+| room_id                             | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312df                                                                                                                                                                                                                                                                                                                                          |
+| metadata_id                         | `string`             | Webhook metadata ID <br/><br/> Example: 14f350f5-18c4-46ca-8a33-71cbcc836600                                                                                                                                                                                                                                                                                                                                 |
+| metadata_timestamp                  | `timestamp (in UTC)` | Webhook message creation timestamp <br/><br/> Example: 2020-11-11T17:32:17Z                                                                                                                                                                                                                                                                                                                                  |
+| duration                            | `int`                | Duration of HLS recording in seconds <br/><br/> Example: 12                                                                                                                                                                                                                                                                                                                                                  |
+| session_id                          | `string`             | 100ms assigned id to identify the session <br/><br/> Example: 5f9edc6bd238215aec7700df                                                                                                                                                                                                                                                                                                                       |
+| template_id                         | `string`             | Template ID of the room <br/><br/> Example: 66112497abcd52312556c4gg                                                                                                                                                                                                                                                                                                                                         |
+| hls_vod_recording_path              | `string`             | Upload path of the HLS VOD playlist such as s3 URL <br/><br/> Example: s3://bucket/prefix/ac.mp4                                                                                                                                                                                                                                                                                                             |
+| hls_vod_recording_presigned_url     | `string`             | This will be a playable CDN URL for the VOD file or the pre-signed URL of the M3U8 file, depending upon the configured storage and the VOD upload format. Learn more about this [here](/get-started/v2/get-started/features/recordings/live-stream-recording#video-on-demand-vod-recording) <br/><br/> Example: <https://upload-location/bucket/hls-vod.zip> , <https://upload-location/bucket/hls-vod.m3u8> |
+| chat_recording_path                 | `string`             | Upload path of chat recording files such as s3 URI <br/><br/> Example: s3://bucket/prefix/ac.csv                                                                                                                                                                                                                                                                                                             |
+| chat_recording_presigned_url        | `string`             | Pre signed url for chat recording files <br/><br/> Example: <https://upload-location/bucket/chat.csv>                                                                                                                                                                                                                                                                                                        |
+| hls_vod_recording_size              | `int`                | Size of the HLS vod recording (in bytes) <br/><br/> Example: 10024                                                                                                                                                                                                                                                                                                                                           |
+| max_width                           | `int`                | Maximum width of the screen supported for HLS recording in pixels <br/><br/> Example: 1280                                                                                                                                                                                                                                                                                                                   |
+| max_height                          | `int`                | Maximum height of the screen supported for HLS recording in pixels <br/><br/> Example: 720                                                                                                                                                                                                                                                                                                                   |
+| meeting_url                         | `string`             | meeting_url provided at HLS start <br/><br/> Example: "https://app.100ms.live/room_id"                                                                                                                                                                                                                                                                                                                       |
+| recording_created_at                | `timestamp (in UTC)` | Timestamp at which recording was created <br/><br/> Example: 2020-11-11T17:12:17Z                                                                                                                                                                                                                                                                                                                            |
+| started_at                          | `timestamp (in UTC)` | Timestamp at which HLS started <br/><br/> Example: 2020-11-11T17:32:18Z                                                                                                                                                                                                                                                                                                                                      |
+| stopped_at                          | `timestamp (in UTC)` | Timestamp at which HLS stopped <br/><br/> Example: 2020-11-11T17:32:18Z                                                                                                                                                                                                                                                                                                                                      |
+| recording_id                        | `string`             | 100ms assigned id to the recording  <br/><br/> Example: 5ff5881b80b66969e1fb35f4                                                                                                                                                                                                                                                                                                                             |
+| recording_single_files              | `array`              | List of recording details per layer. layer="0" is the highest quality layer <br/><br/> Example: < see below >                                                                                                                                                                                                                                                                                                |
+| recording_hls_vod_playlist_location | `string`             | (Deprecated, use hls_vod_recording_presigned_url) Pre signed url for HLS vod playlist url. <br/><br/> Example: < see below >\*                                                                                                                                                                                                                                                                               |
+| recording_thumbnails                | `array`              | List of thumbnails generated <br/><br/> Example: < see below >                                                                                                                                                                                                                                                                                                                                               |
+| session_started_at                  | `timestamp (in UTC)` | Timestamp when session started <br/><br/> Example: 2020-11-11T16:32:17Z                                                                                                                                                                                                                                                                                                                                      |
 
 #### Sample `hls.recording.success` event
 
@@ -1215,6 +1442,7 @@ This event will be sent when HLS recordings are successful and uploaded to the s
         "chat_recording_path": "s3://<chat-recording-address>.csv",
         "chat_recording_presigned_url": "https://<chat-recording-access-url>?<signature>",
         "hls_vod_recording_size": 10024,
+        "recording_id": "************************",
         "recording_single_files": [
             {
                 "asset_id": "646acb659348ac0ada47d9ef",
@@ -1284,6 +1512,7 @@ This event is sent when transcription is started post completion of the recordin
 | app_id                   | `string`             | App ID from which this event is generated <br/><br/> Example: 5ff5881b80b66969e1fb35f6                      |
 | recording_id             | `string`             | 100ms assigned id to the recording  <br/><br/> Example: 5ff5881b80b66969e1fb35f4                            |
 | room_id                  | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312df                                         |
+| room_name                | `string`             | Room name provided when creating the room <br/><br/> Example: Test Room                                     |
 | session_id               | `string`             | 100ms assigned id to identify the session <br/><br/> Example: 5f9edc6bd238215aec7700df                      |
 | metadata_id              | `string`             | Webhook metadata ID <br/><br/> Example: 14f350f5-18c4-46ca-8a33-71cbcc836600                                |
 | transcription_id         | `string`             | 100ms assigned id to identify the transcription <br/><br/> Example: 648aabbcafd9fc711c815270                |
@@ -1311,6 +1540,7 @@ This event is sent when transcription is started post completion of the recordin
         "metadata_timestamp": "2023-06-15T06:17:39.986637275Z",
         "recording_id": "***********************",
         "room_id": "***********************",
+        "room_name": "***********",
         "transcription_id": "***********************",
         "session_id": "***********************",
         "duration": 23,
@@ -1334,6 +1564,7 @@ This event is sent when transcription is successful and the assets are uploaded 
 | app_id                        | `string`             | App ID from which this event is generated <br/><br/> Example: 5ff5881b80b66969e1fb35f6                      |
 | recording_id                  | `string`             | 100ms assigned id to the recording <br/><br/> Example: 5ff5881b80b66969e1fb35f4                             |
 | room_id                       | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312df                                         |
+| room_name                     | `string`             | Room name provided when creating the room <br/><br/> Example: Test Room                                     |
 | session_id                    | `string`             | 100ms assigned id to identify the session <br/><br/> Example: 5f9edc6bd238215aec7700df                      |
 | metadata_id                   | `string`             | Webhook metadata ID <br/><br/> Example: 14f350f5-18c4-46ca-8a33-71cbcc836600                                |
 | transcription_id              | `string`             | 100ms assigned id to identify the transcription <br/><br/> Example: 648aabbcafd9fc711c815270                |
@@ -1369,6 +1600,7 @@ This event is sent when transcription is successful and the assets are uploaded 
             "metadata_timestamp": "2023-06-15T06:17:39.986637275Z",
             "recording_id": "***********************",
             "room_id": "***********************",
+            "room_name": "***********",
             "transcription_id": "***********************",
             "session_id": "***********************",
             "duration": 23,
@@ -1403,6 +1635,7 @@ This event is sent when transcription fails. Some files might still be generated
 | app_id                        | `string`             | App ID from which this event is generated <br/><br/> Example: 5ff5881b80b66969e1fb35f6                      |
 | recording_id                  | `string`             | 100ms assigned id to the recording <br/><br/> Example: 5ff5881b80b66969e1fb35f4                             |
 | room_id                       | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312df                                         |
+| room_name                     | `string`             | Room name provided when creating the room <br/><br/> Example: Test Room                                     |
 | session_id                    | `string`             | 100ms assigned id to identify the session <br/><br/> Example: 5f9edc6bd238215aec7700df                      |
 | metadata_id                   | `string`             | Webhook metadata ID <br/><br/> Example: 14f350f5-18c4-46ca-8a33-71cbcc836600                                |
 | transcription_id              | `string`             | 100ms assigned id to identify the transcription <br/><br/> Example: 648aabbcafd9fc711c815270                |
@@ -1439,6 +1672,7 @@ This event is sent when transcription fails. Some files might still be generated
             "metadata_timestamp": "2023-06-15T06:17:39.986637275Z",
             "recording_id": "***********************",
             "room_id": "***********************",
+            "room_name": "***********",
             "transcription_id": "***********************",
             "session_id": "***********************",
             "duration": 23,
