@@ -1,6 +1,6 @@
 ---
 title: HMSTrackStats
-nav: '4.63'
+nav: '4.74'
 ---
 
 Extends RTCOutboundRtpStreamStats
@@ -15,6 +15,16 @@ Ref: https://www.w3.org/TR/webrtc-stats/#dom-rtcoutboundrtpstreamstats
   ↳ **`HMSTrackStats`**
 
 ## Properties
+
+### audioLevel
+
+• `Optional` **audioLevel**: `number`
+
+#### Inherited from
+
+[HMSRemoteTrackStats](/api-reference/javascript/v2/interfaces/HMSRemoteTrackStats).[audioLevel](/api-reference/javascript/v2/interfaces/HMSRemoteTrackStats#audiolevel)
+
+---
 
 ### bitrate
 
@@ -66,6 +76,26 @@ Ref: https://www.w3.org/TR/webrtc-stats/#dom-rtcoutboundrtpstreamstats
 
 ---
 
+### concealedSamples
+
+• `Optional` **concealedSamples**: `number`
+
+#### Inherited from
+
+[HMSRemoteTrackStats](/api-reference/javascript/v2/interfaces/HMSRemoteTrackStats).[concealedSamples](/api-reference/javascript/v2/interfaces/HMSRemoteTrackStats#concealedsamples)
+
+---
+
+### concealmentEvents
+
+• `Optional` **concealmentEvents**: `number`
+
+#### Inherited from
+
+[HMSRemoteTrackStats](/api-reference/javascript/v2/interfaces/HMSRemoteTrackStats).[concealmentEvents](/api-reference/javascript/v2/interfaces/HMSRemoteTrackStats#concealmentevents)
+
+---
+
 ### enabled
 
 • `Optional` **enabled**: `boolean`
@@ -73,6 +103,26 @@ Ref: https://www.w3.org/TR/webrtc-stats/#dom-rtcoutboundrtpstreamstats
 #### Inherited from
 
 [HMSRemoteTrackStats](/api-reference/javascript/v2/interfaces/HMSRemoteTrackStats).[enabled](/api-reference/javascript/v2/interfaces/HMSRemoteTrackStats#enabled)
+
+---
+
+### fecPacketsDiscarded
+
+• `Optional` **fecPacketsDiscarded**: `number`
+
+#### Inherited from
+
+[HMSRemoteTrackStats](/api-reference/javascript/v2/interfaces/HMSRemoteTrackStats).[fecPacketsDiscarded](/api-reference/javascript/v2/interfaces/HMSRemoteTrackStats#fecpacketsdiscarded)
+
+---
+
+### fecPacketsReceived
+
+• `Optional` **fecPacketsReceived**: `number`
+
+#### Inherited from
+
+[HMSRemoteTrackStats](/api-reference/javascript/v2/interfaces/HMSRemoteTrackStats).[fecPacketsReceived](/api-reference/javascript/v2/interfaces/HMSRemoteTrackStats#fecpacketsreceived)
 
 ---
 
@@ -350,6 +400,16 @@ https://www.w3.org/TR/webrtc-stats/#dom-rtcremoteinboundrtpstreamstats
 
 ---
 
+### silentConcealedSamples
+
+• `Optional` **silentConcealedSamples**: `number`
+
+#### Inherited from
+
+[HMSRemoteTrackStats](/api-reference/javascript/v2/interfaces/HMSRemoteTrackStats).[silentConcealedSamples](/api-reference/javascript/v2/interfaces/HMSRemoteTrackStats#silentconcealedsamples)
+
+---
+
 ### ssrc
 
 • **ssrc**: `number`
@@ -387,6 +447,26 @@ https://www.w3.org/TR/webrtc-stats/#dom-rtcremoteinboundrtpstreamstats
 #### Inherited from
 
 [HMSRemoteTrackStats](/api-reference/javascript/v2/interfaces/HMSRemoteTrackStats).[totalRoundTripTime](/api-reference/javascript/v2/interfaces/HMSRemoteTrackStats#totalroundtriptime)
+
+---
+
+### totalSamplesDuration
+
+• `Optional` **totalSamplesDuration**: `number`
+
+#### Inherited from
+
+[HMSRemoteTrackStats](/api-reference/javascript/v2/interfaces/HMSRemoteTrackStats).[totalSamplesDuration](/api-reference/javascript/v2/interfaces/HMSRemoteTrackStats#totalsamplesduration)
+
+---
+
+### totalSamplesReceived
+
+• `Optional` **totalSamplesReceived**: `number`
+
+#### Inherited from
+
+[HMSRemoteTrackStats](/api-reference/javascript/v2/interfaces/HMSRemoteTrackStats).[totalSamplesReceived](/api-reference/javascript/v2/interfaces/HMSRemoteTrackStats#totalsamplesreceived)
 
 ---
 

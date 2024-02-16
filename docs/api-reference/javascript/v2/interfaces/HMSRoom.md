@@ -1,9 +1,15 @@
 ---
 title: HMSRoom
-nav: '4.52'
+nav: '4.63'
 ---
 
 ## Properties
+
+### effectsKey
+
+• `Optional` **effectsKey**: `string`
+
+---
 
 ### hls
 
@@ -20,6 +26,18 @@ nav: '4.52'
 ### isConnected
 
 • `Optional` **isConnected**: `boolean`
+
+---
+
+### isEffectsEnabled
+
+• `Optional` **isEffectsEnabled**: `boolean`
+
+---
+
+### isLargeRoom
+
+• `Optional` **isLargeRoom**: `boolean`
 
 ---
 

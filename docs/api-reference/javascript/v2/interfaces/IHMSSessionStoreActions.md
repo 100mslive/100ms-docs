@@ -1,6 +1,6 @@
 ---
 title: IHMSSessionStoreActions<T>
-nav: '4.68'
+nav: '4.79'
 ---
 
 ## Type parameters

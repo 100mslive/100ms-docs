@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
+import UtmLinkWrapper from './UtmLinkWrapper';
 import { useRouter } from 'next/router';
 import APILink from './APILink';
 import BaseRequest from './BaseRequest';
@@ -24,10 +24,9 @@ import View from './View';
 import Callout from './Callout';
 import FlexContainer from './FlexContainer';
 import { PortraitImage } from './PortraitImage';
+import SuggestedBlogs from './SuggestedBlogs';
 
 const CodeCustom = (props: any) => <Code {...props}>{props.children}</Code>;
-
-const NoteCustom = (props: any) => <Note type="success">{props.children}</Note>;
 
 const TableCustom = (props: any) => (
     <div className="table-wrapper">
@@ -40,7 +39,7 @@ const LinkCustom = (props) => {
     const isInternalLink = href && !href.startsWith('http');
     const router = useRouter();
 
-    // FIX for a next/link bug where its not able to resolve relative path for current directory
+    // FIX for a ./UtmLinkWrapper bug where its not able to resolve relative path for current directory
     if (href.startsWith('./')) {
         const { asPath = '' } = router;
         href = asPath.substring(0, asPath.lastIndexOf('/')) + href.replace('./', '/');
@@ -57,9 +56,9 @@ const LinkCustom = (props) => {
 
     if (isInternalLink) {
         return (
-            <Link href={href}>
+            <UtmLinkWrapper href={href}>
                 <a>{props.children}</a>
-            </Link>
+            </UtmLinkWrapper>
         );
     }
     const { hostname } = new URL(href);
@@ -93,7 +92,7 @@ const MDXComponents = {
     Note,
     Callout,
     Image,
-    blockquote: NoteCustom,
+    blockquote: Note,
     pre: CodeCustom,
     table: TableCustom,
     Code,
@@ -107,6 +106,7 @@ const MDXComponents = {
     APILink,
     StepsToc,
     StepsContainer,
+    SuggestedBlogs,
     PortraitImage
 };
 

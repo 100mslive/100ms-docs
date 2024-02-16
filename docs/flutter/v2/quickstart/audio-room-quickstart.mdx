@@ -1,6 +1,6 @@
 ---
 title: Audio Room QuickStart Guide
-nav: 2.5
+nav: 2.6
 ---
 
 ## Overview
@@ -53,6 +53,12 @@ Once you have the prerequisites, follow the steps below to create a Flutter app.
 ### Add 100ms SDK to your project
 
 Once you have created a Flutter app, you must add the 100ms Flutter SDK and [permission_handler package](https://pub.dev/packages/permission_handler) (to handle audio/video permissions from microphone and camera) to your app.
+
+> For creating audio room we will use the audio room template from [dashboard](https://dashboard.100ms.live/dashboard) just like below.
+
+<video loop="true" autoplay="autoplay" controls="controls" id="vid" muted>
+    <source src="/docs/guides/flutter-audio-room-template.mp4" type="video/mp4" />
+</video>
 
 -   Add the below snippet to the `pubspec.yaml`.
 
@@ -865,7 +871,7 @@ class PeerTrackNode {
 We can get the authentication token using room-code from meeting URL.
 
 Let's understand the subdomain and code from the sample URL
-In this url: `http://100ms-rocks.app.100ms.live/meeting/abc-defg-hij`
+In this URL: `http://100ms-rocks.app.100ms.live/meeting/abc-defg-hij`
  -  Subdomain is `100ms-rocks`
  -  Room code is `abc-defg-ghi`
 
@@ -948,7 +954,8 @@ If you click `Join as HLS Viewer`, you should be able to watch the stream if it'
 
 ## Building step-by-step
 
-So in this audio room quickstart we are handling two roles namely `listener` and `speaker`.
+For creating audio room we will use the audio room template from dashboard.
+In this audio room quickstart we are handling two roles namely `listener` and `speaker`.
 In this example only speaker can publish audio whereas listener does not putting it in simple words as,
 the speaker can talk in the room while the listener can only hear to speakers.
 
@@ -1724,7 +1731,7 @@ We have multiple example apps to get you started with 100ms Flutter SDK.
 ### Clubhouse clone blog
 
 - Checkout the clubhouse clone [here](https://www.100ms.live/blog/clubhouse-clone-flutter)
-- Checkout the repository [here](https://github.com/govindmaheshwari2/clubhouse_100ms)
+- Checkout the repository [here](https://github.com/ygit/clubhouse_100ms)
 
 ### Basic example
 

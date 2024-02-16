@@ -1,9 +1,15 @@
 ---
-title: HLS Player (Beta)
+title: HLS Playback (Beta)
 nav: 8.23
 ---
 
-The HMSHLSPlayer is an HLS player offered by 100ms that can be used to play HLS streams. The player takes a URL to play the stream. It also provides the ability to send analytics events related to the HLS playback to the 100ms dashboard when provided with 100ms SDK instance with an active room.
+<Tabs
+  id="sample-code"
+  items={["UIKit", "SwiftUI"]}
+/>
+
+<Tab id='sample-code-0'>
+  The HMSHLSPlayer is an HLS player offered by 100ms that can be used to play HLS streams. The player takes a URL to play the stream. It also provides the ability to send analytics events related to the HLS playback to the 100ms dashboard when provided with 100ms SDK instance with an active room.
 
 ## How to integrate HLS Player SDK
 
@@ -61,7 +67,7 @@ You should handle both cases by listening to onJoin and onRoomUpdate callbacks r
 
 ```swift
 
-// Case 1 - play the hls stream if room has an active hls url
+// Case 1 - play the hls stream if room has an active hls URL
 func on(join room: HMSRoom) {
   if let hlsUrl = room.hlsStreamingState.variants.first?.url {
     hmsPlayer.play(hlsUrl)
@@ -279,3 +285,161 @@ hlsPlayer.analytics = hmsSDK
 
 
 👀 To see an example iOS HLS Player implementation using 100ms SDK, checkout [our example project](https://github.com/100mslive/100ms-ios-sdk/tree/main/Example).
+</Tab>
+
+<Tab id='sample-code-1'>
+## How to show video player UI that plays HLS stream of the Room
+
+You instantiate `HMSHLSPlayerView()` instance to render the HLS stream from the room you are in.
+```swift
+HMSHLSPlayerView()
+```
+
+## How to play HLS stream when you have a URL of hls stream
+
+You instantiate `HMSHLSPlayerView()` instance passing the URL as parameter to render the HLS stream from the URL.
+```swift
+HMSHLSPlayerView(url: /* pass stream URL here */)
+```
+
+## How to overlay buttons/UI on top of the HLS player
+You can use a view builder as overlay parameter to `HMSHLSPlayerView`.
+```swift
+HMSHLSPlayerView() { player in
+    // player here is an instance of HMSHLSPlayer
+    // custom overlay controls for HLS playback
+    HStack {
+        // pause hls stream
+        Button(action: {
+            player.pause()
+        }, label: {
+            Text("Pause")
+        })
+        
+        // resume hls stream
+        Button(action: {
+            player.resume()
+        }, label: {
+            Text("Resume")
+        })
+    }
+}
+```
+
+ <details>
+    <summary>Code in context</summary>
+```swift
+import SwiftUI
+import HMSRoomModels
+
+struct MeetingView: View {
+    
+    @ObservedObject var roomModel = HMSRoomModel(roomCode: "qdw-mil-sev")
+    
+    var body: some View {
+        
+        switch roomModel.roomState {
+        case .notJoined, .leftMeeting:
+            // Button to join the room
+            Button {
+                Task {
+                    try await roomModel.joinSession(userName: "iOS User")
+                }
+            } label: {
+                Text("Join")
+            }
+        case .inMeeting:
+            VStack {
+                if roomModel.hlsVariants.first?.url != nil {
+                    HMSHLSPlayerView() { player in
+                        // custom overlay controls for HLS playback
+                        HStack {
+
+                            // pause hls stream
+                            Button(action: {
+                                player.pause()
+                            }, label: {
+                                Text("Pause")
+                            })
+                            
+                            // resume hls stream
+                            Button(action: {
+                                player.resume()
+                            }, label: {
+                                Text("Resume")
+                            })
+
+                            // stop hls stream playback
+                            Button(action: {
+                                hmsPlayer.stop()
+                            }, label: {
+                                Text("Stop")
+                            })
+
+                            // seek forward
+                            Button(action: {
+                                hmsPlayer.seekForward(seconds: 5)
+                            }, label: {
+                                Text("Seek forward")
+                            })
+
+                            // seek forward
+                            Button(action: {
+                                hmsPlaye.seekBackward(seconds: 5)
+                            }, label: {
+                                Text("Seek backward")
+                            })
+
+                            // seek to live position
+                            Button(action: {
+                                hmsPlayer.seekToLivePosition()
+                            }, label: {
+                                Text("Seek to Live")
+                            })
+
+                            // change volume
+                            Button(action: {
+                                hmsPlayer.volume = 50
+                            }, label: {
+                                Text("Half Volume")
+                            })
+                        }
+                    }
+                    .onResolutionChanged { size in
+                        print("resolution: \(size)")
+                    }
+                    .onPlaybackFailure { error in
+                        print("hlsError: \(error.localizedDescription)")
+                    }
+                    .onCue { cue in
+                        // use HMSHLSCue to overlay metadata information
+                    }
+                    .onPlaybackStateChanged { playbackState in
+                        // handle HMSHLSPlaybackState enum here
+                        // where HMSHLSPlaybackState is
+                        ///  @objc public enum HMSHLSPlaybackState: Int {
+                        ///      case playing, stopped, paused, buffering, failed, unknown
+                        ///  }
+                    }
+                }
+                else {
+                    // view to show when stream is yet to start
+                }
+                
+                HStack {
+                    
+                    // Button to leave the room
+                    Image(systemName: "phone.down.fill")
+                        .onTapGesture {
+                            Task {
+                                try await roomModel.leaveSession()
+                            }
+                        }
+                }
+            }
+        }
+    }
+}
+```
+</details>
+</Tab>

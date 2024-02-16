@@ -1,17 +1,20 @@
-import { useEffect, useState } from 'react';
-import Link from 'next/link';
+import React, { useEffect, useState } from 'react';
+import UtmLinkWrapper from './UtmLinkWrapper';
 import { ChevronDownIcon } from '@100mslive/react-icons';
 import { Flex, Text } from '@100mslive/react-ui';
 import { titleCasing } from '../lib/utils';
+import { SidebarAPIReference } from './SidebarAPIReference';
+import { references } from '../api-references';
 
-const references = {
-    Web: '/api-reference/javascript/v2/home/content',
-    Android: '/api-reference/android/v2/index.html',
-    'React Native': '/api-reference/react-native/v2/modules.html',
-    Flutter:
-        'https://pub.dev/documentation/hmssdk_flutter/latest/hmssdk_flutter/hmssdk_flutter-library.html',
-    iOS: '/api-reference/ios/v2/documentation/hmssdk'
-    // 'Server side': ''
+const recursivelyGetLink = (data) => {
+    const currentLevel = data?.[Object.keys(data)[0]];
+    if (currentLevel?.url) {
+        return currentLevel.url;
+    }
+    if (typeof currentLevel === 'object') {
+        return recursivelyGetLink(currentLevel);
+    }
+    return undefined;
 };
 
 const PlatformAccordion = ({
@@ -56,16 +59,11 @@ const PlatformAccordion = ({
             </div>
 
             <div className={`plat-accordion-content ${open ? 'active-plat-accordion' : ''}`}>
-                {Object.keys(data['v2']).map((item) => (
+                {Object.keys(data.v2).map((item) => (
                     // For when all children are accordions
-                    <Link
+                    <UtmLinkWrapper
                         passHref
-                        href={`${
-                            data['v2'][item][Object.keys(data['v2'][item])[0]]?.url ||
-                            data['v2'][item][Object.keys(data['v2'][item])[0]][
-                                Object.keys(data['v2'][item][Object.keys(data['v2'][item])[0]])[0]
-                            ].url
-                        }`}
+                        href={`${recursivelyGetLink(data.v2[item])}`}
                         key={`${title}-${item}`}>
                         <Text
                             as="a"
@@ -78,22 +76,10 @@ const PlatformAccordion = ({
                             }}>
                             {titleCasing(item)}
                         </Text>
-                    </Link>
+                    </UtmLinkWrapper>
                 ))}
                 {title !== 'Server side' ? (
-                    <Link passHref href={references[title]}>
-                        <Text
-                            as="a"
-                            variant="sm"
-                            css={{
-                                pl: '$12',
-                                my: '$8',
-                                color: 'var(--docs_text_primary)',
-                                display: 'block'
-                            }}>
-                            API Reference
-                        </Text>
-                    </Link>
+                    <SidebarAPIReference reference={references[title]} />
                 ) : null}
             </div>
         </div>

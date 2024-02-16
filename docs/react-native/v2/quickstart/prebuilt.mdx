@@ -1,6 +1,6 @@
 ---
 title: Prebuilt Quickstart
-nav: 5.3
+nav: 2.1
 ---
 
 ## Overview
@@ -171,6 +171,8 @@ npm install --save @100mslive/react-native-room-kit
 2. react-native-reanimated package
   `react-native-reanimated` package is required for adding animated views.
 
+> Note: If you already have the setup for `react-native-reanimated` package, then skip this step. We support minimum `>= 2.x.x` versions.
+
   ```bash
   npm install react-native-reanimated@2.17.0
   ```
@@ -190,23 +192,20 @@ npm install --save @100mslive/react-native-room-kit
 
   For iOS, do run `pod install` in the `ios/` directory.
 
-  > Note: If you already have the setup for `react-native-reanimated` package, then you can continue with your existing setup. We recommend using `>= 2.x.x` versions.
-
 #### Install the dependencies of react-native-room-kit package
 
 `react-native-room-kit` package depends upon many other packages. These packages to be your app's direct dependencies so that `react-native` can link them.
 
 ```bash
 npm install @100mslive/react-native-hms
-  @100mslive/types-prebuilt@0.0.4
+  @100mslive/types-prebuilt
   @react-native-community/blur@^4.3.2
   @react-native-masked-view/masked-view@^0.2.9
   @shopify/flash-list@1.4.3
   lottie-react-native@5.1.6
   react-native-gesture-handler@2.12.1
-  react-native-keyboard-controller@^1.6.1
   react-native-linear-gradient@2.7.3
-  react-native-modal@12.1.0
+  react-native-modal
   react-native-safe-area-context@3.3.0
   react-native-simple-toast@1.1.3
 ```
@@ -214,17 +213,16 @@ npm install @100mslive/react-native-hms
 Ensure that the final `package.json` file contains the following dependencies -
 
 ```json
-  "@100mslive/react-native-room-kit": "^0.0.4",
-  "@100mslive/react-native-hms": "^1.7.2",
-  "@100mslive/types-prebuilt": "^0.0.4",
+  "@100mslive/react-native-room-kit": "^1.0.3",
+  "@100mslive/react-native-hms": "^1.9.2",
+  "@100mslive/types-prebuilt": "^0.12.7",
   "@react-native-community/blur": "^4.3.2",
   "@react-native-masked-view/masked-view": "^0.2.9",
   "@shopify/flash-list": "1.4.3",
   "lottie-react-native": "5.1.6",
   "react-native-gesture-handler": "2.12.1",
-  "react-native-keyboard-controller": "^1.6.1",
   "react-native-linear-gradient": "2.7.3",
-  "react-native-modal": "12.1.0",
+  "react-native-modal": "^13.0.1",
   "react-native-permissions": "3.4.0",
   "react-native-reanimated": "2.17.0",
   "react-native-safe-area-context": "3.3.0",
@@ -247,7 +245,7 @@ Ensure that the final `package.json` file contains the following dependencies -
   ```
   </Tab>
 
-Follow official installation steps of these libraries if you encounter any problem in setup.
+Follow the official installation steps of these libraries if you encounter any problems in setup.
 
 > Note: If you already have the setup for any of the listed package, then you may continue with your existing setup. If some problem occurs then try using specified version for the package.
 
@@ -290,7 +288,29 @@ After doing changes related to ScreenShare feature, To use screenshare feature o
   }}
 />
 ```
+### Prebuilt Properties 
 
+```js
+ <HMSPrebuilt
+      roomCode={roomCode}
+      options={{
+        userName: "John Appleseed",
+        userId: "My_Unique_UserId",    
+        ios: {
+            appGroup: 'group.rnroomkit',
+            preferredExtension: 'live.100ms.reactnative.RNExampleBroadcastUpload',
+        },
+      }}
+      onLeave={handleRoomLeave}
+      handleBackButton={isScreenFocused}
+      autoEnterPipMode={true}
+/>
+
+const handleRoomLeave: OnLeaveHandler = useCallback((reason) => {
+    console.log(':: Reason for Leaving the Room > ', reason);
+    navigation.navigate('HomeScreen');
+}, []);
+```
 
 ### Complete code example
 

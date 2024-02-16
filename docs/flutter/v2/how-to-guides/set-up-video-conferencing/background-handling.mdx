@@ -1,6 +1,6 @@
 ---
 title: Background Handling
-nav: 10
+nav: 4.91
 ---
 
 While a user has joined a 100ms Room they can put the app in Background Mode & usually expect a certain subset of app functionality continues to work.
@@ -17,43 +17,10 @@ Let's breakdown how your apps can implement efficient handling of Background sta
 
 ## How to prevent mobile device from getting locked while on a call?
 
-To prevent the device from locking during lengthy video or audio calls, you can utilize the [wakelock](https://pub.dev/packages/wakelock) package. By default, devices are configured to lock the screen after a certain period of inactivity as defined in the device settings. However, during calls, where user interactions on the screen are minimal, this behavior can become disruptive.
-To address this issue, the wakelock package can be employed.
+To prevent the device from locking during lengthy video or audio calls, you can utilize the [toggleAlwaysScreenOn](https://www.100ms.live/docs/flutter/v2/how-to-guides/set-up-video-conferencing/always-screen-on) api. By default, devices are configured to lock the screen after a certain period of inactivity as defined in the device settings. However, during calls, where user interactions on the screen are minimal, this behavior can become disruptive.
+To address this issue, the above API can be employed.
 
-It allows you to acquire a wake lock, ensuring that the device remains awake and the screen stays active during the call. By utilizing this package, you can prevent the device from locking automatically and provide a seamless call experience.
-
-Let's see how we can add the package in our applications:
-
-<div className="steps-container">
-
-### Add wakelock to pubspec.yaml file
-
-```yaml
-dependencies:
-  wakelock:
-```
-
-### Enable wakelock in the application
-
-The `Wakelock` package offers convenient methods to enable and disable the wakelock feature within your application. This allows you to selectively enable wakelock only in specific screens where it is necessary.
-
-For example, to enable wakelock in whole application:
-
-```dart
-void main(){
-  Wakelock.enable();
-}
-```
-
-### Disable wakelock in the application
-
-To disable wakelock we can use the `disable` method:
-
-```dart
-Wakelock.disable();
-```
-
-</div>
+It allows you to acquire a wake lock, ensuring that the device remains awake and the screen stays active during the call. By utilizing this, you can prevent the device from locking automatically and provide a seamless call experience.
 
 ## Managing Wakelock and Earpiece Audio Source in Your App
 
@@ -193,16 +160,22 @@ Depending on your use-case, your app may want either access to `microphone` or `
 Add service inside `<application>` tag as follows:
 
 ```xml
-<application>
-    ...
-    <activity>
-        ...
-    </activity>
+<manifest package="....">
 
-      // Set Service Type to capture Audio or Video as per your use-case. In most cases, only `microphone` access would be required. Then do not pass the `camera`. If stopWithTask set to true then it will stop the notification if app is force killed.
-      <service android:name="com.pravera.flutter_foreground_task.service.ForegroundService"
-        android:foregroundServiceType="camera|microphone"
-        android:stopWithTask="true" />
+  <!-- This is required if the application uses foreground service for android 14 and above-->
+  <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CAMERA"/>
+  <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
+
+  <application>
+      ...
+      <activity>
+          ...
+      </activity>
+
+        // Set Service Type to capture Audio or Video as per your use-case. In most cases, only `microphone` access would be required. Then do not pass the `camera`. If stopWithTask set to true then it will stop the notification if app is force killed.
+        <service android:name="com.pravera.flutter_foreground_task.service.ForegroundService"
+          android:foregroundServiceType="camera|microphone"
+          android:stopWithTask="true" />
 
 </application>
 ```

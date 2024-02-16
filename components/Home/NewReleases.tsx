@@ -16,7 +16,7 @@ const NewReleases = () => (
             New releases
         </Text>
         <Text variant="sm" css={{ color: '$textMedEmp', mt: '$2', mb: '$10' }}>
-            Follow our changelog for new features and improvements
+            Follow our release notes for new features and improvements
         </Text>
         <Box
             css={{
@@ -47,31 +47,31 @@ const SdkList = {
     Web: {
         icon: <JavascriptIcon style={iconStyle} />,
         id: 'javascript',
-        link: '/javascript/v2/changelog/release-notes'
+        link: '/javascript/v2/release-notes/release-notes'
     },
     Android: {
         icon: <AndroidIcon style={iconStyle} />,
         id: 'android',
-        link: '/android/v2/changelog/release-notes'
+        link: '/android/v2/release-notes/release-notes'
     },
     iOS: {
         icon: <AppleIcon style={iconStyle} />,
         id: 'ios',
-        link: '/ios/v2/changelog/release-notes'
+        link: '/ios/v2/release-notes/release-notes'
     },
     Flutter: {
         icon: <FlutterIcon style={iconStyle} />,
         id: 'flutter',
-        link: '/flutter/v2/changelog/release-notes'
+        link: '/flutter/v2/release-notes/release-notes'
     },
     'React Native': {
         icon: <ReactIcon style={iconStyle} />,
         id: 'reactNative',
-        link: '/react-native/v2/changelog/release-notes'
+        link: '/react-native/v2/release-notes/release-notes'
     },
     'Server-side': {
         icon: <ServerIcon style={iconStyle} />,
         id: 'server',
-        link: '/server-side/v2/changelog/release-notes'
+        link: '/server-side/v2/release-notes/release-notes'
     }
 };

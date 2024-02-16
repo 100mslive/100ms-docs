@@ -1,6 +1,6 @@
 ---
 title: Prebuilt Quickstart
-nav: 1.06
+nav: 1.01
 ---
 
 ## Overview
@@ -125,3 +125,33 @@ npm run dev
 ![Join](/docs/v2/prebuilt-room.png)
 
 The Prebuilt component behaves like the 100ms sample app which can be forked from this [GitHub repository](https://github.com/100mslive/100ms-web).
+
+The supported props are listed in the below section.
+
+## Props for HMSPrebuilt
+
+<br />
+HMSPrebuilt accepts the following props:
+
+`roomCode` 
+- The room code of the room you want to join. You can get the room code from the [100ms dashboard](https://dashboard.100ms.live).
+
+`logo` (optional)
+- An image URL as a string which is displayed in the preview screen and header.
+
+`authToken` (optional)
+- This token is room and role specific. It can be copied from the join room modal on the [dashboard](https://dashboard.100ms.live). Read more about it [here](/get-started/v2/get-started/security-and-tokens#auth-token-for-client-sdks).
+
+`onJoin` (optional)
+- A callback function that will be executed after the peer joins the call. 
+
+`onLeave` (optional)
+- A callback function that will be executed after the peer leaves the call, the session ends or if the peer gets kicked out.
+
+`options` (optional)
+- An object which accepts the following parameters:
+    - `userName` (optional): The name to be assigned to the peer.
+
+    - `userId` (optional): The user ID to be assigned to the peer.
+
+    

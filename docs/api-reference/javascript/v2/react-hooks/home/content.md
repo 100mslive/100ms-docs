@@ -12,6 +12,7 @@ nav: '5.1.1'
 - [useDevicesResult](/api-reference/javascript/v2/react-hooks/interfaces/useDevicesResult)
 - [useEmbedShareResult](/api-reference/javascript/v2/react-hooks/interfaces/useEmbedShareResult)
 - [usePDFShareResult](/api-reference/javascript/v2/react-hooks/interfaces/usePDFShareResult)
+- [usePaginatedParticipantsResult](/api-reference/javascript/v2/react-hooks/interfaces/usePaginatedParticipantsResult)
 - [useParticipantListResult](/api-reference/javascript/v2/react-hooks/interfaces/useParticipantListResult)
 - [useParticipantsResult](/api-reference/javascript/v2/react-hooks/interfaces/useParticipantsResult)
 - [usePreviewInput](/api-reference/javascript/v2/react-hooks/interfaces/usePreviewInput)
@@ -51,7 +52,7 @@ nav: '5.1.1'
 ▸ (`err`, `method?`): `void`
 
 use this to control how errors are handled within a function exposed by a hook. By default this
-only logs the error to the console, and can be overridden for any other behaviour. For e.g.
+only logs the error to the console, and can be overridden for any other behaviour. For example
 `(err) => throw err;` will ensure that any error is thrown back to the caller when the function is called.
 
 ##### Parameters
@@ -64,6 +65,12 @@ only logs the error to the console, and can be overridden for any other behaviou
 ##### Returns
 
 `void`
+
+---
+
+### usePaginatedParticipantsInput
+
+Ƭ **usePaginatedParticipantsInput**: `HMSPeerListIteratorOptions`
 
 ---
 
@@ -407,6 +414,30 @@ usePDFShareResult
 
 ---
 
+### usePaginatedParticipants
+
+▸ **usePaginatedParticipants**(`options`): `Object`
+
+#### Parameters
+
+| Name      | Type                         |
+| :-------- | :--------------------------- |
+| `options` | `HMSPeerListIteratorOptions` |
+
+#### Returns
+
+`Object`
+
+| Name            | Type                     |
+| :-------------- | :----------------------- |
+| `hasNext`       | () => `boolean`          |
+| `loadMorePeers` | () => `Promise`<`void`\> |
+| `loadPeers`     | () => `Promise`<`void`\> |
+| `peers`         | `HMSPeer`[]              |
+| `total`         | `number`                 |
+
+---
+
 ### useParticipantList
 
 ▸ **useParticipantList**(): `Object`
@@ -563,3 +594,27 @@ Please check the documentation of input and output types for more details.
 #### Returns
 
 [`useVideoResult`](/api-reference/javascript/v2/react-hooks/interfaces/useVideoResult)
+
+---
+
+### useWhiteboard
+
+▸ **useWhiteboard**(`isMobile?`): `Object`
+
+#### Parameters
+
+| Name       | Type      | Default value |
+| :--------- | :-------- | :------------ |
+| `isMobile` | `boolean` | `false`       |
+
+#### Returns
+
+`Object`
+
+| Name        | Type                                               |
+| :---------- | :------------------------------------------------- |
+| `iframeRef` | `MutableRefObject`<`null` \| `HTMLIFrameElement`\> |
+| `isAdmin`   | `boolean`                                          |
+| `isOwner`   | `boolean`                                          |
+| `open`      | `boolean`                                          |
+| `toggle`    | `undefined` \| () => `Promise`<`void`\>            |

@@ -5,6 +5,12 @@ nav: 4.6
 
 What's a video without being able to send messages to each other too? 100ms supports chat for every video/audio room you create.
 
+<Tabs
+  id="sample-code"
+  items={["UIKit", "SwiftUI"]}
+/>
+
+<Tab id='sample-code-0'>
 You can see an example of every way of sending messages and interpreting messages in the advanced [sample app](https://github.com/100mslive/100ms-ios-sdk).
 
 ### Addressing messages
@@ -114,6 +120,52 @@ public class HMSMessageRecipient {
 
 `type`: Will be `broadcast` for a message being sent to everyone. If this is true, the other two field will be null, empty respectively.
 
-`peer` will be set when it's a direct message.
+`peer`: will be set when it's a direct message.
 
-`roles` will be set when it's a message to one or many roles.
+`roles`: will be set when it's a message to one or many roles.
+</Tab>
+
+<Tab id='sample-code-1'>
+
+## How to send message to another participant
+
+You use `send(message: , to:)` method on `HMSRoomModel` instance to send a message to another participant.
+```swift
+try await roomModel.send(message: /* text message as string */, to recipient: /* instance of HMSRecipient */, type: /* optional type of message; type is "chat" by default*/)
+```
+    <details>
+    <summary>Code in context</summary>
+```swift
+//Send a text message to everyone
+try await roomModel.send("How is it going?", to: .everyone)
+```
+```swift
+//Send a text message to a random remote participant
+guard let randomRemoteParticiapnt = roomModel.remotePeerModels.randomElement() else {return}
+try await roomModel.send(message: "How is it going?", to: .peer(randomRemoteParticiapnt))
+```
+```swift
+//Send a text message to all participant with student role
+guard let studentRole = (roomModel.roles.first{$0.name == "student"}) else { return }
+try await roomModel.send(message: "How is it going?", to: .role(studentRole))
+```
+    </details>
+
+## How to receive messages from other participants
+
+You can access received messages from messages property of RoomModel like following:
+```swift
+roomModel.messages
+```
+ <details>
+    <summary>Code in context</summary>
+```swift
+// show list of all received messages.
+List {
+    ForEach(roomModel.messages, id: \.self) { hmsMessage in
+        Text(hmsMessage.message)
+    }
+}
+```
+</details>
+</Tab>

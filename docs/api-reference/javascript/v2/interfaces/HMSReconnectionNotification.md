@@ -1,6 +1,6 @@
 ---
 title: HMSReconnectionNotification
-nav: '4.46'
+nav: '4.57'
 ---
 
 ## Hierarchy
@@ -13,7 +13,7 @@ nav: '4.46'
 
 ### data
 
-• **data**: `null`
+• **data**: `null` \| [`HMSException`](/api-reference/javascript/v2/interfaces/HMSException)
 
 ---
 

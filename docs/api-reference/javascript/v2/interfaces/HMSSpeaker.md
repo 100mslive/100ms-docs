@@ -1,10 +1,10 @@
 ---
 title: HMSSpeaker
-nav: '4.57'
+nav: '4.68'
 ---
 
 HMS Speaker stores the details of peers speaking at any point of time along with
-their audio levels. This can be used to current speakers or highlight videotiles.
+their audio levels. This can be used to current speakers or highlight video tiles.
 
 ## Properties
 

@@ -1,6 +1,6 @@
 ---
 title: useVideoOutput
-nav: '5.2.18'
+nav: '5.2.19'
 ---
 
 ## Properties

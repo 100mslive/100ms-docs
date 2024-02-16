@@ -1,0 +1,209 @@
+---
+title: Live Streaming using RTMP Ingestion
+nav: 8
+---
+
+<Note type='warning'>
+**IMPORTANT** <br/>
+- Free usage is limited to 5 minutes for HD and 15 minutes for non-HD resolution for every live stream for a particular account.
+- This feature has been gated. In case you require access beyond the available free usage, please reach out to us through the chat support on 100ms dashboard with your **customer ID**, **company name**, and your **use case** for RTMP Ingestion.
+</Note>
+
+This guide will help you start a live stream in 100ms from OBS or any external broadcasting application over RTMP. 
+
+
+<StepsToc
+    parentId="rtmp-ingestion-flow"
+    descriptions={[
+        "Setting up your template for RTMP-In Live Stream experience.",
+        "Generating RTMP Stream Key and RTMP URL for your room(s).",
+        "Inputting stream details in your broadcasting software.",
+        "Starting, interacting, and ending your live streams."
+    ]}
+/>
+
+<StepsContainer id="rtmp-ingestion-flow">
+
+### Create a Template
+
+The first step is to create a template which is suitable for live streaming using RTMP Ingestion.
+
+1. On the 100ms Dashboard, click on ‘Create Template’.
+
+![create template](/docs/v2/create-a-template.png)
+
+2. Select ‘Live Streaming’ as your use-case and click on ‘Configure’.
+
+![select live streaming](/docs/v2/rtmp-ingestion/rtmp-in-create-template-1.png)
+
+3. Choose the "Streaming software (using RTMP-Ingestion)" option when asked, "Where will the Broadcaster stream from?". Then, proceed to the "Select Add-ons" section.
+
+![select rtmp in](/docs/v2/rtmp-ingestion/rtmp-in-create-template-2.png)
+
+4. Proceed through the rest of the steps by answering the questions according to your preferences.
+
+5. On the last screen, the RTMP Ingest details (stream key and RTMP Endpoint) are displayed for the default room created for the template. [Input the stream key](#input-stream-details), share the viewer role link and start your stream.
+
+![rtmp stream key details](/docs/v2/rtmp-ingestion/rtmp-in-create-template-3.png)
+
+
+> **Note on editing an existing templates (Not recommended)**
+> 
+> Live streaming over RTMP-In can also be enabled for rooms with existing templates that have live streaming enabled. However, this is not recommended as other modifications need to be made for the broadcaster role to join the room without going live from the browser. 
+> 
+
+### Getting stream details
+
+Since the live stream is started for a specific room, a room needs to be created using the [Create Room API](/server-side/v2/api-reference/Rooms/create-via-api) or through the [100ms Dashboard](/server-side/v2/api-reference/Rooms/create-via-dashboard). Once a room is created, a stream key needs to be generated for the room. Using the stream key and the RTMP Ingest endpoint (URL), any third party application can send a media stream to the room over RTMP. Once a stream key is generated, it remains valid until explicitly reset or disabled by the user.
+
+Stream key along with RTMP Ingest endpoint for a room can be generated and fetched using the below methods.
+
+<Tabs id="fetching-stream-details" items={['Dashboard - Joining a Room', 'Dashboard - Room Details' ,'REST APIs']} />
+
+<Tab id='fetching-stream-details-0'>
+**Create and Join a Room**
+
+1. On 100ms, dashboard, click on ‘Create Room’ and configure the room name and template settings. 
+2. Continue to create a new room based on the selected template.
+3. In join your room panel, Click on ‘Stream Key Details’ under ‘Go live using RTMP Ingest’ section to generate and access the stream key and RTMP URL.
+
+<video loop="true" autoplay="autoPlay" controls="false" id="vid" muted>
+    <source src="/docs/docs/v2/rtmp-ingestion/rtmp-in-create-room.mp4" type="video/mp4" />
+</video>
+
+</Tab>
+
+<Tab id='fetching-stream-details-1'>
+
+**Room Details Page** 
+
+1. Navigate to the **'Rooms'** section from the left sidebar on 100ms Dashboard. 
+2. In the **‘Rooms’** section, navigate to the ‘Room Details’ page by clicking on the specific room name or room ID.
+3. For the specific room, the RTMP Stream Key and RTMP URL will be available. In case they are not, you can create them by clicking the ‘Generate’ button.
+
+![generating stream keys](/docs/v2/rtmp-ingestion/generate-stream-key.gif)
+
+4. Existing stream key can be reset or disabled at any time using the options here. The new stream key will take effect from the subsequent RTMP Ingest connections. 
+
+![rtmp stream key functions](/docs/v2/rtmp-ingestion/rtmp-in-key-functions.png)
+
+> **Note**
+>
+> 1. Stream keys and RTMP URL cannot be generated for disabled rooms. Learn more about managing room statuses [here](/server-side/v2/api-reference/Rooms/disable-or-enable).
+> 2. Stream keys and RTMP URL won't be visible if the 'Live Streaming (HLS)' is disabled for the template of the room.
+>
+
+</Tab>
+
+<Tab id='fetching-stream-details-2'>
+
+**Stream Key APIs**
+
+1. Use the [Create Stream Key API](/server-side/v2/api-reference/stream-key/create-rtmp-stream-key) to create the stream key for a specific room. 
+
+2. Existing stream key for a room can be fetched using the [Get Stream Key API](/server-side/v2/api-reference/stream-key/get-rtmp-stream-key).  
+
+3. In case the stream key is compromised or not to be used again, it can be disabled using the [Disable Stream Key API](/server-side/v2/api-reference/stream-key/disable-rtmp-stream-key). Alternatively, a room can be disabled which deactivates its linked stream key. Enabling the room reactivates the linked stream key.
+
+> **Note**
+>
+> There is a possibility that RTMP Endpoint might change for the specified room.  We recommend fetching the stream key details using the [Get Stream Key API](/server-side/v2 api-reference/stream-key/get-rtmp-stream-key) each time before starting a new stream in any room.
+>
+
+</Tab>
+
+
+### Input stream details
+Once stream key and RTMP endpoint have been fetched and copied, these need to be inputted in a streaming software that supports RTMP-Out. We’ll be using OBS Studio for our example although you can use any software that supports RTMP-Out.
+
+1. Click on ‘**Settings**’ in the software interface.
+
+![obs studio interface](/docs/v2/obs-studio-interface.png)
+
+2. Click on ‘Stream’ and input RTMP URL in the ‘Server’ field and the stream key in the ‘Stream Key’ field.
+
+![obs studio stream settings](/docs/v2/obs-studio-stream-settings.png)
+
+3. Click on ‘OK’ to confirm the details.
+
+Refer to [this guide](https://obsproject.com/kb/) to set up OBS Studio for the desired experience.
+
+### Managing the live stream
+
+#### Starting the live stream
+Start your live stream directly from the broadcasting software. In case of OBS Studio, click on the ‘Start Streaming’ button under ‘Controls’ to begin the live stream. 
+
+![obs studio start live stream](/docs/v2/obs-studio-start-live-stream.png)
+
+> **Note on starting the live stream**
+> 
+> While starting a live stream with RTMP Ingest, **do not use** ‘Start live stream’ API or SDK functionality. The live stream will commence automatically upon a successful connection to 100ms Ingest servers by OBS or the external application.
+>
+
+Once the RTMP connection request is initiated from OBS/external application, the following webhooks will be dispatched to indicate the progression of the live stream. 
+
+| Webhook                                                                                                | What does it signify                                                                                                                                                                                 |
+|---------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [`ingest.start.success`](/server-side/v2/how-to-guides/configure-webhooks/webhook#ingeststartsuccess)   | Connection with 100ms ingest server is successfully established. 100ms server will internally initiate a request to start a live stream on the room.                                                   |
+| [`hls.started.success`](/server-side/v2/how-to-guides/configure-webhooks/webhook#hlsstartedsuccess)     | Live stream on the room has successfully started. Playback is active from this point onwards. Application can enable the viewer to join the room with the 'viewer' role.                               |
+| [`ingest.start.failure`](/server-side/v2/how-to-guides/configure-webhooks/webhook#ingestfailure)        | Connection with 100ms ingest server has failed. The exact reason can be inferred from the error code and error message.                                                                               |
+| [`hls.failure`](/server-side/v2/how-to-guides/configure-webhooks/webhook#hlsfailure)                    | Any internal failure in the live stream start up process.                                                                                                                                            |
+| [`ingest.end.success`](/server-side/v2/how-to-guides/configure-webhooks/webhook#ingestendsuccess)       | Connection with 100ms ingest server has been successfully terminated. This is sent on stopping the stream from OBS / external application. Our server will internally signal to stop the live stream on the room |
+| [`hls.stopped.success`](/server-side/v2/how-to-guides/configure-webhooks/webhook#hlsstoppedsuccess)     | Live stream has been successfully stopped. Playback is not active from this point onwards.                                                                                                                              |
+| [`hls.recording.success`](/server-side/v2/how-to-guides/configure-webhooks/webhook#hlsrecordingsuccess) | Recording of the live stream is successfully generated.                                                                                                                                              |
+
+> **Previewing your live stream**
+> 
+> There is no built-in functionality is available to preview the stream as of now. However, you can preview and watch along by joining in through the `viewer-near-realtime` role.
+>
+
+#### Interactivity during live stream
+The interactivity between the broadcaster and the viewers will be very limited in case of RTMP-In live streams.
+
+1. On-stage and off-stage functionality is not supported. Since the media is ingested from an external source and directly streamed through HLS, the viewers of the HLS stream will not be able to see anything going inside the conferencing (WebRTC) room. This feature is meant for a one-way broadcast from a single broadcaster to an audience
+2. The peers in the conferencing (WebRTC) room (if any) will not be able to watch the incoming RTMP-Ingested media stream.
+3. The `broadcaster` role created for the given template can chat with the viewers, but the experience will be sub-optimal as the stream is running couple of seconds delayed.
+
+#### Ending the live stream
+To instantly terminate the live stream, use 100ms SDK methods or [REST APIs](/server-side/v2/api-reference/live-streams/stop-live-stream-for-room), 
+
+On stopping the stream from OBS / external streaming application, only the RTMP connection to 100ms ingestion servers will be terminate. Note that this will merely stop the ingest from the external streaming application into 100ms room. **The live stream will NOT end** and continue to run while a **'disconnection slate'** is shown in the playback until the reconnection window expires. The same behaviour applies when the external streaming application faces disconnection with 100ms Ingest servers due to any network interruptions.
+
+![disconnection slate](/docs/v2/disconnection-slate.png)
+
+The duration of  the live stream’s reconnection window can be configured using the `autoStopTimeout` field in the [Policy API](/server-side/v2/api-reference/policy/create-template-via-api).  After the reconnect window elapses, the live stream will be terminated automatically.
+
+> **Note**
+> 
+> Any new RTMP connection initiated from OBS or another streaming app while the live stream is still trying to reconnect, it will be seen as a reconnection attempt to the existing live stream. Once the reconnection is successful, the "disconnection slate" in the live stream will be replaced by the incoming feed from the broadcaster.
+>
+
+
+#### After the live stream
+Based on your live streaming use-case, you can choose to do any of the following after the live stream has ended.
+- Continue using the same room for your live streams. The older stream key and RTMP URL endpoint will be valid to start future live streams since they do not have an expiry.
+- Reset or disable the stream key for the given room. This can be done using the following methods.
+    <Tabs id="reset-stream-key" items={['Dashboard' ,'REST APIs']} />
+
+    <Tab id='reset-stream-key-0'>
+    Reset the stream keys on the 'Room Details' page using the reset button beside the stream key.
+
+    ![rtmp stream key functions](/docs/v2/rtmp-ingestion/rtmp-in-key-functions.png)
+
+    </Tab>
+
+    <Tab id='reset-stream-key-1'>
+
+    1. Disabling it by using the [Disable Stream Key API](/server-side/v2/api-reference/stream-key/disable-rtmp-stream-key).
+    2. Regenerating a new stream key using the [Create Stream Key API](/server-side/v2/api-reference/stream-key/create-rtmp-stream-key) after disabling the older one.
+
+    </Tab>
+
+> Note
+>
+> Lock or disable the room by either using 100ms dashboard or by using the [Disable / Enable Room API](/server-side/v2/api-reference/Rooms/disable-or-enable). This will also render the associated key useless until the room is reactivated.
+>
+ 
+
+</StepsContainer>
+

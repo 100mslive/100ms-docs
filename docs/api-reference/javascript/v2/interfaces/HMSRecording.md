@@ -1,21 +1,13 @@
 ---
 title: HMSRecording
-nav: '4.47'
+nav: '4.58'
 ---
 
 ## Properties
 
 ### browser
 
-• **browser**: `Object`
-
-#### Type declaration
-
-| Name         | Type           |
-| :----------- | :------------- |
-| `error?`     | `HMSException` |
-| `running`    | `boolean`      |
-| `startedAt?` | `Date`         |
+• **browser**: `HMSBrowserRecording`
 
 ---
 
@@ -27,12 +19,4 @@ nav: '4.47'
 
 ### server
 
-• **server**: `Object`
-
-#### Type declaration
-
-| Name         | Type           |
-| :----------- | :------------- |
-| `error?`     | `HMSException` |
-| `running`    | `boolean`      |
-| `startedAt?` | `Date`         |
+• **server**: `HMSSFURecording`

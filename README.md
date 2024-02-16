@@ -90,7 +90,7 @@ Here's some of them added and can be easily added:
 
 #### 1. Note Component
 
--   You can easily use this by using `> blockquote` it will have a default type of `'success'`
+-   You can easily use this by using `> blockquote` it will have a default type of `white`
 -   To use other types write in this way
 
 ```jsx
@@ -106,6 +106,8 @@ Here's some of them added and can be easily added:
   Hello this is Warning Note Component
 </Note>
 ```
+
+Types available: `success`,`warning`,`error`, `white`
 
 ---
 
@@ -161,7 +163,7 @@ Super easy just get the `id`
 
 ## 🎨 Customization
 
-Every style of docs is fully customisable and is fully built with CSS Variables.
+Every style of docs is fully customizable and is fully built with CSS Variables.
 
 All CSS Tokens , Baseline , Reset can be found in [theme.css](https://github.com/100mslive/100ms-docs/blob/main/styles/theme.css)
 
@@ -181,7 +183,7 @@ All CSS Variables prefixed with `token` control the Syntax Highlighting.
 
 ## #️⃣ Viewing updated release versions on local before pushing changes
 
-- To view the updated release version on local after adding changelog, run the following command before starting the local server:
+-   To view the updated release version on local after adding changelog, run the following command before starting the local server:
     -   `yarn updatereleases`
     -   `yarn dev`
 

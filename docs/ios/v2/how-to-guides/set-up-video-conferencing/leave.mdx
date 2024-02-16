@@ -5,10 +5,59 @@ nav: 4.2
 
 Leaving a room should be quick. Once a user wishes to end their interaction in the room, they can choose to leave the meeting. 👋
 
-100ms SDK provides a simple, no fuss API to do exactly that. Invoke the `leave` method on instance of `HMSSDK`.
+100ms SDK provides a simple, no fuss API to do exactly that.
+
+<Tabs
+  id="sample-code"
+  items={["UIKit", "SwiftUI"]}
+/>
+
+<Tab id='sample-code-0'>
+Invoke the `leave` method on instance of `HMSSDK`.
 
 ```swift
 hmsSDK.leave()
 ```
+</Tab>
+
+<Tab id='sample-code-1'>
+Invoke the `leaveSession` method on instance of `HMSRoomModel`.
+
+```swift
+try await roomModel.leaveSession()
+```
+<details>
+    <summary>Code in context</summary>
+```swift
+import HMSRoomModels
+
+struct MeetingView: View {
+    
+    @ObservedObject var roomModel = HMSRoomModel(roomCode: "qdr-mik-seb")
+    
+    var body: some View {
+        
+        switch roomModel.roomState {
+            
+        case .notJoined, .leftMeeting:
+            // Button to join the room
+            ...
+        case .inMeeting:
+            VStack {
+                // Button to leave the room
+                Button {
+                    Task {
+                        try await roomModel.leaveSession()
+                    }
+                } label: {
+                    Text("Leave")
+                }
+            }
+        }
+    }
+}
+```
+</details>
+</Tab>
 
 You should expect that the `leave` function always succeeds, even in scenarios like "No Internet Connection", "Low Battery", etc

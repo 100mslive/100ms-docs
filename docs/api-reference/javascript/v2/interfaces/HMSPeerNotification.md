@@ -1,6 +1,6 @@
 ---
 title: HMSPeerNotification
-nav: '4.30'
+nav: '4.35'
 ---
 
 ## Hierarchy
@@ -49,7 +49,7 @@ BaseNotification.severity
 
 ### type
 
-• **type**: [`PEER_JOINED`](/api-reference/javascript/v2/enums/HMSNotificationTypes#peer_joined) \| [`PEER_LEFT`](/api-reference/javascript/v2/enums/HMSNotificationTypes#peer_left) \| [`ROLE_UPDATED`](/api-reference/javascript/v2/enums/HMSNotificationTypes#role_updated) \| [`NAME_UPDATED`](/api-reference/javascript/v2/enums/HMSNotificationTypes#name_updated) \| [`METADATA_UPDATED`](/api-reference/javascript/v2/enums/HMSNotificationTypes#metadata_updated)
+• **type**: [`PEER_JOINED`](/api-reference/javascript/v2/enums/HMSNotificationTypes#peer_joined) \| [`PEER_LEFT`](/api-reference/javascript/v2/enums/HMSNotificationTypes#peer_left) \| [`ROLE_UPDATED`](/api-reference/javascript/v2/enums/HMSNotificationTypes#role_updated) \| [`NAME_UPDATED`](/api-reference/javascript/v2/enums/HMSNotificationTypes#name_updated) \| [`METADATA_UPDATED`](/api-reference/javascript/v2/enums/HMSNotificationTypes#metadata_updated) \| [`HAND_RAISE_CHANGED`](/api-reference/javascript/v2/enums/HMSNotificationTypes#hand_raise_changed)
 
 #### Overrides
 

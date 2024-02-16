@@ -83,7 +83,7 @@ When a peer wishes to change the role of another peer it calls `changeRoleOfPeer
 
 -   When `force` is set to `true` - role is directly changed and the peers receives an `HMSUpdateListenerActions.ON_PEER_UPDATE` event with `HMSPeerUpdate.ROLE_CHANGED` update type.
 
--   When `force` is set to `false` - This is a polite request e.g. "Would you like to change your role from listener to speaker?". Which can be ignored by the peer. The way it works is that the target peer will first receive a "Role Change Request" by `HMSUpdateListenerActions.ON_ROLE_CHANGE_REQUEST` event. If the request is accepted, the peers receives an `HMSUpdateListenerActions.ON_PEER_UPDATE` event with `HMSPeerUpdate.ROLE_CHANGED` update type otherwise nothing happens.
+-   When `force` is set to `false` - This is a polite request. For example, "Would you like to change your role from listener to speaker?". Which can be ignored by the peer. The way it works is that the target peer will first receive a "Role Change Request" by `HMSUpdateListenerActions.ON_ROLE_CHANGE_REQUEST` event. If the request is accepted, the peers receives an `HMSUpdateListenerActions.ON_PEER_UPDATE` event with `HMSPeerUpdate.ROLE_CHANGED` update type otherwise nothing happens.
 
 Let's understand this with a diagram:
 

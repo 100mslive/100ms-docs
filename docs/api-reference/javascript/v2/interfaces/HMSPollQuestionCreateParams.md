@@ -1,11 +1,11 @@
 ---
 title: HMSPollQuestionCreateParams
-nav: '4.42'
+nav: '4.49'
 ---
 
 ## Hierarchy
 
-- `Pick`<`HMSPollQuestion`, `"text"` \| `"skippable"` \| `"type"` \| `"answer"`\>
+- `Pick`<[`HMSPollQuestion`](/api-reference/javascript/v2/interfaces/HMSPollQuestion), `"text"` \| `"skippable"` \| `"type"` \| `"answer"`\>
 
   ↳ **`HMSPollQuestionCreateParams`**
 
@@ -29,7 +29,7 @@ Pick.answer
 
 ### options
 
-• `Optional` **options**: `HMSPollQuestionOptionCreateParams`[]
+• `Optional` **options**: [`HMSPollQuestionOptionCreateParams`](/api-reference/javascript/v2/interfaces/HMSPollQuestionOptionCreateParams)[]
 
 ---
 
@@ -55,8 +55,14 @@ Pick.text
 
 ### type
 
-• **type**: `HMSPollQuestionType`
+• **type**: [`HMSPollQuestionType`](/api-reference/javascript/v2/enums/HMSPollQuestionType)
 
 #### Inherited from
 
 Pick.type
+
+---
+
+### weight
+
+• `Optional` **weight**: `number`
