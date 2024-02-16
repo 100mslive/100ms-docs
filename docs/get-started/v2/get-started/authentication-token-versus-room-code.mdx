@@ -16,9 +16,10 @@ Before integrating, it's important to define your implementation stack. Let's ex
 
 |  | Room Codes | Authentication Token |
 | --- | --- | --- |
-| Parity | Unique codes against a `role` and `room_id` combination. Additional user context can be passed to make these codes user specific. | JWT token. Auth token is unique to a `role`, `user_id` and `room_id`. |
+| Parity | Encrypted code representing a unique `role` and `room_id` combination.| JWT token. Auth token is unique to a `role`, `user_id` and `room_id`. |
 | Set-up | Use server-side [Room Codes APIs](https://www.100ms.live/docs/server-side/v2/api-reference/room-codes/create-room-code-api). Management Token is required | [Server-side set up](https://www.100ms.live/docs/get-started/v2/get-started/security-and-tokens#set-up-your-token-server) to generate auth token. Management token is not required |
-| Expiry | [Room Codes do not expire](https://www.100ms.live/docs/prebuilt/v2/prebuilt/room-codes/overview#room-codes-do-not-expire). Peers can access rooms using links created with room codes, unless disabled.  | Set a desired expiry for auth token. Default expiry duration is 24 hours. Peers cannot join a session if their auth token is expires. |
+| Expiry | [Room Codes do not expire](https://www.100ms.live/docs/prebuilt/v2/prebuilt/room-codes/overview#room-codes-do-not-expire). Peers can access rooms using links created with room codes, unless disabled.  | Set a desired expiry for auth token. Peers cannot join a session if their auth token is expires. |
+| User Context|  Additional user context can be passed to make these codes user specific. | User ID can be passed when creating auth token|
 
 ## Key Recommendations
 
