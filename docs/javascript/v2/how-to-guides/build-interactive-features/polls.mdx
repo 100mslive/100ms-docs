@@ -139,7 +139,7 @@ The props accepted are:
 - `count` :number - The number of peer entries that should be fetched at a time
 
 The response contains an array of entries of type `HMSQuizLeaderboardEntry`, a boolean `hasNext` to know there are more entries and 
-a summary object of type `HMSQuizLeaderboardSummary` containing details like the average score, average time taken to answer a question and more.
+a summary object of type `HMSQuizLeaderboardSummary` containing details like the average score, average time taken to answer a question, number of users with all correct answers and more.
 
 ```
 {
@@ -149,7 +149,7 @@ a summary object of type `HMSQuizLeaderboardSummary` containing details like the
     votedUsers: number,
     avgScore: number,
     avgTime: number,
-    correctAnswers: number,
+    correctUsers: number,
   };
   hasNext: false
 }
