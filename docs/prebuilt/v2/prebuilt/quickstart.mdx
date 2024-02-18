@@ -72,6 +72,21 @@ Once you have the template-subdomain and room code ready, append these to the li
   </Callout>
 </FlexContainer>
 
+### Passing user context with Prebuilt links(optional)
+When using Prebuilt links and room codes, you can pass your user ID and user name to the Prebuilt link by appending `?userId=<user_id>&name=<user_name>` to the link. This way, you can track user specific events when using server-side APIs and webhooks.
+
+<FlexContainer>
+  <Callout icon="link" title="Prebuilt Links with user context">
+    - Host Prebuilt Link :
+    https://`template-subdomain`.app.100ms.live/meeting/`room-code-for-host`?`userId=<user_id>`&`name=<user_name>`
+    - Guest Prebuilt Link : https://`template-subdomain`.app.100ms.live/meeting/`room-code-for-guest`?`userId=<user_id>`&`name=<user_name>`
+  </Callout>
+</FlexContainer>
+
+<Note title="Passing Name to 100ms Prebuilt">
+When you pass a user name to 100ms Prebuilt, it pre-populates the user's name field on Prebuilt's preview screen. The user's name field becomes locked after being pre-filled, preventing users from modifying their name.
+</Note>
+
 ### Share or Embed as iFrame
 
 Once you have a Prebuilt link ready, you can share it with your users on the fly as push notification, SMS, email etc or directly embed the link in your application.
