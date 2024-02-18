@@ -1,0 +1,174 @@
+---
+title: Network metrics and media quality
+nav: 4.4
+---
+
+## Media Quality Types
+
+Quality measurement in video conferencing systems involves assessing both the outgoing/publisher media quality that is being sent from a peer as well as the incoming/subscriber media quality being received by the peer. Media quality can be observed in two dimensions:
+
+1. **Outgoing or Publisher Media Quality**: This dimension represents the quality of outgoing audio and video streams sent from a peer's device. It is influenced by factors such as the device's processing power, encoder efficiency, and the available uplink bandwidth.
+2. I**ncoming or Subscriber Media Quality**: This dimension refers to the quality of incoming audio and video streams received by a peer from other peers in the call. It is primarily impacted by the network conditions on the ~~remote~~ publishing end, including factors like available downlink bandwidth, packet loss, jitter, and the efficiency of the decoder on the receiving device.
+
+## Network metrics impact media quality
+
+There are several factors on which quality can be measured such as bitrate, jitter, round trip time, packet loss, CPU limitation, network limitation impact incoming and outgoing media quality of a video session.
+
+### Bitrate
+
+Defines the amount of data transferred measured in bits per second (bps). The maximum achievable bitrate depends on factors like RTT, packet loss, and available network bandwidth.
+
+<Callout>
+<img src="/icons/gradebook_green.svg" alt="/icons/gradebook_green.svg" width="40px" /> **Bitrate and audio/video quality**
+
+- Higher bitrates allow for higher-quality video and audio streaming, but they also consume more bandwidth.
+- Connection quality score uses the ratio of Actual Bitrate received/Expected Bitrate to determine its video and audio quality.
+- Standard Bitrates
+    - Audio:
+    - Video:
+</Callout>
+
+- **Bitrate affecting outgoing or publisher media quality**
+    1. When simulcast is OFF
+        1. Single video layer
+            1. The endpoint publishes only a single video bitrate and resolution based on available bandwidth. Lower bandwidth caps the maximum possible quality.
+        2. Single audio layer
+            1. Audio requires much lower bandwidth so bitrate differences have little impact. Standard codecs provide good quality at 64-128kbps.
+    2. When simulcast is ON
+        1. Multiple video layers published at High, Medium, Low bitrates
+            1. The High layer has the highest resolution and fps that bandwidth allows (e.g. 1080p30 at 2Mbps).
+            2. Medium layer scales back to 720p30 at 1Mbps to match lower bandwidth capability
+            3. Low layer further reduces resolution and fps (e.g. 360p15) at 500kbps for poor connections
+            4. More layers allows matching to receivers' diverse network capabilities
+        2. Audio 
+            1.  Still only a single audio layer- No need for simulcast, audio quality consistent across bandwidths with standard codec
+    
+- **Bitrate affecting Incoming or Subscriber media quality**
+    - Expected Video Bitrate - The bitrate the client expects to receive based on allocated bandwidth estimates. Allows selecting appropriate simulcast layer.
+    - Actual Video Bitrate - The bitrate actually received by the client.
+    
+    When Simulcast is OFF:
+    
+    - The publisher emits only a single video layer tuned to match endpoint camera and encoding capabilities.
+    - If actual bitrate drops below level necessary to sustain resolution/fps, video quality degrades sharply through pixelation, blurring, and frame loss. Cannot fall back to lower layer.
+    - Overall conference experience impacted whenever an individual has bandwidth constraints.
+    
+    When Simulcast is ON:
+    
+    - Publisher emits multiple resolution/quality layers - High, Medium, and Low
+    - Endpoint continually measures actual bitrate and dynamically switches between simulcast layers to maximize detail quality while minimizing packet loss from exceeding available bandwidth
+    - Smoothly adapts quality across poor/fair/good network connections by flexing between 360p/30fps to 720p/30fps to 1080p/60fps video (for example)
+    - Overall conference experience persists by tuning quality to each endpoint's capabilities - no single bad connection impacts group
+    
+    So in summary, with simulcast OFF a single poor connection severely degrades quality for that user. Simulcast ON allows optimizing and isolating quality to each receiver's capabilities without group impact. The result is maximized video detail and smooth adaptation to network changes.
+    
+    <Callout>
+    <img src="/icons/gradebook_green.svg" alt="/icons/gradebook_green.svg" width="40px" /> Lower actual vs expected bitrate indicates packet loss and bandwidth issues that degrade quality.
+    
+    </Callout>
+    
+
+### Frame Rate (FPS)
+
+Frame Rate or Frames per second is the complete still image frames that are displayed or transmitted per second in video conferencing.
+
+Common frame rates used in video conferencing are 15 FPS, 30 FPS and 60 FPS. 
+
+- Higher frame rates result in video with smoother motion
+- Lower frame rates can suffer from choppy transitions between frames.
+
+<Callout>
+<img src="/icons/gradebook_green.svg" alt="/icons/gradebook_green.svg" width="40px" /> **Frame rates and video quality**
+
+- Higher FPS requires transmitting more frames in the same period so it demands **higher video bitrates** and **network bandwidth capabilities.**
+</Callout>
+
+- **Frames rates and Outgoing Media Quality (Publisher):**
+    - Higher frame rates (e.g., 30 FPS or 60 FPS) can result in smoother motion and a better overall video quality when sending video from the publisher's device.
+    - However, higher frame rates demand higher video bitrates and more network bandwidth to transmit the increased number of frames per second.
+    - If the publisher's network bandwidth or device capabilities are limited, maintaining higher frame rates may result in degraded video quality, such as choppy motion or dropped frames.
+- **Incoming Media Quality (Subscriber):**
+    - The frame rate of the incoming video stream received by a subscriber is determined by the publisher's settings and network conditions.
+    - If the publisher is sending video at a higher frame rate (e.g., 30 FPS or 60 FPS), the subscriber's device and network must be capable of handling and displaying that many frames per second.
+    - If the subscriber's network bandwidth is limited or their device is less capable, they may experience choppy or stuttering video when trying to display a high frame rate stream.
+    - In such cases, reducing the frame rate (e.g., to 15 FPS) can help improve the incoming video quality by reducing the bandwidth and processing requirements on the subscriber's end.
+
+### Frame rates and Simulcast
+
+Simulcast allows for flexible video transmission, enabling receivers to select the best stream for their setup. Without Simulcast, the sender must choose a single resolution and frame rate, which may not be ideal for all participants.
+
+- **Frame rates when simulcast is on**
+    - Sender transmits multiple video streams with different resolutions and frame rates (e.g., 1080p@30FPS, 720p@30FPS, 360p@15FPS).
+    - Receivers can choose the most appropriate stream based on their network conditions and device capabilities.
+- **Simulcast Off**
+    - Sender transmits a single video stream with a fixed resolution and frame rate (e.g., 720p@30FPS).
+    - The selected resolution and frame rate may not be optimal for all receivers due to varying network conditions and device capabilities.
+
+### Packet Loss
+
+Defines the percentage of lost/dropped packets. It occur due to network congestion, insufficient bandwidth, faulty network hardware, etc. This can degrade the quality of audio and video in a WebRTC session.
+
+<Callout>
+<img src="/icons/hourglass_purple.svg" alt="/icons/hourglass_purple.svg" width="40px" /> **Packet loss and quality**
+
+- Lower packet loss leads to higher audio/video quality
+- Packet Loss >5% is considered as degraded audio/video
+</Callout>
+
+- **Packet Loss and Outgoing Media Quality (Publisher):**
+    - Packet loss on the publisher's side causes missing or incomplete data transmission.
+    - Results in audio/video gaps, distortions, and artifacts, leading to degraded outgoing media quality.
+    - High packet loss rates can cause choppy, stuttering, or frozen video and interrupted audio.
+- **Packet Loss and Incoming Media Quality (Subscriber):**
+    - Packet loss on the subscriber's side results in missing data in incoming audio and video streams.
+    - Similar issues as the publisher's side: gaps, distortions, artifacts, leading to degraded incoming media quality.
+    - High packet loss rates can cause choppy, stuttering, or frozen video and interrupted audio.
+
+In both cases, higher packet loss rates result in more noticeable quality degradation. Packet loss can be caused by network congestion, insufficient bandwidth, or connectivity issues.
+
+### **Round Trip Time (RTT)**
+
+Measures the time in milliseconds (ms) it takes for a packet of data to travel from the source to the destination and back again. 
+
+<Callout>
+<img src="/icons/repeat_purple.svg" alt="/icons/repeat_purple.svg" width="40px" />
+
+- A lower RTT represents better connection quality
+    - whereas higher RTT
+        - introduces increased latency, leading to a delay between the sender's actions and the receiver's perception, making real-time communication less natural.
+        - can cause video freezing or stuttering, as video frames don't arrive at the receiver in a timely manner, disrupting smooth playback.
+        - can cause audio and video desynchronization, resulting in a mismatch between audio and video signals, creating a "lip-sync" issue.
+    - Real-time feedback and interactivity between participants can feel delayed or unresponsive due to high RTT, leading to a frustrating user experience.
+    - Small increases in RTT may not have a significant impact, but once RTT exceeds certain thresholds (often 200-300ms), the impact on video quality can become more pronounced.
+</Callout>
+
+- RTT and Outgoing Media Quality:
+    - Higher RTT can introduce delays in the transmission of outgoing audio and video streams, leading to a mismatch between the sender's actions and what the receiver perceives.
+    - This can make real-time communication feel less natural and create a disconnect between participants.
+- RTT and Incoming Media Quality:
+    - High RTT can cause video freezing or stuttering on the receiver's end, as video frames don't arrive in a timely manner, disrupting smooth playback.
+    - It can also lead to audio and video desynchronization, resulting in a mismatch between audio and video signals, creating a "lip-sync" issue.
+    - Real-time feedback and interactivity can feel delayed or unresponsive due to high RTT, leading to a frustrating viewing experience.
+
+In both cases, adaptive codecs may interpret high RTT as unfavorable network conditions and automatically lower video quality to compensate, resulting in degraded viewing experience for both outgoing and incoming media streams.
+
+Small increases in RTT may not have a significant impact, but exceeding certain thresholds (often 200-300ms) can significantly degrade video quality.
+
+<Callout>
+<img src="/icons/gradebook_green.svg" alt="/icons/gradebook_green.svg" width="40px" />
+
+- Higher RTT can lead to increased latency, which can negatively impact real-time applications like voice and video conferencing.
+- A lower RTT represents better connection quality.
+</Callout>
+
+### Jitter
+
+Jitter is the variation in the delay of received data packets. High jitter can cause issues with real-time applications, leading to choppy video or audio quality. Lower jitter is desirable for better connection quality.
+
+### Packet Loss
+
+: Packet loss occurs when data packets fail to reach their destination, resulting in missing information. Packet loss can degrade the quality of real-time applications and lead to artifacts, freezing, or distortion. Lower packet loss is preferable for a better connection quality.
+
+### CPU and Network Limitations
+
+Insufficient CPU or network resources can bottleneck the performance of a connection. CPU limitations can cause delays in processing incoming and outgoing data, while network limitations can lead to congestion and increased latency.

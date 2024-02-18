@@ -1,0 +1,67 @@
+---
+title: Connection Quality Score
+nav: 4.3
+---
+
+The Connection Quality Score (CQS) defines the overall network connectivity performance during a video call by synthesizing key underlying network metrics. These network components significantly influence the incoming and outgoing audio/video quality of a call. Understanding the interplay between these metrics can aid in faster troubleshooting and debugging of call quality issues.
+
+
+<FlexContainer>
+<Callout title="">
+- Check Connection Quality Score and its corresponding network metrics for a peer over an entire duration of the session. These are available immediately after the peer leaves the session.
+- How changes in [network metrics impacts media quality](/get-started/insights/network-metrics-media-quality)
+</Callout>
+</FlexContainer>
+
+
+
+## Connection Quality Score(CQS) to measure network quality
+
+CQS is calculated every 30 seconds based on the latest data points captured for certain network components. This applies to both outgoing (publisher) and incoming (subscriber) media quality. The Connection Quality Score assign varied weights to these attributes according to their relative impact on the perceived call quality. Following this, it calculates an indexed score ranging from 0 to 5.
+
+### Tier 1 - Failed Call (Score 0-1)
+
+The call fails to establish or is immediately dropped after connecting. Users cannot communicate at all due to critical issues such as:
+
+- Complete audio failure
+- No incoming video
+- Persistent crashing or freezing
+
+
+Root cause is a severely impaired network connection that cannot support any level of real-time audio/video communication.
+
+
+### Tier 2 - Poor (Score 1-2)
+
+Experience is degraded across multiple dimensions. Users can expect frequent problems like:
+
+- Audio cutting in and out
+- Poor video quality
+- Severe latency issues
+
+
+ Root cause is an unstable, low-capacity connection struggling to support the demands of high-quality video calling.
+
+
+### Tier 3 - Fair (Scores 3-4)
+
+Experience is moderate but inconsistencies exist. Users may experience minor issues like:
+
+- Occasional audio blips
+- Video resolution downgrades
+- Bit of lag or ~~buffering~~ video freezing
+
+
+ Root cause is a borderline connection with fluctuations in bandwidth, RTTs, or packet loss causing intermittent impacts.
+
+
+### Tier 4 - Excellent (Scores 4-5)
+
+Users enjoy a high quality, reliable connection for uninterrupted communication. Any issues would be rare and minor in nature. This enables an engaging video call with:
+
+- Crisp, clear audio
+- Smooth, HD-resolution video
+- Real-time interactivity
+
+
+ Root cause is an excellent network environment with consistent high bandwidth availability, low latency, and minimal congestion or packet loss.
