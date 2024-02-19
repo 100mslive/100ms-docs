@@ -11,7 +11,7 @@ nav: 1.45
 
 ## Pre-requisites
 
-**Get the 100ms VirtualBackground Package**
+**Get the 100ms VirtualBackground Package** (Supported since version 1.11.28)
 
 ```bash section=GetHMSVirtualBackgroundPackage sectionIndex=1
 npm install --save @100mslive/hms-virtual-background@latest
@@ -22,38 +22,57 @@ npm install --save @100mslive/hms-virtual-background@latest
 The following features are currently supported under the `HMSEffectsPlugin` class:
 
 ```js
-// The blur intensity is determined by the blurPower, which can range from 0 to 1
-setBlur(blur: number): void
-
-// Accepts the media URL to set as the virtual background
-setBackground(url: HMSEffectsBackground): void
-
-// returns 'HMSEffects', can be used to check if the plugin has been initialised
-getName(): string
-
-/* 
-  Returns the background type currently enabled or the media URL.
-  Represented by the HMSVirtualBackgroundTypes enum which is present in 
-  @100mslive/hms-virtual-background. Useful to show active selection in the UI. 
-*/
-getBackground(): string | MediaStream | MediaStreamTrack | HTMLVideoElement
-
-
-/*
-  Can be used to set the quality of VB. The default is "balanced"
-  Options: "lightning" | "speed" | "balanced" | "quality"
-  The quality of the VB and CPU usage increases from left to right
+/**
+ * Sets the blur intensity.
+ * @param {number} blur - The blur intensity, ranging from 0 to 1.
+ * @returns {void}
  */
-setPreset(preset: string): Promise<void>
+setBlur(blur) {}
 
-// returns the active preset
-getPreset(): string
+/**
+ * Sets the virtual background using the provided media URL.
+ * @param {HMSEffectsBackground} url - The media URL to set as the virtual background.
+ * @returns {void}
+ */
+setBackground(url) {}
 
-// Clears all applied filters
-removeEffects(): void
+/**
+ * Retrieves the name of the plugin.
+ * @returns {string} The name of the plugin, 'HMSEffects'.
+ */
+getName() {}
 
-// Stops the plugin
-stop(): void
+/**
+ * Retrieves the currently enabled background type or media URL.
+ * @returns {string|MediaStream|MediaStreamTrack|HTMLVideoElement} The background type or media URL.
+ */
+getBackground() {}
+
+/**
+ * Sets the preset quality of the virtual background.
+ * @param {string} preset - The preset quality to set.
+ * @returns {Promise<void>}
+ */
+setPreset(preset) {}
+
+/**
+ * Retrieves the active preset quality of the virtual background.
+ * @returns {string} The active preset quality.
+ */
+getPreset() {}
+
+/**
+ * Clears all applied filters.
+ * @returns {void}
+ */
+removeEffects() {}
+
+/**
+ * Stops the plugin.
+ * @returns {void}
+ */
+stop() {}
+
 ```
 
 
@@ -141,7 +160,7 @@ import {
 import { 
   HMSEffectsPlugin, 
   HMSVirtualBackgroundTypes
-  } from '@100mslive/hms-virtual-background';
+} from '@100mslive/hms-virtual-background';
 import { VBHandler } from './VBHandler';
 
 export const VirtualBackgroundPicker = () => {
@@ -149,30 +168,31 @@ export const VirtualBackgroundPicker = () => {
   // Get the effects SDK key here
   const effectsKey = useHMSStore(selectEffectsKey);
   const trackId = useHMSStore(selectLocalVideoTrackID);
-    
+  
   // State can be used to show active selection
   const [background, setBackground] = useState<string | HMSVirtualBackgroundTypes>(
-      VBHandler.getBackground() as string | HMSVirtualBackgroundTypes,
+    VBHandler.getBackground() as string | HMSVirtualBackgroundTypes,
   );
 
-	useEffect(() => {
+  useEffect(() => {
     if (!track?.id) {
       return;
     }
     if (!isPluginAdded) {
-        let vbObject = VBHandler.getVBObject();
-        if (!vbObject) {
-          VBHandler.initialisePlugin(effectsKey);
-          vbObject = VBHandler.getVBObject();
-          if (effectsKey) {
+      let vbObject = VBHandler.getVBObject();
+      if (!vbObject) {
+        VBHandler.initialisePlugin(effectsKey);
+        vbObject = VBHandler.getVBObject();
+        if (effectsKey) {
           hmsActions.addPluginsToVideoStream([vbObject as HMSEffectsPlugin]);
-          } 
-        }
+        } 
       }
-    }, [hmsActions, isPluginAdded, effectsKey, track?.id]);
+    }
+  }, [hmsActions, isPluginAdded, effectsKey, track?.id]);
 
   // UI code for media picker can go here
 }
+
 ```
 
 This handles initialisation and adding the plugin to the video stream. The plugin takes a few seconds on first load during initialisation. Subsequent filter and effect selections should take less than a second to reflect.
