@@ -1,9 +1,9 @@
 ---
- title: Polls
+ title: Polls & Quizzes
  nav: 8.3
 ---
 
-The Poll feature in the HMS SDK allows us to create, manage, and participate in Polls and Quizzes. Polls are an effective way to gather opinions, feedback, and insights from a group of people in a quick and convenient manner. With the Poll feature, we can create custom polls, set their properties, add questions, and manage responses. We can also receive real-time updates on poll status, and view poll results in an organized and easy-to-use format.
+The Polls feature in the HMS SDK allows us to create, manage, and participate in Polls and Quizzes. Polls are an effective way to gather opinions, feedback, and insights from a group of people in a quick and convenient manner. With the Poll feature, we can create custom Polls, set their properties, add questions, and manage responses. We can also receive real-time updates on poll status, and view Poll Results in an organized and easy-to-use format.
 
 This feature can also be used to create Quizzes. Under the hood, Quizzes are like Polls where questions have right or wrong answers.
 
@@ -17,9 +17,9 @@ This document provides guidance on how to use the Poll APIs to create a poll, re
 
 ## Listen to poll updates
 
-To listen to poll updates HMSSDK provides `HMSPollListener`.This listener keeps the application informed about various poll-related events, including when a poll is initiated, concluded, or when participants submit their responses.
+To listen to poll updates HMSSDK provides `HMSPollListener`. This listener keeps the application informed about various Poll-related events, including when a Poll is initiated, concluded, or when participants submit their responses.
 
-> `HMSPollListener` should be implemented in the class wherever poll updates are required. It's essential to note that HMSPollListener follows the singleton pattern, meaning it can only be implemented in one class at a time.
+> `HMSPollListener` should be implemented in the class wherever Poll updates are required. It's essential to note that HMSPollListener follows the singleton pattern, meaning it can only be implemented in one class at a time.
 
 ```dart
 class Meeting implements HMSUpdateListener, HMSPollListener{
@@ -107,7 +107,70 @@ class Meeting extends HMSUpdateListener, HMSPollListener{
 
 After calling `quickStartPoll` method we will get `onPollUpdate` with `HMSPollUpdateType` as `started`.
 
-Above code will create a poll with a given title and a single choice question, and share it with the room.
+Above code will create a poll with a given title and a single choice question, and share it with the Room.
+
+### Quiz Creation
+
+Quiz assumes that correct answers are provided to each question which are then used to evaluate the user’s score. Use question builder API to indicate which options are correct.
+
+Let's consider an example. We'll create a single-choice quiz with the title `Quiz` and the question `What is the capital of India?`. The Quiz will offer two options: `Delhi` and `Mumbai`. The correct answer is `Delhi`.
+
+```dart
+class Meeting extends HMSUpdateListener, HMSPollListener{
+
+    ...
+
+    ///Create objects for [HMSPollBuilder] and [HMSPollQuestionBuilder]
+    var pollBuilder = HMSPollBuilder();
+    var questionBuilder = HMSPollQuestionBuilder();
+
+    ///Set the Quiz title
+    pollBuilder.withTitle = "Quiz";
+
+    ///Set the category
+    pollBuilder.withCategory = HMSPollCategory.quiz;
+
+    ///Set the Quiz type to single choice
+    questionBuilder.withType = HMSPollQuestionType.singleChoice;
+
+    ///Set the Quiz question
+    questionBuilder.withText = "What is the capital of India?";
+
+    ///Set Quiz options
+    List<HMSPollQuizOption> quizOptions = [];
+
+    var optionDelhi = HMSPollQuizOption(text: "Delhi");
+    optionDelhi.isCorrect = true;
+    quizOptions.add(optionDelhi);
+
+    var optionMumbai = HMSPollQuizOption(text: "Mumbai");
+    optionMumbai.isCorrect = false;
+    quizOptions.add(optionMumbai);
+
+    questionBuilder.addQuizOption = quizOptions;
+
+    ///Add question to poll
+    pollBuilder.addQuestion(questionBuilder);
+
+    ///HMSPollInteractivityCenter is a singleton class containing poll methods
+    ///Here we call the quickStartPoll method
+    void createQuiz(){
+        HMSPollInteractivityCenter.quickStartPoll(pollBuilder: pollBuilder);
+    }
+
+    ...
+
+    @override
+    void onPollUpdate({required HMSPoll poll, required HMSPollUpdateType pollUpdateType}){
+
+        ///We will get the update here with poll object and
+        ///pollUpdateType as HMSPollUpdateType.started
+
+    }
+
+}
+
+```
 
 ## Voting on a Poll
 
@@ -121,8 +184,6 @@ Let's consider a example, A user wishes to answer `yes` to above poll.
 class Meeting extends HMSUpdateListener, HMSPollListener{
 
     ...
-
-
 
     void answerPoll(){
 
