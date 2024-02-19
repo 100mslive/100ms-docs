@@ -1,0 +1,105 @@
+---
+title: Polls
+nav: 8.3
+---
+
+The Poll feature in the HMS SDK allows you to create, manage, and participate in polls and quizzes. Polls are an effective way to gather opinions, feedback, and insights from a group of people in a quick and convenient manner. With the Poll feature, you can create custom polls, set their properties, add questions, and manage responses. You can also receive real-time updates on poll status, and view poll results in an organized and easy-to-use format.
+
+This feature can also be used to create quizzes. Under the hood, quizzes are like polls where questions have right or wrong answers.
+
+This document provides guidance on how to use the Poll APIs to create a poll, receive updates on a poll, and vote on a poll.
+
+## Prerequisites
+
+-   SDK 1.9.11 or higher
+-   Poll Read permission should be enabled for roles that can view polls.
+-   Poll Write and Poll Read permission should be enabled for roles that can create polls.
+
+## Creating a Poll
+
+### Quick Create
+
+Here is how to quickly create a poll using poll builder.
+
+Let's consider an example. We'll create a single-choice poll with the title `Survey` and the question `Do you like TypeScript?` The poll will offer two options: `Yes` and `No`.
+
+```js
+await hmsInstance.interactivityCenter.startPoll({
+    pollId: 'myUniqueID',
+    title: 'Survey',
+    type: HMSPollType.poll,
+    mode: HMSPollUserTrackingMode.customerUserID,
+    questions: [
+        {
+            index: 1,
+            text: 'Do you like TypeScript?',
+            type: HMSPollQuestionType.singleChoice,
+            skippable: false,
+            options: [
+                {
+                    index: 1,
+                    text: 'Yes'
+                },
+                {
+                    index: 2,
+                    text: 'No'
+                }
+            ]
+        }
+    ]
+});
+```
+
+The above code will create a Poll with the specified title and a single choice question and share it with the Room.
+
+## Receiving Updates on a Poll
+
+Once you have started a Poll, you can receive real-time updates on the poll's status using the `addPollUpdateListener` method. This method allows you to listen for updates on the poll, such as when the poll is started, when the results are updated, and when the poll is stopped.
+
+```js
+///  enum HMSPollUpdateType {
+///     started,
+///     resultsUpdated,
+///     stopped,
+/// }
+
+useEffect(() => {
+    const subscription = hmsInstance.interactivityCenter.addPollUpdateListener(
+        (poll: HMSPoll, pollUpdateType: HMSPollUpdateType) => {
+            console.log('Poll Update: ', poll, pollUpdateType);
+        }
+    );
+    return () => {
+        subscription.remove();
+    };
+}, [...]);
+
+```
+
+You can use the `HMSPoll` object returned by the selector to access information about the poll, such as its current state, duration, and questions.
+
+## Voting on a Poll
+
+To participate in a poll, you can use the `add(pollQuestionResponseParams: PollQuestionResponseCreateParams)` method. This method allows you to vote on a poll by providing the poll ID, the index of the question you want to answer, and the response you want to submit.
+
+```js
+await hmsInstance.interactivityCenter.add({
+    pollId,
+    pollQuestionIndex: pollQuestion.index,
+    responses: {
+        options: [
+            {
+                text: 'Yes'
+            }
+        ]
+    }
+});
+```
+
+## Stopping a Poll
+
+Use `hmsInstance.interactivityCenter.stop(pollId: string)` method when you want to stop the Poll and prevent further responses recorded.
+
+```js
+await hmsInstance.interactivityCenter.stop(pollId);
+```
