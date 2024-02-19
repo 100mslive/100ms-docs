@@ -23,20 +23,20 @@ The following features are currently supported under the `HMSEffectsPlugin` clas
 
 ```js
 // The blur intensity is determined by the blurPower, which can range from 0 to 1
-setBlur(blurPower: number)
+setBlur(blur: number): void
 
 // Accepts the media URL to set as the virtual background
-setBackground(mediaURL: string)
+setBackground(url: HMSEffectsBackground): void
 
 // returns 'HMSEffects', can be used to check if the plugin has been initialised
-getName()
+getName(): string
 
 /* 
   Returns the background type currently enabled or the media URL.
   Represented by the HMSVirtualBackgroundTypes enum which is present in 
   @100mslive/hms-virtual-background. Useful to show active selection in the UI. 
 */
-getBackground()
+getBackground(): string | MediaStream | MediaStreamTrack | HTMLVideoElement
 
 
 /*
@@ -44,16 +44,16 @@ getBackground()
   Options: "lightning" | "speed" | "balanced" | "quality"
   The quality of the VB and CPU usage increases from left to right
  */
-setPreset()
+setPreset(preset: string): Promise<void>
 
 // returns the active preset
-getPreset()
+getPreset(): string
 
 // Clears all applied filters
-removeEffects()
+removeEffects(): void
 
 // Stops the plugin
-stop()
+stop(): void
 ```
 
 
