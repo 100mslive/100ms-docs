@@ -37,11 +37,9 @@ await hmsInstance.interactivityCenter.startPoll({
             skippable: false,
             options: [
                 {
-                    index: 1,
                     text: 'Yes'
                 },
                 {
-                    index: 2,
                     text: 'No'
                 }
             ]
@@ -72,26 +70,25 @@ useEffect(() => {
     return () => {
         subscription.remove();
     };
-}, [...]);
+}, []);
 
 ```
 
-You can use the `HMSPoll` object returned by the selector to access information about the poll, such as its current state, duration, and questions.
+You can use the `HMSPoll` object to access information about the poll, such as its current state, duration, and questions.
 
 ## Voting on a Poll
 
 To participate in a poll, you can use the `add(pollQuestionResponseParams: PollQuestionResponseCreateParams)` method. This method allows you to vote on a poll by providing the poll ID, the index of the question you want to answer, and the response you want to submit.
 
 ```js
+/// index of the selected Poll Question option
+const selectedOptionIndex = 1;
+
 await hmsInstance.interactivityCenter.add({
     pollId,
     pollQuestionIndex: pollQuestion.index,
     responses: {
-        options: [
-            {
-                text: 'Yes'
-            }
-        ]
+        options: [selectedOptionIndex]
     }
 });
 ```
