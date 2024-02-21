@@ -1,0 +1,82 @@
+---
+title: Network metrics and media quality
+nav: 4.4
+---
+
+## Media Quality Types
+
+Quality measurement in video conferencing systems involves assessing both the outgoing/publisher media quality that is being sent from a peer as well as the incoming/subscriber media quality being received by the peer. Media quality can be observed in two dimensions:
+
+1. **Outgoing or Publisher Media Quality**: This dimension represents the quality of outgoing audio and video streams sent from a peer's device. It is influenced by factors such as the device's processing power, encoder efficiency, and the available uplink bandwidth.
+2. I**ncoming or Subscriber Media Quality**: This dimension refers to the quality of incoming audio and video streams received by a peer from other peers in the call. It is primarily impacted by the network conditions on the ~~remote~~ publishing end, including factors like available downlink bandwidth, packet loss, jitter, and the efficiency of the decoder on the receiving device.
+
+## Network metrics impact media quality
+
+There are several factors on which quality can be measured such as bitrate, jitter, round trip time, packet loss, CPU limitation, network limitation impact incoming and outgoing media quality of a video session.
+
+### Bitrate
+
+Defines the amount of data transferred measured in bits per second (bps). The maximum achievable bitrate depends on factors like RTT, packet loss, and available network bandwidth.
+
+<Callout title="Bitrate and audio/video quality">
+
+- Higher bitrates allow for higher-quality video and audio streaming, but they also consume more bandwidth.
+- Standard Bitrates
+    - Audio:
+    - Video:
+- [Connection quality score](/get-started/v2/get-started/insights/connection-quality-score) uses the ratio of Actual Bitrate received/Expected Bitrate to determine its video and audio quality.
+
+</Callout>
+
+    
+
+### Frame Rate (FPS)
+
+Frame Rate or Frames per second is the complete still image frames that are displayed or transmitted per second in video conferencing.
+
+Common frame rates used in video conferencing are 15 FPS, 30 FPS and 60 FPS. 
+
+- Higher frame rates result in video with smoother motion
+- Lower frame rates can suffer from choppy transitions between frames.
+
+<Callout title ="Frame rates and video quality">
+
+- Higher FPS requires transmitting more frames in the same period so it demands **higher video bitrates** and **network bandwidth capabilities.**
+</Callout>
+
+### Packet Loss
+
+Defines the percentage of lost/dropped packets. It occur due to network congestion, insufficient bandwidth, faulty network hardware, etc. This can degrade the quality of audio and video in a WebRTC session.
+
+<Callout title="Packet loss and quality">
+
+- Lower packet loss leads to higher audio/video quality
+- Packet Loss >5% is considered as degraded audio/video
+</Callout>
+
+
+In both cases, higher packet loss rates result in more noticeable quality degradation. Packet loss can be caused by network congestion, insufficient bandwidth, or connectivity issues.
+
+### **Round Trip Time (RTT)**
+
+Measures the time in milliseconds (ms) it takes for a packet of data to travel from the source to the destination and back again. 
+
+<Callout title="A lower RTT represents better connection quality">
+    - whereas higher RTT
+        - introduces increased latency, leading to a delay between the sender's actions and the receiver's perception, making real-time communication less natural.
+        - can cause video freezing or stuttering, as video frames don't arrive at the receiver in a timely manner, disrupting smooth playback.
+        - can cause audio and video desynchronization, resulting in a mismatch between audio and video signals, creating a "lip-sync" issue.
+    - Real-time feedback and interactivity between participants can feel delayed or unresponsive due to high RTT, leading to a frustrating user experience.
+    - Small increases in RTT may not have a significant impact, but once RTT exceeds certain thresholds (often 200-300ms), the impact on video quality can become more pronounced.
+</Callout>
+
+
+
+### Jitter
+
+Jitter is the variation in the delay of received data packets. High jitter can cause issues with real-time applications, leading to choppy video or audio quality. Lower jitter is desirable for better connection quality.
+
+
+### CPU and Network Limitations
+
+Insufficient CPU or network resources can bottleneck the performance of a connection. CPU limitations can cause delays in processing incoming and outgoing data, while network limitations can lead to congestion and increased latency.

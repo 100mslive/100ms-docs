@@ -8,7 +8,7 @@ When a user joins a session on 100ms, a corresponding peer is created for them o
 <FlexContainer>
 <Callout title="Peer Details">
 Identify peer and their device and network setup
-[Peer details→](/get-started/v2/get-started/insights/peerinsights/#peer-details)
+[Peer details →](/get-started/v2/get-started/insights/peerinsights/#peer-details)
 </Callout>
 
 
@@ -67,12 +67,19 @@ Peer details, such as who the peer was, the session they belonged to, and a summ
 - **Left At** -The timestamp when the peer leaves the session, shown in local time.
 - **Duration** -The total session duration for this peer in the format "HH:MM:SS". The maximum duration allowed per peer is 12 hours.
 - **Published** -The count of tracks published by the peer. The tracks can be audio, video, or screen-share tracks.
-- **End Reason** -The reason why the peer left the session. This can happen due to multiple reasons.
+- **End Reason** -The reason why the peer left the session. This can happen due to multiple reasons:
 
-### **Peer summary**
+	| End Reason field | Reason|
+	|---------| -------|
+	| Peer left | Peer left the session on their own.|
+	| Peer Disconnected | Network Disconnected or Websocket closed  |
+	| Peer Removed  | Peer was kicked out by another peer.|
+	| Peer Removed From Server | Peer was removed from backend APIs (End Room)|
 
-- **Platform** -The platform used by the peer, such as Desktop or Mobile.
-- **Operating System** -The operating system used by the peer.
-- **Browser** -The browser used by the peer.
-- **Framework** -The framework used by the peer.
-- **SDK version** -The version of the 100ms SDK used by the peer.
+### Peer summary
+
+- **Platform** - The platform used by the peer, such as Desktop or Mobile.
+- **Operating System** - The operating system and its version used by the peer.
+- **Browser** - The browser and its version used by the peer.
+- **Framework** - The framework used by the peer.
+- **SDK version** - The version of the 100ms SDK used by the peer, which can be Web, Android, iOS, Flutter and React Native.
