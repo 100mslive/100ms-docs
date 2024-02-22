@@ -1,0 +1,227 @@
+---
+title: Virtual Background with Effects SDK
+nav: 1.45
+---
+
+<Note type="warning">
+    This feature is still in Beta. To know more or report any issues, feel free to reach out to us
+    over <a href={'https://discord.com/invite/kGdmszyzq2'}>Discord</a>.
+</Note>
+
+
+## Pre-requisites
+
+**Get the 100ms VirtualBackground Package** (Supported since version 1.11.28)
+
+```bash section=GetHMSVirtualBackgroundPackage sectionIndex=1
+npm install --save @100mslive/hms-virtual-background@latest
+```
+
+## Features
+
+The following features are currently supported under the `HMSEffectsPlugin` class:
+
+```js
+/**
+ * Sets the blur intensity.
+ * @param {number} blur - The blur intensity, ranging from 0 to 1.
+ * @returns {void}
+ */
+setBlur(blur) {}
+
+/**
+ * Sets the virtual background using the provided media URL.
+ * @param {HMSEffectsBackground} url - The media URL to set as the virtual background.
+ * @returns {void}
+ */
+setBackground(url) {}
+
+/**
+ * Retrieves the name of the plugin.
+ * @returns {string} The name of the plugin, 'HMSEffects'.
+ */
+getName() {}
+
+/**
+ * Retrieves the currently enabled background type or media URL.
+ * @returns {string|MediaStream|MediaStreamTrack|HTMLVideoElement} The background type or media URL.
+ */
+getBackground() {}
+
+/**
+ * Sets the preset quality of the virtual background.
+ * Options: "lightning" | "speed" | "balanced" | "quality"
+ * The quality of the VB and CPU usage increases from left to right
+ * @param {string} preset - The preset quality to set.
+ * @returns {Promise<void>}
+ */
+setPreset(preset) {}
+
+/**
+ * Retrieves the active preset quality of the virtual background.
+ * @returns {string} The active preset quality.
+ */
+getPreset() {}
+
+/**
+ * Clears all applied filters.
+ * @returns {void}
+ */
+removeEffects() {}
+
+/**
+ * Stops the plugin.
+ * @returns {void}
+ */
+stop() {}
+
+```
+
+
+
+## Instantiate Virtual Background
+
+The SDK key for effects is needed to instantiate the `HMSEffectsPlugin` class:
+
+```jsx
+  const effectsKey = useHMSStore(selectEffectsKey);
+```
+
+It is recommended to initialise the object in a separate file to prevent multiple initialisations on re-renders and keep the UI level code independent of internal calls by the SDK.
+
+
+```js
+import { HMSEffectsPlugin, HMSVirtualBackgroundTypes } from '@100mslive/hms-virtual-background';
+
+export class VBPlugin {
+  private effectsPlugin?: HMSEffectsPlugin | undefined;
+
+  initialisePlugin = (effectsSDKKey?: string) => {
+    if (this.getVBObject()) {
+      return;
+    }
+    if (effectsSDKKey) {
+      this.effectsPlugin = new HMSEffectsPlugin(effectsSDKKey);
+    }
+  };
+
+  getBackground = () => {
+    return this.effectsPlugin?.getBackground();
+  };
+
+  getBlurAmount = () => {
+    return this.effectsPlugin?.getBlurAmount();
+  };
+
+  getVBObject = () => {
+    return this.effectsPlugin;
+  };
+
+  getName = () => {
+    return this.effectsPlugin?.getName();
+  };
+
+  setBlur = async (blurPower: number) => {
+    this.effectsPlugin?.setBlur(blurPower);
+  };
+
+  setBackground = async (mediaURL: string) => {
+    this.effectsPlugin?.setBackground(mediaURL);
+  };
+
+  setPreset = (preset: string) => {
+    this.effectsPlugin.setPreset(preset);
+  };
+
+  getPreset = () => {
+    return this.effectsPlugin?.getPreset() || '';
+  };
+
+  removeEffects = async () => {
+    this.effectsPlugin?.removeEffects();
+  };
+
+  reset = () => {
+    this.effectsPlugin = undefined;
+  };
+}
+
+export const VBHandler = new VBPlugin();
+```
+
+## Building the UI
+
+The following snippet illustrates how to add the plugin to the video and manage the UI state to preserve configuration:
+
+```jsx
+import {
+  selectLocalVideoTrackID,
+  selectEffectsKey,
+  useHMSStore,
+} from '@100mslive/react-sdk';
+import { 
+  HMSEffectsPlugin, 
+  HMSVirtualBackgroundTypes
+} from '@100mslive/hms-virtual-background';
+import { VBHandler } from './VBHandler';
+
+export const VirtualBackgroundPicker = () => {
+  const hmsActions = useHMSActions();
+  // Get the effects SDK key here
+  const effectsKey = useHMSStore(selectEffectsKey);
+  const trackId = useHMSStore(selectLocalVideoTrackID);
+  
+  // State can be used to show active selection
+  const [background, setBackground] = useState<string | HMSVirtualBackgroundTypes>(
+    VBHandler.getBackground() as string | HMSVirtualBackgroundTypes,
+  );
+
+  useEffect(() => {
+    if (!track?.id) {
+      return;
+    }
+    if (!isPluginAdded) {
+      let vbObject = VBHandler.getVBObject();
+      if (!vbObject) {
+        VBHandler.initialisePlugin(effectsKey);
+        vbObject = VBHandler.getVBObject();
+        if (effectsKey) {
+          hmsActions.addPluginsToVideoStream([vbObject as HMSEffectsPlugin]);
+        } 
+      }
+    }
+  }, [hmsActions, isPluginAdded, effectsKey, track?.id]);
+
+  // UI code for media picker can go here
+}
+
+```
+
+This handles initialisation and adding the plugin to the video stream. The plugin takes a few seconds on first load during initialisation. Subsequent filter and effect selections should take less than a second to reflect.
+
+The methods can be called via the `VBHandler` object:
+```jsx
+const setBackground = async(mediaURL : string) => {
+  await VBHandler?.setBackground(mediaURL);
+  // The selection can be highlighted using the activeBackground state
+  setActiveBackground(mediaURL);
+}
+
+const setBlur = async(blurAmount: number) => {
+  await VBHandler?.setBlur(blurAmount);
+  setActiveBackground(HMSVirtualBackgroundTypes.BLUR);
+}
+
+const removeEffects = async() => {
+  await VBHandler.removeEffects();
+  setActiveBackground(HMSVirtualBackgroundTypes.NONE);
+}
+```
+
+
+The full implementation can be viewed in the [roomkit-react package](https://github.com/100mslive/web-sdks/blob/main/packages/roomkit-react/src/Prebuilt/components/VirtualBackground/VBPicker.tsx).
+
+
+## Supported Browsers
+
+Effects virtual background is supported on Safari, Firefox and Chromium based browsers.<br/>
