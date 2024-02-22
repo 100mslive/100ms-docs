@@ -1,0 +1,25 @@
+name: Create Release PR
+
+on:
+  push:
+    branches:
+      - qa
+  pull_request:
+    types: [closed]
+
+jobs:
+  create_release_pr:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Create Release PR
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "Release PR"
+          title: "Release PR"
+          branch: "qa"
+          base: "main"

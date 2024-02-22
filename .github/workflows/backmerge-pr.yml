@@ -1,0 +1,24 @@
+name: Backmerge PR
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  backmerge_pr:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Create Backmerge PR
+        if: github.ref != 'refs/heads/qa' && github.event_name == 'push'
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "Backmerge PR"
+          title: "Backmerge PR"
+          head: "main"
+          base: "qa"
