@@ -5,85 +5,108 @@ nav: 4.4
 
 ## Media Quality Types
 
-Quality measurement in video conferencing systems involves assessing both the outgoing/publisher media quality that is being sent from a peer as well as the incoming/subscriber media quality being received by the peer. Media quality can be observed in two dimensions:
+Quality measurement in video conferencing systems involves assessing both the outgoing and incoming media quality being received by the peer. Media quality can be observed in two dimensions:
 
-1. **Outgoing or Publisher Media Quality**: This dimension represents the quality of outgoing audio and video streams sent from a peer's device. It is influenced by factors such as the device's processing power, encoder efficiency, and the available uplink bandwidth.
-2. I**ncoming or Subscriber Media Quality**: This dimension refers to the quality of incoming audio and video streams received by a peer from other peers in the call. It is primarily impacted by the network conditions on the ~~remote~~ publishing end, including factors like available downlink bandwidth, packet loss, jitter, and the efficiency of the decoder on the receiving device.
+1. **Outgoing or Publisher Media Quality** - represents the quality of outgoing audio and video streams sent from a peer's device. It is influenced by factors such as the device's processing power, encoder efficiency, and the available uplink bandwidth.
+2. **Incoming or Subscriber Media Quality** - represents the quality of incoming audio and video streams received by a peer from other peers in the sesssion. It is primarily impacted by either or both
+	- the network conditions on the publishing end from other ***remote peers.***
+	- factors like available downlink bandwidth, packet loss, jitter, and the efficiency of the decoder on the ***receiving local peer.***
 
 ## Network metrics impact media quality
 
 There are several factors on which quality can be measured such as bitrate, jitter, round trip time, packet loss, CPU limitation, network limitation impact incoming and outgoing media quality of a video session.
 
+<Tabs id="test-code" items={['Outgoing Media Quality','Incoming Media Quality']} />
+
+<Tab id='test-code-0'>
+
 ### Bitrate
 
-Defines the amount of data transferred measured in bits per second (bps). The maximum achievable bitrate depends on factors like RTT, packet loss, and available network bandwidth. Additionally, this also depends on the bitrate values configured for the respective role under templates.
+Bitrate defines the amount of video and audio data sent by the local peer to remote peers per second, measured in bits per second (bps). The maximum achievable outgoing bitrate depends on factors like:
 
-<Callout title="Bitrate and audio/video quality">
-- Higher bitrates allow for higher-quality video and audio streaming, but they also consume more bandwidth.
-- Standard Bitrates
-    - Audio: 32kbps for audio 
-    - Video: Depends on [Video Quality](/get-started/v2/get-started/concepts/templates-and-roles#publish-strategies) configured under publish strategies for the role.
-- [Connection quality score](/get-started/v2/get-started/insights/connection-quality-score) uses the ratio of Actual Bitrate received/Expected Bitrate to determine its video and audio quality.
+- RTT, packet loss, and available network bandwidth.
+- Bitrate values configured for the respective role under templates.
 
-</Callout>
-    
+#### Bitrate values
+- Standard bitrate value for auddio is 32kbps; for video it can be configured under the template settings.
+- Higher bitrate value means more data per second is being sent, allowing for better video/audio quality. But if the bitrate exceeds network capacity it leads to packet loss and quality degradation.
+
+
 
 ### Frame Rate (FPS)
+The frame rate refers to the number of video frames transmitted per second by the local peer to the remote peers in a video call. 
 
-Frame Rate or Frames per second is the complete still image frames that are displayed or transmitted per second in video conferencing.
+#### Frame rates and video quality
+- Higher outgoing frame rates result in smoother, less choppy video quality at the receiver's end. However, high frame rates require higher bitrates.
+- Lower outgoing frame rates allow the local peer to reduce their transmitted bitrate while maintaining visual quality.
 
-<Callout title ="Frame rates and video quality">
-- Common frame rates used in video conferencing are 15 FPS, 30 FPS and 60 FPS. 
-- Higher FPS requires transmitting more frames in the same period with a smoother motion, thus it demands **higher video bitrates** and **network bandwidth capabilities.**
-- Lower frame rates can suffer from choppy transitions between frames.
-</Callout>
+
 
 ### Packet Loss
+Packet loss occurs when media packets being sent by the local peer fail to reach the remote peers, resulting in degraded audio/video quality of the peer. It occur due to network congestion, insufficient bandwidth, faulty network hardware, etc. 
 
-Defines the percentage of lost/dropped packets. It occur due to network congestion, insufficient bandwidth, faulty network hardware, etc. This can degrade the quality of audio and video in a WebRTC session.
+#### Measuring Packet loss
+- Some amount of data loss is inevitable, so the severity is measured by the percentage of total packets lost.
+- Packet loss below 5% is generally considered acceptable and normal.
+- Beyond 5%, high outgoing packet loss can significantly degrade the video resolution, frame rate, and image quality observed by remote viewers. Audio can be jittery or broken up or may miss sections of audio.
 
-<Callout title="Packet loss and quality">
-
-- Lower packet loss leads to higher audio/video quality
-- Packet Loss >5% is considered as degraded audio/video
-</Callout>
 
 ### **Round Trip Time (RTT)**
 
-Measures the time in milliseconds (ms) it takes for a packet of data to travel from the source to the destination and back again. 
-
-<Callout title="A lower RTT represents better connection quality">
-- Lower RTT represents better connection quality
-- Higher RTT:
-	- Increased latency, leading to delays between sender and receiver, making communication less natural
-	- Can cause video freezing or stuttering due to untimely frame arrival, disrupting smooth playback
-	- Can cause audio and video desynchronization, resulting in lip-sync issues
-	- Real-time feedback and interactivity can feel delayed or unresponsive, leading to a frustrating experience
-Small RTT increases may not have a significant impact, but exceeding thresholds (200-300ms) can pronounce impact on video quality
-</Callout>
-
+Measures the time in milliseconds (ms) it takes for a packet of data to travel from the source(client) to the destination and back again. 
+Higher the RTT, higher the latency.
 
 
 ### Jitter
 
-Jitter is the variation in the delay of received data packets. 
-
-<Callout title="A lower RTT represents better connection quality">
-	- Lower jitter is desirable for better connection quality.
-	- High jitter can cause issues with real-time applications, leading to choppy video or audio quality.
-</Callout>
+Jitter refers to the variation in delay between delivered media packets being sent from the local peer to the remote peers. High outgoing jitter can cause received video to stutter or display jerky movements and make audio sound choppy or distorted to remote viewers.
 
 
-
-### CPU and Network Limitations
-Insufficient CPU or network resources can bottleneck the performance of a connection. CPU limitations can cause delays in processing incoming and outgoing data, while network limitations can lead to congestion and increased latency.
+### Quality Limitations
+There are two main limitations that can severely impact the outgoing media quality transmitted from a local peer to remote peers:
 
 #### CPU Limitations
 
-- High CPU usage (more than 80%) can cause delays in processing incoming and outgoing data, leading to increased latency, jitter, and packet loss.
-- Low CPU usage (less than 30%) can indicate underutilization of resources, which may not be an issue unless other resources are also constrained.
+Insufficient CPU cores or processing power can cause delays in encoding and transmitting outgoing audio/video packets. This leads to increased latency, jitter, and potential packet loss for the streams received by remote peers.
 
 #### Network Limitations
 
-- High network utilization (less than 80%) can cause congestion, leading to increased latency, jitter, and packet loss.
-- Low network utilization (more than 30%) may not be an issue unless other resources are also constrained.
+Bandwidth, throughput, or network equipment constraints can create congestion and bottlenecks specifically along the local peer's upload path. This results in higher outgoing latency, jitter, and packet loss that significantly reduces the media quality observed by remote participants.
+
+</Tab>
+
+
+<Tab id='test-code-1'>
+
+### Bitrate
+When incoming media quality, bitrate is defined as the sum of all the bitrates published by all the remote peers in the call. It is defined using:
+
+- **Expected Bitrate**: The bitrate a client expects to receive based on the video resolution and layers selected according to the call template settings. This is configured for the role under templates.<br/>
+- **Actual Bitrate**: The bitrate actually received by the client, limited by the sender's upload bandwidth and network conditions.<br/>
+
+#### CQS and Bitrate
+- [Connection quality score](/get-started/v2/get-started/insights/connection-quality-score) uses the ratio of Actual Bitrate received/Expected Bitrate to determine its video and audio quality.
+- In ideal scenarios, the actual bitrate received should be equal to expected bitrate. If there's a delta in actual and expected bitrate then there's a drop in video quality consumed by the peer
+
+
+
+### Round Trip Time
+Measures the time in milliseconds (ms) it takes for a video or audio packet to travel from the remote peer to the local peer and back to the remote peer. 
+
+High outgoing RTT reduces interactivity and introduces lag to remote users.
+
+
+### Packet Loss
+Packet loss occurs when media packets transmitted from remote peers fail to reach the local peer. This results in degradation of the incoming audio/video quality received by the local peer. Some potential root causes include Network congestion, Insufficient bandwidth, Faulty network hardware
+
+#### Packet loss on incoming media quality:
+
+- Minor packet loss is inevitable, so the severity is measured as a percentage of total packets expected to arrive vs packets lost.
+- Up to 5% loss is generally acceptable without noticeable quality impact.
+- Beyond 5%, high incoming packet loss can significantly lower the video resolution, frame rate, and image quality received by the local peer. Incoming audio can sound broken, intermittent, or have missing sections.
+</Tab>
+
+    
+
+
+
