@@ -1,0 +1,57 @@
+---
+title: Stream Recordings
+nav: 3.2
+---
+
+A stream recording captures a continuous feed of live audio or video, like a video call or live event. The stream is encoded and transmitted in real-time to viewers.
+
+
+<FlexContainer>
+<Callout title="Stream Recording Basics">
+
+1. Stream recordings **start automatically** when the first peer joins a room, and stops automatically when the last peer leaves the room.
+2. Recorded stream assets of type `stream` are available via Rest APIs and track webhook events.
+3. The final recording asset type will be individual `stream` types  per peer present in the session. 
+4. Recording assets will be available within x mins of a successful recording event.
+</Callout>
+</FlexContainer>
+
+Some of the use cases of stream recoridng:
+- Archival purposes - Recording live events for later viewing
+- Live broadcasting an event to viewers in real-time like webinars, conferences, meetings, classes, etc
+- Augmenting traditional broadcast mediums like radio shows with video stream or TV broadcasts with web stream
+
+
+## Guide to setup stream recordings
+
+<StepsContainer id="stream-recording-setup">
+### Setup stream recordings
+
+Stream recordings can be enabled for your template through the 100ms Dashboard. Refer this section to [set up stream recordings→](/get-started/v2/get-started/features/recordings/set-up-recording)
+
+### Start a stream recording
+
+Once enabled for a template, stream recording gets **auto-started** when first peer joins the corresponding room. Stream recordings cannot be started from client side.
+
+### stream recording events
+
+1. 100ms notifies you when a recording starts for a stream with `stream.recording.started.success`event for every peer. 
+2. A `stream.recording.failure` webhook event is sent if an individual stream recording fails.
+
+### Get stream Assets
+A successfully recorded stream generates a recording asset of type `stream`. Refer here for [all recording assets](/get-started/v2/get-started/features/recordings/recording-assets/recording-asset-types) types on 100ms. For successful stream recordings, get stream recording assets using
+
+1. Get stream `asset_id`
+	- Use **List recordings API** to retrieve all recordings.
+	- **Using `stream.recording.success`** - triggered when a stream recording is completed for a peer
+2. Get `id` of stream with type `stream` using either List Recording API or stream webhook events.
+3. Store this `id` as corresponding asset identifier of the stream.
+4. Call the Get Recording Asset API using the stream's `asset_id` to download the actual recording.
+
+### Manage stream recordings
+
+1. **Stop a stream recording** - Use Stop recording by id to stop a stream recoridng
+2. **Pause a stream recording** - Use Pause a Recording API
+3. **Resume a stream recording -** Use Resume a stream Recording API
+
+</StepsContainer>
