@@ -77,6 +77,12 @@ nav: '2.5'
 
 ---
 
+### POLLS_LIST
+
+• **POLLS_LIST** = `"POLLS_LIST"`
+
+---
+
 ### POLL_CREATED
 
 • **POLL_CREATED** = `"POLL_CREATED"`
