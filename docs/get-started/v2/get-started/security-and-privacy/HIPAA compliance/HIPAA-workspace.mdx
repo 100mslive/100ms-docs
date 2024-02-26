@@ -1,0 +1,291 @@
+---
+title: HIPAA Compliant Workspace
+nav: 9.4
+---
+## Introduction
+
+This document is intended for developers who are integrating 100ms inside their telehealth apps, are subject to [HIPAA compliance](https://www.hhs.gov/hipaa/for-professionals/index.html) and intend to enter into a Business Associate Agreement (BAA) with 100ms. There are aspects of HIPAA controls that 100ms has put in place for all of our customers. Additionally, it also outlines the customer’s responsibility to ensure that their applications built on 100ms refer to these requirements to architect a solution that supports HIPAA compliance. This guide is assuming that the user already has an account on 100ms.
+
+Get a primer on HIPAA compliance in [this blog](https://www.100ms.live/blog/primer-on-hipaa-compliance).
+
+<StepsToc
+    parentId="hipaa-flow"
+    descriptions={[
+        "This section outlines 100ms' general security framework and technical implementation",
+        "This institutes technical changes along with putting in safeguards for HIPAA",
+        "Unwrapping the changes that have been put in to make the workspace HIPAA compliant",
+        "Recommendations on further safeguarding customer's interest",
+        "BAAs are mandated by the HIPAA Security Rule"
+    ]}
+/>
+
+<StepsContainer id="hipaa-flow">
+### Basics
+
+This section outlines 100ms' security framework and technical implementation, covering:
+
+- Implementation details consistent across all product features.
+- A uniform security experience for all users, unless noted otherwise.
+
+#### Video calling and media security
+
+- 100ms does not store your video, audio or screensharing data.
+- All of 100ms’ video and audio calls are encrypted to and from 100ms’ SFU servers. Encrypted media in transit is decrypted only in the server memory, ensuring that the exposure of the decrypted stream is as minimal as possible. At the application layer, we never have access to unencrypted media.
+- All audio, video, and screen sharing media are transmitted encrypted using the Secure Real-time Transport Protocol (SRTP) which are encrypted over Datagram Transport Layer Security (DTLS) with AES 256-bit encryption.
+- TURN servers are media relay servers only so there is no processing or storage of media. TURN servers do not and cannot decrypt the media that they relay.
+- Disk encryption is enabled on the servers.
+
+#### Recordings
+
+- Recordings in 100ms are strictly opt-in, and it can be specified by customers when to start or stop their recordings.
+- Recordings, when stored with 100ms, are stored on encrypted disk servers and deleted after 15 days.
+- **Only for HIPAA Workspaces** - Recording with the customer’s cloud storage bucket configured on 100ms is the only method allowed by 100ms. As soon as the recording for a particular session is complete, it is uploaded to the customers’ storage and immediately deleted from ours.
+- **Only for HIPAA Workspaces** - Access to customers’ buckets cannot be obtained by 100ms because write-only access is enforced when configuring the customer’s storage bucket.
+
+#### Secure webhooks
+
+Customers building HIPAA compliant workflows on 100ms webhook events are required to ensure that requests coming to your application are indeed coming from 100ms. To achieve this, we have put in four safeguards:
+
+- Customers can use [configure secret headers](/server-side/v2/how-to-guides/configure-webhooks/secure-webhooks#secret-headers) on the 100ms dashboard and verify the webhook once it is delivered to them using the same. 
+- Customers can [whitelist 100ms IP addresses](/server-side/v2/how-to-guides/configure-webhooks/secure-webhooks#ip-whitelist) that are used to send webhooks.
+- **Only for HIPAA Workspaces** - 100ms mandatorily requires customers to configure a webhook URL secured with HTTPS.
+    
+    ![hipaa-configure-webhook-https](/docs/v2/hipaa/hipaa-configure-webhook-https.png)
+    
+- **Only for HIPAA Workspaces** - 100ms cryptographically signs its requests, and it is the responsibility of the customer to verify that the signature is valid.
+
+#### Chat: ephemerality and access control
+
+- 100ms chat messages are ephemeral by default, implying that messages exchanged in an active room session disappear after the session ends. These messages are not saved anywhere and encrypted in transmission and at rest.
+- If a session is recorded, so is the session chat recording, and these are uploaded to the customers’ storage bucket.
+- Customers are responsible for avoiding broadcast messages and specifying controls to send chat messages directly to specific peers in the room with the 100ms API. Additionally, if chat or chat recording isn’t required, please disable chat.
+
+#### Data storage and protection
+
+- 100ms has media clusters based in the USA, Europe and India.
+- We have technical and administrative safeguards in place to detect breaches and unauthorized access to our media servers or databases.
+
+#### Data collection by SDKs
+
+- 100ms’ SDK generates anonymized device IDs instead of collecting actual device identifiers such as serial no. and device IDs.
+- 100ms collects web browser name and version, along with SDK version for a specific call.
+
+### Creating a HIPAA workspace
+
+The very first step to getting started with HIPAA is to create a HIPAA workspace. Creating this workspace is an irreversible action. Once created, a HIPAA workspace instigates changes on the dashboard which are reflective of the changes instrumented on 100ms’ backend infrastructure to make all the calls within the workspace HIPAA-compliant.
+
+1. Click on the workspace selector in the left sidebar.
+2. Click on ‘+ Create Workspace’.
+3. Type in the Workspace name of your choice and select the ‘HIPAA Compliant’ checkbox. Then click on Create Workspace.
+    
+    ![hipaa-workspace-creation](/docs/v2/hipaa/hipaa-workspace-creation.png)
+    
+
+100ms HIPAA workspaces can be distinguished by noting the HIPAA logon on the sidebar.
+
+![hipaa-logo-sidebar](/docs/v2/hipaa/hipaa-logo-sidebar.png)
+
+### Understanding the changes in a HIPAA workspace
+
+#### Managing PII and PHI surface area
+
+We have a standard policy of not collecting and storing any PHI or PII for HIPAA compliant workspaces. In fact, we actively try and stop users from sending us any PHI mistakenly by setting up appropriate checks and balances on possible information gateways. 
+
+100ms collects the following data points and updates their form so as to make sure that information cannot be used to identify individuals.
+
+1. `user_name` or `peer_name` → This information is one-way hashed using SHA-256 algorithm and stored within our system in that format. 
+2. `room_name` → Although this will possibly not consist of any PHI, but 100ms also does a one-way hash of room names using SHA-256 algorithm.
+3. IP Address→ IP Addresses of peers are masked and securely stored within our logs so as to not be able to identify associated individuals.
+
+**Note on hashed data**
+
+1. **Dashboard** - Hashed data can be viewed and verified on 100ms dashboard on the following pages:
+    - Rooms Page
+        
+        ![hipaa-hashed-rooms](/docs/v2/hipaa/hipaa-hashed-rooms.png)
+        
+    - Room Details Page
+        
+        ![hipaa-hashed-room-details](/docs/v2/hipaa/hipaa-hashed-room-details.png)
+        
+    - Session Details Page
+        
+        ![hipaa-session-details](/docs/v2/hipaa/hipaa-session-details.png)
+        
+    - Participants Insights
+        
+        ![hipaa-participant-insights](/docs/v2/hipaa/hipaa-participant-insights.png)
+        
+- **REST APIs** - All the APIs which return `room_name` or `peer_name`  in the response have them in the hashed format except Active Rooms REST API which returns the actual `peer_name` because this data is returned from a live store.
+- **Webhooks** - All the webhooks which return `room_name` or `peer_name`  in the response have them in the hashed format.
+
+#### Template settings
+
+To make sure all the services that are being used are HIPAA compliant with no security risks, we only make the necessary services available to avoid any surface area for mistakes.
+
+Following services and features can be **enabled** and used:
+
+1. Polls and Quizzes
+2. Composite Recording with user’s cloud storage bucket configured
+    1. Recording with the [customer’s cloud storage bucket configured](/get-started/v2/get-started/features/recordings/storage) on 100ms is the only method allowed by 100ms. As soon as the recording for a particular session is complete, it is uploaded to the customers’ storage and immediately deleted from ours.
+    2. Access to customers’ buckets cannot be obtained by 100ms because write-only access is enforced when configuring the customer’s storage bucket.
+3. Whiteboard
+4. Session Initiation Protocol (SIP) (Limited Preview Access)
+5. Chat
+
+Following services within the template have been **disabled** and locked for HIPAA workspaces:
+
+1. Live Streaming through HLS
+2. Live Streaming using RTMP-Out
+3. Track Recording
+4. Stream Recording
+5. Live Transcription for HLS
+6. Post Call Transcription
+7. AI-Generated Summaries
+
+Following services are in the process of being HIPAA compliant:
+
+1. Live Transcription (Video Conferencing and HLS) - Diarized and Non-diarized
+2. Post Call Transcription - Speaker Labelled (Diarized)
+3. Track Recording
+4. Stream Recording
+
+#### Server Side
+
+HIPAA Workspace changes will affect the REST APIs in the following ways:
+
+1. [Rooms API](/server-side/v2/api-reference/Rooms/overview)
+    - All APIs will work as is with some minor changes.
+    - CRUD operations on a room will return hashed room `name` in the response.
+    - [GET List Rooms API](/server-side/v2/api-reference/Rooms/list-rooms) will allow search using hashed as well as un-hashed room `name` filter. 
+    - Room `description` has been disabled. This will return an empty string no matter what is passed in the request.
+2. [Active Rooms API](/server-side/v2/api-reference/active-rooms/overview)
+    - [GET Peer Details API](/server-side/v2/api-reference/active-rooms/retrieve-peer) and [GET List of Peers API](/server-side/v2/api-reference/active-rooms/list-peers) in the Active Room APIs are the only APIs to return un-hashed peer `name` because this API extracts its details from an ongoing session in a room.
+    - Active Rooms API is only operational for active rooms with ongoing sessions. As soon as the session ends, these details are deleted. So these peer details won’t be accessible using this API.
+3. [Live Streams](/server-side/v2/api-reference/live-streams/overview) and [External Streams](/server-side/v2/api-reference/external-streams/overview) API
+    - For HIPAA Workspaces, the Start/Stop Live Stream APIs will return an error due to live streaming being disabled.
+4. [Sessions API](/server-side/v2/api-reference/Sessions/object)
+    - These APIs will work as is with hashed peer `name` in the response.
+5. [Room Codes API](/server-side/v2/api-reference/room-codes/room-code-overview)
+    - These APIs will work as is.
+6. [Recordings API](/server-side/v2/api-reference/recordings/overview)
+    - [POST Start Recording API](/server-side/v2/api-reference/recordings/start-recording-for-room) won’t work unless user’s storage bucket credentials have been configured. The following error will show in the response.
+        
+        ```json
+        {
+            "code": 500,
+            "message": "hipaa enabled: recording config is not provided"
+        }
+        ```
+        
+    - Rest of the APIs will function as is. 
+7. [Recording Assets API](/server-side/v2/api-reference/recording-assets/overview)
+    - [GET Presigned URL API](/server-side/v2/api-reference/recording-assets/get-presigned-url) will return an error as 100ms doesn’t have read access to the customer’s storage bucket.
+    - Rest of the APIs will function as is. 
+8. [Stream Key API](/server-side/v2/api-reference/stream-key/overview)
+    - These APIs will function as is but will not provide any value as Live Streaming is disabled for HIPAA Workspaces.
+9. [Polls API](/server-side/v2/api-reference/polls/overview)
+    - These APIs will work as is. 
+
+#### SDK
+
+100ms’ core platform SDKs as well as Prebuilt SDKs have been updated to work with HIPAA compliant workspaces. Please use the latest versions to be up to date with our security updates.
+
+Additionally, all our SDKs have been open-sourced, allowing for their code to be reviewed if required.
+
+### Best practices to stay secure
+
+#### User ID
+
+Customers are requested to not use their users’ (patients’) email addresses, names or any other personal identifiers as their user IDs. Ideally, user IDs should be anonymized as they are something we neither mask, nor hash.
+
+#### Webhooks
+
+Customers building HIPAA compliant workflows are required to ensure that the requests to your web application are indeed coming from 100ms, and not a malicious third party. 
+
+1. [Configure secret headers](https://www.100ms.live/docs/server-side/v2/how-to-guides/configure-webhooks/secure-webhooks#secret-headers) on 100ms dashboard.
+2. [Whitelist 100ms’ IP addresses](https://www.100ms.live/docs/server-side/v2/how-to-guides/configure-webhooks/secure-webhooks#ip-whitelist)
+3. All inbound requests to your application will be signed with an `x-100ms-signature` HTTP header. Sharing an example below on how to verify the webhook using this.
+    
+    ```python
+    import hmac
+    import hashlib
+    
+    def verify_sha256_hmac(payload, secret_token, expected_hmac):
+        """
+        Verifies the SHA256 HMAC for a given payload and secret token.
+    
+        :param payload: The payload (message) to verify.
+        :param secret_token: The secret token used to generate the HMAC.
+        :param expected_hmac: The expected HMAC value to compare against.
+        :return: True if the HMAC matches, False otherwise.
+        """
+        # Create a new hmac object using the secret token and sha256 hash function
+        hmac_obj = hmac.new(secret_token.encode(), payload.encode(), hashlib.sha256)
+        
+        # Calculate the HMAC digest
+        generated_hmac = hmac_obj.hexdigest()
+        
+        # Compare the generated HMAC with the expected HMAC
+        if hmac.compare_digest(generated_hmac, expected_hmac):
+            return True
+        else:
+            return False
+    
+    # Example usage
+    payload = '<webhook_payload'
+    secret_token = "<auth_secret>"
+    expected_hmac = "<x-100ms-signature value>"
+    
+    is_valid = verify_sha256_hmac(payload, secret_token, expected_hmac)
+    print("Is the HMAC valid?", is_valid)
+    ```
+    
+
+#### Recordings
+
+Once the storage bucket has been configured on the 100ms dashboard, it is recommended that a couple of test recordings be conducted and manually checked to ensure the recordings are being received in the bucket. Verification for recordings cannot be performed on 100ms due to the lack of read access to the customer's storage bucket in HIPAA workspaces. The path of the recording will be shared through the webhook or in API responses for recording assets or recordings.
+
+#### Chat
+
+Customers are responsible for avoiding broadcast messages and specifying controls to send chat messages directly to specific peers in the room with the 100ms API. Additionally, if chat or chat recording isn’t required, please disable chat.
+
+### Signing the Business Associate Agreement (BAA)
+
+Customers that are subject to HIPAA and intend to utilize 100ms to develop communication workflows containing PHI must execute a Business Associate Agreement (BAA) to 100ms Terms of Service. To learn more about this, [contact us](https://100ms.live/contact). 
+
+> **Note on entity status**
+>
+> Please let us be informed if your company is a [**Covered Entity**](https://www.hhs.gov/hipaa/for-professionals/covered-entities/index.html) or acts as a [**Business Associate**](https://www.hhs.gov/hipaa/for-professionals/privacy/guidance/business-associates/index.html) to a Covered Entity. The nature of the contract to be signed will differ based on that. To understand more about your company status, read [our blog](https://www.100ms.live/blog/primer-on-hipaa-compliance) on HIPAA compliance.
+>
+
+
+Creating and using a HIPAA workspace doesn’t guarantee HIPAA compliance until the customer signs a BAA with 100ms.
+
+</StepsContainer>
+
+## SOC2 Compliance
+
+100ms is SOC2 Type 2 compliant. SOC2 defines criteria for managing customer data based on the five “trust service principles” of security, availability, processing integrity, confidentiality and privacy. SOC2 Type 2 is verified by external auditors and is developed by the American Institute of CPAs.
+
+## Frequently Asked Questions (FAQs)
+
+1. **How much does 100ms charge for signing the BAA and implementing HIPAA changes for my account?**
+    
+    We charge $500 / month for our healthcare add-on which includes HIPAA compliance and a signed BAA. This is offered free of charge if you opt for any of our paid premium plans. To know more, please [contact us](https://www.100ms.live/contact).
+    
+2. **Regarding the electronic PHI (ePHI) generated by your service, could you explain how it is created, where it is stored, and the lifecycle of this data?**
+    
+    Please refer to the [given section](#managing-pii-and-phi-surface-area).
+    
+3. **Please elaborate on the encryption methods used for securing media and ePHI both in transit and at rest.**
+    
+    Please refer to our [basics section](#basics).
+    
+4. **For any subcontractors or third-party services you engage with, who might have access to PHI, do you establish Business Associate Agreements (BAAs)? How do you ensure their compliance with HIPAA? What are these services?**
+   
+    We have signed BAAs with critical services and features which will have temporary access to the customers’ ePHI.
+    
+5. **Can a workspace be deleted?**
+    
+    A workspace cannot be deleted at this point of time. If you do require this, please reach out to us through the support widget on 100ms dashboard.

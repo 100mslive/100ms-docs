@@ -1,12 +1,12 @@
 import React from 'react';
-import Link from 'next/link';
+import UtmLinkWrapper from './UtmLinkWrapper';
 import { MinusIcon } from '@100mslive/react-icons';
 
 const ReleaseNotes = ({ dataObj }) => {
     const isActive = window && window.location.href.includes(dataObj.url);
 
     return (
-        <Link prefetch={false} href={dataObj.url || ''} key={`${dataObj.url}-rel-notes`}>
+        <UtmLinkWrapper prefetch={false} href={dataObj.url || ''} key={`${dataObj.url}-rel-notes`}>
             <a
                 className="opaque-link"
                 style={{
@@ -29,7 +29,7 @@ const ReleaseNotes = ({ dataObj }) => {
                 />
                 {dataObj.title}
             </a>
-        </Link>
+        </UtmLinkWrapper>
     );
 };
 

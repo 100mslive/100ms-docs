@@ -8,6 +8,10 @@ nav: 7.26
 Previously, We had to implement **hand raise** functionality with peer metadata.
 But that is no more required, We have made raising/lowering hand as **first class API** on HMSSDK.
 
+## Requirements
+
+SDK version 1.9.0 or higher
+
 ### How to Raise Hand
 
 You can use `raiseLocalPeerHand` method available on `HMSSDK` instance to raise hand of local peer.
@@ -33,7 +37,6 @@ await hmsInstance.lowerLocalPeerHand();
 You can use `lowerRemotePeerHand` method available on `HMSSDK` instance to lower hand of remote peer.
 It accepts a peer (an instance of the HMSPeer class) of whom you want to lower the hand.
 
-
 ```js
 // `hmsInstance` is an instance of `HMSSDK` class
 // `peer` is a remote peer of whom we want to lower the hand
@@ -43,7 +46,7 @@ await hmsInstance.lowerRemotePeerHand(peer);
 
 ### How to know when a Peer raises or lowers hand
 
-Whenever local/remote peer raises or lowers hand, `HMSUpdateListenerActions.ON_PEER_UPDATE` event 
+Whenever local/remote peer raises or lowers hand, `HMSUpdateListenerActions.ON_PEER_UPDATE` event
 is emitted with `HMSPeerUpdate.HAND_RAISED_CHANGED` update type. You can subscribe to this event and update the UI for updated peer.
 
 ```js
@@ -64,17 +67,17 @@ hmsInstance.addEventListener(HMSUpdateListenerActions.ON_PEER_UPDATE, onPeerList
 
 ### Get current hand raise status of peer
 
-Now, `HMSPeer` instance has `isHandRaised` property on it. It will be `true` when 
-peer has raised it's hand and `false` otherwise. You can use `peer.isHandRaised` property to 
+Now, `HMSPeer` instance has `isHandRaised` property on it. It will be `true` when
+peer has raised it's hand and `false` otherwise. You can use `peer.isHandRaised` property to
 get the current status.
 
 ```js
-hmsPeer.isHandRaised
+hmsPeer.isHandRaised;
 ```
 
 ## How to get Total Peer count of the Room
 
-You can use `peerCount` property of `HMSRoom` instance to get the latest peer count of the room. 
+You can use `peerCount` property of `HMSRoom` instance to get the latest peer count of the room.
 Whenever peer count is updated, `HMSUpdateListenerActions.ON_ROOM_UPDATE` event is emitted with `HMSRoomUpdate.ROOM_PEER_COUNT_UPDATED` update type.
 
 ```js
@@ -98,9 +101,9 @@ hmsInstance.addEventListener(
 ### Get list of peers on join
 
 When local peer join a room, it will not receive `ON_PEER_UPDATE` with
- `type === HMSPeerUpdate.PEER_JOINED` for each remote peer like it used to.
- Now, `ON_PEER_LIST_UPDATED` event is emitted with list of all the peers present
- in the room.
+`type === HMSPeerUpdate.PEER_JOINED` for each remote peer like it used to.
+Now, `ON_PEER_LIST_UPDATED` event is emitted with list of all the peers present
+in the room.
 
 You can subscribe to `ON_PEER_LIST_UPDATED` event to get list of added or removed peers -
 
@@ -131,18 +134,19 @@ You don't want to fetch every peer if the room is very large, use the peer list 
 You call `getPeerListIterator` method on `HMSSDK` instance to get `HMSPeerListIterator`.
 
 `getPeerListIterator` method has following `HMSPeerListIteratorOptions` options -
-- `byRoleName?: string` - filter by role of the peers
-- `byPeerIds?: string[]` - `peerID`s of the peers you want to fetch with iterator.
-- `limit?: number` - number of peers fetched by the iterator in `next` method call. Default value is `10`
+
+-   `byRoleName?: string` - filter by role of the peers
+-   `byPeerIds?: string[]` - `peerID`s of the peers you want to fetch with iterator.
+-   `limit?: number` - number of peers fetched by the iterator in `next` method call. Default value is `10`
 
 ```js
 // calling `getPeerListIterator` without any options
 const peerListIterator = hmsInstance.getPeerListIterator();
 
 // calling `getPeerListIterator` with some options
-const peerListIterator =  hmsInstance.getPeerListIterator({
-  limit: 10,
-  byRoleName: 'viewer-realtime',
+const peerListIterator = hmsInstance.getPeerListIterator({
+    limit: 10,
+    byRoleName: 'viewer-realtime'
 });
 ```
 
@@ -158,11 +162,11 @@ You can use `next` method on `HMSPeerListIterator` instance to fetch the next se
 
 ```js
 try {
-  const peers = await peerListIterator.next();
+    const peers = await peerListIterator.next();
 
-  // store newly loaded peers to show in UI
+    // store newly loaded peers to show in UI
 } catch (error) {
-  // handle error returned by `next` method here
+    // handle error returned by `next` method here
 }
 ```
 
@@ -172,33 +176,31 @@ You can use `hasNext` method on `HMSPeerListIterator` instance to check if there
 
 ```js
 try {
-  const hasNext = await peerListIterator.hasNext();
+    const hasNext = await peerListIterator.hasNext();
 
-  if (hasNext) {
-    // can fetch more peers by calling `next` method
-  } else {
-    // There are no more peers available to fetch right now
-  }
+    if (hasNext) {
+        // can fetch more peers by calling `next` method
+    } else {
+        // There are no more peers available to fetch right now
+    }
 } catch (error) {
-  // handle error returned by `hasNext` method here
+    // handle error returned by `hasNext` method here
 }
 ```
 
 ### How to check the total count of peers in the peer list
 
 You use `totalCount` property on `HMSPeerListIterator` instance to know how many peers are there in
- the peer list. This property is updated whenever you can `next` method, initially it is zero. so,
-  ensure you have called `peerListIterator.next()` method before using `totalCount` property.
+the peer list. This property is updated whenever you can `next` method, initially it is zero. so,
+ensure you have called `peerListIterator.next()` method before using `totalCount` property.
 
 ```js
 try {
-  await peerListIterator.next();
+    await peerListIterator.next();
 
-  const totalCount = peerListIterator.totalCount;
-
-  // `totalCount` is the number of peers in the room
-
+    // `totalCount` is the number of peers in the room
+    const totalCount = peerListIterator.totalCount;
 } catch (error) {
-  // handle error returned by `next` method here
+    // handle error returned by `next` method here
 }
 ```

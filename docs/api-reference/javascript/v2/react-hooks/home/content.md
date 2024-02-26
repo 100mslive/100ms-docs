@@ -210,6 +210,21 @@ unblock the browser autoplay block
 
 ---
 
+### useAwayNotifications
+
+▸ **useAwayNotifications**(): `Object`
+
+#### Returns
+
+`Object`
+
+| Name                | Type                                                             |
+| :------------------ | :--------------------------------------------------------------- |
+| `requestPermission` | () => `Promise`<`void`\>                                         |
+| `showNotification`  | (`title`: `string`, `options?`: `NotificationOptions`) => `void` |
+
+---
+
 ### useCustomEvent
 
 ▸ **useCustomEvent**<`T`\>(`«destructured»`): [`useCustomEventResult`](/api-reference/javascript/v2/react-hooks/interfaces/useCustomEventResult)<`T`\>

@@ -1,7 +1,7 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/router';
-import Link from 'next/link';
+import UtmLinkWrapper from './UtmLinkWrapper';
 import FlutterIcon from '@/assets/FlutterIcon';
 import AndroidIcon from '@/assets/icons/AndroidIcon';
 import IosIcon from '@/assets/icons/IosIcon';
@@ -239,15 +239,15 @@ const Sidebar: React.FC<Props> = ({
                     }}>
                     <DocsSearchBar setHelperState={setHelperState} />
                 </Box>
-                <Link passHref href="/get-started/v2/get-started/overview">
+                <UtmLinkWrapper passHref href="/get-started/v2/get-started/overview">
                     <Flex as="a" gap="2" align="center" css={{ color: '$primaryLight' }}>
                         <PlayIcon style={{ color: 'inherit' }} />
                         <Text as="span" css={{ fontWeight: '$semiBold', color: '$textHighEmp' }}>
                             Get started
                         </Text>
                     </Flex>
-                </Link>
-                <Link passHref href="/prebuilt/v2/prebuilt/overview">
+                </UtmLinkWrapper>
+                <UtmLinkWrapper passHref href="/prebuilt/v2/prebuilt/overview">
                     <Flex
                         as="a"
                         gap="2"
@@ -261,9 +261,9 @@ const Sidebar: React.FC<Props> = ({
                             Prebuilt
                         </Text>
                     </Flex>
-                </Link>
+                </UtmLinkWrapper>
 
-                <Link passHref href="/examples">
+                <UtmLinkWrapper passHref href="/examples">
                     <Flex
                         as="a"
                         gap="2"
@@ -279,7 +279,7 @@ const Sidebar: React.FC<Props> = ({
                             Examples
                         </Text>
                     </Flex>
-                </Link>
+                </UtmLinkWrapper>
 
                 <hr style={{ margin: '24px 0' }} />
 

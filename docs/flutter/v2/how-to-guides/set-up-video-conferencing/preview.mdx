@@ -194,6 +194,25 @@ These options are available in advanced settings:
 
 ![Room State in preview](/docs/v2/flutter-room-state-in-preview.png)
 
+## What if you leave the call after preview
+
+In the event that a user exits the room after initiating the `preview` but before proceeding to `join`, it is recommended to invoke the `leave` method to guarantee proper cleanup.
+
+```dart
+class Preview implements HMSUpdateListener{
+
+   late HMSSDK hmsSDK;
+   ...
+
+
+   ///Call leave method when a user leaves after preview
+   ///The execution of the 'leave' method should also be triggered when the user presses the back button in the application.
+   void leave(){
+      hmsSDK.leave();
+   }
+}
+```
+
 ## Supplementary bytes
 
 Now, let's take a look at the listener class in detail.
