@@ -1,22 +1,22 @@
 name: Backmerge PR to QA
 on:
-  pull_request:
-    types: [closed]
-    branches:
-      - main
+    pull_request:
+        types: [closed]
+        branches:
+            - main
 
 jobs:
     pull-request:
-      runs-on: ubuntu-latest
-      steps:
-      - uses: actions/checkout@v1
-      - name: pull-request
-        uses: repo-sync/pull-request@v2
-        if: github.event.pull_request.merged == true
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          source_branch: "main"
-          destination_branch: "qa"
-          pr_title: "backmerge: main to qa"
-          pr_body: ":robot: Automated PR from main to qa"
-          pr_label: "auto-pr"
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v1
+            - name: pull-request
+              uses: repo-sync/pull-request@v2
+              if: github.event.pull_request.merged == true
+              with:
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  source_branch: 'main'
+                  destination_branch: 'qa'
+                  pr_title: 'backmerge: main to qa'
+                  pr_body: ':robot: Automated PR from main to qa'
+                  pr_label: 'auto-pr'
