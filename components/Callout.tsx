@@ -19,7 +19,7 @@ const Callout = ({ title, icon, children }) => (
         }}>
         <Box css={{ m: '20px 24px' }}>
             <Flex align="center" css={{ color: '$textHighEmp', gap: '$2', mb: '$2' }}>
-                <DynamicIcon iconName={icon} />
+                <DynamicIcon name={icon} />
                 <Text css={{ color: '$textHighEmp', fontWeight: '$semiBold' }}>{title}</Text>
             </Flex>
             {children}
@@ -30,15 +30,21 @@ const Callout = ({ title, icon, children }) => (
 const iconStyle = { color: 'inherit' };
 
 interface DynamicIconProps {
-    iconName: string;
+    name: string;
 }
 
-const DynamicIcon: React.FC<DynamicIconProps> = ({ iconName }) => {
-    const Icons = dynamic(() => import(`@100mslive/react-icons/dist/${iconName}.js`) as any, {
-        loading: () => <InfoIcon style={iconStyle} />
-    });
-
-    return <Icons />;
+const DynamicIcon: React.FC<DynamicIconProps> = ({ name }) => {
+    let Icon;
+    try {
+        Icon = dynamic(() => import(`@100mslive/react-icons/dist/${name}.js`) as any, {
+            loading: () => <InfoIcon style={iconStyle} />,
+            ssr: false // Disable server-side rendering for dynamic imports
+        });
+    } catch (error) {
+        console.error(`Error loading icon module for "${name}":`, error);
+        Icon = () => <InfoIcon style={iconStyle} />;
+    }
+    return <Icon />;
 };
 
 export default Callout;
