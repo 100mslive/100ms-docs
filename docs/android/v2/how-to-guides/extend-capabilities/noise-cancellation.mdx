@@ -1,0 +1,52 @@
+---
+title: Noise Cancellation
+nav: 14.2
+---
+
+100ms offers noise cancellation at the mic if you need it.
+
+The noise cancellation is opt-in, here are the steps to enable it:
+1. Add the following import to your app 
+```kotlin 
+implementation "live.100ms:hms-noise-cancellation-android:$hmsVersion"
+```
+2. Enable noise cancellation from the dashboard.
+3. Toggle noise cancellation on in your application with `hmsSDK.setNoiseCancellationEnabled(true)`
+
+> Note: Adding the library for noise cancellation will increase app size by 5.6 Mb.
+
+## Dynamic Toggling
+Noise cancellation can be turned on or off dynamically. When starting calls it is always *off* by default.
+
+Toggle it on or off during a call with:
+```kotlin
+hmsSDK.setNoiseCancellationEnabled(true) // or false
+```
+
+To get the current state of noise cancellation call:
+```kotlin
+val enabled : Boolean = hmsSDK.getNoiseCancellationEnabled()
+```
+
+## Availability
+To debug issues with noise cancellation call `hmsSDK.isNoiseCancellationSupported()`
+
+This will either return `AvailabilityStatus.Available` or it will return `AvailabilityStatus.NotAvailable(val reason : String)`
+
+To see the reason why it's not available, check the reason provided in `NotAvailable`.
+Possible reasons may be:
+1. The noise cancellation import was not added.
+2. Noise cancellation is not enabled from the dashboard.
+
+```kotlin
+val availability : AvailabilityStatus = hmsSDK.isNoiseCancellationSupported()
+
+if(availability == AvailabilityStatus.Available) {
+    /// is available, but not necessarily enabled
+} else {
+    val reason = (availability as AvailabilityStatus.NotAvailable).reason
+    Log.d("NoiseCancellation","Not available because of $reason")
+}
+
+```
+
