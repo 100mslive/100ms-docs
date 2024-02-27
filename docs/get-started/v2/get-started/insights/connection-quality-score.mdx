@@ -1,0 +1,62 @@
+---
+title: Connection Quality Score
+nav: 4.3
+---
+
+The Connection Quality Score (CQS) defines the overall network connectivity performance during a video call by synthesizing key underlying network metrics like bitrate, frame rate, packet loss, round trip time, jitter and CPU/Network limitations. These network components significantly influence the incoming and outgoing audio/video quality of a call. Understanding the interplay between these metrics can aid in faster troubleshooting and debugging of call quality issues.
+
+
+<FlexContainer>
+<Callout title="CQS Basics">
+- Know how a call went for a peer; timeline view of their connection quality score; with corresponding network metrics for the entire session duration. 
+- These metrics are available immediately after the peer leaves the session.
+- Check how changes in [network metrics impacts media quality](/get-started/v2/get-started/insights/network-performance)
+</Callout>
+</FlexContainer>
+
+
+
+## Connection Quality Score(CQS) to measure network quality
+
+CQS is calculated every fixed interval (currently configured at 30 seconds) based on the latest data points captured for certain network components. This applies to both outgoing (publisher) and incoming (subscriber) media quality. The Connection Quality Score assign varied weights to these attributes according to their relative impact on the perceived call quality. Following this, it calculates an indexed score ranging from 0 to 5.
+
+
+<video loop="true" autoplay="true" id="vid" muted>
+<source src="/docs/guides/CQS.mp4" type="video/mp4" />
+</video>
+
+
+### Tier 1 - Failed Call (Score 0-1)
+
+The call fails to establish or is immediately dropped after connecting. It can happen due to severely impaired network connection that cannot support any level of real-time audio/video communication. Peers cannot communicate at all due to critical issues such as:
+
+- Complete audio failure
+- No incoming video
+- Persistent video freezing
+
+
+### Tier 2 - Poor (Score 1-2)
+
+Experience is degraded across multiple dimensions. It can happen due to unstable, low-capacity connection struggling to support the demands of high-quality video calling. Peers can expect frequent problems like:
+
+- Audio choppiness
+- Artefacts in video
+- Severe latency issues
+
+
+### Tier 3 - Fair (Scores 3-4)
+
+Experience is moderate but inconsistencies exist. It can happen due to borderline connection with fluctuations in bandwidth, RTTs, or packet loss causing intermittent impacts. Peers may experience minor issues like:
+
+- Occasional audio blips
+- Video resolution downgrades
+- Bit of lag or video freezing
+
+
+### Tier 4 - Excellent (Scores 4-5)
+
+Users enjoy a high quality, reliable connection for uninterrupted communication. This happens because of an excellent network environment with consistent high bandwidth availability, low latency, and minimal congestion or packet loss. Any issues would be rare and minor in nature. This enables an engaging video call with:
+
+- Crisp, clear audio
+- Smooth, HD-resolution video
+- Real-time interactivity
