@@ -256,4 +256,45 @@ class Meeting extends HMSUpdateListener, HMSPollListener{
 
 After calling the `stopPoll` function, the `onPollUpdate` event is triggered with a type of `stopped`, indicating that the poll has been stopped.
 
+## Quiz Leaderboard
+
+Upon quiz completion, users can retrieve a comprehensive summary including total votes, correct answers count, average score, and participant rankings.
+The `fetchLeaderboard` method in `HMSSDK` simplifies the process of retrieving this leaderboard information.
+
+Let's see how we can fetch leaderboard for a quiz:
+
+```dart
+class Meeting extends HMSUpdateListener, HMSPollListener{
+
+
+    void fetchLeaderboard(HMSPoll quiz){
+        
+        ///[quiz]: HMSPoll - It is the poll object from `onPollUpdate`
+        ///[count]: int - It denotes the number of peers you wish to fetch at once, in this example we are fetching first five peers
+        ///[startIndex]: int - It is the offset from where you wish to fetch the leaderboard
+        ///[includeCurrentPeer]: bool - It denotes whether you wish to include current/local peer in the leaderboard
+        ///useful in edtech scenarios where including a teacher in a leaderboard is unnecessary.
+        var leaderboardResponse = HMSPollInteractivityCenter.fetchLeaderboard(
+                                    poll: quiz,
+                                    count: 5,
+                                    startIndex: startIndex,
+                                    includeCurrentPeer: includeCurrentPeer);
+
+        if (leaderboardResponse is HMSPollLeaderboardResponse){
+            ///Render the leaderboard using the [leaderboardResponse]
+        }else{
+            ///Handle the error here
+        }
+
+    }
+
+
+    @override
+    void onPollUpdate({required HMSPoll poll, required HMSPollUpdateType pollUpdateType}){
+        ///Get poll updates here
+    }
+
+}
+```
+
 👀 For an example of how to implement polls in an Flutter app with the 100ms SDK, checkout [our example project](https://github.com/100mslive/100ms-flutter/tree/b59e555d3c254b8f292c57c3562f6973a461d4e9/packages/hms_room_kit/lib/src).
