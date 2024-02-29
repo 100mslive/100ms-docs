@@ -5,6 +5,24 @@ nav: 5.1
 
 This Changelog highlights notable changes to the 100ms server-side API, such as API additions, improvements, and deprecations. Also, we've included developer experience improvements to this page to keep you on track with items that will enhance your integration journey.
 
+## 2024-02-27
+
+#### Additions
+
+- Added [new recording apis](/server-side/v2/policy/configure-recordings) to provide configurations for different kind of recordings - `trackRecording`, `streamRecording`, `compositeRecording`
+- Added new asset types - `track` and `stream` in [recording assets api](/server-side/v2/api-reference/recording-assets/overview).
+- Added following new webhook events - 
+    1. [`track.recording.started.success`](/server-side/v2/how-to-guides/configure-webhooks/webhook.md#track.recording.started.success)
+    2. [`track.recording.success`](/server-side/v2/how-to-guides/configure-webhooks/webhook.md#track.recording.success)
+    3. [`track.recording.failure`](/server-side/v2/how-to-guides/configure-webhooks/webhook.md#track.recording.failure)
+    4. [`stream.recording.success`](/server-side/v2/how-to-guides/configure-webhooks/webhook.md#stream.recording.success)
+    5. [`stream.recording.failure`](/server-side/v2/how-to-guides/configure-webhooks/webhook.md#stream.recording.failure)
+
+#### Deprecations
+
+- The `settings.enabled` field in template API which was used to enable custom composite recording, has been deprecated. Please use the [new recordings api](/server-side/v2/policy/configure-recordings) to configure composite recordings.
+- The `destinations.browserRecordings` field in template API which was used to provide configuration for browser based recording, has been deprecated. Please use the [new recordings api](/server-side/v2/policy/configure-recordings) to configure browser recording.
+
 ## 2023-12-20
 - Added support for [pause and resume recording](/server-side/v2/api-reference/recordings/overview).
 
