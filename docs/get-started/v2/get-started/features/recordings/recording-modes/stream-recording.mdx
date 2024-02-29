@@ -5,9 +5,9 @@ nav: 3.2
 
 A stream recording combines the individual video and audio tracks for each pariticipant into a single recording file. If the peer publishes his desktop, the screen share video track is generated as an additional stream recording asset.
 Stream Recording Assets are classifed into three types:
-    **Regular** - contains video track from camera input and audio track from microphone input
-    **Screen** - contains video track from screen share (desktop) input; optionally can include audio track if they are published from desktop source.
-    **Audio** - contains only the audio track from micrphone input for audio only calls where video tracks were not published at all by the peer.
+- **Regular** - contains video track from camera input and audio track from microphone input
+- **Screen** - contains video track from screen share (desktop) input; optionally can include audio track if they are published from desktop source.
+- **Audio** - contains only the audio track from micrphone input for audio only calls where video tracks were not published at all by the peer.
 
 <FlexContainer>
 <Callout title="Stream Recording Basics">
@@ -42,7 +42,7 @@ Once enabled for a template, stream recording gets **auto-started** when first p
 ### Get stream Assets
 A successfully recorded stream generates a recording asset of type `stream`. Refer here for [all recording assets](/get-started/v2/get-started/features/recordings/recording-assets/recording-asset-types) types on 100ms. For successful stream recordings, get stream recording assets using
 
-1. Using **[List Recording Assets API]**(/server-side/v2/aoi-reference/recording-assets/list-all-assets) get the all stream recording assets for a session_id and asset_type=`stream`
+1. Using **[List Recording Assets API]**(/server-side/v2/api-reference/recording-assets/list-all-assets) get the all stream recording assets for a session_id and asset_type=`stream`
 2. Store the `id` as corresponding asset identifier of each stream.
 3. Call the Get Presigned URL Asset API using the stream's `asset_id` to download the actual recording.
 

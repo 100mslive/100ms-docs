@@ -17,20 +17,20 @@ There are 2 types of Composite Recordings - Browser Composite and Custom Composi
 </Callout>
 </FlexContainer>
 
-## Guide to Composite Recordings
+## Guide to Browser Composite Recordings
 Follow this guide for browser based composite recordings:
 
-<StepsContainer id="composite-recording-setup">
+<StepsContainer id="browser-composite-recording-setup">
 
-### Enable Composite Recordings
-Set up composite recording using [recording configuration on 100ms dashboard →](/get-started/v2/get-started/features/recordings/set-up-recording) 
+### Enable Browser Composite Recordings
+Set up browser composite recording using [recording configuration on 100ms dashboard →](/get-started/v2/get-started/features/recordings/set-up-recording)
 	- Set up which roles to be recorded, video resolution, max recording duration time etc.
-	- Audio-only composite recordings: possible via the **[REST API to start recording](https://www.100ms.live/docs/server-side/v2/how-to-guides/recordings/customize)**
+	- Audio-only browser composite recordings: possible via the **[REST API to start recording](https://www.100ms.live/docs/server-side/v2/how-to-guides/recordings/customize)**
 	- **[Customize the composition UI](https://www.100ms.live/docs/get-started/v2/get-started/features/ui-composition)**
 
 ### Start a browser composite recording
 
-There are two ways to record a composite recording
+There are two ways to record a browse composite recording
 
 - Auto Start - Start recording automatically when the first peer joins a room. **[Enable on dashboard →](https://www.100ms.live/docs/docs/v2/auto-start-dashboard.png)**
 - Start on demand
@@ -44,14 +44,14 @@ There are two ways to record a composite recording
 		- **[Flutter docs →](https://www.100ms.live/docs/flutter/v2/how-to-guides/record-and-live-stream/recording)**
 		- **[React Native docs →](https://www.100ms.live/docs/react-native/v2/how-to-guides/record-and-live-stream/recording)**
 
-### Stop, pause, resume a composite recording
+### Stop, pause, resume a browser composite recording
 
 Browser composite recording can be started either by 100ms Recording APIs or SDKs, whereas actions like stop, pause, resume can be achieved with:
 - Stop a recording - [Stop Recording API](/server-side/v2/api-reference/recordings/stop-recording-for-room)
 - Pause a recording - [Pause Recording API](/server-side/v2/api-reference/recordings/pause-recording-for-room)
 - Resume a recording - [Resume Recording API](/server-side/v2/api-reference/recordings/resume-recording-for-room)
 
-### **Get composite recording assets**
+### **Get browser composite recording assets**
 
 After the recording is stopped and processed, a **[recording asset](https://www.100ms.live/docs/server-side/v2/api-reference/recording-assets/overview)** is generated. Composite generates an asset of type `room-composite`. You can fetch this asset through multiple methods:
 
@@ -59,8 +59,6 @@ After the recording is stopped and processed, a **[recording asset](https://www
 - Auto-send to your **[cloud storage location](https://www.100ms.live/docs/get-started/v2/get-started/features/recordings/storage)**
 - REST API to **[get recording asset](https://www.100ms.live/docs/server-side/v2/api-reference/recording-assets/get-asset)**
 - Server-side webhooks: **[use the `beam.recording.success` webhook](https://www.100ms.live/docs/server-side/v2/how-to-guides/configure-webhooks/webhook#beamrecordingsuccess)**
-
-### Get composite audio only recordings
 
 
 </StepsContainer>
