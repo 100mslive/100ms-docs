@@ -1,25 +1,22 @@
 name: Create Release PR
-
 on:
-  push:
-    branches:
-      - qa
-  pull_request:
-    types: [closed]
+    pull_request:
+        types: [closed]
+        branches:
+            - qa
 
 jobs:
-  create_release_pr:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Create Release PR
-        uses: peter-evans/create-pull-request@v3
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: "Release PR"
-          title: "Release PR"
-          branch: "qa"
-          base: "main"
+    pull-request:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v1
+            - name: pull-request
+              uses: repo-sync/pull-request@v2
+              if: github.event.pull_request.merged == true
+              with:
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  source_branch: 'qa'
+                  destination_branch: 'main'
+                  pr_title: 'Release PR'
+                  pr_body: ':robot: Automated PR from QA to Main'
+                  pr_label: 'auto-pr'
