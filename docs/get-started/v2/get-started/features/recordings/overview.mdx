@@ -5,8 +5,8 @@ nav: 3.1
 
 Recordings enable you to convert live video from 100ms rooms into long-lived video assets. 100ms can generate different types of recordings
 
-- [Composite recordings](#composite-recordings): One video file, composed with tracks of all peers in the room
-- [Track recordings](#track-recordings): Separate media files for audio, video and screen-share tracks
+-   [Composite recordings](#composite-recordings): One video file, composed with tracks of all peers in the room
+-   [Track recordings](#track-recordings): Separate media files for audio, video and screen-share tracks
 
 ## Composite recordings
 
@@ -28,7 +28,7 @@ There are 3 methods to start a recording.
 
 <FlexContainer>
 
-<Callout icon="link" title="Auto-start">
+<Callout icon="LinkTwoIcon" title="Auto-start">
 Start recording automatically when the first peer joins a room.
 <br/>
 
@@ -36,7 +36,7 @@ Start recording automatically when the first peer joins a room.
 
 </Callout>
 
-<Callout icon="link" title="Start with API">
+<Callout icon="LinkTwoIcon" title="Start with API">
 Start recording by calling the 100ms server-side REST API. This is suitable to start/stop based on business logic.
 <br/>
 
@@ -44,7 +44,7 @@ Start recording by calling the 100ms server-side REST API. This is suitable to s
 
 </Callout>
 
-<Callout icon="shield" title="Start from SDK">
+<Callout icon="ShieldIcon" title="Start from SDK">
 Start recording with the client-side SDK. This is suitable to start/stop based on user action (click a button).
 <br/>
 
@@ -66,16 +66,16 @@ Start recording with the client-side SDK. This is suitable to start/stop based o
 
 After the recording is stopped and processed, a [recording asset](/server-side/v2/api-reference/recording-assets/overview) is generated. Composite generates an asset of type `room-composite`. You can fetch this asset through multiple methods:
 
-* [Fetch on 100ms Dashboard](./storage#using-the-100ms-dashboard)
-* Auto-send to your [cloud storage location](./storage)
-* REST API to [get recording asset](/server-side/v2/api-reference/recording-assets/get-asset)
-* Server-side webhooks: [use the `beam.recording.success` webhook](/server-side/v2/how-to-guides/configure-webhooks/webhook#beamrecordingsuccess)
+-   [Fetch on 100ms Dashboard](./storage#using-the-100ms-dashboard)
+-   Auto-send to your [cloud storage location](./storage)
+-   REST API to [get recording asset](/server-side/v2/api-reference/recording-assets/get-asset)
+-   Server-side webhooks: [use the `beam.recording.success` webhook](/server-side/v2/how-to-guides/configure-webhooks/webhook#beamrecordingsuccess)
 
 ### Customizing the recording
 
-- No-code customization on the 100ms Dashboard: Modify the video resolution, which roles to be recorded
-- Get audio-only recording: possible via the [REST API to start recording](/server-side/v2/how-to-guides/recordings/customize)
-- [Customize the composition UI](/get-started/v2/get-started/features/ui-composition)
+-   No-code customization on the 100ms Dashboard: Modify the video resolution, which roles to be recorded
+-   Get audio-only recording: possible via the [REST API to start recording](/server-side/v2/how-to-guides/recordings/customize)
+-   [Customize the composition UI](/get-started/v2/get-started/features/ui-composition)
 
 ### Legacy composite through SFU recording
 
@@ -101,5 +101,5 @@ Track recordings can be enabled for your template through the 100ms Dashboard. O
 
 You can fetch track recordings through two methods:
 
-* Auto-send to your [cloud storage location](./storage)
-* Server-side webhooks: use the `track.recording.success` webhook
+-   Auto-send to your [cloud storage location](./storage)
+-   Server-side webhooks: use the `track.recording.success` webhook
