@@ -1,0 +1,27 @@
+---
+title: Comparing Recordings Modes
+nav: 3.4
+---
+
+The choice of recording mode will have significant impacts on quality, editing flexibility, viewer experience, and more down the line. But when should you use track vs stream vs composite recordings?
+
+- **Track recordings** - Best used when there is a post processing requirement for custom editing/ AI tooling for transcription/ object detection/ analysis.
+
+- **Stream recordings** - Best used when a separate composite recording (video and audio `muxed`) is needed for each participant. Example: in proctoring use case, where separate recording is required for each student taking a proctored exam.
+
+- **Composite recordings** - Best used when a single composite recording is needed containing tracks from all participants. There are 2 types of composites available in 100ms:
+    - **Browser Composite recordings** - Best used when a lot of UI customisation is required in the recordings or for premium viewer experience.
+    - **Custom Composite recordings** - Best used for internal usage such as compliance/auditing/archival where UI layout customisation is not required.
+
+
+## Choosing a recording mode
+Here is a table summarizing the key differences between track, stream, and composite recording modes across various aspects:
+
+| Aspect | Track Recording | Stream Recording | Browser Composite Recording | Custom Composite Recording |
+| --- | --- | --- | --- | --- |
+| Definition | Separate video track from webcam, audio track from microphone, recorded separately | Participant level composite | Room level composite | Room level composite |
+| Components | Single recording type; for example, one video track | Typically one video and audio stream | Capture UI via a browser| Multiple tracks across all participants |
+| Use Cases | Transcription/ other AI workflows | Proctoring, AI workflows | Premium recording, Social, Recording with live reactions, emojis  |  Compliance, Auditing |
+| Output format | `webm` | `mp4` | `mp4`  | `mp4` |
+
+
