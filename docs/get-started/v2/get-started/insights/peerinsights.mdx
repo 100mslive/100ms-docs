@@ -1,0 +1,83 @@
+---
+title: Peer Insights
+nav: 4.1
+---
+
+When a user joins a session on 100ms, a corresponding peer is created for them on 100ms. Peer insights comprise a complete collection of events, an overall connection quality score, and network performance for a peer's entire session duration, providing comprehensive data to evaluate their overall experience. Key components include:
+
+<FlexContainer>
+<Callout title="Peer Details">
+Identify peer; their device and network setup.<br/>
+[Peer details →](/get-started/v2/get-started/insights/peerinsights/#peer-details)
+</Callout>
+
+
+<Callout title="Check event log of a peer" icon="LinkTwoIcon">
+Chronological record of all events occurred for a peer during a session.<br/>
+[Event Log →](/get-started/v2/get-started/insights/event-log)
+</Callout>
+</FlexContainer>
+
+<FlexContainer>
+<Callout title="Connection Quality Score" icon="LinkTwoIcon">
+Check overall network performance trend for a peer during a session.<br/>
+[CQS for a peer →](/get-started/v2/get-started/insights/connection-quality-score)
+</Callout>
+
+<Callout title="Network Performance">
+Track underlying network conditions that impact media quality.<br/>
+[Network and media quality →](/get-started/v2/get-started/insights/network-performance)
+</Callout>
+</FlexContainer>
+
+## Measuring peer level insights
+
+To debug the call experience of a peer and gain insights into their session, follow these steps:
+
+1. Go to the "Sessions" section in the [100ms dashboard](https://dashboard.100ms.live/dashboard)
+2. Select or enter a Session ID
+3. Select a peer or enter a peer ID to debug.
+4. Explore the insights for the selected peer, including peer details, events performed, and network performance metrics that impacted the media quality during the session.
+
+
+
+
+<video loop="true" autoplay="true" id="vid" muted>
+<source src="/docs/guides/peer-insights.mp4" type="video/mp4" />
+</video>
+
+
+## Peer details
+
+Peer details, such as who the peer was, the session they belonged to, and a summary of their device setup, help you identify and contextualize the peer's experience.
+
+### Peer Information
+
+- **Name** -The name of the peer.
+- **Peer ID** -A unique 100ms-generated peer ID.
+- **User ID** -The user ID passed by you (optional).
+
+### Session information
+
+- **Session ID**: The ID of the session.
+- **Room ID** -The ID of the room to which this session belongs.
+- **Joined At** -The timestamp when the peer joins the session, shown in local time.
+- **Left At** -The timestamp when the peer leaves the session, shown in local time.
+- **Duration** -The total session duration for this peer in the format "HH:MM:SS". The maximum duration allowed per peer is 12 hours.
+- **Published** -The count of tracks published by the peer. The tracks can be audio, video, or screen-share tracks.
+- **End Reason** -The reason why the peer left the session. This can happen due to multiple reasons:
+
+	| End Reason field | Reason|
+	|---------| -------|
+	| Peer left | Peer left the session on their own.|
+	| Peer Disconnected | Network Disconnected or Websocket closed  |
+	| Peer Removed  | Peer was kicked out by another peer.|
+	| Peer Removed From Server | Peer was removed from backend APIs (End Room)|
+
+### Peer summary
+
+- **Platform** - The platform used by the peer, such as desktop or mobile.
+- **Operating System** - The operating system and its version used by the peer.
+- **Browser** - The browser and its version used by the peer.
+- **Framework** - The framework used by the peer.
+- **SDK version** - The version of the 100ms SDK used by the peer, which can be Web, Android, iOS, Flutter and React Native.

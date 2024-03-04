@@ -1,6 +1,6 @@
 ---
 title: HMSRole
-nav: '4.51'
+nav: '4.60'
 ---
 
 ## Properties
@@ -17,18 +17,19 @@ nav: '4.51'
 
 #### Type declaration
 
-| Name               | Type      |
-| :----------------- | :-------- |
-| `browserRecording` | `boolean` |
-| `changeRole`       | `boolean` |
-| `endRoom`          | `boolean` |
-| `hlsStreaming`     | `boolean` |
-| `mute`             | `boolean` |
-| `pollRead`         | `boolean` |
-| `pollWrite`        | `boolean` |
-| `removeOthers`     | `boolean` |
-| `rtmpStreaming`    | `boolean` |
-| `unmute`           | `boolean` |
+| Name               | Type                  |
+| :----------------- | :-------------------- |
+| `browserRecording` | `boolean`             |
+| `changeRole`       | `boolean`             |
+| `endRoom`          | `boolean`             |
+| `hlsStreaming`     | `boolean`             |
+| `mute`             | `boolean`             |
+| `pollRead`         | `boolean`             |
+| `pollWrite`        | `boolean`             |
+| `removeOthers`     | `boolean`             |
+| `rtmpStreaming`    | `boolean`             |
+| `unmute`           | `boolean`             |
+| `whiteboard?`      | `HMSPermissionType`[] |
 
 ---
 

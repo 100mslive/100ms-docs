@@ -15,7 +15,94 @@ import AndroidSdkVersionShield from '@/common/android-sdk-version-shield.md';
 | live.100ms:video-view:               |   <AndroidSdkVersionShield />  |
 | live.100ms:hls-player:                  |<AndroidSdkVersionShield />            |
 | live.100ms:hls-player-stats: |<AndroidSdkVersionShield /> 
+| live.100ms:video-filters: |<AndroidSdkVersionShield />|
 | live.100ms:virtual-background: |<AndroidSdkVersionShield />|
+
+## v2.9.3 - 2024-02-17
+### Changed
+- Masking device-id field used in analytics
+- Not storing log files to disk if room is marked HIPPA
+
+### Fixed
+- Analytics fixes around publisher stats
+
+## v2.9.2 - 2024-02-9
+### Added
+Added Video Filter Plugin
+
+## v2.9.1 - 2024-02-5
+### Added
+Previews are now skippable based on settings in the dashboard.
+
+## v2.9.0 - 2024-01-25
+### Fixed
+- Pixel 4/4a issue with back camera publishing corrupt video
+
+## v2.8.9 - 2024-01-19
+### Added
+- Added response time in millis to Quiz answers
+
+## v2.8.8 - 2024-01-15
+### Fixed
+- Applications now do not need to take `BLUETOOTH_CONNECT` permission from user for Android 12 and above
+
+### Changed
+- Upgraded tarketSDKVersion and compileSDKVersion to 31 from 30
+- Type of `availableAudioDevices` in `onAudioDeviceChanged` of `AudioManagerDeviceChangeListener` is changed from `MutableSet` to `Set` if you are using Kotlin. It remains `Set` for java applications
+
+## v2.8.7 - 2024-01-05
+### Added
+- getResponse of HMSInteractivity center would map self answers to the questions as well
+
+### Fixed
+- Crash fix : `SDKStore.getLocalPeer()`` throwing null pointer exception while leaving very fast after joining
+
+## v2.8.6 - 2023-12-28
+### Fixed
+- Possible crash while joining. `java.lang.IllegalStateException: Property factory should be initialized before get`
+
+## v2.8.5 - 2023-12-20
+### Fixed
+- Crash in android 5.0 when receiving timed metadata
+
+## v2.8.4 - 2023-12-15
+### Added
+- Prebuilt now contains an option to skip previews.
+
+### Fixed
+- Set running field in HMSHLSStreamingState correctly on getting a HLS update
+
+## v2.8.3 - 2023-12-06
+### Fixed
+- `HMSTextureRenderer` class was sending wrong values in `onResolutionChange` of `VideoViewStateChangeListener` in certain cases
+
+## v2.8.2 - 2023-12-01
+### Added
+- Support for using TextureView to render webrtc video
+
+### Fixed
+- Issue where camera was publishing in 1:1 aspect ratio if 9:16 publish is set on some devices
+
+## v2.8.1 - 2023-11-16
+### Fixed
+- Publisher and Subscriber stats are sent according to whether they're enabled in flags on the dashboard.
+
+### Added
+- Intermediate stages of Beam - The states have been updated to include the following:
+-  Recording states:
+    - NONE,
+    -  STARTING
+    - STARTED
+    - PAUSED
+    - RESUMED
+    - STOPPED
+    - FAILED
+- Streaming states are:
+    - NONE,
+    -  STARTING
+    - STARTED
+    - STOPPED
+    - FAILED
 
 ## v2.8.0 - 2023-11-3
 ### Added
@@ -44,8 +131,8 @@ import AndroidSdkVersionShield from '@/common/android-sdk-version-shield.md';
 
 ## v2.7.6 - 2023-09-14
 ### Breaking Changes
-- The SDK is now compiled with Java 11 and if you're using an older version of the JDK you'll get an error like "class file has wrong version 55.0, should be 52.0". To fix this please upgrade your JDK to at least Java 11. This was necessitated by a change in webrtc.
-- SDK uses webrtc m107.
+- The SDK is now compiled with Java 11 and if you're using an older version of the JDK you'll get an error like "class file has wrong version 55.0, should be 52.0". To fix this please upgrade your JDK to at least Java 11. This was necessitated by a change in WebRTC.
+- SDK uses WebRTC m107.
 
 ### Added
 - Preview API for role change.
@@ -94,7 +181,7 @@ import AndroidSdkVersionShield from '@/common/android-sdk-version-shield.md';
 ## v2.6.7 - 2023-06-2
 
 ### Added
-- SDK now sends detailed analytics from the webrtc publisher side for debugging call quality issues.
+- SDK now sends detailed analytics from the WebRTC publisher side for debugging call quality issues.
 
 ## v2.6.6 - 2023-05-29
 
@@ -160,7 +247,7 @@ import AndroidSdkVersionShield from '@/common/android-sdk-version-shield.md';
 ## v2.6.0 - 2023-03-31
 
 ### Breaking Changes
-- getToken() is an instance level api and returns a string in onSuccess instead of a TokenResult object. It modifies an API introduced in 2.5.9. [Docs](https://www.100ms.live/docs/android/v2/get-started/quickstart#get-auth-token)
+- getToken() is an instance level API and returns a string in onSuccess instead of a TokenResult object. It modifies an API introduced in 2.5.9. [Docs](https://www.100ms.live/docs/android/v2/get-started/quickstart#get-auth-token)
 - `customerUserID` is now nullable for both `HMSLocalPeer` and `HMSRemotePeer`.
 
 ### Added
@@ -207,7 +294,7 @@ import AndroidSdkVersionShield from '@/common/android-sdk-version-shield.md';
 ### Added
 
 -   New API in SDK to send Timed Metadata while streaming to hls viewers
--   Util method added to get HMS SDK and webrtc version
+-   Util method added to get HMS SDK and WebRTC version
 -   Added `joined_at` field to Local and Remote peers
 -   `AutoSimulcast` is enabled by default while using `HMSVideoView`
 -   Local Stats for all the layers
@@ -273,12 +360,12 @@ import AndroidSdkVersionShield from '@/common/android-sdk-version-shield.md';
 
 ### Added
 
--   Updated webrtc to fix hardware simulcast resolution not changing between layers.
+-   Updated WebRTC to fix hardware simulcast resolution not changing between layers.
 -   Screenshare now gets unpublished if the role of the peer is changed to one that can't.
 
 ### Changed
 
--   Messages that are sent via REST api now arrive with a null sender peer, where previously they were not sent at all. `senderPeer` in HMSMessages can be null now.
+-   Messages that are sent via REST API now arrive with a null sender peer, where previously they were not sent at all. `senderPeer` in HMSMessages can be null now.
 
 ## v2.5.0 - 2022-10-14
 
@@ -321,7 +408,7 @@ import AndroidSdkVersionShield from '@/common/android-sdk-version-shield.md';
 
 -   Calling `switchCamera` API leads trigerring of `onSuccess` callback twice
 -   `onRoomUpdate` with type `HMSRoomUpdate.ROOM_PEER_COUNT_UPDATED` not getting called when peer count changes in the room
--   Peer not able to publish tracks when updated to webrtc from HLS if rejoins after a reconnection in webrtc Mode
+-   Peer not able to publish tracks when updated to WebRTC from HLS if rejoins after a reconnection in WebRTC Mode
 
 #### Changed
 
@@ -350,13 +437,13 @@ import AndroidSdkVersionShield from '@/common/android-sdk-version-shield.md';
 #### Added
 
 -   `Join response time` to analytics
--   Support to enable or disable webrtc's AutoResize option while publishing video track
+-   Support to enable or disable WebRTC's AutoResize option while publishing video track
 
 ## v2.4.4 - 2022-07-07
 
 #### Fixed
 
--   Web-Socket reconnection not working for non webrtc peers
+-   Web-Socket reconnection not working for non WebRTC peers
 
 ## v2.4.3 - 2022-07-01
 
@@ -369,23 +456,23 @@ import AndroidSdkVersionShield from '@/common/android-sdk-version-shield.md';
 #### Added
 
 -   APIs to stream device audio in different modes
--   APIs to view and change the output speaker selected by the SDK to playout
+-   APIs to view and change the output speaker selected by the SDK to play out
 -   Analytics events to measure `retry` counts of JOIN calls
 
 ## v2.4.2 - 2022-06-22
 
 #### Fixed
 
--   Webrtc not able to find Camera from Android Camera Manager leading to `CantAccessCaptureDevice` error while calling preview or join API
+-   WebRTC not able to find Camera from Android Camera Manager leading to `CantAccessCaptureDevice` error while calling preview or join API
 -   Assertion Crash in Network Monitor while trying to create new instane of HMSSDK while a call is in progress
--   Chances of Multiple socket connection getting created incase there is network disconnection in preview screen and join gets called during that time
+-   Chances of Multiple socket connection getting created in case there is network disconnection in preview screen and join gets called during that time
 
 #### Added
 
 -   `setAudioMode` API to change the Audio out mode manually between in-call volume and media volume
 -   Retry on 5xx and 429 errors in all RPC calls
 -   Analytics events to measure `peer-list` time
--   Join optimization by not sending offer for non webrtc peers
+-   Join optimization by not sending offer for non WebRTC peers
 
 #### Changed
 
@@ -415,7 +502,7 @@ import AndroidSdkVersionShield from '@/common/android-sdk-version-shield.md';
 
 #### Changed
 
--   Socket close from cancel, which ensures the leave api does not wait for server response hence initiating internal teardown immediately
+-   Socket close from cancel, which ensures the leave API does not wait for server response hence initiating internal teardown immediately
 
 #### Added
 
@@ -430,7 +517,7 @@ import AndroidSdkVersionShield from '@/common/android-sdk-version-shield.md';
 -   Screen Share not starting in highest resolution
 -   Serverside Subscribe degradation fix - marking track not degraded after removeSink is called
 -   IO Exception Crash in Android 12, in the alarm manager of Log Util
--   NPE Crash fix in webrtc stats monitor
+-   NPE Crash fix in WebRTC stats monitor
 -   Crash in LogUtils
 
 #### Changed
@@ -537,7 +624,7 @@ import AndroidSdkVersionShield from '@/common/android-sdk-version-shield.md';
 #### Changed
 
 -   Upgraded kotlin version to `1.6.10`
--   Upgraded webrtc version to `m97`
+-   Upgraded WebRTC version to `m97`
 -   `customerUserID` can be null
 
 #### Fixed
@@ -757,7 +844,7 @@ It could be mute if the person tried to mute or unmute someone and immediately l
 
 #### Updated
 
--   Updated to latest m94 release of webrtc
+-   Updated to latest m94 release of WebRTC
 
 ## 2.1.2 - 2021-09-20
 
@@ -773,7 +860,7 @@ It could be mute if the person tried to mute or unmute someone and immediately l
 
 -   SDK Reconnection on network disconnection improvement
 -   NPE Crash fix on preview screen in case of SDK reconnection
--   Fix: onPreview getting was called twice incase of SDK reconnection
+-   Fix: onPreview getting was called twice in case of SDK reconnection
 
 ## 2.1.0 - 2021-09-03
 
@@ -791,10 +878,10 @@ It could be mute if the person tried to mute or unmute someone and immediately l
 
 #### Changed
 
--   Updated webrtc lib to latest
+-   Updated WebRTC lib to latest
 -   Bug fix(can reuse the same instance of hmsSDK to rejoin a room)
 -   Few memory leak
--   IMP --> With this release no need to add any dependancy to webrtc library. Anyone migrating from previous versions, PLEASE REMOVE the webrtc dependancy from your app's build.gradle
+-   IMP --> With this release no need to add any dependency to WebRTC library. Anyone migrating from previous versions, PLEASE REMOVE the WebRTC dependency from your app's build.gradle
 
 ## 2.0.8 - 2021-08-17
 
@@ -869,15 +956,15 @@ It could be mute if the person tried to mute or unmute someone and immediately l
 
 -   NPE Crash on SDKStore.getLocalPeer()
 -   Unsupported notification message crash
--   Call onError callback in webrtc subscription failure
+-   Call onError callback in WebRTC subscription failure
 
 ## 2.0.0-beta02 - 2021-06-24
 
 #### Added
 
 -   Preview API
--   Enabled Opus dtx for audio
--   Added retry to INIT api call
+-   Enabled Opus DTX for audio
+-   Added retry to INIT API call
 
 ## 2.0.0-beta01 - 2021-06-16
 
@@ -893,7 +980,7 @@ It could be mute if the person tried to mute or unmute someone and immediately l
 
 #### Added
 
--   Simplified SDK interfaces that can power a fully-featured video conferencing application
+-   Simplified SDK interfaces that can power a fully featured video conferencing application
     -   `join`
     -   `leave`
     -   `listeners` for tracks/peers/other data

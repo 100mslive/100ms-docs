@@ -1,0 +1,64 @@
+---
+title: Composite Recordings
+nav: 3.3
+---
+
+100ms can record a session to capture the perspective of a participant, who can hear and see other participants in the room.
+These recordings are a composite of multiple audio/video tracks across multiple participants in the session. The output is a single MP4 file.
+There are 2 types of Composite Recordings - Browser Composite and Custom Composite. Depending on the [use case](/get-started/v2/get-started/features/recordings/recording-modes/comparing-recording-modes), the ideal composite type can be selected.
+
+
+<FlexContainer>
+<Callout title="Browser Composite Recordings Basics" icon="ShieldIcon">
+- These are **browser based** recordings which records the screen to generate a composite recording file.
+- They can be started automatically when the first peer joins and stopped after all peers leave with a timeOut configuration.
+- Alternatively, they can also be started and stopped via client SDK or Recording APIs
+- **Customizable settings**: You can define which roles to record, which video resolution to record and, other modifications to the UI.
+</Callout>
+</FlexContainer>
+
+## Guide to Browser Composite Recordings
+Follow this guide for browser based composite recordings:
+
+<StepsContainer id="browser-composite-recording-setup">
+
+### Enable Browser Composite Recordings
+Set up browser composite recording using [recording configuration on 100ms dashboard →](/get-started/v2/get-started/features/recordings/set-up-recording)
+	- Set up which roles to be recorded, video resolution, max recording duration time etc.
+	- Audio-only browser composite recordings: possible via the **[REST API to start recording](https://www.100ms.live/docs/server-side/v2/how-to-guides/recordings/customize)**
+	- **[Customize the composition UI](https://www.100ms.live/docs/get-started/v2/get-started/features/ui-composition)**
+
+### Start a browser composite recording
+
+There are two ways to record a browse composite recording
+
+- Auto Start - Start recording automatically when the first peer joins a room. **[Enable on dashboard →](https://www.100ms.live/docs/docs/v2/auto-start-dashboard.png)**
+- Start on demand
+	- **Start with API** - Use 100ms server-side REST API which is suitable to start/stop based on business logic. Record with [Recording APIs →](https://www.100ms.live/docs/server-side/v2/how-to-guides/recordings/overview)
+
+	- **Start from SDK** - Start recording with the client-side SDK. This is suitable to start/stop based on user action (click a button).
+
+		- **[Web docs →](https://www.100ms.live/docs/javascript/v2/how-to-guides/record-and-live-stream/rtmp-recording)**
+		- **[iOS docs →](https://www.100ms.live/docs/ios/v2/how-to-guides/record-and-live-stream/rtmp-recording)**
+		- **[Android docs →](https://www.100ms.live/docs/android/v2/how-to-guides/record-and-live-stream/rtmp-recording)**
+		- **[Flutter docs →](https://www.100ms.live/docs/flutter/v2/how-to-guides/record-and-live-stream/recording)**
+		- **[React Native docs →](https://www.100ms.live/docs/react-native/v2/how-to-guides/record-and-live-stream/recording)**
+
+### Stop, pause, resume a browser composite recording
+
+Browser composite recording can be started either by 100ms Recording APIs or SDKs, whereas actions like stop, pause, resume can be achieved with:
+- Stop a recording - [Stop Recording API](/server-side/v2/api-reference/recordings/stop-recording-for-room)
+- Pause a recording - [Pause Recording API](/server-side/v2/api-reference/recordings/pause-recording-for-room)
+- Resume a recording - [Resume Recording API](/server-side/v2/api-reference/recordings/resume-recording-for-room)
+
+### **Get browser composite recording assets**
+
+After the recording is stopped and processed, a **[recording asset](https://www.100ms.live/docs/server-side/v2/api-reference/recording-assets/overview)** is generated. Composite generates an asset of type `room-composite`. You can fetch this asset through multiple methods:
+
+- **[Fetch on 100ms Dashboard](https://www.100ms.live/docs/get-started/v2/get-started/features/recordings/storage#using-the-100ms-dashboard)**
+- Auto-send to your **[cloud storage location](https://www.100ms.live/docs/get-started/v2/get-started/features/recordings/storage)**
+- REST API to **[get recording asset](https://www.100ms.live/docs/server-side/v2/api-reference/recording-assets/get-asset)**
+- Server-side webhooks: **[use the `beam.recording.success` webhook](https://www.100ms.live/docs/server-side/v2/how-to-guides/configure-webhooks/webhook#beamrecordingsuccess)**
+
+
+</StepsContainer>

@@ -3,9 +3,6 @@ title: Local Audio Share
 nav: 4.8
 ---
 
-> This feature is still in Beta. To know more or report any issues, feel free to reach out to us
-> over [Discord](https://discord.com/invite/kGdmszyzq2).
-
 This feature is the analog of screen capture, but for audio.
 There may be cases where the application needs to stream music which is either stored in the device locally or from some other app present on the device in the room where the peer is joined.
 
@@ -47,6 +44,9 @@ super.onActivityResult(requestCode, resultCode, data)
 
 ```kotlin
 <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+<!---- Required for android 14 and above --->
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION" />
 ```
 
 ### Migrating from older HMSSDK version to 1.5.0 or above

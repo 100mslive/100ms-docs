@@ -1,6 +1,6 @@
 ---
 title: HMSPeerStats
-nav: '4.33'
+nav: '4.36'
 ---
 
 ## Properties

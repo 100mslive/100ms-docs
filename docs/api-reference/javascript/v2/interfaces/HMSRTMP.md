@@ -1,6 +1,6 @@
 ---
 title: HMSRTMP
-nav: '4.47'
+nav: '4.56'
 ---
 
 ## Properties
@@ -20,3 +20,9 @@ nav: '4.47'
 ### startedAt
 
 • `Optional` **startedAt**: `Date`
+
+---
+
+### state
+
+• `Optional` **state**: `HMSStreamingState`

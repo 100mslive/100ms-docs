@@ -60,7 +60,7 @@ If lock is passed as true, the room cannot be used further.
 
 ### interactivityCenter
 
-• **interactivityCenter**: [`IHMSInteractivityCenter`](/api-reference/javascript/v2/interfaces/IHMSInteractivityCenter)
+• **interactivityCenter**: `HMSInteractivityCenter`
 
 ---
 
@@ -130,9 +130,9 @@ Audio plugins can be added/removed at any time after the audio track is availabl
 
 #### Parameters
 
-| Name     | Type             | Description    |
-| :------- | :--------------- | :------------- |
-| `plugin` | `HMSAudioPlugin` | HMSAudioPlugin |
+| Name     | Type                                                                       | Description    |
+| :------- | :------------------------------------------------------------------------- | :------------- |
+| `plugin` | [`HMSAudioPlugin`](/api-reference/javascript/v2/interfaces/HMSAudioPlugin) | HMSAudioPlugin |
 
 #### Returns
 
@@ -154,10 +154,10 @@ pluginFrameRate is the rate at which the output plugin will do processing
 
 #### Parameters
 
-| Name               | Type             | Description    |
-| :----------------- | :--------------- | :------------- |
-| `plugin`           | `HMSVideoPlugin` | HMSVideoPlugin |
-| `pluginFrameRate?` | `number`         | number         |
+| Name               | Type                                                                       | Description    |
+| :----------------- | :------------------------------------------------------------------------- | :------------- |
+| `plugin`           | [`HMSVideoPlugin`](/api-reference/javascript/v2/interfaces/HMSVideoPlugin) | HMSVideoPlugin |
+| `pluginFrameRate?` | `number`                                                                   | number         |
 
 #### Returns
 
@@ -166,6 +166,29 @@ pluginFrameRate is the rate at which the output plugin will do processing
 **`See`**
 
 HMSVideoPlugin
+
+---
+
+### addPluginsToVideoStream
+
+▸ **addPluginsToVideoStream**(`plugins`): `Promise`<`void`\>
+
+Add video plugins to the local peer video stream. Eg. Virtual Background, Face Filters etc.
+Video plugins can be added/removed at any time after the video track is available.
+
+#### Parameters
+
+| Name      | Type                                                                                     |
+| :-------- | :--------------------------------------------------------------------------------------- |
+| `plugins` | [`HMSMediaStreamPlugin`](/api-reference/javascript/v2/interfaces/HMSMediaStreamPlugin)[] |
+
+#### Returns
+
+`Promise`<`void`\>
+
+**`See`**
+
+HMSMediaStreamPlugin
 
 ---
 
@@ -373,6 +396,22 @@ enable sending audio speaker data to beam
 
 ---
 
+### getNativeTrackById
+
+▸ **getNativeTrackById**(`trackId`): `undefined` \| `MediaStreamTrack`
+
+#### Parameters
+
+| Name      | Type     | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| :-------- | :------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `trackId` | `string` | pass the trackId from store (for instance, peer.audioTrack) for which you want the native MediaStreamTrack instance. Be cautious when using this and modifying the underlying MediastreamTrack. Note: In case of local peer, the native audio track will change the first time it is unmuted. In case of video track, the native track changes everytime you mute/unmute. Be cautious when using this. This will not be needed unless you want to do some extra processing on the audio/video tracks. We recommend using our plugins for the same instead |
+
+#### Returns
+
+`undefined` \| `MediaStreamTrack`
+
+---
+
 ### getPeerListIterator
 
 ▸ **getPeerListIterator**(`options?`): [`HMSPeerListIterator`](/api-reference/javascript/v2/interfaces/HMSPeerListIterator)
@@ -386,6 +425,22 @@ enable sending audio speaker data to beam
 #### Returns
 
 [`HMSPeerListIterator`](/api-reference/javascript/v2/interfaces/HMSPeerListIterator)
+
+---
+
+### getTrackById
+
+▸ **getTrackById**(`trackId`): `undefined` \| `HMSTrack`
+
+#### Parameters
+
+| Name      | Type     |
+| :-------- | :------- |
+| `trackId` | `string` |
+
+#### Returns
+
+`undefined` \| `HMSTrack`
 
 ---
 
@@ -601,9 +656,9 @@ If you have **removeOthers** permission, you can remove a peer from the room.
 
 #### Parameters
 
-| Name     | Type             |
-| :------- | :--------------- |
-| `plugin` | `HMSAudioPlugin` |
+| Name     | Type                                                                       |
+| :------- | :------------------------------------------------------------------------- |
+| `plugin` | [`HMSAudioPlugin`](/api-reference/javascript/v2/interfaces/HMSAudioPlugin) |
 
 #### Returns
 
@@ -621,9 +676,9 @@ addPluginToAudioTrack
 
 #### Parameters
 
-| Name     | Type             |
-| :------- | :--------------- |
-| `plugin` | `HMSVideoPlugin` |
+| Name     | Type                                                                       |
+| :------- | :------------------------------------------------------------------------- |
+| `plugin` | [`HMSVideoPlugin`](/api-reference/javascript/v2/interfaces/HMSVideoPlugin) |
 
 #### Returns
 
@@ -632,6 +687,29 @@ addPluginToAudioTrack
 **`See`**
 
 addPluginToVideoTrack
+
+---
+
+### removePluginsFromVideoStream
+
+▸ **removePluginsFromVideoStream**(`plugins`): `Promise`<`void`\>
+
+Remove video plugins to the local peer video stream. Eg. Virtual Background, Face Filters etc.
+Video plugins can be added/removed at any time after the video track is available.
+
+#### Parameters
+
+| Name      | Type                                                                                     |
+| :-------- | :--------------------------------------------------------------------------------------- |
+| `plugins` | [`HMSMediaStreamPlugin`](/api-reference/javascript/v2/interfaces/HMSMediaStreamPlugin)[] |
+
+#### Returns
+
+`Promise`<`void`\>
+
+**`See`**
+
+HMSMediaStreamPlugin
 
 ---
 
@@ -662,10 +740,10 @@ Send a plain text message to all the other participants in the room.
 
 #### Parameters
 
-| Name      | Type     | Description                                                       |
-| :-------- | :------- | :---------------------------------------------------------------- |
-| `message` | `string` | string message to broadcast                                       |
-| `type?`   | `string` | type of message eg: image, video etc. - optional defaults to chat |
+| Name      | Type     | Description                                                                 |
+| :-------- | :------- | :-------------------------------------------------------------------------- |
+| `message` | `string` | string message to broadcast                                                 |
+| `type?`   | `string` | type of message. For example: image, video etc. - optional defaults to chat |
 
 #### Returns
 
@@ -679,11 +757,11 @@ Send a plain text message to all the other participants in the room.
 
 #### Parameters
 
-| Name      | Type     | Description                                                       |
-| :-------- | :------- | :---------------------------------------------------------------- |
-| `message` | `string` |                                                                   |
-| `peerID`  | `string` | id of the peer to which message has to be sent                    |
-| `type?`   | `string` | type of message eg: image, video etc. - optional defaults to chat |
+| Name      | Type     | Description                                                                 |
+| :-------- | :------- | :-------------------------------------------------------------------------- |
+| `message` | `string` |                                                                             |
+| `peerID`  | `string` | id of the peer to which message has to be sent                              |
+| `type?`   | `string` | type of message. For example: image, video etc. - optional defaults to chat |
 
 #### Returns
 
@@ -697,11 +775,11 @@ Send a plain text message to all the other participants in the room.
 
 #### Parameters
 
-| Name      | Type       | Description                                                       |
-| :-------- | :--------- | :---------------------------------------------------------------- |
-| `message` | `string`   | string message to send                                            |
-| `roles`   | `string`[] | roles to which to send the message                                |
-| `type?`   | `string`   | type of message eg: image, video etc. - optional defaults to chat |
+| Name      | Type       | Description                                                                 |
+| :-------- | :--------- | :-------------------------------------------------------------------------- |
+| `message` | `string`   | string message to send                                                      |
+| `roles`   | `string`[] | roles to which to send the message                                          |
+| `type?`   | `string`   | type of message. For example: image, video etc. - optional defaults to chat |
 
 #### Returns
 
@@ -962,7 +1040,25 @@ found in store, no change in store will take place.
 | Name         | Type      | Description                                                            |
 | :----------- | :-------- | :--------------------------------------------------------------------- |
 | `readStatus` | `boolean` | boolean value which you want to set as read flag for message/messages. |
-| `messageId?` | `string`  | message id whose read falg you want to set.                            |
+| `messageId?` | `string`  | message id whose read flag you want to set.                            |
+
+#### Returns
+
+`void`
+
+---
+
+### setPlaylistSettings
+
+▸ **setPlaylistSettings**(`settings`): `void`
+
+Method to override the default settings for playlist tracks
+
+#### Parameters
+
+| Name       | Type                  |
+| :--------- | :-------------------- |
+| `settings` | `HMSPlaylistSettings` |
 
 #### Returns
 
@@ -1013,7 +1109,7 @@ This can be used to mute/unmute a remote peer's track
 
 ▸ **setRemoteTracksEnabled**(`params`): `Promise`<`void`\>
 
-Use this to mute/unmute multipe tracks by source, role or type
+Use this to mute/unmute multiple tracks by source, role or type
 
 #### Parameters
 
@@ -1192,19 +1288,19 @@ Toggle the camera between front and back if the both the camera's exist
 
 ### validateAudioPluginSupport
 
-▸ **validateAudioPluginSupport**(`plugin`): `HMSPluginSupportResult`
+▸ **validateAudioPluginSupport**(`plugin`): [`HMSPluginSupportResult`](/api-reference/javascript/v2/interfaces/HMSPluginSupportResult)
 
 To check the support of the plugin, based on browser, os and audio devices
 
 #### Parameters
 
-| Name     | Type             | Description    |
-| :------- | :--------------- | :------------- |
-| `plugin` | `HMSAudioPlugin` | HMSAudioPlugin |
+| Name     | Type                                                                       | Description    |
+| :------- | :------------------------------------------------------------------------- | :------------- |
+| `plugin` | [`HMSAudioPlugin`](/api-reference/javascript/v2/interfaces/HMSAudioPlugin) | HMSAudioPlugin |
 
 #### Returns
 
-`HMSPluginSupportResult`
+[`HMSPluginSupportResult`](/api-reference/javascript/v2/interfaces/HMSPluginSupportResult)
 
 **`See`**
 
@@ -1214,19 +1310,19 @@ HMSPluginSupportResult
 
 ### validateVideoPluginSupport
 
-▸ **validateVideoPluginSupport**(`plugin`): `HMSPluginSupportResult`
+▸ **validateVideoPluginSupport**(`plugin`): [`HMSPluginSupportResult`](/api-reference/javascript/v2/interfaces/HMSPluginSupportResult)
 
 To check the support of the plugin, based on browser, os and audio devices
 
 #### Parameters
 
-| Name     | Type             | Description    |
-| :------- | :--------------- | :------------- |
-| `plugin` | `HMSVideoPlugin` | HMSVideoPlugin |
+| Name     | Type                                                                       | Description    |
+| :------- | :------------------------------------------------------------------------- | :------------- |
+| `plugin` | [`HMSVideoPlugin`](/api-reference/javascript/v2/interfaces/HMSVideoPlugin) | HMSVideoPlugin |
 
 #### Returns
 
-`HMSPluginSupportResult`
+[`HMSPluginSupportResult`](/api-reference/javascript/v2/interfaces/HMSPluginSupportResult)
 
 **`See`**
 

@@ -37,6 +37,9 @@ super.onActivityResult(requestCode, resultCode, data)
 
 ```kotlin
 <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+<!---- Required for android 14 and above --->
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION" />
 ```
 
 > If your application uses `FlutterFragmentActivity` instead of `FlutterActivity`, then you need to replace `activity` with `this` in the above code.
@@ -298,7 +301,7 @@ class Meeting implements HMSUpdateListener, HMSActionResultListener{
 
 Application needs to call the `isScreenShareActive` method of `HMSSDK`.
 
-This method returns a `Boolean` which will be `true` incase ScreenShare is currently active and being used, and `false` for inactive state.
+This method returns a `Boolean` which will be `true` in case ScreenShare is currently active and being used, and `false` for inactive state.
 
 ```dart
 hmsSDK.isScreenShareActive();

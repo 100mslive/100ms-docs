@@ -1,5 +1,5 @@
 import React from 'react';
-import Link from 'next/link';
+import UtmLinkWrapper from './UtmLinkWrapper';
 
 interface Props {
     type: 'interface' | 'enum' | 'class' | 'selector' | 'type-alias';
@@ -50,9 +50,9 @@ const APILink: React.FC<Props> = ({
 }) => {
     name = name || getPrimitiveValueFromChildren(children);
     return name ? (
-        <Link href={getAPIPath({ type, client, name })}>
+        <UtmLinkWrapper href={getAPIPath({ type, client, name })}>
             <a>{children}</a>
-        </Link>
+        </UtmLinkWrapper>
     ) : null;
 };
 

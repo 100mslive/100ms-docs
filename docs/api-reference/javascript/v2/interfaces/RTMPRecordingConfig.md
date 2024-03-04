@@ -1,6 +1,6 @@
 ---
 title: RTMPRecordingConfig
-nav: '4.73'
+nav: '4.82'
 ---
 
 ## Properties

@@ -1,8 +1,8 @@
-import Link from 'next/link';
+import UtmLinkWrapper from './UtmLinkWrapper';
 import { Text } from '@100mslive/react-ui';
 
 export const LinkItem = ({ reference, text, css = {} }) => (
-    <Link passHref href={reference}>
+    <UtmLinkWrapper passHref href={reference}>
         <Text
             as="a"
             variant="sm"
@@ -15,5 +15,5 @@ export const LinkItem = ({ reference, text, css = {} }) => (
             }}>
             {text}
         </Text>
-    </Link>
+    </UtmLinkWrapper>
 );

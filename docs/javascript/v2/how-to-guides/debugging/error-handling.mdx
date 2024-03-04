@@ -15,6 +15,9 @@ These are returned as `type='error'` through the [notifications interface](/java
 Most browsers have a restriction on audio autoplay where audio is allowed only if the user has interacted with the page. You can read
 more about the restrictions here for [chrome](https://developer.chrome.com/blog/autoplay/) and [safari](https://webkit.org/blog/7734/auto-play-policy-changes-for-macos/).
 
+Sample UI for handling autoplay code
+[code](https://github.com/100mslive/100ms-web/blob/4ea9353b11e6a908ade8c77a9e8a84ddb189c94e/src/components/Notifications/AutoplayBlockedModal.jsx#L6C1-L6C1/)
+
 If an autoplay error is received(code=3008), UI can show a popup or a notification with button. Once a user click has happened confirming an interaction point,
 unblockAudio can be called.
 
@@ -61,6 +64,7 @@ Following are the different error codes that are returned by the SDK. Before ret
 | **6009**       | Trying to join a room when preview is in progress                                                         | Call join action only when room state is "Preview" and not "Connecting".                                    |
 | **6010**       | navigator.mediaDevices is undefined in insecure contexts served over HTTP protocol                        | Deploy the app in a secure context with HTTPS protocol.                                                     |
 | **6011**       | RTCPeerConnection is undefined in browser                                                                 | Switch/Upgrade browser to WebRTC compatible version/check for browser extension blocking WebRTC.            |
+| **6012**       | The application does not have access to localStorage                                                      | Try joining the link in a normal browser window if using in incognito mode causes this error. Alternatively, allowing cookies and localStorage via browser settings also works in incognito mode            |
 | **7001**       | Platform Not Supported                                                                                    | The platform is not supported for plugin                                                                    |
 | **7002**       | Plugin Init Failed                                                                                        | Plugin initialization has failed                                                                            |
 | **7003**       | Plugin Processing Failed                                                                                  | Plugin processing failed                                                                                    |

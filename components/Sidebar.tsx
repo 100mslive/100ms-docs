@@ -1,7 +1,7 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/router';
-import Link from 'next/link';
+import UtmLinkWrapper from './UtmLinkWrapper';
 import FlutterIcon from '@/assets/FlutterIcon';
 import AndroidIcon from '@/assets/icons/AndroidIcon';
 import IosIcon from '@/assets/icons/IosIcon';
@@ -20,14 +20,15 @@ import {
     JavascriptIcon as JavaScript,
     RocketIcon,
     PlayIcon,
-    SearchIcon
+    SearchIcon,
+    BrushDesignIcon
 } from '@100mslive/react-icons';
 import { Listbox } from '@headlessui/react';
 import { Flex, Box, Text, CSS } from '@100mslive/react-ui';
+import { getUpdatedPlatformName } from '@/lib/utils';
 import SidebarSection from './SidebarSection';
 import ReleaseNotes from './ReleaseNotes';
 import PlatformAccordion from './PlatformAccordion';
-import { getUpdatedPlatformName } from '@/lib/utils';
 
 const accordionIconStyle = { height: '24px', width: '24px', color: 'inherit' };
 
@@ -81,6 +82,7 @@ const Sidebar: React.FC<Props> = ({
     const [renderComponents, setRenderComponents] = useState(false);
     const [openPlatformAccordion, setOpenPlatformAccordion] = useState(platformlist[0]);
     const [helperState, setHelperState] = useState(0);
+    const slugsToHideInPlatformSelector = ['get-started', 'prebuilt'];
 
     useEffect(() => {
         if (escPressed) {
@@ -129,7 +131,7 @@ const Sidebar: React.FC<Props> = ({
         }
     } else nav = false;
 
-    const showPlatformSelector = slug?.[0] !== 'get-started';
+    const showPlatformSelector = !slugsToHideInPlatformSelector.includes(slug?.[0]);
 
     let indexOf = menuItem.findIndex((e) => e.key === slug?.[0]);
     if (slug?.[0] === 'api-reference') indexOf = menuItem.findIndex((e) => e.key === slug?.[1]);
@@ -216,7 +218,7 @@ const Sidebar: React.FC<Props> = ({
                             mb: '$8',
                             cursor: 'pointer',
                             '@md': {
-                                pt: '90px'
+                                pt: '65px'
                             }
                         }}
                         onClick={() => setShowBaseView(false)}>
@@ -237,16 +239,31 @@ const Sidebar: React.FC<Props> = ({
                     }}>
                     <DocsSearchBar setHelperState={setHelperState} />
                 </Box>
-                <Link passHref href="/get-started/v2/get-started/overview">
+                <UtmLinkWrapper passHref href="/get-started/v2/get-started/overview">
                     <Flex as="a" gap="2" align="center" css={{ color: '$primaryLight' }}>
                         <PlayIcon style={{ color: 'inherit' }} />
                         <Text as="span" css={{ fontWeight: '$semiBold', color: '$textHighEmp' }}>
                             Get started
                         </Text>
                     </Flex>
-                </Link>
+                </UtmLinkWrapper>
+                <UtmLinkWrapper passHref href="/prebuilt/v2/prebuilt/overview">
+                    <Flex
+                        as="a"
+                        gap="2"
+                        align="center"
+                        css={{
+                            color: '$primaryLight',
+                            mt: '$10'
+                        }}>
+                        <BrushDesignIcon style={{ color: 'inherit' }} />
+                        <Text as="span" css={{ fontWeight: '$semiBold', color: '$textHighEmp' }}>
+                            Prebuilt
+                        </Text>
+                    </Flex>
+                </UtmLinkWrapper>
 
-                <Link passHref href="/examples">
+                <UtmLinkWrapper passHref href="/examples">
                     <Flex
                         as="a"
                         gap="2"
@@ -262,7 +279,7 @@ const Sidebar: React.FC<Props> = ({
                             Examples
                         </Text>
                     </Flex>
-                </Link>
+                </UtmLinkWrapper>
 
                 <hr style={{ margin: '24px 0' }} />
 
@@ -282,7 +299,7 @@ const Sidebar: React.FC<Props> = ({
 
                 <PlatformAccordion
                     id="server-side"
-                    title={'Server side'}
+                    title="Server side"
                     icon={<ServerIcon style={accordionIconStyle} />}
                     data={allNav['server-side']}
                     openPlatformAccordion={openPlatformAccordion}
@@ -363,17 +380,17 @@ const Sidebar: React.FC<Props> = ({
                                                     justifyContent: 'center'
                                                 }}>
                                                 <Text
-                                                    variant={'xs'}
+                                                    variant="xs"
                                                     style={{ color: 'var(--docs_text_secondary)' }}>
                                                     Platform Selected
                                                 </Text>
-                                                <Text variant={'lg'} style={{ fontWeight: 'bold' }}>
+                                                <Text variant="lg" style={{ fontWeight: 'bold' }}>
                                                     {getUpdatedPlatformName(tech.name)}
                                                 </Text>
                                             </div>
                                             <div style={{ display: 'flex', alignItems: 'center' }}>
                                                 <div className="dropdown-chevron-container">
-                                                    <ChevronDownIcon className="dropdown-chevron"></ChevronDownIcon>
+                                                    <ChevronDownIcon className="dropdown-chevron" />
                                                 </div>
                                             </div>
                                         </Listbox.Button>
@@ -404,7 +421,8 @@ const Sidebar: React.FC<Props> = ({
                                             height: '16px',
                                             boxShadow: '0 8px 8px 0.25rem rgba(8, 9, 12, 0.8)',
                                             '@md': { display: 'none' }
-                                        }}></Box>
+                                        }}
+                                    />
                                 </section>
                             ) : null}
                         </Box>
@@ -412,7 +430,7 @@ const Sidebar: React.FC<Props> = ({
                         {nav
                             ? Object.entries(nav).map(([key, children], index) =>
                                   children?.['release-notes'] ? (
-                                      <ReleaseNotes dataObj={children['release-notes']} />
+                                      <ReleaseNotes key={key} dataObj={children['release-notes']} />
                                   ) : (
                                       <SidebarSection
                                           key={`${key}-${index}-section`}
@@ -433,20 +451,18 @@ const Sidebar: React.FC<Props> = ({
 
 export default Sidebar;
 
-const DocsSearchBar = ({ setHelperState }) => {
-    return (
-        <Flex
-            align="center"
-            className="docs-search-bar"
-            onClick={() => setHelperState((prev) => prev + 1)}>
-            <SearchIcon style={{ width: '24px' }} />
-            <Text as="span" variant="body2" css={{ fontWeight: '$regular', flexGrow: '1' }}>
-                Search docs…
-            </Text>
-            <span className="hot-key">/</span>
-        </Flex>
-    );
-};
+const DocsSearchBar = ({ setHelperState }) => (
+    <Flex
+        align="center"
+        className="docs-search-bar"
+        onClick={() => setHelperState((prev) => prev + 1)}>
+        <SearchIcon style={{ width: '24px' }} />
+        <Text as="span" variant="body2" css={{ fontWeight: '$regular', flexGrow: '1' }}>
+            Search docs…
+        </Text>
+        <span className="hot-key">/</span>
+    </Flex>
+);
 
 const iconStyle = { height: '20px', width: '20px', fill: 'var(--docs_text_primary)' };
 

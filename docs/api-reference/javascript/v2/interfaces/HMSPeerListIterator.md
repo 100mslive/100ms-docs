@@ -1,6 +1,6 @@
 ---
 title: HMSPeerListIterator
-nav: '4.29'
+nav: '4.32'
 ---
 
 ## Methods

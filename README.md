@@ -163,7 +163,7 @@ Super easy just get the `id`
 
 ## 🎨 Customization
 
-Every style of docs is fully customisable and is fully built with CSS Variables.
+Every style of docs is fully customizable and is fully built with CSS Variables.
 
 All CSS Tokens , Baseline , Reset can be found in [theme.css](https://github.com/100mslive/100ms-docs/blob/main/styles/theme.css)
 

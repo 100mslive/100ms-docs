@@ -120,6 +120,41 @@ Once you have submitted your responses, other peers in the room will get `POLL_V
 
 Use `hmsActions.interactivityCenter.stopPoll(id)` when you wan’t to prevent further responses recorded.
 
+## Fetching the Quiz Leaderboard
+
+Once the quiz has ended, the leaderboard can be fetched which has the quiz summary and peer level statistics sorted by score using the asynchronous `fetchLeaderboard` function added to the interactivityCenter.
+
+```js
+
+const fetchLeaderboardData = async () => {
+        const leaderboardData = await hmsActions.interactivityCenter.fetchLeaderboard(quiz, 0, 50);
+        setQuizLeaderboard(leaderboardData);
+    };
+
+```
+
+The props accepted are:
+- `quiz` :HMSPoll - The quiz object
+- `offset` :number - The position offset after which the peer level entries should be fetched
+- `count` :number - The number of peer entries that should be fetched at a time
+
+The response contains an array of entries of type `HMSQuizLeaderboardEntry`, a boolean `hasNext` which indicates if there are more entries to be fetched, and 
+a summary object of type `HMSQuizLeaderboardSummary` containing details like the average score, average time taken to answer a question, number of users with all correct answers and more.
+
+```
+{
+  entries: [...],
+  summary: {
+    totalUsers: number,
+    votedUsers: number,
+    avgScore: number,
+    avgTime: number,
+    correctUsers: number,
+  };
+  hasNext: false
+}
+```
+
 ## Viewing Poll Results Summary
 
 After poll has ended you can use `poll.result` to get statistics like how many peers responded and how many total peers were in the room at the time of poll.

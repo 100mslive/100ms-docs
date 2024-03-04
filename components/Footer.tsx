@@ -8,7 +8,7 @@ import {
 } from '@100mslive/react-icons';
 import { Box, CSS, Flex, HorizontalDivider, Text } from '@100mslive/react-ui';
 import { useStatusPage } from 'hooks';
-import Link from 'next/link';
+import UtmLinkWrapper from './UtmLinkWrapper';
 import React from 'react';
 
 interface Props {
@@ -88,7 +88,8 @@ const Footer: React.FC<Props> = ({ css = {} }) => (
                         </Flex>
                     </Box>
                     <Box className="subscribe">
-                        <Link href="https://status.100ms.live">
+
+                        <UtmLinkWrapper href="https://status.100ms.live">
                             <a>
                                 <Flex
                                     className="footer-systems"
@@ -114,7 +115,7 @@ const Footer: React.FC<Props> = ({ css = {} }) => (
                                     </Text>
                                 </Flex>
                             </a>
-                        </Link>
+                        </UtmLinkWrapper>
                     </Box>
                 </Flex>
                 <HorizontalDivider css={{ backgroundColor: '$borderDefault', margin: '$16 0' }} />
