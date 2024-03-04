@@ -3,24 +3,23 @@ title: Track recordings
 nav: 3.1
 ---
 
-A track represents a single media stream coming from a device like a camera or microphone. These tracks can be combined to generate a video file, which can have different tracks types such as:
+A track represents a single media stream published into the WebRTC session captured from a device's camera or microphone. Multiple tracks can be sent by each peer. Broadly, they are categorised into 2 types:
 
-- **Video track** - contains video data captured from a camera
-- **Audio track** - contains audio data captured from a microphone
+- **Video track** - contains video data captured from a  video source such as a camera or desktop screen capture
+- **Audio track** - contains audio data captured from an audio source such as a microphone
 
 <FlexContainer>
-<Callout title="Track Recording Basics" icon="CheckIcon">
-
+<Callout title="Track Recording Basics">
 1. Track recordings **start automatically** when the first peer joins a room, and stops automatically when the last peer leaves the room.
-2. Recorded track assets of type `track` are available via Rest APIs and track webhook events.
-3. The final recording asset type will be individual `track` types  per peer present in the session. For example, for a 1:1 call for Peer A and Peer B, the recorded asset type tracks will be `audio` | `video`(includes screen-share) for each of them.
+2. Recorded track assets are of type `track` and are available via Recording Asset APIs and track webhook events.
+3. Multiple track recording assets can be available for a single peer. For example, for a 1:1 call for Peer A and Peer B, with both publishing audio, video and desktop screen, there shall be 3 track assets for each peer.
+4. Recording assets will be available within a few minutes of a successful recording event
 </Callout>
 </FlexContainer>
 
 Some of the use cases of recording a track:
-- Composing custom tracks (video/audio) from specific participants only as a single recording file
-- Integrating with AI workflows for transcription/translation/ participant insights
-- Integrating with workflows for object detection
+- Integrating with custom composition workflows where tracks (video/audio) from specific participants are composed together in a single recording file
+- Integrating with AI workflows for transcription/ translation/ participant insights/ object detection
 
 ## Guide to setup track recordings
 
@@ -34,21 +33,33 @@ Track recordings can be enabled for your template through the 100ms Dashboard. R
 
 ### Start a track recording
 
-Once enabled for a template, track recording gets **auto-started** when first peer joins the corresponding room. Track recordings cannot be started from client side.
+Once enabled for a template, track recording gets **auto-started** when first peer joins the corresponding room. Track recordings cannot be started from client side or API.
 
 ### Track recording events
 
-1. 100ms notifies you when a recording starts for each track with [track.recording.started.success](/docs/server-side/v2/how-to-guides/configure-webhooks/webhook#trackrecordingstartedsuccess) event for every peer. 
-2. A [track.recording.failure](/docs/server-side/v2/how-to-guides/configure-webhooks/webhook#trackrecordingsuccess) webhook event is sent if an individual track recording fails.
-3. A [track.recording.success](/docs/server-side/v2/how-to-guides/configure-webhooks/webhook#trackrecordingfailure) event is sent when all tracks of a peer are successfully recorded.
+1. 100ms notifies you when a recording starts for a track with `track.recording.started.success`event for every peer.
+2. Once the recording is completed successfully, `track.recording.success` event is sent with the details on the recorded file path and associated metadata.
+3. A `track.recording.failure` webhook event is sent if an individual track recording fails.
 
 ### Get Track Assets
 A successfully recorded track generates a recording asset of type `track`. Refer here for [all recording assets](/get-started/v2/get-started/features/recordings/recording-assets/recording-asset-types) types on 100ms. For successful track recordings, get track recording assets using
 
-1. Get track `asset_id`
-	- Use **[List recordings API](/server-side/v2/api-reference/recordings/list-all-recordings)** to retrieve all recordings.
-	- Using `track.recording.success` event - triggered when a track recording is completed for a peer
-2. Get `id` of tracks with type `track` using either List Recording API or track webhook events.
-3. Store this `id` as corresponding asset identifier of the track.
-4. Call the [Get Recording Asset API](/server-side/v2/api-reference/recordings/get-recording) using the track's `asset_id` to download the actual recording.
+1. Using **[List Recording Assets API](/server-side/v2/api-reference/recording-assets/list-all-assets)** get the all tracks recording assets for a session_id and asset_type=`track`
+2. Store the `id` as corresponding asset identifier of each track.
+3. Call the Get Presigned URL Asset API using the track's `asset_id` to download the actual recording.
+
 </StepsContainer>
+
+## Resources on Track Recording 
+
+<FlexContainer>
+
+
+<Callout title="Get track recording updates via webhooks">
+- Track recording success
+- Track recording started
+- Track recording failure
+</Callout>
+
+</FlexContainer>
+>>>>>>> qa

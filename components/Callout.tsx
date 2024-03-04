@@ -1,7 +1,7 @@
+import React from 'react';
+import dynamic from 'next/dynamic';
 import { InfoIcon } from '@100mslive/react-icons';
 import { Flex, Text, Box } from '@100mslive/react-ui';
-import dynamic from 'next/dynamic';
-import React from 'react';
 
 const Callout = ({ title, icon, children }) => (
     <Flex
