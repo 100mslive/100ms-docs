@@ -3,18 +3,17 @@ title: Track recordings
 nav: 3.1
 ---
 
-A track represents a single media stream published into the webrtc session captured from a device's camera or microphone. Multiple tracks can be sent by each peer. Broadly, they are categorised into 2 types:
+A track represents a single media stream published into the WebRTC session captured from a device's camera or microphone. Multiple tracks can be sent by each peer. Broadly, they are categorised into 2 types:
 
 - **Video track** - contains video data captured from a  video source such as a camera or desktop screen capture
 - **Audio track** - contains audio data captured from an audio source such as a microphone
 
 <FlexContainer>
 <Callout title="Track Recording Basics">
-
 1. Track recordings **start automatically** when the first peer joins a room, and stops automatically when the last peer leaves the room.
 2. Recorded track assets are of type `track` and are available via Recording Asset APIs and track webhook events.
 3. Multiple track recording assets can be available for a single peer. For example, for a 1:1 call for Peer A and Peer B, with both publishing audio, video and desktop screen, there shall be 3 track assets for each peer.
-4. Recording assets will be available within a few minutes minutes of a successful recording event
+4. Recording assets will be available within a few minutes of a successful recording event
 </Callout>
 </FlexContainer>
 
