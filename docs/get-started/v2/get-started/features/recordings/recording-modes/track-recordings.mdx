@@ -9,12 +9,11 @@ A track represents a single media stream coming from a device like a camera or m
 - **Audio track** - contains audio data captured from a microphone
 
 <FlexContainer>
-<Callout title="Track Recording Basics">
+<Callout title="Track Recording Basics" icon="link">
 
 1. Track recordings **start automatically** when the first peer joins a room, and stops automatically when the last peer leaves the room.
 2. Recorded track assets of type `track` are available via Rest APIs and track webhook events.
 3. The final recording asset type will be individual `track` types  per peer present in the session. For example, for a 1:1 call for Peer A and Peer B, the recorded asset type tracks will be `audio` | `video`(includes screen-share) for each of them.
-4. Recording assets will be available within x mins of a successful recording event
 </Callout>
 </FlexContainer>
 
@@ -39,18 +38,19 @@ Once enabled for a template, track recording gets **auto-started** when first pe
 
 ### Track recording events
 
-1. 100ms notifies you when a recording starts for a track with `track.recording.started.success`event for every peer. 
+1. 100ms notifies you when a recording starts for each track with `track.recording.started.success`event for every peer. 
 2. A `track.recording.failure` webhook event is sent if an individual track recording fails.
+3. A `track.recording.success` event is sent when all tracks of a peer are successfully recorded.
 
 ### Get Track Assets
 A successfully recorded track generates a recording asset of type `track`. Refer here for [all recording assets](/get-started/v2/get-started/features/recordings/recording-assets/recording-asset-types) types on 100ms. For successful track recordings, get track recording assets using
 
 1. Get track `asset_id`
-	- Use **List recordings API** to retrieve all recordings.
-	- **Using track.recording.success-** triggered when a track recording is completed for a peer
+	- Use **[List recordings API](/server-side/v2/api-reference/recordings/list-all-recordings)** to retrieve all recordings.
+	- Using `track.recording.success` event - triggered when a track recording is completed for a peer
 2. Get `id` of tracks with type `track` using either List Recording API or track webhook events.
 3. Store this `id` as corresponding asset identifier of the track.
-4. Call the Get Recording Asset API using the track's `asset_id` to download the actual recording.
+4. Call the [Get Recording Asset API](/server-side/v2/api-reference/recordings/get-recording) using the track's `asset_id` to download the actual recording.
 
 ### Manage track recordings
 
