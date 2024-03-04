@@ -1,5 +1,7 @@
-import { InfoIcon, LinkTwoIcon, ShieldIcon } from '@100mslive/react-icons';
+import { InfoIcon } from '@100mslive/react-icons';
 import { Flex, Text, Box } from '@100mslive/react-ui';
+import dynamic from 'next/dynamic';
+import React from 'react';
 
 const Callout = ({ title, icon, children }) => (
     <Flex
@@ -17,7 +19,7 @@ const Callout = ({ title, icon, children }) => (
         }}>
         <Box css={{ m: '20px 24px' }}>
             <Flex align="center" css={{ color: '$textHighEmp', gap: '$2', mb: '$2' }}>
-                {getIcon(icon)}
+                <DynamicIcon name={icon} />
                 <Text css={{ color: '$textHighEmp', fontWeight: '$semiBold' }}>{title}</Text>
             </Flex>
             {children}
@@ -27,15 +29,22 @@ const Callout = ({ title, icon, children }) => (
 
 const iconStyle = { color: 'inherit' };
 
-const getIcon = (icon) => {
-    switch (icon) {
-        case 'shield':
-            return <ShieldIcon style={iconStyle} />;
-        case 'link':
-            return <LinkTwoIcon style={iconStyle} />;
-        default:
-            return <InfoIcon style={iconStyle} />;
+interface DynamicIconProps {
+    name: string;
+}
+
+const DynamicIcon: React.FC<DynamicIconProps> = ({ name }) => {
+    let Icon;
+    try {
+        Icon = dynamic(() => import(`@100mslive/react-icons/dist/${name}.js`) as any, {
+            loading: () => <InfoIcon style={iconStyle} />,
+            ssr: false // Disable server-side rendering for dynamic imports
+        });
+    } catch (error) {
+        console.error(`Error loading icon module for "${name}":`, error);
+        Icon = () => <InfoIcon style={iconStyle} />;
     }
+    return <Icon />;
 };
 
 export default Callout;
