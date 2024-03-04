@@ -7,7 +7,7 @@ A stream recording captures a continuous feed of live audio or video, like a vid
 
 
 <FlexContainer>
-<Callout title="Stream Recording Basics">
+<Callout title="Stream Recording Basics" icon="CheckIcon">
 
 1. Stream recordings **start automatically** when the first peer joins a room, and stops automatically when the last peer leaves the room.
 2. Recorded stream assets of type `stream` are available via Rest APIs and track webhook events.
@@ -32,25 +32,20 @@ Stream recordings can be enabled for your template through the 100ms Dashboard. 
 
 Once enabled for a template, stream recording gets **auto-started** when first peer joins the corresponding room. Stream recordings cannot be started from client side.
 
-### stream recording events
+### Stream recording events
 
-1. 100ms notifies you when a recording starts for a stream with `stream.recording.started.success`event for every peer. 
-2. A `stream.recording.failure` webhook event is sent if an individual stream recording fails.
+1. 100ms notifies you when a recording starts for a stream with [stream.recording.started.success](/docs/server-side/v2/how-to-guides/configure-webhooks/webhook#streamrecordingsuccess) event for every peer. 
+2. A [stream.recording.failure](/docs/server-side/v2/how-to-guides/configure-webhooks/webhook#streamrecordingfailure) webhook event is sent if an individual stream recording fails.
 
 ### Get stream Assets
 A successfully recorded stream generates a recording asset of type `stream`. Refer here for [all recording assets](/get-started/v2/get-started/features/recordings/recording-assets/recording-asset-types) types on 100ms. For successful stream recordings, get stream recording assets using
 
 1. Get stream `asset_id`
-	- Use **List recordings API** to retrieve all recordings.
-	- **Using `stream.recording.success`** - triggered when a stream recording is completed for a peer
+	- Use [List recordings API](/docs/server-side/v2/api-reference/recording-assets/list-all-assets) to retrieve all recordings.
+	- Using [stream.recording.success](/docs/server-side/v2/how-to-guides/configure-webhooks/webhook#streamrecordingsuccess) - triggered when a stream recording is completed for a peer
 2. Get `id` of stream with type `stream` using either List Recording API or stream webhook events.
 3. Store this `id` as corresponding asset identifier of the stream.
 4. Call the Get Recording Asset API using the stream's `asset_id` to download the actual recording.
 
-### Manage stream recordings
-
-1. **Stop a stream recording** - Use Stop recording by id to stop a stream recoridng
-2. **Pause a stream recording** - Use Pause a Recording API
-3. **Resume a stream recording -** Use Resume a stream Recording API
 
 </StepsContainer>
