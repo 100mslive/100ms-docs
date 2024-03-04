@@ -3,14 +3,14 @@ title: Composite Recordings
 nav: 3.3
 ---
 
-100ms can record a session to capture the perspective of a participant, who can hear and see other participants in the room. These recordings are a mix of multiple audio/video tracks, composed together in one video file—with a layout that is similar to the UI of the room. The output is a single MP4 file.
-
-If you're using SFU or custom composite recording, we recommend that you [migrate to Browser Composite recordings](/get-started/v2/get-started/features/recordings/recording-modes/migrating-from-sfu). 
+100ms can record a session to capture the perspective of a participant, who can hear and see other participants in the room. These recordings are a composite of multiple audio/video tracks across multiple participants in the session. The output is a single MP4 file. There are 2 types of Composite Recordings - Browser Composite and Custom Composite. Depending on the use case, the ideal composite type can be selected.
 
 <FlexContainer>
 <Callout title="Composite Recordings Basics" icon="CheckIcon">
-- Composite recordings are **browser based** recordings which records the screen to generate a composite recording file.
-- **Customizable settings**: You can define which roles to record, which video resolution to record and, other modifications to the UI.
+- These are **browser based** recordings which records the screen to generate a composite recording file.
+- They can be started automatically when the first peer joins and stopped after all peers leave with a timeOut configuration.
+- Alternatively, they can also be started and stopped via client SDK or Recording APIs
+- Customizable settings: You can define which roles to record, which video resolution to record and, other modifications to the UI.
 </Callout>
 </FlexContainer>
 
@@ -19,7 +19,7 @@ Follow this guide for browser based composite recordings:
 
 <StepsContainer id="composite-recording-setup">
 
-### Enable Composite Recordings
+### Enable Browser Composite Recordings
 Set up composite recording using [recording configuration on 100ms dashboard →](/get-started/v2/get-started/features/recordings/set-up-recording) 
 	- Set up which roles to be recorded, video resolution, max recording duration time etc.
 	- Audio-only composite recordings: possible via the **[REST API to start recording](https://www.100ms.live/docs/server-side/v2/how-to-guides/recordings/customize)**
