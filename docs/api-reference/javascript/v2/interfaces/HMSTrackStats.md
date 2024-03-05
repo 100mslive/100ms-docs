@@ -196,6 +196,26 @@ Ref: https://www.w3.org/TR/webrtc-stats/#dom-rtcoutboundrtpstreamstats
 
 ---
 
+### framesReceived
+
+• `Optional` **framesReceived**: `number`
+
+#### Inherited from
+
+[HMSRemoteTrackStats](/api-reference/javascript/v2/interfaces/HMSRemoteTrackStats).[framesReceived](/api-reference/javascript/v2/interfaces/HMSRemoteTrackStats#framesreceived)
+
+---
+
+### freezeCount
+
+• `Optional` **freezeCount**: `number`
+
+#### Inherited from
+
+[HMSRemoteTrackStats](/api-reference/javascript/v2/interfaces/HMSRemoteTrackStats).[freezeCount](/api-reference/javascript/v2/interfaces/HMSRemoteTrackStats#freezecount)
+
+---
+
 ### id
 
 • **id**: `string`
@@ -213,6 +233,26 @@ Ref: https://www.w3.org/TR/webrtc-stats/#dom-rtcoutboundrtpstreamstats
 #### Inherited from
 
 [HMSRemoteTrackStats](/api-reference/javascript/v2/interfaces/HMSRemoteTrackStats).[jitter](/api-reference/javascript/v2/interfaces/HMSRemoteTrackStats#jitter)
+
+---
+
+### jitterBufferDelay
+
+• `Optional` **jitterBufferDelay**: `number`
+
+#### Inherited from
+
+[HMSRemoteTrackStats](/api-reference/javascript/v2/interfaces/HMSRemoteTrackStats).[jitterBufferDelay](/api-reference/javascript/v2/interfaces/HMSRemoteTrackStats#jitterbufferdelay)
+
+---
+
+### jitterBufferEmittedCount
+
+• `Optional` **jitterBufferEmittedCount**: `number`
+
+#### Inherited from
+
+[HMSRemoteTrackStats](/api-reference/javascript/v2/interfaces/HMSRemoteTrackStats).[jitterBufferEmittedCount](/api-reference/javascript/v2/interfaces/HMSRemoteTrackStats#jitterbufferemittedcount)
 
 ---
 
@@ -283,6 +323,16 @@ Ref: https://www.w3.org/TR/webrtc-stats/#dom-rtcoutboundrtpstreamstats
 #### Inherited from
 
 [HMSLocalTrackStats](/api-reference/javascript/v2/interfaces/HMSLocalTrackStats).[packetsSent](/api-reference/javascript/v2/interfaces/HMSLocalTrackStats#packetssent)
+
+---
+
+### pauseCount
+
+• `Optional` **pauseCount**: `number`
+
+#### Inherited from
+
+[HMSRemoteTrackStats](/api-reference/javascript/v2/interfaces/HMSRemoteTrackStats).[pauseCount](/api-reference/javascript/v2/interfaces/HMSRemoteTrackStats#pausecount)
 
 ---
 
@@ -430,6 +480,16 @@ https://www.w3.org/TR/webrtc-stats/#dom-rtcremoteinboundrtpstreamstats
 
 ---
 
+### totalFreezesDuration
+
+• `Optional` **totalFreezesDuration**: `number`
+
+#### Inherited from
+
+[HMSRemoteTrackStats](/api-reference/javascript/v2/interfaces/HMSRemoteTrackStats).[totalFreezesDuration](/api-reference/javascript/v2/interfaces/HMSRemoteTrackStats#totalfreezesduration)
+
+---
+
 ### totalPacketSendDelay
 
 • `Optional` **totalPacketSendDelay**: `number`
@@ -437,6 +497,16 @@ https://www.w3.org/TR/webrtc-stats/#dom-rtcremoteinboundrtpstreamstats
 #### Inherited from
 
 [HMSLocalTrackStats](/api-reference/javascript/v2/interfaces/HMSLocalTrackStats).[totalPacketSendDelay](/api-reference/javascript/v2/interfaces/HMSLocalTrackStats#totalpacketsenddelay)
+
+---
+
+### totalPausesDuration
+
+• `Optional` **totalPausesDuration**: `number`
+
+#### Inherited from
+
+[HMSRemoteTrackStats](/api-reference/javascript/v2/interfaces/HMSRemoteTrackStats).[totalPausesDuration](/api-reference/javascript/v2/interfaces/HMSRemoteTrackStats#totalpausesduration)
 
 ---
 
