@@ -10,10 +10,10 @@ Stream Recording Assets are classified into three types:
 - **Audio** - contains only the audio track from microphone input for audio only calls where video tracks were not published at all by the peer.
 
 <FlexContainer>
-<Callout title="Stream Recording Basics">
+<Callout title="Stream Recording Basics" icon="CheckIcon">
 
 1. Stream recordings **start automatically** when the first peer joins a room, and stops automatically when the last peer leaves the room.
-2. Recorded stream assets are of asset type `stream` and are available via Recording Asset APIs and stream recording webhook events.
+2. Recorded stream assets are of asset type stream and are available via Recording Asset APIs and stream recording webhook events.
 3. At most there shall be only 2 stream recording assets for each peer
 4. Recording assets will be available within a few minutes of a successful recording event
 </Callout>
@@ -34,10 +34,10 @@ Stream recordings can be enabled for your template through the 100ms Dashboard. 
 
 Once enabled for a template, stream recording gets **auto-started** when first peer joins the corresponding room. Stream recordings cannot be started from client side or REST APIs.
 
-### stream recording events
+### Stream recording events
 
-1. Once the recording is completed successfully, `stream.recording.success` event is sent with the details on the recorded file path and associated metadata.
-2. A `stream.recording.failure` webhook event is sent if an individual stream recording fails.
+1. Once the recording is completed successfully, [stream.recording.success](/docs/server-side/v2/how-to-guides/configure-webhooks/webhook#streamrecordingsuccess) event is sent with the details on the recorded file path and associated metadata.
+2. A [stream.recording.failure](/docs/server-side/v2/how-to-guides/configure-webhooks/webhook#streamrecordingfailure) webhook event is sent if an individual stream recording fails.
 
 ### Get stream Assets
 A successfully recorded stream generates a recording asset of type `stream`. Refer here for [all recording assets](/get-started/v2/get-started/features/recordings/recording-assets/recording-asset-types) types on 100ms. For successful stream recordings, get stream recording assets using
