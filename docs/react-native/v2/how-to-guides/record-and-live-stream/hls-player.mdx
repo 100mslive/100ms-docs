@@ -39,18 +39,18 @@ import { HMSHLSPlayer } from '@100mslive/react-native-hms';
 
   We can render the `HMSHLSPlayer` component and pass the HLS Stream URL to it to play the HLS stream.
 
-  ```js
+  ```js{5}
   const streamURL = room.hlsStreamingState?.variants?.get(0)?.hlsStreamUrl;
 
   ...
 
-  <HMSHLSPlayer url={streamURL} />
+  <HMSHLSPlayer url={streamURL} style={{ width: 300, height: 600 }} />
   ```
 
   The `url` prop of HMSHLSPlayer component is optional, HMSHLSPlayer can automatically get the HLS
   stream URL from the HMSRoom if you render it when HLS stream has started -
 
-  ```js
+  ```js{8}
   // --- snip ---
 
   const isHLSStreamRunning = room.hlsStreamingState?.running;
@@ -58,7 +58,7 @@ import { HMSHLSPlayer } from '@100mslive/react-native-hms';
   ...
 
   if (isHLSStreamRunning) {
-    return <HMSHLSPlayer />;
+    return <HMSHLSPlayer style={{ width: 300, height: 600 }} />;
   }
 
   return <Text>Waiting for strem to start</Text>;
@@ -80,7 +80,7 @@ import { HMSHLSPlayer } from '@100mslive/react-native-hms';
   ...
 
   // Assign above created ref to `ref` prop of `HMSHLSPlayer` component
-  <HMSHLSPlayer ref={hmsHlsPlayerRef} />
+  <HMSHLSPlayer ref={hmsHlsPlayerRef} style={{ width: 300, height: 600 }} />
 
   ...
 
@@ -88,9 +88,43 @@ import { HMSHLSPlayer } from '@100mslive/react-native-hms';
   hmsHlsPlayerRef.current?.play();
   ```
 
+Note: We also have to pass `width` and `height` in `style` prop for HLSPlayer to be visible on screen
+
 Take a look at [how the sample app does this](#) if not clear.
 </div>
 
+## Styling HMSHLSPlayer Component
+
+`HMSHLSPlayer` component accepts style prop like a react-native `View`, for HLS Player to be visible on screen we have to give it some `width` and `height`.
+
+```js{3}
+<HMSHLSPlayer
+  url={streamURL}
+  style={{ width: 300, height: 600 }}
+/>
+```
+
+You can also apply width and height on the basis of video stream's width and height, For this we have to get video streams resolution -
+
+```ts
+const resolution: { width: number; height: number; } | undefined = useHMSHLSPlayerResolution();
+```
+
+Note that `resolution` will be `undefined` initially, Therefore, You have to set `static` `width` and `height` in start and use `resolution` when it is not `undefined`
+
+```js{3,8-9}
+const resolution: { width: number; height: number; } | undefined = useHMSHLSPlayerResolution();
+
+...
+
+<HMSHLSPlayer
+  url={streamURL}
+  style={{
+    width: resolution ? resolution.width : 300,
+    height: resolution ? resolution.height : 600,
+  }}
+/>
+```
 
 ## How to Stop the Playback
 

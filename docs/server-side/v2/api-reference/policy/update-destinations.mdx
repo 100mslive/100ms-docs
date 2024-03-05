@@ -5,41 +5,30 @@ nav: 13
 
 This endpoint is used to update [destinations](/server-side/v2/policy/create-template-via-api#destinations-object).
 
+| **Deprecation Notice:** The `destinations.browserRecordings` field which was used to provide configuration for browser based recording, has been deprecated. Please use the [new recordings API](/server-side/v2/policy/configure-recordings) to configure browser recording.
+
 <PostRequest title="https://api.100ms.live/v2/templates/<template_id>/destinations" />
 
 <Request id="req-0">
 
 ```bash
-curl --location --request POST 'https://api.100ms.live/v2/<template_id>/destinations' \
+curl --location --request POST 'https://api.100ms.live/v2/templates/<template_id>/destinations' \
 --header 'Authorization: Bearer <management_token>' \
 --header 'Content-Type: application/json' \
 --data-raw '{
-    "browserRecordings": {
-        "test": {
-            "name": "test",
-            "width": 1920,
-            "height": 1080,
-            "maxDuration": 1800,
-            "thumbnails": {
-                "width": 0,
-                "height": 0
-            },
-            "presignDuration": 3600
-        }
-    },
     "rtmpDestinations": {
-        "test": {
-            "name": "test",
+        "default": {
+            "name": "default",
             "width": 1080,
             "height": 1920,
             "maxDuration": 1800,
-            "rtmpUrls": ["url", "ashdas", "ddsfsdf"],
+            "rtmpUrls": ["rtmp://example.com:443/stream", "rtmp://example.net/live"],
             "recordingEnabled": true
         }
     },
     "hlsDestinations": {
-        "test": {
-            "name": "test",
+        "default": {
+            "name": "default",
             "maxDuration": 28800,
             "layers": [
                 {
@@ -84,8 +73,8 @@ curl --location --request POST 'https://api.100ms.live/v2/<template_id>/destinat
         }
     },
     "transcriptions": {
-        "test": {
-            "name": "test",
+        "default": {
+            "name": "default",
             "role": "host",
             "modes": ["recorded", "live"],
             "outputModes": [ "txt", "srt", "json" ],
@@ -124,32 +113,19 @@ curl --location --request POST 'https://api.100ms.live/v2/<template_id>/destinat
 
 ```json
 {
-    "browserRecordings": {
-        "test": {
-            "name": "test",
-            "width": 1920,
-            "height": 1080,
-            "maxDuration": 1800,
-            "thumbnails": {
-                "width": 0,
-                "height": 0
-            },
-            "presignDuration": 3600
-        }
-    },
     "rtmpDestinations": {
-        "test": {
-            "name": "test",
+        "default": {
+            "name": "default",
             "width": 1080,
             "height": 1920,
             "maxDuration": 1800,
-            "rtmpUrls": ["url", "ashdas", "ddsfsdf"],
+            "rtmpUrls": ["rtmp://example.com:443/stream", "rtmp://example.net/live"],
             "recordingEnabled": true
         }
     },
     "hlsDestinations": {
-        "test": {
-            "name": "test",
+        "default": {
+            "name": "default",
             "maxDuration": 28800,
             "layers": [
                 {
@@ -194,8 +170,8 @@ curl --location --request POST 'https://api.100ms.live/v2/<template_id>/destinat
         }
     },
     "transcriptions": {
-        "test": {
-            "name": "test",
+        "default": {
+            "name": "default",
             "role": "host",
             "modes": ["recorded", "live"],
             "outputModes": [ "txt", "srt", "json" ],

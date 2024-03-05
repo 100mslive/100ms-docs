@@ -14,6 +14,9 @@ While peer metadata is associated with individual peers and each peer can have t
 
 </Note>
 
+## Requirements
+
+SDK version 1.6.0 or higher
 
 ## How to use
 
@@ -89,7 +92,6 @@ await hmsSessionStore.set(
   'pinnedMessage',  // key
 );
 ```
-
 
 ## Retrieving a value for a specific key
 
@@ -191,7 +193,6 @@ React.useEffect(() => {
 
 > It is recommended to remove all the key change listeners while leaving the room or when the room is ended.
 
-
 ## Limitations and workarounds in Alpha release
 
 -   There is no permission support, which means anyone can read/write session metadata. If you want to restrict access to session metadata, you have to implement it at the app level logic.
@@ -201,8 +202,8 @@ React.useEffect(() => {
 
 ## Limits
 
-- Max payload size for data can be 1KB.
-- Maximum 100 keys are supported with 64KB limit applied to all keys combined.
-- Metadata size for 64 KB also include the key size.
+-   Max payload size for data can be 1KB.
+-   Maximum 100 keys are supported with 64KB limit applied to all keys combined.
+-   Metadata size for 64 KB also include the key size.
 
 That's it. You are all set to use Session Store.
