@@ -16,6 +16,49 @@ implementation "live.100ms:hms-noise-cancellation-android:$hmsVersion"
 > Note: Adding the library for noise cancellation will increase app size by 5.6 Mb.  
 Noise cancellation is turned off by default for all calls.
 
+## Enable noise cancellation by default
+To enable noise cancellation by default, add the option in the audio track settings while constucting the `HmsSdk`.
+
+This is the same as enabling noise cancellation in your `onJoin` callback as seen above.
+
+<Tabs id="noise-cancellation" items={['Kotlin', 'Java']} />
+
+<Tab id='noise-cancellation-0'>
+
+```kotlin
+private val hmsTrackSettings = HMSTrackSettings.Builder()
+        .audio(
+            HMSAudioTrackSettings.Builder()
+                .enableNoiseCancellation(true)
+                .build()
+        )
+
+    val hmsSDK = HMSSDK
+        .Builder(application)
+        .setTrackSettings(hmsTrackSettings)
+        .build()
+```
+
+</Tab>
+
+<Tab id='noise-cancellation-1'>
+
+```java
+HMSAudioTrackSettings audioSettings = new HMSAudioTrackSettings.Builder()
+                .enableNoiseCancellation(true)
+                .build();
+                
+HMSTrackSettings hmsTrackSettings = new HMSTrackSettings.Builder()
+        .audio(audioSettings)
+        .build();
+
+HMSSDK hmsSdk = new HMSSDK.Builder(application)
+        .setTrackSettings(hmsTrackSettings)
+        .build();
+```
+
+</Tab>
+
 ## Dynamic Toggling
 Noise cancellation can be turned on or off dynamically. When starting calls it is always *off* by default.
 
