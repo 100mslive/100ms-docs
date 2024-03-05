@@ -18,11 +18,16 @@ This document provides guidance on how to use the Poll APIs to create a poll, re
 ## Listen to poll updates
 
 To listen to poll updates HMSSDK provides `HMSPollListener`. This listener keeps the application informed about various Poll-related events, including when a Poll is initiated, concluded, or when participants submit their responses.
+Use the `addPollUpdateListener` method to start listening for updates. When you're done, use `removePollUpdateListener` to stop listening.
 
 > `HMSPollListener` should be implemented in the class wherever Poll updates are required. It's essential to note that HMSPollListener follows the singleton pattern, meaning it can only be implemented in one class at a time.
 
 ```dart
 class Meeting implements HMSUpdateListener, HMSPollListener{
+
+
+    ///To attach a poll update listener we need to call [addPollUpdateListener]
+    HMSPollInteractivityCenter.addPollUpdateListener(listener: this);
 
     @override
     void onPollUpdate({required HMSPoll poll, required HMSPollUpdateType pollUpdateType}){
@@ -30,6 +35,9 @@ class Meeting implements HMSUpdateListener, HMSPollListener{
         ///[poll] is the HMSPoll object containing info about poll.
         ///[pollUpdateType] is an enum of type HMSPollUpdateType with type as started, stopped and resultsupdated
     }
+
+    ///To stop listening to poll updates call [removePollUpdateListener]
+    HMSPollInteractivityCenter.removePollUpdateListener();
 }
 ```
 
@@ -294,6 +302,76 @@ class Meeting extends HMSUpdateListener, HMSPollListener{
         ///Get poll updates here
     }
 
+}
+```
+
+## Poll methods
+
+### fetchPollList
+
+`fetchPollList` method is used to fetch list of polls/quiz with a given state. Let's see how we can fetch all the concluded polls.
+
+```dart
+class Meeting extends HMSUpdateListener, HMSPollListener{
+
+    ///[hmsPollState]: the poll state for which polls need to be fetched
+    var data = await HMSPollInteractivityCenter.fetchPollList(hmsPollState: HMSPollState.stopped);
+    if (data is List<HMSPoll>) {
+        ///[data] contains all the concluded polls
+    }else{
+         ///Handle the error here
+    }
+    
+    @override
+    void onPollUpdate({required HMSPoll poll, required HMSPollUpdateType pollUpdateType}){
+        ///Get poll updates here
+    }
+}
+```
+
+### fetchPollQuestions
+
+`fetchPollQuestions` method is used to fetch questions for the given poll.
+
+```dart
+class Meeting extends HMSUpdateListener, HMSPollListener{
+
+    ///[hmsPoll]: the poll object for which questions need to be fetched, here poll
+    ///is the poll for which questions need to be fetched
+    var data = await _hmsSDKInteractor.fetchPollQuestions(hmsPoll: poll);
+
+    if (data is List<HMSPollQuestion>) {
+      ///[data] contains all the questions for the corresponding [poll]
+    }else{
+        ///Handle the error here
+    }
+
+
+    @override
+    void onPollUpdate({required HMSPoll poll, required HMSPollUpdateType pollUpdateType}){
+        ///Get poll updates here
+    }
+}
+```
+
+### getPollResults
+
+`getPollResults` method is used to fetch results for given poll object.
+
+```dart
+class Meeting extends HMSUpdateListener, HMSPollListener{
+
+    var data = await _hmsSDKInteractor.getPollResults(hmsPoll: poll);
+    if (data is HMSPoll) {
+        ///[data] contains the poll results
+    }else{
+        ///Handle the error here
+    }
+
+    @override
+    void onPollUpdate({required HMSPoll poll, required HMSPollUpdateType pollUpdateType}){
+        ///Get poll updates here
+    }
 }
 ```
 
