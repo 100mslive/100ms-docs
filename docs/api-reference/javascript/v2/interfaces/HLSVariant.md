@@ -23,6 +23,12 @@ nav: '4.4'
 
 ---
 
+### playlist_type
+
+• `Optional` **playlist_type**: [`HLSPlaylistType`](/api-reference/javascript/v2/enums/HLSPlaylistType)
+
+---
+
 ### startedAt
 
 • `Optional` **startedAt**: `Date`

@@ -6,6 +6,7 @@ nav: '1.1'
 ## Enumerations
 
 - [DeviceType](/api-reference/javascript/v2/enums/DeviceType)
+- [HLSPlaylistType](/api-reference/javascript/v2/enums/HLSPlaylistType)
 - [HMSAudioPluginType](/api-reference/javascript/v2/enums/HMSAudioPluginType)
 - [HMSLogLevel](/api-reference/javascript/v2/enums/HMSLogLevel)
 - [HMSNotificationSeverity](/api-reference/javascript/v2/enums/HMSNotificationSeverity)
