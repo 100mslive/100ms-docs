@@ -1,6 +1,6 @@
 ---
 title: HMSRemoteTrackStats
-nav: '4.51'
+nav: '4.59'
 ---
 
 Extends RTCInboundRtpStreamStats
@@ -178,6 +178,26 @@ MissingInboundStats.framesPerSecond
 
 ---
 
+### framesReceived
+
+• `Optional` **framesReceived**: `number`
+
+#### Inherited from
+
+MissingInboundStats.framesReceived
+
+---
+
+### freezeCount
+
+• `Optional` **freezeCount**: `number`
+
+#### Inherited from
+
+MissingInboundStats.freezeCount
+
+---
+
 ### id
 
 • **id**: `string`
@@ -195,6 +215,26 @@ BaseTrackStats.id
 #### Inherited from
 
 MissingInboundStats.jitter
+
+---
+
+### jitterBufferDelay
+
+• `Optional` **jitterBufferDelay**: `number`
+
+#### Inherited from
+
+MissingInboundStats.jitterBufferDelay
+
+---
+
+### jitterBufferEmittedCount
+
+• `Optional` **jitterBufferEmittedCount**: `number`
+
+#### Inherited from
+
+MissingInboundStats.jitterBufferEmittedCount
 
 ---
 
@@ -255,6 +295,16 @@ MissingInboundStats.packetsLostRate
 #### Inherited from
 
 MissingInboundStats.packetsReceived
+
+---
+
+### pauseCount
+
+• `Optional` **pauseCount**: `number`
+
+#### Inherited from
+
+MissingInboundStats.pauseCount
 
 ---
 
@@ -345,6 +395,26 @@ BaseTrackStats.ssrc
 #### Inherited from
 
 BaseTrackStats.timestamp
+
+---
+
+### totalFreezesDuration
+
+• `Optional` **totalFreezesDuration**: `number`
+
+#### Inherited from
+
+MissingInboundStats.totalFreezesDuration
+
+---
+
+### totalPausesDuration
+
+• `Optional` **totalPausesDuration**: `number`
+
+#### Inherited from
+
+MissingInboundStats.totalPausesDuration
 
 ---
 

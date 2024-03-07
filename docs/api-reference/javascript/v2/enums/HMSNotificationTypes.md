@@ -1,6 +1,6 @@
 ---
 title: HMSNotificationTypes
-nav: '2.5'
+nav: '2.6'
 ---
 
 ## Enumeration Members
@@ -74,6 +74,12 @@ nav: '2.5'
 ### PLAYLIST_TRACK_ENDED
 
 • **PLAYLIST_TRACK_ENDED** = `"PLAYLIST_TRACK_ENDED"`
+
+---
+
+### POLLS_LIST
+
+• **POLLS_LIST** = `"POLLS_LIST"`
 
 ---
 

@@ -1,0 +1,31 @@
+---
+title: Recording assets
+nav: 3.5
+---
+
+Recording assets are files generated after a successful recording session. They are also created from live streams and external streams when recording is enabled.
+
+
+
+
+## Recording Asset types
+
+A recording can be anything, a text, a individual peers audio, remote peer's video. Everything that can be recorded is stored as an asset type that can be retrieved and managed using Recording Assets APIs and recording asset webhooks.
+
+1. **Track** - This asset type is a single `webm` file that contains the individual audio or video track for a peer. Refer [track recordings->](/get-started/v2/get-started/features/recordings/recording-modes/track-recordings)
+
+2. **Stream** - This asset type is a composition file (mp4) of all the tracks that correspond to a given peer. The type can be regular for composite of the webcam video and audio or screen for composite of screenshare video and audio. Refer [stream recordings](/get-started/v2/get-started/features/recordings/recording-modes/stream-recording)
+
+3. **Room Composite** = This asset type is a single video file (mp4) that composes audio/video for all peers in the room. The composition is higher quality (similar to the perspective of a peer in the room) than room-composite-legacy (learn more). Refer [room composite recordings](/get-started/v2/get-started/features/recordings/recording-modes/comparing-recording-modes)
+
+4. **Room composite legacy** = This asset type is a single video file (mp4) that composes audio/video tracks for all peers in the room.
+
+5. **Room Vod** - This is also a composition of all peers in the room and is available in HLS (or m3u8) format for on-demand playback. Based on your chosen recording storage option (100ms hosted or your storage bucket), you have the option to export this file in a zipped or un-zipped format. You can learn more about this here.
+
+6. **Chat** - This type captures chat messages that were exchanged while recording was running.
+
+7. **Transcript** - This type is composed of generated transcripts of the recording, if transcription was enabled. The metadata will contain the `output_mode` (txt, srt, json).
+
+8. **Summary** -This type contains the summary generated from the transcript. The metadata will contain the `output_mode` (json).
+
+9. **Recording Link** - a pre-signed URL that can be downloaded by using Get Recording link API.

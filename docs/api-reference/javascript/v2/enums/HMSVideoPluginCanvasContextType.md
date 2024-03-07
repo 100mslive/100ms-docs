@@ -1,6 +1,6 @@
 ---
 title: HMSVideoPluginCanvasContextType
-nav: '2.9'
+nav: '2.14'
 ---
 
 ## Enumeration Members

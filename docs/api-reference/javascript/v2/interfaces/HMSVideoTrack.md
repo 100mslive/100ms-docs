@@ -1,6 +1,6 @@
 ---
 title: HMSVideoTrack
-nav: '4.67'
+nav: '4.76'
 ---
 
 ## Hierarchy

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
+import UtmLinkWrapper from './UtmLinkWrapper';
 import { SearchIcon, ArrowRightIcon } from '@100mslive/react-icons';
 import { Flex, Box, Text } from '@100mslive/react-ui';
 import useClickOutside from '@/lib/useClickOutside';
@@ -215,11 +215,11 @@ const ResultBox = ({
                                             });
                                             setModal(false);
                                         }}>
-                                        <Link href={searchResult.link} passHref>
+                                        <UtmLinkWrapper href={searchResult.link} passHref>
                                             <a style={{ color: 'inherit', textDecoration: 'none' }}>
                                                 <Result searchResult={searchResult} />
                                             </a>
-                                        </Link>
+                                        </UtmLinkWrapper>
                                     </Box>
                                     <Box
                                         css={{

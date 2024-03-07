@@ -5,6 +5,8 @@ nav: 3.32
 
 This endpoint is used to create a template. A recommended way is to provide a list of roles with empty objects to get default values for various options corresponding to those roles, then update those roles by modifying them using create/update role API.
 
+| **Deprecation Notice:** The `settings.enabled` field which was used to enable custom composite recording, has been deprecated. Please use the [new recordings API](/server-side/v2/policy/configure-recordings) to configure composite recordings.
+| **Deprecation Notice:** The `destinations.browserRecordings` field which was used to provide configuration for browser based recording, has been deprecated. Please use the [new recordings API](/server-side/v2/policy/configure-recordings) to configure browser recording.
 ## Understand sub-objects hierarchy
 
 ![Template sub-objects hierarchy](/docs/v2/template-object-hierarchy.png)
@@ -157,7 +159,6 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
     "settings": {
         "region": "in",
         "recording": {
-            "enabled": true,
             "upload": {
                 "type": "<upload type: supported are s3, gs, oss>",
                 "location": "<Name of the storage bucket>",
@@ -179,20 +180,6 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
         }
     },
     "destinations": {
-        "browserRecordings": {
-            "<recording destination name>": {
-                "name": "<recording destination name>",
-                "width": 1920,
-                "height": 1080,
-                "maxDuration": 1800,
-                "thumbnails": {
-                    "width": 0,
-                    "height": 0
-                },
-                "presignDuration": 3600,
-                "role": "host"
-            }
-        },
         "rtmpDestinations": {
             "<rtmp destination name>": {
                 "name": "<rtmp destination name>",
@@ -250,10 +237,11 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
         },
         "transcriptions": {
             "<transcription destination name>": {
-                "name": "<transcription destination name>",
+                "name": "<destination name>",
                 "role": "host",
+                "modes": ["recorded", "live"],
                 "outputModes": [ "txt", "srt", "json" ],
-                "customVocabulary": ["100ms", "SDK", "Sundar", "Pichai" ],
+                "customVocabulary": ["100ms", "WebSDK", "Flutter", "Sundar", "Pichai", "DALL-E"],
                 "summary": {
                     "enabled": true,
                     "context": "this is a meeting between 100ms SDK team and a user representative",
@@ -436,7 +424,6 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
     "settings": {
         "region": "in",
         "recording": {
-            "enabled": true,
             "upload": {
                 "location": "<Name of the storage bucket>",
                 "type": "<upload type: Supported are s3, gs, oss>",
@@ -459,20 +446,6 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
         "retry": {}
     },
     "destinations": {
-        "browserRecordings": {
-            "<destination name>": {
-                "name": "<destination name>",
-                "width": 1920,
-                "height": 1080,
-                "maxDuration": 1800,
-                "thumbnails": {
-                    "width": 0,
-                    "height": 0
-                },
-                "presignDuration": 3600
-                "role": "host"
-            }
-        },
         "rtmpDestinations": {
             "<destination name>": {
                 "name": "<destination name>",
@@ -532,8 +505,8 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
             "<destination name>": {
                 "name": "<destination name>",
                 "role": "host",
-                "modes": ["recorded", "live"]
-                "outputModes": [ "txt", "srt", "json" ],
+                "modes": ["recorded", "live"],
+                "outputModes": ["txt", "srt", "json"],
                 "customVocabulary": ["100ms", "WebSDK", "Flutter", "Sundar", "Pichai", "DALL-E"],
                 "summary": {
                     "enabled": true,
@@ -572,12 +545,12 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
 
 ## Main arguments
 
-| Name               | Type      | Description                                                                                                                                                                                                                                                                                                                                | Required |
-| :----------------- | :-------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| name <br/>         | `string`  | A unique name you can assign to 100ms templates. Accepted characters are a-z, A-Z, 0-9, space, hyphen `-`, dot `.`, underscore `_` and colon `:`. If not provided, this is generated automatically. <br/><br/> **Notes**: <br/>If `create template` is called with an existing template name, then that template will be overwritten.<br/> | No       |
-| roles <br/>        | `object`  | Map of `{roleName:roleObject}`. Some sane defaults are set for values that are not provided in the roles object.                                                                                                                                                                                                                           | No       |
-| settings <br/>     | `object`  | Global settings for this template.                                                                                                                                                                                                                                                                                                         | No       |
-| destinations <br/> | `object`  | Object of type `destinations`. This object contains information for enabling/configuring features like `browserRecordings`, `rtmpDestinations`, `hlsDestinations`, & `transcriptions`                                                                                                                                                                       | No       |
+| Name               | Type     | Description                                                                                                                                                                                                                                                                                                                                | Required |
+| :----------------- | :------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| name <br/>         | `string` | A unique name you can assign to 100ms templates. Accepted characters are a-z, A-Z, 0-9, space, hyphen `-`, dot `.`, underscore `_` and colon `:`. If not provided, this is generated automatically. <br/><br/> **Notes**: <br/>If `create template` is called with an existing template name, then that template will be overwritten.<br/> | No       |
+| roles <br/>        | `object` | Map of `{roleName:roleObject}`. Some sane defaults are set for values that are not provided in the roles object.                                                                                                                                                                                                                           | No       |
+| settings <br/>     | `object` | Global settings for this template.                                                                                                                                                                                                                                                                                                         | No       |
+| destinations <br/> | `object` | Object of type `destinations`. This object contains information for enabling/configuring features like `rtmpDestinations`, `hlsDestinations`, & `transcriptions`                                                                                                                                                      | No       |
 
 ## roles object
 
@@ -633,6 +606,7 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
 | layers | `object` | Object of type `layers`. Use this to configure various dimensions to be supported for simulcast. <br/>The max length of this array can be 3. | Yes      |
 
 ##### simulcast - layer object
+
 | Name                  | Type           | Description                                                                                                                                                                                                                                                                                                                                                                                                                  | Required |
 | :-------------------- | :------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
 | maxBitrate            | `int`          | Specifies the maximum number of kilobits per second to allow for encoding. <br/>It should be in the range [0, 2e3] (max is 2 Mbps)—defaults to 0.                                                                                                                                                                                                                                                                            | No       |
@@ -659,7 +633,7 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
 ### permissions object
 
 | Name             | Type      | Description                                                                                                                                                                 | Required | Default |
-|:-----------------|:----------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:---------|:--------|
+| :--------------- | :-------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- | :------ |
 | endRoom          | `boolean` | Permission to end room for all.                                                                                                                                             | No       | `false` |
 | removeOthers     | `boolean` | Permission to remove others from the room.                                                                                                                                  | No       | `false` |
 | mute             | `boolean` | Permission to request others to mute them.                                                                                                                                  | No       | `false` |
@@ -682,10 +656,10 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
 
 ### recording object
 
-| Name    | Type      | Description                                                                                                                                                                                                 | Required |
-| :------ | :-------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| enabled | `boolean` | Enable the SFU recording for its rooms. Disabled by default.                                                                                                                                                | No       |
-| upload  | `object`  | Object of type `upload`. This object contains information on recordings storage location. If you want to store recording with 100ms, and not use your own storage (s3/gs/oss), don't add this to the object | No       |
+| Name                 | Type      | Description                                                                                                                                                                                                 | Required |
+| :------------------- | :-------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| enabled (deprecated) | `boolean` | Enable the SFU recording for its rooms. Disabled by default. This field is deprecated, please use new recordings API to configure the composite recordings.                                                                                                                                               | No       |
+| upload               | `object`  | Object of type `upload`. This object contains information on recordings storage location. If you want to store recording with 100ms, and not use your own storage (s3/gs/oss), don't add this to the object | No       |
 
 #### upload object
 
@@ -720,26 +694,26 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
 
 ## destinations object
 
-| Name              | Type     | Description                                                                                                                                            | Required |
-| :---------------- | :------- | :----------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| browserRecordings | `object` | Object of type `browserRecordings`. This can be used to record your sessions to a file, for subsequent access.                                         | No       |
-| rtmpDestinations  | `object` | Object of type `rtmpDestinations`. This can be used to live stream your video conferencing apps to platforms like YouTube, Twitch, Facebook, MUX, etc. | No       |
-| hlsDestinations   | `object` | Object of type `hlsDestinations`. This can be used to configure arguments for your HLS live streaming.                                                 | No       |
-| transcriptions    | `object` | Object of type `transcriptions`. This can be used to configure transcriptions.                                                                         | No       |
+| Name                           | Type     | Description                                                                                                                                            | Required |
+| :----------------------------- | :------- | :----------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| browserRecordings (deprecated) | `object` | Object of type `browserRecordings`. This can be used to record your sessions to a file, for subsequent access.                                         | No       |
+| rtmpDestinations               | `object` | Object of type `rtmpDestinations`. This can be used to live stream your video conferencing apps to platforms like YouTube, Twitch, Facebook, MUX, etc. | No       |
+| hlsDestinations                | `object` | Object of type `hlsDestinations`. This can be used to configure arguments for your HLS live streaming.                                                 | No       |
+| transcriptions                 | `object` | Object of type `transcriptions`. This can be used to configure transcriptions.                                                                         | No       |
 
-### browserRecordings object
+### browserRecordings object (Deprecated)
 
-| Name            | Type     | Description                                                                                             | Required |
-| --------------- | -------- | ------------------------------------------------------------------------------------------------------- | -------- |
-| name            | `string` | The name you can assign to identify the browser recording                                               | Yes      |
-| width           | `int`    | Indicates the width of the screen to be recorded in pixels. For example, 1280 pixels                    | No       |
-| height          | `int`    | Indicates the height of the screen to be recorded in pixels. For example, 720 pixels                    | No       |
-| maxDuration     | `int`    | Sets the maximum duration, in seconds, of the recording. For example, 1800 seconds(30 minutes)             | No       |
-| thumbnails      | `object` | Object of type `thumbnails`. This can be used to configure thumbnail's dimension                        | No       |
-| presignDuration | `int`    | Indicates the expiry of the pre-signed URLs—the duration for which the pre-signed URL should be signed  | No       |
-| role            | `string` | Indicates the role use to start browser recording                                                       | Yes      |
-| autoStart       | `boolean`| Indicates whether recordings should automatically start on room join for this destination               | No       |
-| autoStopTimeout | `int`    | Maximum duration to wait before automatically stopping recording after all peers leave                  | No       |
+| Name            | Type      | Description                                                                                            | Required |
+| --------------- | --------- | ------------------------------------------------------------------------------------------------------ | -------- |
+| name            | `string`  | The name you can assign to identify the browser recording                                              | Yes      |
+| width           | `int`     | Indicates the width of the screen to be recorded in pixels. For example, 1280 pixels                   | No       |
+| height          | `int`     | Indicates the height of the screen to be recorded in pixels. For example, 720 pixels                   | No       |
+| maxDuration     | `int`     | Sets the maximum duration, in seconds, of the recording. For example, 1800 seconds(30 minutes)         | No       |
+| thumbnails      | `object`  | Object of type `thumbnails`. This can be used to configure thumbnail's dimension                       | No       |
+| presignDuration | `int`     | Indicates the expiry of the pre-signed URLs—the duration for which the pre-signed URL should be signed | No       |
+| role            | `string`  | Indicates the role use to start browser recording                                                      | Yes      |
+| autoStart       | `boolean` | Indicates whether recordings should automatically start on room join for this destination              | No       |
+| autoStopTimeout | `int`     | Maximum duration to wait before automatically stopping recording after all peers leave                 | No       |
 
 ### rtmpDestinations object
 
@@ -748,7 +722,7 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
 | name             | `string`  | The name you can assign to identify the RTMP destination                                                           | Yes      |
 | width            | `int`     | Indicates the width of the screen to be recorded in pixels. For example, 1280 pixels                               | No       |
 | height           | `int`     | Indicates the height of the screen to be recorded in pixels. For example, 720 pixels                               | No       |
-| maxDuration      | `int`     | Set maximum duration for RTMP stream, in seconds. For example, 1800 seconds(30 minutes)                               | No       |
+| maxDuration      | `int`     | Set maximum duration for RTMP stream, in seconds. For example, 1800 seconds(30 minutes)                            | No       |
 | rtmpUrls         | `object`  | Object of type `rtmpUrls`. This can be used to configure the RTMP URLs(max 3) you wish to broadcast the stream to. | No       |
 | recordingEnabled | `boolean` | If recording is required this can be set as true. This value has no effect on streaming.                           | No       |
 | autoStopTimeout  | `int`     | Maximum duration to wait before automatically stopping RTMP after all peers leave                                  | No       |
@@ -771,15 +745,16 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
 #### HLS - recording object
 
 | Name               | Type      | Description                                                                                                                                                                                                                                                                                                                                                           | Required |
-|:-------------------|:----------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:---------|
-| hlsVod             | `boolean` | Set this to `true` to enabled Video on Demand. Output will be a HLS VOD asset file of m3u8 format with all the chunks.                                                                                                                                                                                                                                                          | No       |
+| :----------------- | :-------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| hlsVod             | `boolean` | Set this to `true` to enabled Video on Demand. Output will be a HLS VOD asset file of m3u8 format with all the chunks.                                                                                                                                                                                                                                                | No       |
 | singleFilePerLayer | `boolean` | Set this to `true` if HLS recording should be available as separate files for various dimensions supported. Output will be Individual mp4 file per HLS layer.                                                                                                                                                                                                         | No       |
-| enableZipUpload    | `boolean` | By default, the value is 'false'. You can set this to 'true' to enable zipped upload of the HLS VOD asset if the recording storage is your personal storage bucket and `upload` [object](#upload-object) is configured. Setting it to 'true' with the configured storage as 100ms will give an error.                                                                                                                                              | No       |
+| enableZipUpload    | `boolean` | By default, the value is 'false'. You can set this to 'true' to enable zipped upload of the HLS VOD asset if the recording storage is your personal storage bucket and `upload` [object](#upload-object) is configured. Setting it to 'true' with the configured storage as 100ms will give an error.                                                                 | No       |
 | layers             | `object`  | Object of type `layers`. This can be used to configure the various dimensions to be supported for HLS recording - both `hlsVod` and `singleFilePerLayer`. `recording.layers` should be subset of `hlsDestinations.layers` and has the same validations as `hlsDestinations.layers`. When not specified, recordings will be generated for all `hlsDestinations.layers` | No       |
 | thumbnails         | `object`  | Object of type `thumbnails`. This can be used to configure thumbnail's dimension.                                                                                                                                                                                                                                                                                     | No       |
 | presignDuration    | `int`     | Indicates the expiry of the pre-signed URLs—the duration for which the pre-signed URL should be signed.                                                                                                                                                                                                                                                               | No       |
 
 #### HLS/ HLS Recording - Layers
+
 Minimum between `width` and `height` should be in range [144, 1080] and Maximum between `width` and `height` should be in range [192, 1920].
 
 | Name         | Type  | Description                                                                                            | Required |
@@ -794,9 +769,9 @@ Minimum between `width` and `height` should be in range [144, 1080] and Maximum 
 | Name             | Type     | Description                                                                                                                                                                      | Required |
 | ---------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
 | name             | `string` | The name you can assign to identify transcription destination.                                                                                                                   | Yes      |
-| modes            | `array`  | Array of modes for transcription. Valid values: [ `recorded`, `live` ] <br/> (recorded: Transcribe recording post call completion, live: Closed caption for live stream viewers)       | No       |
+| modes            | `array`  | Array of modes for transcription. Valid values: [ `recorded`, `live` ] <br/> (recorded: Transcribe recording post call completion, live: Closed caption for live stream viewers) | No       |
 | role             | `string` | Indicates the role used to transcribe. Roles which are subscribed by the given role will be transcribed.                                                                         | Yes      |
-| outputModes      | `array`  | Array of transcript output modes, valid for recorded mode. Valid values: [ txt, srt, json ] (txt: Plain text, srt: SubRip text, json: Granular timestamped words and sentences) | No       |
+| outputModes      | `array`  | Array of transcript output modes, valid for recorded mode. Valid values: [ txt, srt, json ] (txt: Plain text, srt: SubRip text, json: Granular timestamped words and sentences)  | No       |
 | customVocabulary | `array`  | Array of words that might be spoken during the call. This can consist of non-dictionary words like names, slang, abbreviations and domain specific words.                        | No       |
 | summary          | `object` | Object of type `summary`. This can be used to enable and configure summary, valid for recorded mode.                                                                             | No       |
 
@@ -811,7 +786,7 @@ Minimum between `width` and `height` should be in range [144, 1080] and Maximum 
 
 #### transcriptions - summary - sections object
 
-| Name   | Type     | Description                                                                                                            | Required |
-| ------ | -------- | ---------------------------------------------------------------------------------------------------------------------- | -------- |
+| Name   | Type     | Description                                                                                                        | Required |
+| ------ | -------- | ------------------------------------------------------------------------------------------------------------------ | -------- |
 | title  | `string` | Title of the section `Agenda`, `Short Summary`, `Follow Up Action Items`, `Short Summary`. (limit: 100 characters) | Yes      |
-| format | `string` | Format of the section. Valid values: [`bullets`, `paragraph`]                                                          | Yes      |
+| format | `string` | Format of the section. Valid values: [`bullets`, `paragraph`]                                                      | Yes      |

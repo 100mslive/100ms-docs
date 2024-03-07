@@ -1,11 +1,11 @@
-import { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { ChevronDownIcon, CodeIcon } from '@100mslive/react-icons';
 import { Box, Text } from '@100mslive/react-ui';
-import Chip from './Chip';
 import { Listbox } from '@headlessui/react';
 import useClickOutside from '@/lib/useClickOutside';
-import { menuItem } from './Sidebar';
 import { getUpdatedPlatformName } from '@/lib/utils';
+import Chip from './Chip';
+import { menuItem } from './Sidebar';
 
 const ChipDropDown = ({
     openFilter,
@@ -20,7 +20,6 @@ const ChipDropDown = ({
             key: 'all-platforms',
             icon: <CodeIcon />
         },
-        ,
         ...menuItem
     ];
     const optionsRef = useRef<any>(null);
@@ -30,22 +29,6 @@ const ChipDropDown = ({
         setOpenFilter(false);
         buttonRef?.current.blur();
     });
-
-    useEffect(() => {
-        if (typeof window !== 'undefined') {
-            const url = localStorage.getItem('platformFilterSetAt') || '';
-            if (url !== location.href.toString()) {
-                localStorage.setItem('platformFilterSetAt', location.href.toString());
-                let setFilter = false;
-                updatedMenuItem.forEach((plat) => {
-                    if (!setFilter && plat && window.location.pathname.includes(plat.key)) {
-                        setPlatformFilter(plat.name);
-                        setFilter = true;
-                    }
-                });
-            }
-        }
-    }, []);
 
     return (
         <Box ref={optionsRef}>

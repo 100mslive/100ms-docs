@@ -1,105 +1,63 @@
 ---
-title: Video recording
+title: Overview
 nav: 3.1
 ---
 
-Recordings enable you to convert live video from 100ms rooms into long-lived video assets. 100ms can generate different types of recordings
+Recordings enable you to convert live video from 100ms rooms into long-lived video assets. 100ms can generate different types of recordings:
 
-- [Composite recordings](#composite-recordings): One video file, composed with tracks of all peers in the room
-- [Track recordings](#track-recordings): Separate media files for audio, video and screen-share tracks
+## Recording modes for video conferencing
 
-## Composite recordings
+-   **[Track recordings](/get-started/v2/get-started/features/recordings/recording-modes/track-recordings)** - Record each audio and video track of each peer as separate assets.
+-   **[Stream recordings](/get-started/v2/get-started/features/recordings/recording-modes/stream-recording)** - Record each peer's media streams (audio and video tracks combined) as a single asset.
+-   **[Composite recordings](/get-started/v2/get-started/features/recordings/recording-modes/composite-recordings)** - Record as a composed asset combining media tracks of all peers in the room
 
-> Previously called browser or beam recording.
+<FlexContainer>
+    <Callout title="Choosing a recording mode" icon="LinkTwoIcon">
+        Compare track, stream and composite recordings for your use cases. [Compare recording modes
+        →](/get-started/v2/get-started/features/recordings/recording-modes/comparing-recording-modes)
+    </Callout>
+</FlexContainer>
 
-100ms can record a room to capture the perspective of a participant, who can hear and see other participants in the room. These recordings are a mix of multiple audio/video tracks, composed together in one video file—with a layout that is similar to the UI of the room. The output is a single MP4 file.
+## Recording a livestream
 
-Composite recordings can be customized: you can define which roles to record, which video resolution to record and, other modifications to the UI.
+Live stream recording enables capturing a continuous feed of audio or video in real-time during a live broadcast event. It focuses on low latency for interactivity over post-production flexibility. 100ms offers two recording formats:
 
-Internally, these recordings are created using an automated web browser that joins the room as a hidden peer (called "beam")—which records the screen to generate a composite recording.
+-   **Video-On-Demand (VOD)**: Generated HLS file enables re-playable video with adaptive bitrates. Can be unzipped or zipped when storing.
+-   **Per Layer MP4 Files**: Records separate MP4 videos for chosen resolution layers. Gives access to distinct raw footage files.
 
-### Start and stop recording
+In summary, VOD recording is better for on-demand playback while Per Layer MP4's allow remixing footage. Choice depends on needs. But 100ms enables recording live streams in multiple ways maximizing flexibility. <br/>For more details, head to [Livestream recording →](/get-started/v2/get-started/features/recordings/live-stream-recording)
 
-Enable "room composite recordings" on any template created on the [100ms Dashboard](https://dashboard.100ms.live). This enables the feature for your template, and exposes options to customize the recording. You can control when to **start and stop** recording, based on your use-case.
-
-![Composite recording on 100ms Dashboard](/docs/v2/composite-recording-dashboard.png)
-
-There are 3 methods to start a recording.
+## Recording Assets
 
 <FlexContainer>
 
-<Callout icon="link" title="Auto-start">
-Start recording automatically when the first peer joins a room.
-<br/>
-
-[Enable on dashboard →](/docs/v2/auto-start-dashboard.png)
-
+<Callout title="Recording asset types" icon="LinkTwoIcon">
+    Different assets types generated on 100ms. View [recording assets
+    →](/get-started/v2/get-started/features/recordings/recording-assets/recording-asset-types)
 </Callout>
 
-<Callout icon="link" title="Start with API">
-Start recording by calling the 100ms server-side REST API. This is suitable to start/stop based on business logic.
-<br/>
-
-[REST API docs →](/server-side/v2/how-to-guides/recordings/overview)
-
+<Callout title="Storage configuration" icon="ShieldIcon">
+Understand how to store your recordings. Refer [storage configuration →](/get-started/v2/get-started/features/recordings/recording-assets/storage-configuration)
 </Callout>
 
-<Callout icon="shield" title="Start from SDK">
-Start recording with the client-side SDK. This is suitable to start/stop based on user action (click a button).
-<br/>
-
-[Web docs →](/javascript/v2/how-to-guides/record-and-live-stream/rtmp-recording)
-
-[iOS docs →](/ios/v2/how-to-guides/record-and-live-stream/rtmp-recording)
-
-[Android docs →](/android/v2/how-to-guides/record-and-live-stream/rtmp-recording)
-
-[Flutter docs →](/flutter/v2/how-to-guides/record-and-live-stream/recording)
-
-[React Native docs →](/react-native/v2/how-to-guides/record-and-live-stream/recording)
-
+<Callout title="Get recording assets" icon="LinkTwoIcon">
+    Fetch recording asset types generated. [Get recording assets
+    →](/get-started/v2/get-started/features/recordings/recording-assets/get-recording-assets)
 </Callout>
 
 </FlexContainer>
 
-### Fetch the recording
+## Recordings Guides
 
-After the recording is stopped and processed, a [recording asset](/server-side/v2/api-reference/recording-assets/overview) is generated. Composite generates an asset of type `room-composite`. You can fetch this asset through multiple methods:
+-   [Chat Recording →](/get-started/v2/get-started/features/recordings/chat-recording)
+-   [Set up recordings →](/get-started/v2/get-started/features/recordings/set-up-recording)
 
-* [Fetch on 100ms Dashboard](./storage#using-the-100ms-dashboard)
-* Auto-send to your [cloud storage location](./storage)
-* REST API to [get recording asset](/server-side/v2/api-reference/recording-assets/get-asset)
-* Server-side webhooks: [use the `beam.recording.success` webhook](/server-side/v2/how-to-guides/configure-webhooks/webhook#beamrecordingsuccess)
+## Recordings Resources
 
-### Customizing the recording
+<FlexContainer>
 
-- No-code customization on the 100ms Dashboard: Modify the video resolution, which roles to be recorded
-- Get audio-only recording: possible via the [REST API to start recording](/server-side/v2/how-to-guides/recordings/customize)
-- [Customize the composition UI](/get-started/v2/get-started/features/ui-composition)
-
-### Legacy composite through SFU recording
-
-100ms has an alternative method to generate a composite video. This method is not recommended since above described method generates a higher quality video.
-
-SFU recording generates the asset type called `room-composite-legacy`.
-
-See [migration doc](./migrating) to compare these 2 methods and pick a preferred approach.
-
-### Recording with live streaming
-
-You can turn on recording when starting up a new live stream. 100ms can produce two different formats of recordings suitable for downloading or streaming in on demand scenarios. Learn more about recording with a live stream [here](/get-started/v2/get-started/features/recordings/live-stream-recording).
-
-## Track recordings
-
-Some use-cases require 1 file per 1 track (audio, video or screen-share). This can be generated through the SFU recording.
-
-Track recordings can be enabled for your template through the 100ms Dashboard. Once enabled, the recording **starts automatically** when the first peer joins a room, and stops automatically when the last peer leaves the room.
-
-![SFU recording on 100ms Dashboard](/docs/v2/sfu-recording-dashboard.png)
-
-### Fetch the recording
-
-You can fetch track recordings through two methods:
-
-* Auto-send to your [cloud storage location](./storage)
-* Server-side webhooks: use the `track.recording.success` webhook
+<Callout title="Recording API" icon="LinkTwoIcon">
+- [Recording APIs →](/server-side/v2/api-reference/recordings/overview)
+- [Recording Assets APIs →](/server-side/v2/api-reference/recording-assets/overview)
+</Callout>
+</FlexContainer>
