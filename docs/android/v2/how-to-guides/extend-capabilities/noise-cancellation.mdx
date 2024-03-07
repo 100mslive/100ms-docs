@@ -3,21 +3,22 @@ title: Noise Cancellation
 nav: 14.2
 ---
 
-100ms offers noise cancellation at the mic if you need it.
+100ms offers noise cancellation at the mic if you need it. This removes noise from outgoing audio.
+
+It supports the same `minSdk` as the core HMS SDK which is 21 (Android 5.0, Lollipop).
 
 The noise cancellation is opt-in, here are the steps to enable it:
 1. Add the following import to your app 
 ```kotlin 
 implementation "live.100ms:hms-noise-cancellation-android:$hmsVersion"
 ```
-2. Enable noise cancellation from the dashboard.
-3. Toggle noise cancellation on in your application with `hmsSDK.setNoiseCancellationEnabled(true)` in your `onJoin` callback.
+2. Toggle noise cancellation on in your application with `hmsSDK.setNoiseCancellationEnabled(true)` in your `onJoin` callback.
 
 > Note: Adding the library for noise cancellation will increase app size by 5.6 Mb.  
 Noise cancellation is turned off by default for all calls.
 
-## How to join with Noise cancellation enabled
-To enable noise cancellation by default, add the option in the audio track settings while constucting the `HmsSdk`.
+## How to Join with Noise cancellation Enabled
+To enable noise cancellation by default, add the option in the audio track settings while constucting the `HMSSDK` object.
 
 This is the same as enabling noise cancellation in your `onJoin` callback as seen above.
 
@@ -80,7 +81,6 @@ This will either return `AvailabilityStatus.Available` or it will return `Availa
 To see the reason why it's not available, check the reason provided in `NotAvailable`.
 Possible reasons may be:
 1. The noise cancellation import was not added.
-2. Noise cancellation is not enabled from the dashboard.
 
 ```kotlin
 val availability : AvailabilityStatus = hmsSDK.isNoiseCancellationSupported()
