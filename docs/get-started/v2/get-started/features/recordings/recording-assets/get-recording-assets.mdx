@@ -1,0 +1,30 @@
+---
+title: Get Recording Assets
+nav: 3.7
+---
+
+To download a recording asset, you can use the Get Recording Asset API with the asset_id identifier. Asset Identifier are available in the recording webhooks for each mode and for each asset.
+Alternatively, Use List recordings Assets API for a session or room to get asset_ids and associated metadata of all recording assets for the session
+
+
+## List recording Assets
+
+The [List Recording Assets API](/server-side/v2/api-reference/recording-assets/list-all-assets) which returns `asset_id`s for recordings generated across your 100ms workspace, which can be filtered by:
+
+- Session ID - list all recordings for a `session_id`. 
+- Room ID - list all recordings for a `room_id`
+- Type - Asset types such as `track`, `stream`, `room-composite`
+- Recording status, where `status` can be:
+	- `completed` - get only completed recordings
+	- `failed` - get only failed recordings
+<br/>
+If no filter is specified, all recordings for your workspace will be returned. The `id` returned in the response refers to the asset generated, which contains information such as associated session, room, asset type, status, duration, etc. Refer to the [recording asset object specification](/server-side/v2/api-reference/recording-assets/overview#object) for details.
+
+
+## Get a recording asset
+
+- Use [Get recording asset API](/server-side/v2/api-reference/recording-assets/get-asset) using an `asset_id`.
+- via Dashboard
+
+## Get a recording link or pre-signed url 
+For any recording asset, you can generate a short-lived recording link for the asset. Use get a pre-signed url using recording link API. You can customise the validity of the url using the API.

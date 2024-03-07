@@ -76,16 +76,16 @@ The very first step to getting started with HIPAA is to create a HIPAA workspace
 
 1. Click on the workspace selector in the left sidebar.
 2. Click on ‘+ Create Workspace’.
-3. Type in the Workspace name of your choice and select the ‘HIPAA Compliant’ checkbox. Then click on Create Workspace.
+3. Type in the Workspace name of your choice and select the ‘HIPAA Compliant’ checkbox. Then click on 'Create Workspace'.
     
     ![hipaa-workspace-creation](/docs/v2/hipaa/hipaa-workspace-creation.png)
     
 
-100ms HIPAA workspaces can be distinguished by noting the HIPAA logon on the sidebar.
+100ms HIPAA Workspaces can be distinguished by noting the HIPAA logo on the sidebar.
 
 ![hipaa-logo-sidebar](/docs/v2/hipaa/hipaa-logo-sidebar.png)
 
-### Understanding the changes in a HIPAA workspace
+### Understanding the changes in a HIPAA Workspace
 
 #### Managing PII and PHI surface area
 
@@ -95,11 +95,11 @@ We have a standard policy of not collecting and storing any PHI or PII for HIPAA
 
 1. `user_name` or `peer_name` → This information is one-way hashed using SHA-256 algorithm and stored within our system in that format. 
 2. `room_name` → Although this will possibly not consist of any PHI, but 100ms also does a one-way hash of room names using SHA-256 algorithm.
-3. IP Address→ IP Addresses of peers are masked and securely stored within our logs so as to not be able to identify associated individuals.
+3. IP Address → IP Addresses of peers are masked and securely stored within our logs so as to not be able to identify associated individuals.
 
 **Note on hashed data**
 
-1. **Dashboard** - Hashed data can be viewed and verified on 100ms dashboard on the following pages:
+- **Dashboard** - Hashed data can be viewed and verified on 100ms dashboard on the following pages:
     - Rooms Page
         
         ![hipaa-hashed-rooms](/docs/v2/hipaa/hipaa-hashed-rooms.png)
@@ -127,13 +127,13 @@ Following services and features can be **enabled** and used:
 
 1. Polls and Quizzes
 2. Composite Recording with user’s cloud storage bucket configured
-    1. Recording with the [customer’s cloud storage bucket configured](/get-started/v2/get-started/features/recordings/storage) on 100ms is the only method allowed by 100ms. As soon as the recording for a particular session is complete, it is uploaded to the customers’ storage and immediately deleted from ours.
+    1. Recording with the [customer’s cloud storage bucket configured](/get-started/v2/get-started/features/recordings/recording-assets/storage-configuration) on 100ms is the only method allowed by 100ms. As soon as the recording for a particular session is complete, it is uploaded to the customers’ storage and immediately deleted from ours.
     2. Access to customers’ buckets cannot be obtained by 100ms because write-only access is enforced when configuring the customer’s storage bucket.
 3. Whiteboard
 4. Session Initiation Protocol (SIP) (Limited Preview Access)
 5. Chat
 
-Following services within the template have been **disabled** and locked for HIPAA workspaces:
+Following services within the template have been **disabled** and locked for the HIPAA Workspace:
 
 1. Live Streaming through HLS
 2. Live Streaming using RTMP-Out
@@ -147,8 +147,9 @@ Following services are in the process of being HIPAA compliant:
 
 1. Live Transcription (Video Conferencing and HLS) - Diarized and Non-diarized
 2. Post Call Transcription - Speaker Labelled (Diarized)
-3. Track Recording
-4. Stream Recording
+3. AI-Generated Summaries
+4. Track Recording
+5. Stream Recording
 
 #### Server Side
 
@@ -250,6 +251,10 @@ Once the storage bucket has been configured on the 100ms dashboard, it is recomm
 
 Customers are responsible for avoiding broadcast messages and specifying controls to send chat messages directly to specific peers in the room with the 100ms API. Additionally, if chat or chat recording isn’t required, please disable chat.
 
+#### Restricting Access to the HIPAA Workspace on 100ms Dashboard
+
+It is technically possible for any developer with access to the workspace on the 100ms dashboard to access and join calls, particularly when the customer utilizes Prebuilt or 100ms' token server. It is recommended that access to the customer's 100ms dashboard and workspace be restricted to developers tasked with the creation and maintenance of templates, debugging, monitoring of usage, and the securing of secrets.
+
 ### Signing the Business Associate Agreement (BAA)
 
 Customers that are subject to HIPAA and intend to utilize 100ms to develop communication workflows containing PHI must execute a Business Associate Agreement (BAA) to 100ms Terms of Service. To learn more about this, [contact us](https://100ms.live/contact). 
@@ -272,7 +277,7 @@ Creating and using a HIPAA workspace doesn’t guarantee HIPAA compliance until 
 
 1. **How much does 100ms charge for signing the BAA and implementing HIPAA changes for my account?**
     
-    We charge $500 / month for our healthcare add-on which includes HIPAA compliance and a signed BAA. This is offered free of charge if you opt for any of our paid premium plans. To know more, please [contact us](https://www.100ms.live/contact).
+    We charge $500 / month for our healthcare add-on which includes HIPAA compliance and a signed BAA. This is offered free of charge if you opt for any of our paid support plans. To know more, please [contact us](https://www.100ms.live/contact).
     
 2. **Regarding the electronic PHI (ePHI) generated by your service, could you explain how it is created, where it is stored, and the lifecycle of this data?**
     
