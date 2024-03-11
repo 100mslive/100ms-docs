@@ -5,6 +5,8 @@ nav: 11
 
 This endpoint is used to update [settings](/server-side/v2/api-reference/policy/create-template-via-api#settings-object).
 
+| **Deprecation Notice:** The `settings.enabled` field which was used to enable custom composite recording, has been deprecated. Please use the [new recordings api](/server-side/v2/policy/configure-recordings) to configure composite recordings.
+
 <PostRequest title="https://api.100ms.live/v2/templates/<template_id>/settings" />
 
 <Request id="req-0">
@@ -16,7 +18,6 @@ curl --location --request POST 'https://api.100ms.live/v2/<template_id>/settings
 --data-raw '{
     "region": "eu",
     "recording": {
-        "enabled": true,
         "upload": {
             "type": "<upload type: supported are s3, gs, oss>",
             "location": "<Name of the storage bucket>",
@@ -47,7 +48,6 @@ curl --location --request POST 'https://api.100ms.live/v2/<template_id>/settings
 {
     "region": "eu",
     "recording": {
-        "enabled": true,
         "upload": {
             "location": "<Name of the storage bucket>",
             "type": "<upload type: supported are s3, gs, oss>",

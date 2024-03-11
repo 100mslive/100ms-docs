@@ -1,6 +1,6 @@
 ---
 title: HMSPluginUnsupportedTypes
-nav: '2.7'
+nav: '2.8'
 ---
 
 ## Enumeration Members

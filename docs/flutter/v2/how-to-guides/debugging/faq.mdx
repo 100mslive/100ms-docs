@@ -65,7 +65,7 @@ Navigator.of(context).push(MaterialPageRoute(
                           )));
 ```
 
-### Issues while using `hmssdk_flutter` with flutter 3.0.x
+### Issues while using hmssdk_flutter with flutter 3.0.x
 
 Flutter versions 3.0.0 to 3.0.5 had issues related to Platform View.
 
@@ -73,9 +73,22 @@ Refer: [Android Platform View issue](https://github.com/flutter/flutter/issues/1
 
 These were resolved in Flutter versions 3.3.0 & above. Please update the Flutter version to 3.3.0 or above.
 
+### Issues while using hms_room_kit or hmssdk_flutter with flutter 3.16.x - 3.19.x
+
+With the release of Flutter version 3.16, platform views functionality has been disrupted. Specifically, the HMSVideoView component fails to render video on Android versions prior to 10. Checkout this 
+issue in detail [here](https://github.com/flutter/flutter/issues/141068).
+
+These platform view issues persist in subsequent Flutter releases, including version 3.19.x
+
+As of the latest development in the Flutter master branch, the above issues have been addressed and resolved. Future releases of Flutter are expected to incorporate these fixes automatically.
+
+In the interim, users encountering platform view issues in Flutter versions 3.16 and 3.19 are advised to revert to version 3.13.x.
+Please refer to the official Flutter documentation and release notes for updates on this issue
+
 ### Is there any limit to the number of HMSVideoView on-screen at a time
 
 `HMSVideoView` internally uses `SurfaceView` in android and `UiKitView` in iOS. It is recommended to render at most 3 to 4 videos on a Single page/screen of the app and rest should be paginated for optimum performance.
+Though `HMSTextureView` has no such limits in theory but it's best to render only the videos which are on-screen and reuse the views wherever possible.
 
 ### Do you have any implementation with popular State Management libraries?
 
@@ -140,7 +153,6 @@ Not much, just turn on a flag in dashboard, and show a proper UI when a video ge
 
 ### Getting Jitpack error: Could not find WebRTC-m104-hms-1.3.aar
 
-
 This occurs intermittently when Jitpack gets down, to fix this permanently you can update the HMSSDK to latest version. In case you can't update
 the HMSSDK version then please wait till Jitpack is up again.
 
@@ -149,7 +161,8 @@ the HMSSDK version then please wait till Jitpack is up again.
 
 ### How do I implement Raise Hand, Polls in application?
 
-You can do using [peer metadata](/flutter/v2/how--to-guides/interact-with-room/peer/peer-metadata-update#use-cases).
+HMSSDK exposes first class API's for polls and hand raise. Refer to hand raise docs [here](/flutter/v2/how-to-guides/interact-with-room/peer/large-room), for polls 
+checkout the docs [here](/flutter/v2/how-to-guides/interact-with-room/room/polls)
 
 ### Why do I see videos getting stuck or frozen?
 

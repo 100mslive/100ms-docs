@@ -35,9 +35,21 @@ nav: '4.63'
 
 ---
 
+### isHipaaEnabled
+
+• `Optional` **isHipaaEnabled**: `boolean`
+
+---
+
 ### isLargeRoom
 
 • `Optional` **isLargeRoom**: `boolean`
+
+---
+
+### isNoiseCancellationEnabled
+
+• `Optional` **isNoiseCancellationEnabled**: `boolean`
 
 ---
 

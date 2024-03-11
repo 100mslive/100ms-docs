@@ -1,0 +1,28 @@
+---
+title: Event Log
+nav: 4.2
+---
+
+Event Log for a peer is a visual representation of all peer events that occur from the moment a peer joins a video session until they leave. This graph is useful in understanding what events happened for a peer in a sequential form or in parallel, hence useful in drawing co-relations to what went in a call. All peer related events can be abstracted in the following event types:
+
+1. **Audio** - event occurs when the peer turns on/off their mic  
+2. **Video** - event occurs when the peer turns on/off their camera  
+3. **Screen** - event when peer starts and stops sharing their screen
+4. **Device** - occurs when an input and output  audio/video device is selected at preview/join screen or switched during a session. It also shows the device type selected. This is available only on web platform.
+5. **Error** - error events that happened for a peer during a session
+
+
+<video loop="true" autoplay="true" id="vid" muted>
+<source src="/docs/guides/event-log.mp4" type="video/mp4" />
+</video>
+
+## Error events log
+
+The error log captures events that occur on the client side, which can disrupt call experience a peer during a call:
+
+| Error Event | Reason |
+| --------| ------ |
+| `client.disconnected` |	The peer was disconnected due to network or Websocket failure |
+| `client.join.failed`	| The peer could not join the call |
+| `client.publish.failed` |	The peer failed to publish their audio/video |
+| `client.subscribe.failed` |	The peer failed to subscribe to other peers’ audio/video |
