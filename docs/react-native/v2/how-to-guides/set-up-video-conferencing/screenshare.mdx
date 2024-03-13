@@ -11,6 +11,10 @@ Please note that for a peer to share their screen, their role must have screensh
 
 ## Android Setup
 
+<div className="steps-container">
+
+### Step 1 - Add Screenshare Activity in your AndroidManifest file
+
 Add `HmsScreenshareActivity` to manifest located at `android/app/src/main/AndroidManifest.xml` as follows -
 
 ```xml
@@ -28,6 +32,19 @@ Add `HmsScreenshareActivity` to manifest located at `android/app/src/main/Androi
 
 </application>
 ```
+
+### Step 2 - Add Permission in in your AndroidManifest file
+
+If you are targeting Android 14 and above, You also need to add `FOREGROUND_SERVICE_MEDIA_PROJECTION` permission in manifest located at `android/app/src/main/AndroidManifest.xml` as follows -
+
+```xml{2}
+<manifest {...}>
+  <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION" />
+  {...}
+</manifest>
+```
+
+</div>
 
 ## iOS Setup
 
