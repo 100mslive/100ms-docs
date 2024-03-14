@@ -25,11 +25,12 @@ Follow below steps to start audio share on android devices -
 
 #### Native file change
 
-Add `FOREGROUND_SERVICE` permission and `HMSAudioshareActivity` activity in the `android/app/src/main/AndroidManifest.xml` file -
+Add `FOREGROUND_SERVICE`, `FOREGROUND_SERVICE_MEDIA_PROJECTION` permission and `HMSAudioshareActivity` activity in the `android/app/src/main/AndroidManifest.xml` file -
 
-```xml{2, 8-10}
+```xml{2-3, 9-11}
 <manifest {...} >
   <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+  <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION" />
   ...
 
   <application {...} >

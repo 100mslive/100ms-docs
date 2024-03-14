@@ -1,5 +1,5 @@
 ---
-title: Polls
+title: Polls & Quizzes
 nav: 8.3
 ---
 
@@ -17,9 +17,9 @@ This document provides guidance on how to use the Poll APIs to create a poll, re
 
 ## Creating a Poll
 
-### Quick Create
+### Quick Start
 
-Here is how to quickly create a poll using poll builder.
+Here is how to quickly start a poll
 
 Let's consider an example. We'll create a single-choice poll with the title `Survey` and the question `Do you like TypeScript?` The poll will offer two options: `Yes` and `No`.
 
@@ -27,7 +27,7 @@ Let's consider an example. We'll create a single-choice poll with the title `Sur
 await hmsInstance.interactivityCenter.startPoll({
     pollId: 'myUniqueID',
     title: 'Survey',
-    type: HMSPollType.poll,
+    type: HMSPollType.poll, // or `HMSPollType.quiz`
     mode: HMSPollUserTrackingMode.customerUserID,
     questions: [
         {
@@ -37,10 +37,12 @@ await hmsInstance.interactivityCenter.startPoll({
             skippable: false,
             options: [
                 {
-                    text: 'Yes'
+                    text: 'Yes',
+                    // isCorrectAnswer: true // In case of quiz
                 },
                 {
-                    text: 'No'
+                    text: 'No',
+                    // isCorrectAnswer: false // In case of quiz
                 }
             ]
         }
@@ -86,12 +88,14 @@ const selectedOptionIndex = 1;
 
 await hmsInstance.interactivityCenter.add({
     pollId,
-    pollQuestionIndex: pollQuestion.index,
+    pollQuestionIndex: pollQuestion.index, // index of the question
     responses: {
-        options: [selectedOptionIndex]
+        options: [selectedOptionIndex] // array of selected option indices, single item if it's a single-choice question and one or more if it's a multiple-choice question
     }
 });
 ```
+
+Once you have submitted your responses, other peers in the room will get `POLL_VOTES_UPDATED` notification. You can check updated vote counts for each option of poll questions.
 
 ## Stopping a Poll
 
@@ -100,3 +104,46 @@ Use `hmsInstance.interactivityCenter.stop(pollId: string)` method when you want 
 ```js
 await hmsInstance.interactivityCenter.stop(pollId);
 ```
+
+## Fetching the Quiz Leaderboard
+
+Once the quiz has ended, the leaderboard can be fetched which has the quiz summary and peer level statistics sorted by score using the asynchronous `fetchLeaderboard` function added to the interactivityCenter.
+
+```js
+const response = await hmsInstance.interactivityCenter.fetchLeaderboard(
+  quizId, // `pollId` of the poll/quiz
+  5, // The number of peer entries that should be fetched at a time
+  1, // The position offset after which the peer level entries should be fetched
+  false, // Whether to include the current peer in the fetched leaderboard entries
+);
+```
+The props accepted are:
+- `quizId` :HMSPoll - `pollId` of the poll/quiz
+- `count` :number - The number of peer entries that should be fetched at a time
+- `offset` :number - The position offset after which the peer level entries should be fetched, Note that "Indexing starts from 1"
+- `includeCurrentPeer`: boolean - Whether to include the current peer in the fetched leaderboard entries
+
+The response contains:
+- An array of entries of type `HMSPollLeaderboardEntry`,
+- A boolean `hasNext` which indicates if there are more entries to be fetched, and
+- An object of type `HMSPollLeaderboardSummary` containing details like the average score, average time taken to answer a question, number of users with all correct answers and more.
+
+```ts
+{
+  entries: [...],
+  summary: {
+    totalUsers: number,
+    votedUsers: number,
+    avgScore: number,
+    avgTime: number,
+    correctUsers: number,
+  };
+  hasNext: false
+}
+```
+
+## Viewing Poll Results Summary
+
+After poll has ended you can use `poll.result` to get statistics like how many peers responded and how many total peers were in the room at the time of poll.
+
+> Have a look at the [API reference of polls](https://www.100ms.live/docs/api-reference/react-native/v2/interfaces/HMSPoll.html) to understand the interface better
