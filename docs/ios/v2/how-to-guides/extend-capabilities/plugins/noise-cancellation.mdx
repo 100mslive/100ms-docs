@@ -16,8 +16,6 @@ The Noise Cancellation is useful when you want to cancel noise and unwanted sudd
 ```swift
 import HMSNoiseCancellationModels
 
-...
-
 let pathForNCModel = HMSNoiseCancellationModels.path(for: .smallFullBand)
 ```
 
@@ -100,14 +98,14 @@ That is all you need to do to add noise cancellation plugin to your conferecing 
 You call enable() or disable() API on noiseCancellationPlugin to enable disable noise cancellation. Additionally, you can call isEnabled() method to check if noise cancellation is enabled.
 
 ```swift
-     // Enable noise cancellation
-     try noiseCancellationPlugin.enable()
+// Enable noise cancellation
+try noiseCancellationPlugin.enable()
 
-     // Disable noise cancellation
-     try noiseCancellationPlugin.disable()
+// Disable noise cancellation
+try noiseCancellationPlugin.disable()
 
-     // Check if noise cancellation is enabled
-     let isnoiseCancellationEnabled = noiseCancellationPlugin.isEnabled()
+// Check if noise cancellation is enabled
+let isnoiseCancellationEnabled = noiseCancellationPlugin.isEnabled()
 ```
 
 ## How to check if noise cancellation is enabled in the room
@@ -115,7 +113,7 @@ You call enable() or disable() API on noiseCancellationPlugin to enable disable 
 To make noise cancellation work your room needs to have noise cancellation feature enabled. You can check if noise cancellation is enabled using isNoiseCancellationAvailable property on noiseCancellationPlugin. To enable noise canellation in your rooms, reach out to support@100ms.live or 100ms discord.
 
 ```swift
-     let isNoiseCancellationAvailableInTheRoom = noiseCancellationPlugin.isNoiseCancellationAvailable
+let isNoiseCancellationAvailableInTheRoom = noiseCancellationPlugin.isNoiseCancellationAvailable
 ```
 
 Note: You can call this API to check the state of noise cancellation only after successfully joining the room.
@@ -144,8 +142,8 @@ That is all you need to do to add noise cancellation plugin to your conferecing 
 You call roomModel.toggleNoiseCancellation() API to enable/disable noise cancellation. Additionally, you can use roomModel.isNoiseCancellationEnabled to check if noise cancellation is enabled.
 
 ```swift
-    roomModel.toggleNoiseCancellation()
-    roomModel.isNoiseCancellationEnabled
+roomModel.toggleNoiseCancellation()
+roomModel.isNoiseCancellationEnabled
 ```
 
 ## How to check if noise cancellation is enabled in the room
@@ -153,7 +151,7 @@ You call roomModel.toggleNoiseCancellation() API to enable/disable noise cancell
 To make noise cancellation work your room needs to have noise cancellation feature enabled. You can check if noise cancellation is enabled using roomModel.isNoiseCancellationAvailable. To enable noise canellation in your rooms, reach out to support@100ms.live or 100ms discord.
 
 ```swift
-     roomModel.isNoiseCancellationAvailable
+roomModel.isNoiseCancellationAvailable
 ```
 
 </Tab>
