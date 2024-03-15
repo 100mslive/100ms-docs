@@ -7,6 +7,7 @@ This endpoint is used to create a template. A recommended way is to provide a li
 
 | **Deprecation Notice:** The `settings.enabled` field which was used to enable custom composite recording, has been deprecated. Please use the [new recordings API](/server-side/v2/policy/configure-recordings) to configure composite recordings.
 | **Deprecation Notice:** The `destinations.browserRecordings` field which was used to provide configuration for browser based recording, has been deprecated. Please use the [new recordings API](/server-side/v2/policy/configure-recordings) to configure browser recording.
+
 ## Understand sub-objects hierarchy
 
 ![Template sub-objects hierarchy](/docs/v2/template-object-hierarchy.png)
@@ -550,7 +551,7 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
 | name <br/>         | `string` | A unique name you can assign to 100ms templates. Accepted characters are a-z, A-Z, 0-9, space, hyphen `-`, dot `.`, underscore `_` and colon `:`. If not provided, this is generated automatically. <br/><br/> **Notes**: <br/>If `create template` is called with an existing template name, then that template will be overwritten.<br/> | No       |
 | roles <br/>        | `object` | Map of `{roleName:roleObject}`. Some sane defaults are set for values that are not provided in the roles object.                                                                                                                                                                                                                           | No       |
 | settings <br/>     | `object` | Global settings for this template.                                                                                                                                                                                                                                                                                                         | No       |
-| destinations <br/> | `object` | Object of type `destinations`. This object contains information for enabling/configuring features like `rtmpDestinations`, `hlsDestinations`, & `transcriptions`                                                                                                                                                      | No       |
+| destinations <br/> | `object` | Object of type `destinations`. This object contains information for enabling/configuring features like `rtmpDestinations`, `hlsDestinations`, & `transcriptions`                                                                                                                                                                           | No       |
 
 ## roles object
 
@@ -658,7 +659,7 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
 
 | Name                 | Type      | Description                                                                                                                                                                                                 | Required |
 | :------------------- | :-------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| enabled (deprecated) | `boolean` | Enable the SFU recording for its rooms. Disabled by default. This field is deprecated, please use new recordings API to configure the composite recordings.                                                                                                                                               | No       |
+| enabled (deprecated) | `boolean` | Enable the SFU recording for its rooms. Disabled by default. This field is deprecated, please use new recordings API to configure the composite recordings.                                                 | No       |
 | upload               | `object`  | Object of type `upload`. This object contains information on recordings storage location. If you want to store recording with 100ms, and not use your own storage (s3/gs/oss), don't add this to the object | No       |
 
 #### upload object

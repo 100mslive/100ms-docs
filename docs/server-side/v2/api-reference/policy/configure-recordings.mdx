@@ -41,7 +41,7 @@ curl --location --request POST 'https://api.100ms.live/v2/templates/<template_id
             "enabled": false
         },
         "streamRecording": {
-            "enabled": false,
+            "autoStart": false,
             "width": 1920,
             "height": 1080
         }
@@ -123,21 +123,21 @@ curl --location --request POST 'https://api.100ms.live/v2/templates/<template_id
 
 ### CustomeComposite Object
 
-| Name    | Type      | Description                                                                                    | Required |
-| :------ | :-------- | :--------------------------------------------------------------------------------------------- | :------- |
-| enabled | `boolean` | Enable the custom composite recording for rooms belonging to the template. Disabled by default | No       |
+| Name      | Type      | Description                                                                                    | Required |
+| :-------- | :-------- | :--------------------------------------------------------------------------------------------- | :------- |
+| autoStart | `boolean` | Enable the custom composite recording for rooms belonging to the template. Disabled by default | No       |
 
 ### StreamRecording Object
 
-| Name    | Type      | Description                                                                          | Required |
-| :------ | :-------- | :----------------------------------------------------------------------------------- | :------- |
-| enabled | `boolean` | Enable the stream recording for rooms belonging to the template. Disabled by default | No       |
+| Name      | Type      | Description                                                                          | Required |
+| :-------- | :-------- | :----------------------------------------------------------------------------------- | :------- |
+| autoStart | `boolean` | Enable the stream recording for rooms belonging to the template. Disabled by default | No       |
 
 ### TrackRecording Object
 
-| Name    | Type      | Description                                                                         | Required |
-| :------ | :-------- | :---------------------------------------------------------------------------------- | :------- |
-| enabled | `boolean` | Enable the track recording for rooms belonging to the template. Disabled by default | No       |
+| Name      | Type      | Description                                                                         | Required |
+| :-------- | :-------- | :---------------------------------------------------------------------------------- | :------- |
+| autoStart | `boolean` | Enable the track recording for rooms belonging to the template. Disabled by default | No       |
 
 # Retrieve current recordings configuration
 
@@ -169,7 +169,6 @@ curl --location --request GET 'https://api.100ms.live/v2/templates/<template_id>
         },
         "compositeRecording": {
             "browserComposite": {
-                "enabled": true,
                 "autoStopTimeout": 500,
                 "width": 1920,
                 "height": 1080
@@ -184,4 +183,5 @@ curl --location --request GET 'https://api.100ms.live/v2/templates/<template_id>
     }
 ]
 ```
+
 </ResponseBox>
