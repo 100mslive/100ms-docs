@@ -10,63 +10,52 @@ The HMSNoiseCancellationPlugin is an audio filter plugin that you can use to can
 
 ## How to add HMSNoiseCancellationPlugin plugin in your app
 
-HMSNoiseCancellationPlugin uses a noise cancelling AI model. So first step is to add the model in your project. To add the model follow these steps:
+HMSNoiseCancellationPlugin uses a noise cancelling AI model. 100ms provides a HMSNoiseCancellationModels SDK to make it very easy. Follow these steps:
 
 1. Add HMSNoiseCancellationModels SDK into your app using either SPM or Cocoapods
 2. import HMSNoiseCancellationModels in your project file
-3. 
-
-1. Create an HMSVideoPlugin array
+3. Now you can create HMSNoiseCancellationPlugin and add it to audioSettings of hmsSDK instance like below:
 
 ```swift
-     var videoPlugins = [HMSVideoPlugin]()
-```
+import HMSNoiseCancellationModels
 
-2. Create an instance of HMSVideoFilterPlugin, activate it and append it to videoPlugins array, like below
+...
 
-```swift
-     let videoFilterPlugin = HMSVideoFilterPlugin()
-     videoFilterPlugin?.activate()
-     videoPlugins.append(videoFilterPlugin)
-```
+var noiseCancellationPlugin: HMSNoiseCancellationPlugin?
 
-3. Set videoPlugins instance while setting the trackSettings on HMSSDK
+...
 
-```swift
-     hmsSDK = HMSSDK.build { sdk in
-            sdk.trackSettings = HMSTrackSettings.build { videoSettingsBuilder, audioSettingsBuilder in
-               videoSettingsBuilder.videoPlugins = self.videoPlugins
-            }
-            ...
-        }
-```
+hmsSDK = HMSSDK.build { sdk in
 
-That is all you need to do to enable video filters!
+     sdk.trackSettings = HMSTrackSettings.build { videoSettingsBuilder, audioSettingsBuilder in
 
-## How to enable and disable video filters
+          if let pathForNCModel = HMSNoiseCancellationModels.path(for: .smallFullBand) {
+               self.noiseCancellationPlugin = HMSNoiseCancellationPlugin(modelPath: pathForNCModel, initialState: .enabled)
+          }
+          else {
+               assertionFailure("noise cancellation model was not found")
+          }
 
-Hold on to a reference to the instance of HMSVideoFilterPlugin and use activate and deactivate functions on it to enable/disable the video filters.
-
-```swift
-     var videoFilterPlugin: HMSVideoPlugin?
-
-     func setupPlugins() {
-        videoFilterPlugin = HMSVideoFilterPlugin()
-        ...
+          audioSettingsBuilder.noiseCancellationPlugin = self.noiseCancellationPlugin
      }
+}
+```
 
-     func toggleVideoFilters() {
-         let isVideoFiltersActivated = UserDefaults.standard.bool(forKey: "VideoFilterPluginEnabled")
+That is all you need to do to add noise cancellation plugin to your conferecing or livestreaming!
 
-         if isVBActivated {
-             self?.interactor.videoFilterPlugin?.deactivate()
-             UserDefaults.standard.set(false, forKey: "VideoFilterPluginEnabled")
-         }
-         else {
-             _ = self?.interactor.videoFilterPlugin?.activate()
-             UserDefaults.standard.set(true, forKey: "VideoFilterPluginEnabled")
-         }
-     }
+## How to enable/disable noise cancellation
+
+You call enable() or disable() API on noiseCancellationPlugin to enable disable noise cancellation. Additionally, you can call isEnabled() method to check if noise cancellation is enabled.
+
+```swift
+     // Enable noise cancellation
+     try noiseCancellationPlugin.enable()
+
+     // Disable noise cancellation
+     try noiseCancellationPlugin.disable()
+
+     // Check if noise cancellation is enabled
+     let isnoiseCancellationEnabled = noiseCancellationPlugin.isEnabled()
 ```
 
 ## How to adjust video filter paramerters
