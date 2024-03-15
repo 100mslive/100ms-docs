@@ -8,33 +8,56 @@ The HMSNoiseCancellationPlugin is an audio filter plugin that you can use to can
 ## Minimum Requirements
 -   Minimum 100ms SDK version required is `1.7.0`
 
-## How to add HMSNoiseCancellationPlugin plugin in your app
+## How to enable noise cancellation in your app
 
-HMSNoiseCancellationPlugin uses a noise cancelling AI model. 100ms provides a HMSNoiseCancellationModels SDK to make it very easy. Follow these steps:
+To enable noise cancellation, you need HMSNoiseCancellationPlugin. To make HMSNoiseCancellationPlugin you need a noise cancelling AI model. 100ms provides ready made noise cancellation models packaged in HMSNoiseCancellationModels SDK to make it very easy to do.
 
-1. Add HMSNoiseCancellationModels SDK into your app using either SPM or Cocoapods
+To instatiate an HMSNoiseCancellationPlugin follow these steps:
+
+1. Add HMSNoiseCancellationModels SDK into your app using either SPM or Cocoapods https://github.com/100mslive/100ms-noise-cancellation-models-ios
 2. import HMSNoiseCancellationModels in your project file
-3. Now you can create HMSNoiseCancellationPlugin and add it to audioSettings of hmsSDK instance like below:
+3. Now you can get path to the noise cancellation AI model using HMSNoiseCancellationModels.path(for: .smallFullBand).
+4. Initialise HMSNoiseCancellationPlugin using this path to the AI model. You also pass the initial state of noise cancellation plugin as well.
 
 ```swift
 import HMSNoiseCancellationModels
 
 ...
 
-var noiseCancellationPlugin: HMSNoiseCancellationPlugin?
+var noiseCancellationPlugin: HMSNoiseCancellationPlugin? = {
+     if let pathForNCModel = HMSNoiseCancellationModels.path(for: .smallFullBand) {
+          return HMSNoiseCancellationPlugin(modelPath: pathForNCModel, initialState: .enabled)
+     }
+     else {
+          assertionFailure("noise cancellation model was not found")
+     }
+     return nil
+}()
+
+```
+
+Once you have HMSNoiseCancellationPlugin instance pass it to audioSettings of hmsSDK instance like below:
+
+```swift
+import HMSNoiseCancellationModels
+
+...
+
+var noiseCancellationPlugin: HMSNoiseCancellationPlugin? = {
+     if let pathForNCModel = HMSNoiseCancellationModels.path(for: .smallFullBand) {
+          return HMSNoiseCancellationPlugin(modelPath: pathForNCModel, initialState: .enabled)
+     }
+     else {
+          assertionFailure("noise cancellation model was not found")
+     }
+     return nil
+}()
 
 ...
 
 hmsSDK = HMSSDK.build { sdk in
 
      sdk.trackSettings = HMSTrackSettings.build { videoSettingsBuilder, audioSettingsBuilder in
-
-          if let pathForNCModel = HMSNoiseCancellationModels.path(for: .smallFullBand) {
-               self.noiseCancellationPlugin = HMSNoiseCancellationPlugin(modelPath: pathForNCModel, initialState: .enabled)
-          }
-          else {
-               assertionFailure("noise cancellation model was not found")
-          }
 
           audioSettingsBuilder.noiseCancellationPlugin = self.noiseCancellationPlugin
      }
@@ -65,3 +88,5 @@ To make noise cancellation work your room needs to have noise cancellation featu
 ```swift
      let isNoiseCancellationAvailableInTheRoom = noiseCancellationPlugin.isNoiseCancellationAvailable
 ```
+
+Note: You can call this API to check the state of noise cancellation only after successfully joining the room.
