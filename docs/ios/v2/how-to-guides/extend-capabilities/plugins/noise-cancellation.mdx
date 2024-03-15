@@ -3,28 +3,39 @@ title: Noise Cancellation (Beta)
 nav: 12.4
 ---
 
+The Noise Cancellation is useful when you want to cancel noise and unwanted sudden audio like clicks, claps, barking etc. from the mic audio in a conference or live stream. This feature uses an AI model to cancel noise.
+
 <Tabs
   id="sample-code"
   items={["UIKit", "SwiftUI"]}
 />
 
-<Tab id='sample-code-0'>
-
 The HMSNoiseCancellationPlugin is an audio filter plugin that you can use to cancel noise and unwanted sudden audio like clicks, claps, barking etc. from the mic audio in a conference or live stream.
+
+## How to integrate noise cancellation AI model in your app
+
+100ms provides ready made noise cancellation models packaged in HMSNoiseCancellationModels SDK to make it very easy to integrate with your app. Follow these steps:
+
+1. Add HMSNoiseCancellationModels SDK into your app using either SPM or Cocoapods https://github.com/100mslive/100ms-noise-cancellation-models-ios
+2. import HMSNoiseCancellationModels in your project file
+3. Now you can get path to the noise cancellation AI model using HMSNoiseCancellationModels.path(for: .smallFullBand).
+
+```swift
+import HMSNoiseCancellationModels
+
+...
+
+let pathForNCModel = HMSNoiseCancellationModels.path(for: .smallFullBand)
+```
+
+<Tab id='sample-code-0'>
 
 ## Minimum Requirements
 -   Minimum 100ms SDK version required is `1.7.0`
 
 ## How to enable noise cancellation in your app
 
-To enable noise cancellation, you need HMSNoiseCancellationPlugin. To make HMSNoiseCancellationPlugin you need a noise cancelling AI model. 100ms provides ready made noise cancellation models packaged in HMSNoiseCancellationModels SDK to make it very easy to do.
-
-To instatiate an HMSNoiseCancellationPlugin follow these steps:
-
-1. Add HMSNoiseCancellationModels SDK into your app using either SPM or Cocoapods https://github.com/100mslive/100ms-noise-cancellation-models-ios
-2. import HMSNoiseCancellationModels in your project file
-3. Now you can get path to the noise cancellation AI model using HMSNoiseCancellationModels.path(for: .smallFullBand).
-4. Initialise HMSNoiseCancellationPlugin using this path to the AI model. You also pass the initial state of noise cancellation plugin as well.
+To enable noise cancellation, you need HMSNoiseCancellationPlugin. Initialise HMSNoiseCancellationPlugin using this path to the AI model. You also pass the initial state of noise cancellation plugin as well.
 
 ```swift
 import HMSNoiseCancellationModels
@@ -45,6 +56,18 @@ var noiseCancellationPlugin: HMSNoiseCancellationPlugin? = {
 
 Once you have HMSNoiseCancellationPlugin instance pass it to audioSettings of hmsSDK instance like below:
 
+```swift
+hmsSDK = HMSSDK.build { sdk in
+
+     sdk.trackSettings = HMSTrackSettings.build { videoSettingsBuilder, audioSettingsBuilder in
+
+          audioSettingsBuilder.noiseCancellationPlugin = self.noiseCancellationPlugin
+     }
+}
+```
+
+<details>
+    <summary>Full code</summary>
 ```swift
 import HMSNoiseCancellationModels
 
@@ -70,6 +93,7 @@ hmsSDK = HMSSDK.build { sdk in
      }
 }
 ```
+</details>
 
 That is all you need to do to add noise cancellation plugin to your conferecing or livestreaming!
 
@@ -101,5 +125,7 @@ Note: You can call this API to check the state of noise cancellation only after 
 </Tab>
 
 <Tab id='sample-code-1'>
+
+## How to enable noise cancellation in your app
 
 </Tab>
