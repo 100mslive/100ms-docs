@@ -1,0 +1,157 @@
+---
+title: Noise Cancellation (Beta)
+nav: 12.4
+---
+
+The Noise Cancellation is useful when you want to cancel noise and unwanted sudden audio like clicks, claps, barking etc. from the mic audio in a conference or live stream. This feature uses an AI model to cancel noise.
+
+## How to integrate noise cancellation AI model in your app
+
+100ms provides ready made noise cancellation models packaged in HMSNoiseCancellationModels SDK to make it very easy to integrate with your app. Follow these steps:
+
+1. Add HMSNoiseCancellationModels SDK into your app using either SPM or Cocoapods https://github.com/100mslive/100ms-noise-cancellation-models-ios
+2. import HMSNoiseCancellationModels in your project file
+3. Now you can get path to the noise cancellation AI model using HMSNoiseCancellationModels.path(for: .smallFullBand).
+
+```swift
+import HMSNoiseCancellationModels
+
+let pathForNCModel = HMSNoiseCancellationModels.path(for: .smallFullBand)
+```
+
+<Tabs
+  id="sample-code"
+  items={["UIKit", "SwiftUI"]}
+/>
+
+<Tab id='sample-code-0'>
+
+## Minimum Requirements
+-   Minimum 100ms SDK version required is `1.7.0`
+
+## How to enable noise cancellation in your app
+
+To enable noise cancellation, you need HMSNoiseCancellationPlugin. Initialise HMSNoiseCancellationPlugin using this path to the AI model. You also pass the initial state of noise cancellation plugin as well.
+
+```swift
+import HMSNoiseCancellationModels
+
+...
+
+var noiseCancellationPlugin: HMSNoiseCancellationPlugin? = {
+     if let pathForNCModel = HMSNoiseCancellationModels.path(for: .smallFullBand) {
+          return HMSNoiseCancellationPlugin(modelPath: pathForNCModel, initialState: .enabled)
+     }
+     else {
+          assertionFailure("noise cancellation model was not found")
+     }
+     return nil
+}()
+
+```
+
+Once you have HMSNoiseCancellationPlugin instance pass it to audioSettings of hmsSDK instance like below:
+
+```swift
+hmsSDK = HMSSDK.build { sdk in
+
+     sdk.trackSettings = HMSTrackSettings.build { videoSettingsBuilder, audioSettingsBuilder in
+
+          audioSettingsBuilder.noiseCancellationPlugin = self.noiseCancellationPlugin
+     }
+}
+```
+
+<details>
+    <summary>Full code</summary>
+```swift
+import HMSNoiseCancellationModels
+
+...
+
+var noiseCancellationPlugin: HMSNoiseCancellationPlugin? = {
+     if let pathForNCModel = HMSNoiseCancellationModels.path(for: .smallFullBand) {
+          return HMSNoiseCancellationPlugin(modelPath: pathForNCModel, initialState: .enabled)
+     }
+     else {
+          assertionFailure("noise cancellation model was not found")
+     }
+     return nil
+}()
+
+...
+
+hmsSDK = HMSSDK.build { sdk in
+
+     sdk.trackSettings = HMSTrackSettings.build { videoSettingsBuilder, audioSettingsBuilder in
+
+          audioSettingsBuilder.noiseCancellationPlugin = self.noiseCancellationPlugin
+     }
+}
+```
+</details>
+
+That is all you need to do to add noise cancellation plugin to your conferecing or livestreaming!
+
+## How to enable/disable noise cancellation
+
+You call enable() or disable() API on noiseCancellationPlugin to enable disable noise cancellation. Additionally, you can call isEnabled() method to check if noise cancellation is enabled.
+
+```swift
+// Enable noise cancellation
+try noiseCancellationPlugin.enable()
+
+// Disable noise cancellation
+try noiseCancellationPlugin.disable()
+
+// Check if noise cancellation is enabled
+let isnoiseCancellationEnabled = noiseCancellationPlugin.isEnabled()
+```
+
+## How to check if noise cancellation is enabled in the room
+
+To make noise cancellation work your room needs to have noise cancellation feature enabled. You can check if noise cancellation is enabled using isNoiseCancellationAvailable property on noiseCancellationPlugin. To enable noise canellation in your rooms, reach out to support@100ms.live or 100ms discord.
+
+```swift
+let isNoiseCancellationAvailableInTheRoom = noiseCancellationPlugin.isNoiseCancellationAvailable
+```
+
+Note: You can call this API to check the state of noise cancellation only after successfully joining the room.
+
+</Tab>
+
+<Tab id='sample-code-1'>
+
+## Minimum Requirements
+-   Minimum HMSRoomModels SDK version required is `1.5.0`
+
+## How to enable noise cancellation in your app
+
+To enable noise cancellation, while instantiating HMSRoomModel, you pass an instance of HMSNoiseCancellation in HMSRoomOptions.
+
+```swift
+import HMSNoiseCancellationModels
+
+@ObservedObject var roomModel = HMSRoomModel(options: HMSRoomOptions(...noiseCancellation: .init(with: HMSNoiseCancellationModels.path(for: .smallFullBand)!, initialState: .enabled))
+```
+
+That is all you need to do to add noise cancellation plugin to your conferecing or livestreaming!
+
+## How to enable/disable noise cancellation
+
+You call roomModel.toggleNoiseCancellation() API to enable/disable noise cancellation. Additionally, you can use roomModel.isNoiseCancellationEnabled to check if noise cancellation is enabled.
+
+```swift
+roomModel.toggleNoiseCancellation()
+roomModel.isNoiseCancellationEnabled
+```
+
+## How to check if noise cancellation is enabled in the room
+
+To make noise cancellation work your room needs to have noise cancellation feature enabled. You can check if noise cancellation is enabled using roomModel.isNoiseCancellationAvailable. To enable noise canellation in your rooms, reach out to support@100ms.live or 100ms discord.
+
+```swift
+roomModel.isNoiseCancellationAvailable
+```
+
+</Tab>
