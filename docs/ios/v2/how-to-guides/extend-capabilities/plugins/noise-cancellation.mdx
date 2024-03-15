@@ -1,0 +1,135 @@
+---
+title: Noise Cancellation (Beta)
+nav: 12.4
+---
+
+The HMSNoiseCancellationPlugin is an audio filter plugin that you can use to cancel noise and unwanted sudden audio like clicks, claps, barking etc. from the mic audio in a conference or live stream.
+
+## Minimum Requirements
+-   Minimum 100ms SDK version required is `1.7.0`
+
+## How to add HMSNoiseCancellationPlugin plugin in your app
+
+HMSNoiseCancellationPlugin uses a noise cancelling AI model. So first step is to add the model in your project. To add the model follow these steps:
+
+1. Add HMSNoiseCancellationModels SDK into your app using either SPM or Cocoapods
+2. import HMSNoiseCancellationModels in your project file
+3. 
+
+1. Create an HMSVideoPlugin array
+
+```swift
+     var videoPlugins = [HMSVideoPlugin]()
+```
+
+2. Create an instance of HMSVideoFilterPlugin, activate it and append it to videoPlugins array, like below
+
+```swift
+     let videoFilterPlugin = HMSVideoFilterPlugin()
+     videoFilterPlugin?.activate()
+     videoPlugins.append(videoFilterPlugin)
+```
+
+3. Set videoPlugins instance while setting the trackSettings on HMSSDK
+
+```swift
+     hmsSDK = HMSSDK.build { sdk in
+            sdk.trackSettings = HMSTrackSettings.build { videoSettingsBuilder, audioSettingsBuilder in
+               videoSettingsBuilder.videoPlugins = self.videoPlugins
+            }
+            ...
+        }
+```
+
+That is all you need to do to enable video filters!
+
+## How to enable and disable video filters
+
+Hold on to a reference to the instance of HMSVideoFilterPlugin and use activate and deactivate functions on it to enable/disable the video filters.
+
+```swift
+     var videoFilterPlugin: HMSVideoPlugin?
+
+     func setupPlugins() {
+        videoFilterPlugin = HMSVideoFilterPlugin()
+        ...
+     }
+
+     func toggleVideoFilters() {
+         let isVideoFiltersActivated = UserDefaults.standard.bool(forKey: "VideoFilterPluginEnabled")
+
+         if isVBActivated {
+             self?.interactor.videoFilterPlugin?.deactivate()
+             UserDefaults.standard.set(false, forKey: "VideoFilterPluginEnabled")
+         }
+         else {
+             _ = self?.interactor.videoFilterPlugin?.activate()
+             UserDefaults.standard.set(true, forKey: "VideoFilterPluginEnabled")
+         }
+     }
+```
+
+## How to adjust video filter paramerters
+
+let's take a look at the method signature of `HMSVideoFilterPlugin`.
+
+### Set Brightness
+
+Adjust brightness of the video. Value is from `0` to `1` default is `0.5`.
+
+```swift
+videoFilterPlugin.brightness = 1
+```
+
+### Set Contrast
+
+Adjust contrast of the video. Value is from `0` to `infinity` default is `1`.
+
+```swift
+videoFilterPlugin.contrast = 2
+```
+
+### Set Sharpeness
+
+Adjust sharpness of the video. Value is from `0` to `infinite` default is `0`.
+
+```swift
+videoFilterPlugin.sharpness = 1
+```
+
+### Set Redness
+
+Adjust redness in the video. Value is from `0` to `infinite` default is `1`.
+
+```swift
+videoFilterPlugin.redness = 2
+```
+
+### Set Smoothness
+
+Adjust smoothness in the video. Value is from `0` to `infinite` default is `0`.
+
+## I want to apply my own set of core image filters. How can I do that
+
+You can add your core image filtering logic in **coreImageTransformers** property of videoFilterPlugin like below. For example let's increase the exposure of the video.
+
+```swift
+videoFilterPlugin?.coreImageTransformers = [{ inputImage in
+     
+     var outputImage: CIImage?
+                
+     if let filter = CIFilter(name: "CIExposureAdjust") {
+                    
+          // Set input image
+          filter.setValue(inputImage, forKey: kCIInputImageKey)
+                    
+          // Set exposure value
+          filter.setValue(2, forKey: "inputEV")
+                    
+          // Get filtered image
+          outputImage = filter.outputImage
+     }
+                
+     return outputImage ?? inputImage
+}]
+```
