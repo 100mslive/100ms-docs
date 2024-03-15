@@ -126,6 +126,36 @@ Note: You can call this API to check the state of noise cancellation only after 
 
 <Tab id='sample-code-1'>
 
+## Minimum Requirements
+-   Minimum HMSRoomModels SDK version required is `1.5.0`
+
 ## How to enable noise cancellation in your app
+
+To enable noise cancellation, while instantiating HMSRoomModel, you pass an instance of HMSNoiseCancellation in HMSRoomOptions.
+
+```swift
+import HMSNoiseCancellationModels
+
+@ObservedObject var roomModel = HMSRoomModel(options: HMSRoomOptions(...noiseCancellation: .init(with: HMSNoiseCancellationModels.path(for: .smallFullBand)!, initialState: .enabled))
+```
+
+That is all you need to do to add noise cancellation plugin to your conferecing or livestreaming!
+
+## How to enable/disable noise cancellation
+
+You call roomModel.toggleNoiseCancellation() API to enable/disable noise cancellation. Additionally, you can use roomModel.isNoiseCancellationEnabled to check if noise cancellation is enabled.
+
+```swift
+    roomModel.toggleNoiseCancellation()
+    roomModel.isNoiseCancellationEnabled
+```
+
+## How to check if noise cancellation is enabled in the room
+
+To make noise cancellation work your room needs to have noise cancellation feature enabled. You can check if noise cancellation is enabled using roomModel.isNoiseCancellationAvailable.
+
+```swift
+     roomModel.isNoiseCancellationAvailable
+```
 
 </Tab>
