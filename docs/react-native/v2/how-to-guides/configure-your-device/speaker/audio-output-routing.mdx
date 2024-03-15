@@ -9,6 +9,26 @@ For example, you can implement an in-call speaker button that toggles audio outp
 
 ## iOS APIs
 
+<div className="steps-container">
+
+### Switch Audio Output Device Programmatically
+
+You can use `switchAudioOutput` method available on the `HMSSDK` instance to programmatically change audio output routing from `HMSAudioDevice` to `` and vice-versa -
+
+`switchAudioOutput` method takes only `HMSAudioDevice.EARPIECE` and `HMSAudioDevice.SPEAKER_PHONE` as arguments. It doesn't give you any more options, for selecting wired headesets or bluetooth device refer [here](#switch-audio-output-device-using-ios-airplay-ui)
+
+```js
+try {
+    // Switching Audio Output from default to EARPIECE device
+    // It takes only two devices `HMSAudioDevice.EARPIECE` and `HMSAudioDevice.SPEAKER_PHONE` as arguments
+    await hmsInstance.switchAudioOutput(HMSAudioDevice.EARPIECE); // or HMSAudioDevice.SPEAKER_PHONE
+
+    console.log('Switch Audio Output Success');
+} catch (error) {
+    console.log('Switch Audio Output Error: ', error);
+}
+```
+
 ### Switch Audio Output Device using iOS AirPlay UI
 
 The `switchAudioOutputUsingIOSUI` method available on the `HMSSDK` instance allows us to display the native iOS UI for switching the audio output device. Something similar to this -
@@ -28,7 +48,7 @@ Let's look at the method usage -
 
 hmsInstance.switchAudioOutputUsingIOSUI();
 ```
-
+</div>
 
 ## Android APIs
 
