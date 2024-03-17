@@ -10,11 +10,11 @@ Stream Recording Assets are classified into three types:
 - **Audio** - contains only the audio track from microphone input for audio only calls where video tracks were not published at all by the peer.
 
 <FlexContainer>
-<Callout title="Stream Recording Basics">
+<Callout title="Stream Recording Basics" icon="CheckIcon">
 
 1. Stream recordings **start automatically** when the first peer joins a room, and stops automatically when the last peer leaves the room.
 2. Recorded stream assets are of asset type `stream` and are available via Recording Asset APIs and stream recording webhook events.
-3. Recording assets will be available within a few minutes of a successful recording event
+3. Recording assets will be available within a few minutes of a successful recording event.
 </Callout>
 </FlexContainer>
 
@@ -43,7 +43,7 @@ A successfully recorded stream generates a recording asset of type `stream`. Ref
 
 1. Using **[List Recording Assets API](/server-side/v2/api-reference/recording-assets/list-all-assets)** get the all stream recording assets for a session_id and asset_type=`stream`
 2. Store the `id` as corresponding asset identifier of each stream.
-3. Call the Get Presigned URL Asset API using the stream's `asset_id` to download the actual recording.
+3. Call the [Get Presigned URL Asset API](/server-side/v2/api-reference/recording-assets/get-presigned-url) using the stream's `asset_id` to download the actual recording.
 
 
 </StepsContainer>
