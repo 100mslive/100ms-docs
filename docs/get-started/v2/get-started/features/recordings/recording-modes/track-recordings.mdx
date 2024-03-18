@@ -9,11 +9,11 @@ A track represents a single media stream published into the WebRTC session captu
 - **Audio track** - contains audio data captured from an audio source such as a microphone
 
 <FlexContainer>
-<Callout title="Track Recording Basics">
+<Callout title="Track Recording Basics" icon="CheckIcon">
 1. Track recordings **start automatically** when the first peer joins a room, and stops automatically when the last peer leaves the room.
 2. Recorded track assets are of type `track` and are available via Recording Asset APIs and track webhook events.
 3. Multiple track recording assets can be available for a single peer. For example, for a 1:1 call for Peer A and Peer B, with both publishing audio, video and desktop screen, there shall be 3 track assets for each peer.
-4. Recording assets will be available within a few minutes of a successful recording event
+4. Recording assets will be available within a few minutes of a successful recording event.
 </Callout>
 </FlexContainer>
 
@@ -46,7 +46,7 @@ A successfully recorded track generates a recording asset of type `track`. Refer
 
 1. Using **[List Recording Assets API](/server-side/v2/api-reference/recording-assets/list-all-assets)** get the all tracks recording assets for a session_id and asset_type=`track`
 2. Store the `id` as corresponding asset identifier of each track.
-3. Call the Get Presigned URL Asset API using the track's `asset_id` to download the actual recording.
+3. Call the [Get Presigned URL Asset API](/server-side/v2/api-reference/recording-assets/get-presigned-url) using the track's `asset_id` to download the actual recording.
 
 </StepsContainer>
 
@@ -55,10 +55,10 @@ A successfully recorded track generates a recording asset of type `track`. Refer
 <FlexContainer>
 
 
-<Callout title="Get track recording updates via webhooks">
-- Track recording success
-- Track recording started
-- Track recording failure
+<Callout title="Get track recording updates via webhooks" icon="ShieldIcon">
+- [Track recording started→](/server-side/v2/how-to-guides/configure-webhooks/webhook#trackrecordingstartedsuccess)
+- [Track recording success→](https://www.100ms.live/docs/server-side/v2/how-to-guides/configure-webhooks/webhook#trackrecordingsuccess)
+- [Track recording failure→](https://www.100ms.live/docs/server-side/v2/how-to-guides/configure-webhooks/webhook#trackrecordingfailure)
 </Callout>
 
 </FlexContainer>
