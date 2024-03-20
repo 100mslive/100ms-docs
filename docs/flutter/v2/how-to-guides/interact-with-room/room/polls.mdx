@@ -1,9 +1,12 @@
 ---
- title: Polls
+ title: Polls & Quizzes
  nav: 8.3
 ---
 
-The Poll feature in the HMS SDK allows us to create, manage, and participate in polls and quizzes. Polls are an effective way to gather opinions, feedback, and insights from a group of people in a quick and convenient manner. With the Poll feature, we can create custom polls, set their properties, add questions, and manage responses. we can also receive real-time updates on poll status, and view poll results in an organized and easy-to-use format.
+The Polls feature in the HMS SDK allows us to create, manage, and participate in Polls and Quizzes. Polls are an effective way to gather opinions, feedback, and insights from a group of people in a quick and convenient manner. With the Poll feature, we can create custom Polls, set their properties, add questions, and manage responses. We can also receive real-time updates on poll status, and view Poll Results in an organized and easy-to-use format.
+
+This feature can also be used to create Quizzes. Under the hood, Quizzes are like Polls where questions have right or wrong answers.
+
 This document provides guidance on how to use the Poll APIs to create a poll, receive updates on a poll, and vote on a poll.
 
 ## Prerequisites
@@ -14,12 +17,17 @@ This document provides guidance on how to use the Poll APIs to create a poll, re
 
 ## Listen to poll updates
 
-To listen to poll updates HMSSDK provides `HMSPollListener`.This listener keeps the application informed about various poll-related events, including when a poll is initiated, concluded, or when participants submit their responses.
+To listen to poll updates HMSSDK provides `HMSPollListener`. This listener keeps the application informed about various Poll-related events, including when a Poll is initiated, concluded, or when participants submit their responses.
+Use the `addPollUpdateListener` method to start listening for updates. When you're done, use `removePollUpdateListener` to stop listening.
 
-> `HMSPollListener` should be implemented in the class wherever poll updates are required. It's essential to note that HMSPollListener follows the singleton pattern, meaning it can only be implemented in one class at a time.
+> `HMSPollListener` should be implemented in the class wherever Poll updates are required. It's essential to note that HMSPollListener follows the singleton pattern, meaning it can only be implemented in one class at a time.
 
 ```dart
 class Meeting implements HMSUpdateListener, HMSPollListener{
+
+
+    ///To attach a poll update listener we need to call [addPollUpdateListener]
+    HMSPollInteractivityCenter.addPollUpdateListener(listener: this);
 
     @override
     void onPollUpdate({required HMSPoll poll, required HMSPollUpdateType pollUpdateType}){
@@ -27,6 +35,9 @@ class Meeting implements HMSUpdateListener, HMSPollListener{
         ///[poll] is the HMSPoll object containing info about poll.
         ///[pollUpdateType] is an enum of type HMSPollUpdateType with type as started, stopped and resultsupdated
     }
+
+    ///To stop listening to poll updates call [removePollUpdateListener]
+    HMSPollInteractivityCenter.removePollUpdateListener();
 }
 ```
 
@@ -104,7 +115,70 @@ class Meeting extends HMSUpdateListener, HMSPollListener{
 
 After calling `quickStartPoll` method we will get `onPollUpdate` with `HMSPollUpdateType` as `started`.
 
-Above code will create a poll with a given title and a single choice question, and share it with the room.
+Above code will create a poll with a given title and a single choice question, and share it with the Room.
+
+### Quiz Creation
+
+Quiz assumes that correct answers are provided to each question which are then used to evaluate the user’s score. Use question builder API to indicate which options are correct.
+
+Let's consider an example. We'll create a single-choice quiz with the title `Quiz` and the question `What is the capital of India?`. The Quiz will offer two options: `Delhi` and `Mumbai`. The correct answer is `Delhi`.
+
+```dart
+class Meeting extends HMSUpdateListener, HMSPollListener{
+
+    ...
+
+    ///Create objects for [HMSPollBuilder] and [HMSPollQuestionBuilder]
+    var pollBuilder = HMSPollBuilder();
+    var questionBuilder = HMSPollQuestionBuilder();
+
+    ///Set the Quiz title
+    pollBuilder.withTitle = "Quiz";
+
+    ///Set the category
+    pollBuilder.withCategory = HMSPollCategory.quiz;
+
+    ///Set the Quiz type to single choice
+    questionBuilder.withType = HMSPollQuestionType.singleChoice;
+
+    ///Set the Quiz question
+    questionBuilder.withText = "What is the capital of India?";
+
+    ///Set Quiz options
+    List<HMSPollQuizOption> quizOptions = [];
+
+    var optionDelhi = HMSPollQuizOption(text: "Delhi");
+    optionDelhi.isCorrect = true;
+    quizOptions.add(optionDelhi);
+
+    var optionMumbai = HMSPollQuizOption(text: "Mumbai");
+    optionMumbai.isCorrect = false;
+    quizOptions.add(optionMumbai);
+
+    questionBuilder.addQuizOption = quizOptions;
+
+    ///Add question to poll
+    pollBuilder.addQuestion(questionBuilder);
+
+    ///HMSPollInteractivityCenter is a singleton class containing poll methods
+    ///Here we call the quickStartPoll method
+    void createQuiz(){
+        HMSPollInteractivityCenter.quickStartPoll(pollBuilder: pollBuilder);
+    }
+
+    ...
+
+    @override
+    void onPollUpdate({required HMSPoll poll, required HMSPollUpdateType pollUpdateType}){
+
+        ///We will get the update here with poll object and
+        ///pollUpdateType as HMSPollUpdateType.started
+
+    }
+
+}
+
+```
 
 ## Voting on a Poll
 
@@ -118,8 +192,6 @@ Let's consider a example, A user wishes to answer `yes` to above poll.
 class Meeting extends HMSUpdateListener, HMSPollListener{
 
     ...
-
-
 
     void answerPoll(){
 
@@ -191,5 +263,116 @@ class Meeting extends HMSUpdateListener, HMSPollListener{
 ```
 
 After calling the `stopPoll` function, the `onPollUpdate` event is triggered with a type of `stopped`, indicating that the poll has been stopped.
+
+## Quiz Leaderboard
+
+Upon quiz completion, users can retrieve a comprehensive summary including total votes, correct answers count, average score, and participant rankings.
+The `fetchLeaderboard` method in `HMSSDK` simplifies the process of retrieving this leaderboard information.
+
+Let's see how we can fetch leaderboard for a quiz:
+
+```dart
+class Meeting extends HMSUpdateListener, HMSPollListener{
+
+
+    void fetchLeaderboard(HMSPoll quiz){
+        
+        ///[quiz]: HMSPoll - It is the poll object from `onPollUpdate`
+        ///[count]: int - It denotes the number of peers you wish to fetch at once, in this example we are fetching first five peers
+        ///[startIndex]: int - It is the offset from where you wish to fetch the leaderboard
+        ///[includeCurrentPeer]: bool - It denotes whether you wish to include current/local peer in the leaderboard
+        ///useful in edtech scenarios where including a teacher in a leaderboard is unnecessary.
+        var leaderboardResponse = HMSPollInteractivityCenter.fetchLeaderboard(
+                                    poll: quiz,
+                                    count: 5,
+                                    startIndex: startIndex,
+                                    includeCurrentPeer: includeCurrentPeer);
+
+        if (leaderboardResponse is HMSPollLeaderboardResponse){
+            ///Render the leaderboard using the [leaderboardResponse]
+        }else{
+            ///Handle the error here
+        }
+
+    }
+
+
+    @override
+    void onPollUpdate({required HMSPoll poll, required HMSPollUpdateType pollUpdateType}){
+        ///Get poll updates here
+    }
+
+}
+```
+
+## Poll methods
+
+### fetchPollList
+
+`fetchPollList` method is used to fetch list of polls/quiz with a given state. Let's see how we can fetch all the concluded polls.
+
+```dart
+class Meeting extends HMSUpdateListener, HMSPollListener{
+
+    ///[hmsPollState]: the poll state for which polls need to be fetched
+    var data = await HMSPollInteractivityCenter.fetchPollList(hmsPollState: HMSPollState.stopped);
+    if (data is List<HMSPoll>) {
+        ///[data] contains all the concluded polls
+    }else{
+         ///Handle the error here
+    }
+    
+    @override
+    void onPollUpdate({required HMSPoll poll, required HMSPollUpdateType pollUpdateType}){
+        ///Get poll updates here
+    }
+}
+```
+
+### fetchPollQuestions
+
+`fetchPollQuestions` method is used to fetch questions for the given poll.
+
+```dart
+class Meeting extends HMSUpdateListener, HMSPollListener{
+
+    ///[hmsPoll]: the poll object for which questions need to be fetched, here poll
+    ///is the poll for which questions need to be fetched
+    var data = await _hmsSDKInteractor.fetchPollQuestions(hmsPoll: poll);
+
+    if (data is List<HMSPollQuestion>) {
+      ///[data] contains all the questions for the corresponding [poll]
+    }else{
+        ///Handle the error here
+    }
+
+
+    @override
+    void onPollUpdate({required HMSPoll poll, required HMSPollUpdateType pollUpdateType}){
+        ///Get poll updates here
+    }
+}
+```
+
+### getPollResults
+
+`getPollResults` method is used to fetch results for given poll object.
+
+```dart
+class Meeting extends HMSUpdateListener, HMSPollListener{
+
+    var data = await _hmsSDKInteractor.getPollResults(hmsPoll: poll);
+    if (data is HMSPoll) {
+        ///[data] contains the poll results
+    }else{
+        ///Handle the error here
+    }
+
+    @override
+    void onPollUpdate({required HMSPoll poll, required HMSPollUpdateType pollUpdateType}){
+        ///Get poll updates here
+    }
+}
+```
 
 👀 For an example of how to implement polls in an Flutter app with the 100ms SDK, checkout [our example project](https://github.com/100mslive/100ms-flutter/tree/b59e555d3c254b8f292c57c3562f6973a461d4e9/packages/hms_room_kit/lib/src).

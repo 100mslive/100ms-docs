@@ -10,74 +10,156 @@ nav: 99
 | hms_room_kit   | [![Pub Version](https://img.shields.io/pub/v/hms_room_kit)](https://pub.dev/packages/hms_room_kit)     |
 | hmssdk_flutter | [![Pub Version](https://img.shields.io/pub/v/hmssdk_flutter)](https://pub.dev/packages/hmssdk_flutter) |
 
-# 1.9.10 - 2024-02-16
+## 1.9.13 - 2024-03-15
 
 | Package                                | Version                                                                                                                                  |
 | -------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| hms_room_kit                | 1.0.13   |
-| hmssdk_flutter              | 1.9.10   |
+| hms_room_kit                | 1.0.16  |
+| hmssdk_flutter              | 1.9.13  |
 
 ### hmssdk_flutter
 
-- Introducing Quizzes
- 
-  Users can now seamlessly create, answer, and manage quizzes using HMSSDK.
+- Leave Room Immediately if the app is killed(iOS only)
+
+   HMSSDK automatically triggers the `leave` method call when the iOS application is terminated.
 
 ### hms_room_kit
 
-- Introducing quizzes on prebuilt
+- Ability to join rooms directly without a preview
 
-  Users can now create, manage, and stop quizzes directly from the prebuilt interface
+   Prebuilt now allows direct room joining without preview, customizable via the dashboard's `Customize Prebuilt` section.
+
+Updated to Android SDK 2.9.51 & iOS SDK 1.6.0
+
+**Full Changelog**: [1.9.12...1.9.13](https://github.com/100mslive/100ms-flutter/compare/1.9.12...1.9.13)
+
+## 1.9.12 - 2024-03-04
+
+| Package                                | Version                                                                                                                                  |
+| -------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| hms_room_kit                | 1.0.15   |
+| hmssdk_flutter              | 1.9.12   |
+
+### hmssdk_flutter
+
+- Introducing methods to fetch polls, questions, leaderboards and results
+
+  Users can now fetch polls based on the poll state, questions for a poll and poll results
+  using the `fetchPollList`, `fetchPollQuestions` and `getPollResults` methods.
+  Checkout the docs [here](https://www.100ms.live/docs/flutter/v2/how-to-guides/interact-with-room/room/polls#fetchpolllist)
+
+### hms_room_kit
+
+- Ability to fetch concluded and draft polls
+
+  Prebuilt now fetches all the polls happened during the session. Additionally, users can now retrieve draft polls from other platforms and launch them.
+
+- Ability to join Room using Auth Token
+
+  Prebuilt now supports joining rooms using `Auth Token` along with `Room codes`
+
+Updated to Android SDK 2.9.4 & iOS SDK 1.6.0
+
+**Full Changelog**: [1.9.11...1.9.12](https://github.com/100mslive/100ms-flutter/compare/1.9.11...1.9.12)
+
+## 1.9.11 - 2024-02-26
+
+| Package        | Version |
+| -------------- | ------- |
+| hms_room_kit   | 1.0.14  |
+| hmssdk_flutter | 1.9.11  |
+
+### hmssdk_flutter
+
+-   Introducing Leaderboard APIs
+
+    Users can now fetch Rankings and Quiz Summary using the `fetchLeaderboard` method. More information about the Leaderboard can be found [here](https://www.100ms.live/docs/flutter/v2/how-to-guides/interact-with-room/room/polls#quiz-leaderboard)
+    
+### hms_room_kit
+
+-   Introducing Leaderboards to our Quiz experience
+
+    Adding Leaderboard to our Quizzes with Leaderboard Summary and Rankings.  
+
+Updated to Android SDK 2.9.4 & iOS SDK 1.5.1
+
+**Full Changelog**: [1.9.10...1.9.11](https://github.com/100mslive/100ms-flutter/compare/1.9.10...1.9.11)
+
+## 1.9.10 - 2024-02-16
+
+| Package        | Version |
+| -------------- | ------- |
+| hms_room_kit   | 1.0.13  |
+| hmssdk_flutter | 1.9.10  |
+
+### hmssdk_flutter
+
+-   Introducing Quizzes
+
+    Users can now seamlessly create, answer, and manage quizzes using HMSSDK.
+
+    More information about Quizzes can be found [here](https://www.100ms.live/docs/flutter/v2/how-to-guides/interact-with-room/room/polls).
+
+### hms_room_kit
+
+-   Introducing quizzes on Prebuilt
+
+    Users can now create, manage, and stop quizzes directly from the prebuilt interface
+
+Updated to Android SDK 2.9.0 & iOS SDK 1.5.0
 
 **Full Changelog**: [1.9.9...1.9.10](https://github.com/100mslive/100ms-flutter/compare/1.9.9...1.9.10)
 
 ## 1.9.9 - 2024-02-12
 
-| Package                                | Version                                                                                                                                  |
-| -------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| hms_room_kit                | 1.0.12  |
-| hmssdk_flutter              | 1.9.9   |
+| Package        | Version |
+| -------------- | ------- |
+| hms_room_kit   | 1.0.12  |
+| hmssdk_flutter | 1.9.9   |
 
 ### hmssdk_flutter
 
-- Introducing Polls
+-   Introducing Polls
 
-  - APIs for Comprehensive Poll Management:
-    - `quickStartPoll` to start polls
-    - `addSingleChoicePollResponse` & `addMultiChoicePollResponse` for adding single and multi choice response
-    - `stopPoll` to stop polls
+    -   APIs for Comprehensive Poll Management:
 
-  - Poll Update Listeners for Real-Time Notifications:
-    - Use `addPollUpdateListener` to start listening to poll updates
-    - Use `removePollUpdateListener` to stop listening to poll updates
+        -   `quickStartPoll` to start polls
+        -   `addSingleChoicePollResponse` & `addMultiChoicePollResponse` for adding single and multi choice response
+        -   `stopPoll` to stop polls
 
-  - Enhanced Poll Permissions within `HMSPermissions`:
-    - `pollRead` property ensures controlled read access to poll results and details.
-    - `pollWrite` property enables secure write access, allowing for poll creation and response submission.
+    -   Poll Update Listeners for Real-Time Notifications:
+
+        -   Use `addPollUpdateListener` to start listening to poll updates
+        -   Use `removePollUpdateListener` to stop listening to poll updates
+
+    -   Enhanced Poll Permissions within `HMSPermissions`:
+        -   `pollRead` property ensures controlled read access to poll results and details.
+        -   `pollWrite` property enables secure write access, allowing for poll creation and response submission.
+
+    More information about Polls can be found [here](https://www.100ms.live/docs/flutter/v2/how-to-guides/interact-with-room/room/polls).
 
 ### hms_room_kit
 
-- Introducing polls on prebuilt
+-   Introducing polls on prebuilt
 
-  Users can now create, manage, and stop polls directly from the prebuilt interface.
+    Users can now create, manage, and stop polls directly from the prebuilt interface.
 
 Updated to Android SDK 2.9.0 & iOS SDK 1.5.0
 
 **Full Changelog**: [1.9.8...1.9.9](https://github.com/100mslive/100ms-flutter/compare/1.9.8...1.9.9)
 
-
 ## 1.9.8 - 2024-02-01
 
-| Package                                | Version                                                                                                                                  |
-| -------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| hms_room_kit                | 1.0.11  |
-| hmssdk_flutter              | 1.9.8   |
+| Package        | Version |
+| -------------- | ------- |
+| hms_room_kit   | 1.0.11  |
+| hmssdk_flutter | 1.9.8   |
 
 ### hmssdk_flutter
 
-- Fixed broadcast receiver issues on android 14 devices
+-   Fixed broadcast receiver issues on android 14 devices
 
-  Learn more about this issue [here](https://developer.android.com/about/versions/14/behavior-changes-14#runtime-receivers-exported)
+    Learn more about this issue [here](https://developer.android.com/about/versions/14/behavior-changes-14#runtime-receivers-exported)
 
 **Full Changelog**: [1.9.7...1.9.8](https://github.com/100mslive/100ms-flutter/compare/1.9.7...1.9.8)
 

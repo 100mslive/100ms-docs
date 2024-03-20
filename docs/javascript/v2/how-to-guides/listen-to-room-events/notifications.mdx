@@ -69,7 +69,7 @@ The data in notification depends on the notification type. You can use the `swit
 <Tab id="notification-types-0">
 
 ```jsx
-import { hmsNotifications } from './hms';
+import { hmsNotifications, HMSNotificationTypes } from '@100mslive/hms-video-store';
 
 const unsubscribe = hmsNotifications.onNotification((notification) => {
     console.log('notification type', notification.type);
@@ -132,7 +132,7 @@ const unsubscribe = hmsNotifications.onNotification((notification) => {
 <Tab id="notification-types-1">
 
 ```jsx
-import { useHMSNotifications } from '@100mslive/react-sdk';
+import { useHMSNotifications, HMSNotificationTypes } from '@100mslive/react-sdk';
 
 function Notification() {
     const notification = useHMSNotifications();

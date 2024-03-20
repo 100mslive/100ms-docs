@@ -1,0 +1,28 @@
+---
+title: Migrating from SFU recording
+nav: 3.5
+---
+
+There are 2 methods to get composite recordings in 100ms. If you have been using "SFU recording", we recommend you move over to using [Browser Composite Recordings](/get-started/v2/get-started/features/recordings/recording-modes/composite-recordings).
+
+### **Quick comparison**
+
+| Features | Browser Composite | Custom/SFU (Legacy) |
+| --- | --- | --- |
+| Asset type generated | room-composite  | room-composite-legacy |
+| Recording method | Browser | SFU |
+| Composition quality | Higher | Lower |
+| Portrait/landscape mode | Available | Not available |
+| Start method | Auto-start and on-demand | Auto start only |
+| UI customization | Available | Not available |
+| Role-specific recording | Available | Not available |
+| Resolution | Customizable up to 1080p | 720p |
+
+> **Note**
+Another way to start SFU recording is to programmatically create a room using the **[Create Room REST API](https://www.100ms.live/docs/server-side/v2/api-reference/Rooms/create-via-api)** and passing `recording_info` object with `enabled` key set as `true`. Instead, we recommend to use the **[Room APIs](https://www.100ms.live/docs/server-side/v2/api-reference/Rooms/overview)** paired with the **[Recording APIs](https://www.100ms.live/docs/server-side/v2/api-reference/recordings/overview)** if you wish to programmatically control room and recording operations.
+> 
+
+## Migrating to Browser Composite Recordings
+Head to your template on [100ms dashboard](https://dashboard.100ms.live/login). For customers on SFU or Custom Composite recording, you can switch to Browser composite recordings under Recordings tab. You can choose to auto-start recordings, enable audio-only recording, roles to record and their video resolution. Read more on how to [set up recordings →](/get-started/v2/get-started/features/recordings/set-up-recording)
+
+![Recording Links](/guides/sfubrowser.png)

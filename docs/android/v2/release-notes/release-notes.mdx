@@ -18,9 +18,37 @@ import AndroidSdkVersionShield from '@/common/android-sdk-version-shield.md';
 | live.100ms:video-filters: |<AndroidSdkVersionShield />|
 | live.100ms:virtual-background: |<AndroidSdkVersionShield />|
 
+## v2.9.51 - 2024-03-11
+### Fixed
+- Multi choice answers in polls not being recorded correctly.
+- Crash fix while screen or audio sharing on android 14
+- Local audio share was leading to echo in certain devices.
+- Blacklisted only pixel 3 from using hardware encoder instead of all pixel devices
+- Issue leading to un-necessary binding and unbinding due to a bug in `HMSVideoView`
+
+## v2.9.5 - 2024-03-04
+### Added
+- Support for noise Cancellation powered by Krisp
+
+### Fixed
+- Analytics bugs for webrtc stats collection
+
+## v2.9.4 - 2024-02-23
+### Added
+- Better internal analytics by capturing inbound RTP stats (subscriber stats)
+- Added a `HMSHLSPlaylistType` field in `HMSHLSVariant` to denote the type of hls stream - live or event
+
+## v2.9.3 - 2024-02-17
+### Changed
+- Masking device-id field used in analytics
+- Not storing log files to disk if room is marked HIPPA
+
+### Fixed
+- Analytics fixes around publisher stats
+
 ## v2.9.2 - 2024-02-9
 ### Added
-Added Video Filter Plugin 
+Added Video Filter Plugin
 
 ## v2.9.1 - 2024-02-5
 ### Added

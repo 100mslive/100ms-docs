@@ -1,0 +1,61 @@
+---
+title: Set up recordings
+nav: 3.3
+---
+
+Follow this guide to enable recordings on 100ms dashboard.
+
+<video loop="true" autoplay="true" id="vid" muted>
+<source src="/docs/guides/new-recordings.mp4" type="video/mp4" />
+</video>
+
+<StepsContainer id="recording-setup">
+
+### Enable recordings
+
+1. Go to your template on [100ms dashboard](https://dashboard.100ms.live/login)
+2. Go to Recordings tab and enable a recording mode
+    1. [Track Recordings](/get-started/v2/get-started/features/recordings/recording-modes/track-recordings) 
+    2. [Stream Recordings](/get-started/v2/get-started/features/recordings/recording-modes/stream-recording)
+    3. [Composite Recordings](/get-started/v2/get-started/features/recordings/recording-modes/composite-recordings) 
+
+### Configure your recordings
+You can configure how to record your files with certain configurations
+
+#### Storage for Recording Assets
+You have two storage options for recording assets:
+- **Self-storage** - Configure a cloud storage location (for example AWS S3 or GCS) under the storage configuration in your template. By default, 100ms will upload any generated recording assets to this defined location. [Set up storage configuration](/get-started/v2/get-started/features/recordings/recording-assets/storage-configuration) to use this option.
+- **Store with 100ms** - If no custom cloud storage is configured, any generated recording assets are uploaded to 100ms storage buckets allocated for your account. By default, there is limited 15 day retention. The validity period of these recordings can be configured using the Get Recording Link API. <br/>
+
+For more details, refer [storage configuration](http://localhost:4000/docs/get-started/v2/get-started/features/recordings/recording-assets/storage-configuration)
+
+#### Validity of download URL
+When you're using 100ms storage for your recordings, these recording assets need to be downloaded using pre-signed download URLs sent via webhook. Set the validity  Alternatively, you can use your own storage.
+
+#### Max Recording Duration
+Maximum duration limit for which a room can be recorded, after which the recording stops automatically. The recording can also be stopped before the maximum duration set using the API/SDK methods.
+
+#### Video Resolution
+Select recording resolution to select width and height for your recordings. You can record in the following resolution: 
+- 1280x720(Default) 
+- 854x480 
+- 1280x720 
+- 1920x1080 
+
+
+### Configuration across recording modes
+All configurations can be set across one or more recording modes:
+
+| Mode | Track | Stream | Composite |
+| --- | --- | --- | --- |
+| Storage | ✔️ | ✔️ | ✔️ |
+| Validity of download URL | ✔️ | ✔️ | ✔️ |
+| Max recording duration | ✔️ | ✔️ |✔️  |
+| Auto-start | ✔️| ✔️ | Can be auto-started or on-demand |
+| Video resolution | ✖️ | ✔️ | ✔️ |
+
+<Note>
+Cannot specify resolution for track recordings. Track assets returned via Track Recording are recorded as-is published from the peer.
+</Note>
+
+</StepsContainer>

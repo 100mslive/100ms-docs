@@ -1,0 +1,96 @@
+---
+title: Noise Cancellation
+nav: 14.2
+---
+
+100ms offers noise cancellation at the mic if you need it. This removes noise from outgoing audio.
+
+It supports the same `minSdk` as the core HMS SDK which is 21 (Android 5.0, Lollipop).
+
+The noise cancellation is opt-in, here are the steps to enable it:
+1. Add the following import to your app 
+```kotlin 
+implementation "live.100ms:hms-noise-cancellation-android:$hmsVersion"
+```
+2. Toggle noise cancellation on in your application with `hmsSDK.setNoiseCancellationEnabled(true)` in your `onJoin` callback.
+
+> Note: Adding the library for noise cancellation will increase app size by 5.6 Mb.  
+Noise cancellation is turned off by default for all calls.
+
+## How to Join with Noise cancellation Enabled
+To enable noise cancellation by default, add the option in the audio track settings while constucting the `HMSSDK` object.
+
+This is the same as enabling noise cancellation in your `onJoin` callback as seen above.
+
+<Tabs id="noise-cancellation" items={['Kotlin', 'Java']} />
+
+<Tab id='noise-cancellation-0'>
+
+```kotlin
+private val hmsTrackSettings = HMSTrackSettings.Builder()
+        .audio(
+            HMSAudioTrackSettings.Builder()
+                .enableNoiseCancellation(true)
+                .build()
+        )
+
+    val hmsSDK = HMSSDK
+        .Builder(application)
+        .setTrackSettings(hmsTrackSettings)
+        .build()
+```
+
+</Tab>
+
+<Tab id='noise-cancellation-1'>
+
+```java
+HMSAudioTrackSettings audioSettings = new HMSAudioTrackSettings.Builder()
+                .enableNoiseCancellation(true)
+                .build();
+                
+HMSTrackSettings hmsTrackSettings = new HMSTrackSettings.Builder()
+        .audio(audioSettings)
+        .build();
+
+HMSSDK hmsSdk = new HMSSDK.Builder(application)
+        .setTrackSettings(hmsTrackSettings)
+        .build();
+```
+
+</Tab>
+
+## How to Enable and Disable Noise Cancellation After Joining
+Noise cancellation can be turned on or off dynamically. When starting calls it is always *off* by default.
+
+Toggle it on or off during a call with:
+```kotlin
+hmsSDK.setNoiseCancellationEnabled(true) // or false
+```
+
+To get the current state of noise cancellation call:
+```kotlin
+val enabled : Boolean = hmsSDK.getNoiseCancellationEnabled()
+```
+
+## Availability
+To debug issues with noise cancellation call `hmsSDK.isNoiseCancellationSupported()`
+
+This will either return `AvailabilityStatus.Available` or it will return `AvailabilityStatus.NotAvailable(val reason : String)`
+
+To see the reason why it's not available, check the reason provided in `NotAvailable`.
+Possible reasons may be:
+1. The noise cancellation import was not added.
+
+```kotlin
+val availability : AvailabilityStatus = hmsSDK.isNoiseCancellationSupported()
+
+if(availability == AvailabilityStatus.Available) {
+    /// is available, but not necessarily enabled
+} else {
+    val reason = (availability as AvailabilityStatus.NotAvailable).reason
+    Log.d("NoiseCancellation","Not available because of $reason")
+}
+
+```
+

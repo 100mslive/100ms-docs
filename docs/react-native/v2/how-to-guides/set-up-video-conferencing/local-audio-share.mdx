@@ -3,9 +3,6 @@ title: Local Audio Share
 nav: 4.8
 ---
 
-> This feature is still in Beta. To know more or report any issues, feel free to reach out to us
-> over [Discord](https://discord.com/invite/kGdmszyzq2).
-
 This feature is the analog of screen capture, but for audio. There may be cases where the application needs to stream music which is either stored in the device locally or from some other app present on the device in the room where the peer is joined.
 
 Examples of such use cases can be a FM like application where the host would want to stream music while also interacting with others in the room or a host in a gaming app who would want to stream music from their device in the room along with their regular audio track.
@@ -28,11 +25,12 @@ Follow below steps to start audio share on android devices -
 
 #### Native file change
 
-Add `FOREGROUND_SERVICE` permission and `HMSAudioshareActivity` activity in the `android/app/src/main/AndroidManifest.xml` file -
+Add `FOREGROUND_SERVICE`, `FOREGROUND_SERVICE_MEDIA_PROJECTION` permission and `HMSAudioshareActivity` activity in the `android/app/src/main/AndroidManifest.xml` file -
 
-```xml{2, 8-10}
+```xml{2-3, 9-11}
 <manifest {...} >
   <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+  <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION" />
   ...
 
   <application {...} >

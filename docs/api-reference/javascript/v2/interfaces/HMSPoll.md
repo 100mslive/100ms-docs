@@ -85,7 +85,7 @@ nav: '4.44'
 
 ### state
 
-• `Optional` **state**: `HMSPollState`
+• `Optional` **state**: [`HMSPollState`](/api-reference/javascript/v2/home/content#hmspollstate)
 
 ---
 
