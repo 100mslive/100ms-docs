@@ -21,9 +21,9 @@ This section contains instructions to create Expo App.
 
 -   A [100ms account](https://dashboard.100ms.live/register) if you don't have one already.
 -   Familiarity with [Basic concepts of 100ms](/concepts/v2/concepts/basics) like Templates, Rooms, Peers, Roles, Tracks, etc.
--   Working [Expo Local App Development Environment](https://docs.expo.dev/guides/local-app-development/#prerequisites) as we need to make changes in android and ios folders
--   Familiar with basics of [Expo](https://docs.expo.dev/tutorial/introduction/).
--   [VS code](https://code.visualstudio.com/) or any other IDE / code editor
+-   Working [Expo Local App Development Environment](https://docs.expo.dev/guides/local-app-development/#prerequisites) as we need to make changes in android and ios folders.
+-   Familiarity with basics of [Expo](https://docs.expo.dev/tutorial/introduction/).
+-   [VS code](https://code.visualstudio.com/) or any other IDE.
 
 ### Create a Expo app
 
@@ -33,11 +33,11 @@ Once you have the prerequisites, follow the steps below to create a Expo app.
 
 2. Run the below command to create Expo app:
 
-```bash section=CreateExpoApp
-npx create-expo-app my-expo-app && cd my-expo-app
-```
+  ```bash section=CreateExpoApp
+  npx create-expo-app my-expo-app && cd my-expo-app
+  ```
 
-3. Install `expo-dev-client` lib, By installing this library, we will be able to install native libraries and modify project configuration
+3. Install `expo-dev-client` library. By installing this library, we will be able to install native libraries and modify project configuration.
 
 ```bash section=InstallExpoDevClient
 npx expo install expo-dev-client
@@ -69,63 +69,53 @@ The above commands compile your project, using our locally installed Xcode, into
 
 ### Install 100ms React Native SDK
 
-[![npm](https://img.shields.io/npm/v/@100mslive/react-native-hms)](https://www.npmjs.com/package/@100mslive/react-native-hms)
-
 After the Test run of your app is successful, you can install [100ms React Native SDK](https://www.npmjs.com/package/@100mslive/react-native-hms) package in your app.
+
+```bash section=InstallSDK
+npx expo install @100mslive/react-native-hms
+```
 
 ### Refer SDK Implementation Diagram
 
-Below is the diagram which shows the common SDK implementation lifecycle. We start with requesting the Camera & Microphone permissions from user and end with leaving the 100ms Room.
+Below is the diagram which shows the 100msz SDK lifecycle. We start with requesting the Camera & Microphone permissions from the user.
 
 ![HMSSDK Integration Lifecycle](/guides/rn-hmssdk-integration-lifecycle.png)
 
-Now we will look at code and explaination for each step in implementation lifecycle.
+Now we will look at code for each step in the implementation lifecycle.
 
 ### Request Camera and Microphone Permissions
 
-We need to request camera and microphone permissions from user before initializing SDK or joining the meeting.
+We need to request camera and microphone permissions from user before initializing SDK or joining a meeting Room.
 
-1. Install `expo-camera` library, It helps us to request Camera and Microphone permissions from user
+1. Install `expo-camera` library, It helps us to request Camera and Microphone permissions from user.
 
 ```bash
 npx expo install expo-camera
 ```
 
-You can learn more about this library and its usage [here](https://docs.expo.dev/versions/latest/sdk/camera/)
+You can learn more about this library and its usage [here](https://docs.expo.dev/versions/latest/sdk/camera/).
 
 2. Add below `expo-camera` plugin config in your expo plugin file that is root level `app.json` file
 
 ```json
-[
-    "expo-camera",
-    {
-        "cameraPermission": "This Example app uses the camera for video calls",
-        "microphonePermission": "This Example app uses the microphone for audio and video calls",
-        "recordAudioAndroid": true
-    }
-]
-```
-
-Example app.json with above config plugin changes:
-
-```json
 {
-    "expo": {
-        "plugins": [
-            [
-                "expo-camera",
-                {
-                    "cameraPermission": "This Example app uses the camera for video calls",
-                    "microphonePermission": "This Example app uses the microphone for audio and video calls",
-                    "recordAudioAndroid": true
-                }
-            ]
-        ]
-    }
+  "expo": {
+    "plugins": [
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera",
+          "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone",
+          "recordAudioAndroid": true
+        }
+      ]
+    ]
+  }
 }
+
 ```
 
-3. Android platform requires some additional permissions, Add below permissions inside `android` in `app.json` config -
+3. Android platform requires some additional permissions. Add below permissions inside `android` in `app.json` config -
 
 ```json{6-12}
 {
@@ -146,7 +136,7 @@ Example app.json with above config plugin changes:
 }
 ```
 
-4. Now we can request Camera and Microphone usage permissions from user by -
+4. Now we can request Camera and Microphone usage permissions from user using the following -
 
 ```js
 // Import required methods from `expo-camera` library
@@ -157,16 +147,16 @@ import {
 
 ...
 
-// We use `requestCameraPermissionsAsync` method to request camera usage permission
-const cameraPermissionResult = await requestCameraPermissionsAsync();
-
 // We use `requestMicrophonePermissionsAsync` method to request microhone usage permission
 const microphonePermissionResult = await requestMicrophonePermissionsAsync();
+
+// We use `requestCameraPermissionsAsync` method to request camera usage permission
+const cameraPermissionResult = await requestCameraPermissionsAsync();
 ```
 
-### Initialize 100ms React Native SDK
+### Initialize 100ms SDK
 
-Now that we have Camera & Microphone usage permission, We can initialize 100ms React Native SDK instance using static `build` method available on `HMSSDK` class -
+Now that we have Camera & Microphone usage permission, we can initialize 100ms React Native SDK instance using the static `build` method available on `HMSSDK` class -
 
 ```js
 // Import HMSSDK class
@@ -178,26 +168,26 @@ import { HMSSDK } from "@100mslive/react-native-hms";
 const hmsInstance = await HMSSDK.build();
 ```
 
-To know more about Initializing the SDK, `HMSSDK.build` method and the arguments it accepts, refer to [HMSSDK Constructor](../how-to-guides/install-the-sdk/hmssdk) guide
+To know more about Initializing the SDK, `HMSSDK.build` method and the arguments it accepts, refer to [HMSSDK Constructor](../how-to-guides/install-the-sdk/hmssdk) guide.
 
 ### Add Event Listeners
 
-The 100ms SDK emits events during _room joining_ and when the user _joins_ or is _in preview_. Subscribing to these events helps us understand what is happening at any given time.
+The 100ms SDK emits events during _Room joining_ and when the user _joins_ or is _in preview_. Subscribing to these events helps us understand what is happening at any given time and you show appropriate UI to the user.
 
-We can subscribe to the events emitted by the SDK using `hmsInstance.addEventListener` method, It accepts name of the event to subscribe to (variant of `HMSUpdateListenerActions` enum) as first pameter and and callback function as second parameter.
+We can subscribe to the events emitted by the SDK using `hmsInstance.addEventListener` method. It accepts name of the event to subscribe to (variant of `HMSUpdateListenerActions` enum) as first pameter and and callback function as second parameter.
 
--   The `HMSUpdateListenerActions.ON_JOIN` event is emitted when the user (you / localpeer) has successfully joined the [Room](/docs/get-started/v2/get-started/overview#rooms-and-roles).
+-   The `HMSUpdateListenerActions.ON_JOIN` event is emitted when the user (you / localpeer) has successfully joined the [Room](https://www.100ms.live/docs/server-side/v2/api-reference/Rooms/overview).
 
 ```js
 // Subscribing to ON_JOIN update
 hmsInstance.addEventListener(
     HMSUpdateListenerActions.ON_JOIN, // event name
     (data) => {
-        const roomObject = data.room; // room object represeting joined room
-        const localPeer = data.room.localPeer; // local peer object
+        const roomObject = data.room; // room object representing the joined room
+        const localPeer = data.room.localPeer; // the local peer object
 
-        // *Ques* : What to do when this event is received?
-        // *Ans* : When the callback method subscribed to the `ON_JOIN` method is invoked,
+        // What to do when this event is received?
+        // When the callback method subscribed to the `ON_JOIN` method is invoked,
         // it indicates that the current user has successfully joined the meeting/room.
         // You can now display the meeting/room UI, including video tiles of remote and local peers,
         // using the data obtained from this event and other room events.
@@ -205,7 +195,7 @@ hmsInstance.addEventListener(
 );
 ```
 
--   The `HMSUpdateListenerActions.ON_PEER_UPDATE` event is emitted when any update occurs for any _Peer_ (users in the room) in the [Room](/docs/get-started/v2/get-started/overview#rooms-and-roles), such as `HMSPeerUpdate.PEER_JOINED`, `HMSPeerUpdate.PEER_LEFT`, or `HMSPeerUpdate.NAME_CHANGED`, etc. Refer to the [HMSPeerUpdate enum](../how-to-guides/listen-to-room-updates/event-listeners-enums#hmspeerupdate) to learn about all available update types in the `ON_PEER_UPDATE` event.
+-   The `HMSUpdateListenerActions.ON_PEER_UPDATE` event is emitted when any update occurs for any _Peer_ (users in the room) in the [Room](https://www.100ms.live/docs/server-side/v2/api-reference/Rooms/overview), such as `HMSPeerUpdate.PEER_JOINED`, `HMSPeerUpdate.PEER_LEFT`, or `HMSPeerUpdate.NAME_CHANGED`, etc. Refer to the [HMSPeerUpdate enum](../how-to-guides/listen-to-room-updates/event-listeners-enums#hmspeerupdate) to learn about all available update types in the `ON_PEER_UPDATE` event.
 
 ```js
 export enum HMSPeerUpdate {
@@ -229,13 +219,13 @@ hmsInstance.addEventListener(
     // peer update type such as `HMSPeerUpdate.PEER_JOINED`, `HMSPeerUpdate.PEER_LEFT`, etc.
     const peerUpdateType = data.type;
 
-    // *Ques* : What to do when this event is received?
-    // *Ans* : When the callback method subscribed to the `ON_PEER_UPDATE` method is invoked,
+    // What to do when this event is received?
+    // When the callback method subscribed to the `ON_PEER_UPDATE` method is invoked,
     // it indicates that there is an update on a peer in the room.
     // You can check value of `data.type` to know the exact update type.
     //
     // You can store the received `data.peer` object
-    // or update the existing object of same peer (use peer.peerID for comparison)
+    // or update the existing object of same peer (use peer.peerId for comparison)
     // in your app state to reflect the current update in UI
   },
 );
@@ -267,8 +257,8 @@ hmsInstance.addEventListener(
     // track update type such as `HMSTrackUpdate.TRACK_ADDED`, `HMSTrackUpdate.TRACK_MUTED`, etc.
     const peerUpdateType = data.type;
 
-    // *Ques* : What to do when this event is received?
-    // *Ans* : When the callback method subscribed to the `ON_TRACK_UPDATE` method is invoked,
+    // What to do when this event is received?
+    // When the callback method subscribed to the `ON_TRACK_UPDATE` method is invoked,
     // it indicates that there is an update on a audio/video track in the room.
     // You can check value of `data.type` to know the exact update type.
     //
@@ -292,8 +282,8 @@ hmsInstance.addEventListener(
             error.isTerminal || // check is `isTerminal` property is set to `true`
             terminalErrorCodes.includes(error.code); // error code is one of above terminal codes
 
-        // *Ques* : What to do when this event is received?
-        // *Ans* : When the callback method subscribed to the `ON_ERROR` method is invoked,
+        // What to do when this event is received?
+        // When the callback method subscribed to the `ON_ERROR` method is invoked,
         // it indicates that SDK encountered an error (HMSException)
         // this error can be terminal or normal error
         //
@@ -309,7 +299,7 @@ Check the [Event Listeners](../how-to-guides/listen-to-room-updates/event-listen
 
 ### Getting Authentication Token
 
-Authentication token is required to join a 100ms room. You can learn more about authentication tokens and room code in [Authentication and Tokens](/docs/get-started/v2/get-started/security-and-tokens) and [Auth Token Quickstart](../quickstart/token) guides.
+Authentication token is required to join a 100ms Room. You can learn more about authentication tokens and room code in [Authentication and Tokens](/docs/get-started/v2/get-started/security-and-tokens) and [Auth Token Quickstart](../quickstart/token) guides.
 
 We can get Authentication Token for joining a room by following ways -
 
@@ -335,7 +325,7 @@ You can learn more about `getAuthTokenByRoomCode` method [here](../how-to-guides
 -   Navigate to your [100ms dashboard](https://dashboard.100ms.live/dashboard) or [create an account](https://dashboard.100ms.live/register) if you don't have one.
 -   Use the `Video Conferencing Starter Kit` to create a room with a default template assigned to it to test this app quickly.
 -   Go to the [Rooms page](https://dashboard.100ms.live/rooms) in your dashboard, click on the `Room Id` of the room you created above, and click on the `Join Room` button on the top right.
--   You will see 100ms demo URLs for the roles created when you deployed the starter kit; you can click on the 'key' icon to copy the token and update the `AUTH_TOKEN` variable in "App.js" file.
+-   You will see 100ms demo URLs for the roles created when you deployed the starter kit; you can click on the 'key' icon to copy the token and update the `AUTH_TOKEN` variable in `App.js` file.
     > Token from 100ms dashboard is for testing purposes only, For production applications you must generate tokens on your own server. Refer to the [Management Token section](/concepts/v2/concepts/security-and-tokens#management-token) in Authentication and Tokens guide for more information.
 
 <video loop="true" autoplay="autoplay" controls="controls" id="vid" muted>
@@ -343,7 +333,7 @@ You can learn more about `getAuthTokenByRoomCode` method [here](../how-to-guides
 </video>
 <br />
 
-3. [Auth token server](https://www.100ms.live/docs/get-started/v2/get-started/security-and-tokens#set-up-your-token-server) - Programmatically generate auth tokens by setting up an auth token server
+3. [Auth Token Server](https://www.100ms.live/docs/get-started/v2/get-started/security-and-tokens#set-up-your-token-server) - Programmatically generate Auth Tokens by setting up an Auth Token server.
 
 ### Join Room
 
@@ -377,11 +367,11 @@ const hmsConfig = new HMSConfig({
 hmsInstance.join(hmsConfig);
 ```
 
-After you have called the `hmsInstance.join` method, if everything goes correctly, the SDK will emit the `HMSUpdateListenerActions.ON_JOIN` event, indicating that the join method call was successful and user has joined the room.
+After you have called the `hmsInstance.join` method, if everything goes correctly, the SDK will emit the `HMSUpdateListenerActions.ON_JOIN` event, indicating that the join method call was successful and user has joined the Room.
 
 You can learn more about Joining the Room from [Join Room](../how-to-guides/set-up-video-conferencing/join) guide.
 
-You can also preview your audio and video tracks before joining the room, Read [Preview](../how-to-guides/set-up-video-conferencing/preview) guide to learn about preview.
+You can also preview your audio and video tracks before joining the room. Read [Preview](../how-to-guides/set-up-video-conferencing/preview) guide to learn about preview.
 
 ### Render Video
 
@@ -406,8 +396,7 @@ const videoTrackId = '.....'; // `trackId` of video track that we got from `HMSU
   trackId={videoTrackId}
 
   style={{
-    width: '100%', // width of video to render
-    height: '100%', // height of video to render
+    flex: 1,
   }}
 />
 ```
@@ -585,7 +574,7 @@ useEffect(() => {
 }, [hmsInstance]);
 ```
 
-### Basic Video Conferencing App Sample Code
+### Complete App Code
 
 So far, we've covered the core concepts of the 100ms React Native SDK necessary for integrating it into your application.
 
@@ -724,9 +713,10 @@ const RoomScreen = ({ navigate }) => {
           // To Render Peer Live Videos, We can use HMSView
           // For more info about its props and usage, Check out {@link https://www.100ms.live/docs/react-native/v2/features/render-video | Render Video}
           <HmsView
+            key={track.trackId}
             trackId={track.trackId}
             mirror={peer.isLocal}
-            style={{ width: "100%", height: "100%" }}
+            style={{ flex: 1 }}
           />
         ) : (
           <View
