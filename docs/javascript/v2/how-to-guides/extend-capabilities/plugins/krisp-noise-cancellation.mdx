@@ -1,0 +1,118 @@
+---
+title: Noise Cancellation
+nav: 1.51
+---
+
+## Introduction
+
+Background noise always rears its ugly head while live streaming outside, on site, or in any untreated setting. Sounds can ruin anyone's listening or watching experience, whether it's from passing cars, construction noise, or mechanical whirs.
+Krisp Noise cancellation plugin helps in eliminating one’s background sound. This can help eliminate wide variety of background sounds.
+This guide provides an overview of usage of the noise suppression plugin of 100ms and below is the demo of it.
+
+
+## Pre-requisites
+
+**Get the 100ms noise cancellation Package**
+
+```bash section=GetHMSNoiseCancellationPackage sectionIndex=1
+npm install --save @100mslive/hms-noise-cancellation@latest
+```
+
+The plugin has the following methods:
+
+```ts
+getName(): string; // HMSKrispPlugin
+
+// Whether the plugin is supported by the browser. Safari/Mobile browsers are not supported currently
+isSupported(): boolean;
+
+// Toggles the noise cancellation
+toggle(): void;
+
+// whether the noise cancellation is currently enabled
+isEnabled(): boolean | undefined;
+
+stop(): void; 
+
+```
+
+Checking if noise cancellation is enabled for the room. Please reach out to us to get this enabled for you.
+
+
+<Tabs id="noise-cancellation-plugin" items={['Javascript', 'React']} />{' '}
+
+<Tab id='noise-cancellation-plugin-0'>
+
+```js
+import {  selectRoom } from '@100mslive/hms-video-store';
+import { HMSKrispPlugin } from '@100mslive/hms-noise-cancellation';
+
+// Call this after preview/join is successful
+const isNoiseCancellationEnabled = hmsStore.getState(selectRoom)?.isNoiseCancellationEnabled;
+const plugin = new HMSKrispPlugin();
+// check if audio track is available
+const localAudioTrack = hmsStore.getState(selectLocalAudioTrackID);
+let inProgress = false;
+hmsStore.subscribe((isPluginAdded) => {
+    if(!isPluginAdded && !inProgress) {
+     inProgress = true;
+     await hmsActions.addPluginToAudioTrack(plugin);
+    }
+}, selectIsLocalAudioPluginPresent(plugin.getName()));
+
+// Once the plugin is added, to disable/enable again, you can use the `plugin.toggle` method;
+// Current state of plugin can be obtained from `plugin.isEnabled()`;
+```
+
+</Tab>
+
+<Tab id='noise-cancellation-plugin-1'>
+
+```jsx
+import { useEffect, useState } from 'react';
+import { HMSKrispPlugin } from '@100mslive/hms-noise-cancellation';
+import { 
+	selectLocalAudioTrackID, 
+	selectIsLocalAudioPluginPresent,
+	selectRoom,
+	useHMSActions, 
+	useHMSStore, 
+} from '@100mslive/react-sdk';
+
+const plugin = new HMSKrispPlugin();
+
+export const NoiseCancellation = () => {
+	const localPeerAudioTrackID = useHMSStore(selectLocalAudioTrackID);
+  const isPluginAdded = useHMSStore(selectIsLocalAudioPluginPresent(plugin.getName()));
+  const [active, setActive] = useState(isPluginAdded);
+
+  const [inProgress, setInProgress] = useState(false);
+  const actions = useHMSActions();
+  const room = useHMSStore(selectRoom);
+
+  useEffect(() => {
+    // This is to toggle. Here the plugin is removed if active is false but `plugin.toggle` can also be used.
+    (async () => {
+      setInProgress(true);
+      if (active && !isPluginAdded) {
+        await actions.addPluginToAudioTrack(plugin);
+      }
+      if (!active && isPluginAdded) {
+        await actions.removePluginFromAudioTrack(plugin);
+      }
+      setInProgress(false);
+    })();
+  }, [actions, active, isPluginAdded]);
+
+  if (!plugin.isSupported() || !room.isNoiseCancellationEnabled || !localPeerAudioTrackID) {
+    return null;
+  }
+  return <button disabled={inProgress} onClick={() => {
+	   setActive(prev => !prev);
+   }}>
+	   {active ? "Disable" : "Enable"} noise cancellation
+   </button>
+}
+```
+
+</Tab>
