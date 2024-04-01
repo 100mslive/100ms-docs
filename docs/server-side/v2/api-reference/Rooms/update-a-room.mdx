@@ -34,7 +34,14 @@ curl --location --request POST 'https://api.100ms.live/v2/rooms/<room_id>' \
     },
     "region": "us",
     "max_duration_seconds": 10000,
-    "polls": ["631b2654f771854d9bf633dg", "631b2654f771854d9bf633dh"] 
+    "polls": ["631b2654f771854d9bf633dg", "631b2654f771854d9bf633dh"],
+    "webhook: {
+        "url": "https://example-webhook.com/webhook",
+        "headers": {
+            "my-custom-header": "value"
+        },
+        "active": true
+    }
 }'
 ```
 
@@ -72,7 +79,14 @@ curl --location --request POST 'https://api.100ms.live/v2/rooms/<room_id>' \
     "created_at": "2022-09-14T04:54:57.707Z",
     "updated_at": "2022-09-26T12:17:48.37Z",
     "customer": "627cda54ff688c037a39291b",
-    "polls": ["631b2654f771854d9bf633dg", "631b2654f771854d9bf633dh"] 
+    "polls": ["631b2654f771854d9bf633dg", "631b2654f771854d9bf633dh"],
+    "webhook: {
+        "url": "https://example-webhook.com/webhook",
+        "headers": {
+            "my-custom-header": "value"
+        },
+        "active": true
+    }
 }
 ```
 
@@ -90,5 +104,6 @@ curl --location --request POST 'https://api.100ms.live/v2/rooms/<room_id>' \
 | size <br/>                 | `int`     | This value is used to define the maximum number of peers expected to be joining the given room. Following are the acceptable ranges: <br/> <br/>  With `large_room: false`, Minimum `size` = 0; Maximum `size` = 2500  <br/> <br/>  With `large_room: true`, Minimum `size` = 0; Maximum `size` = 20000                                                        | No       |
 | max_duration_seconds <br/> | `int`     | This value is used to define the maximum duration in seconds for a room session. Following are the acceptable ranges: <br/> Minimum `max_duration_seconds` = 120 <br/> Maximum `max_duration_seconds` = 43200  <br/> <br/>                                                                                                                                     | No       |
 | polls  | `array` | Array of poll ids that this room will have.                                                                                                                                                                                                                                                                                                                                                    | No |
+| webhook <br/>       | `object`  | Object of type `webhook`. This object contains webhook information like url, headers and an active flag to enable or disable the webhook. <br/><br/>Check the [webhook arguments](/server-side/v2/Rooms/create-via-api#webhook-arguments) below for more information.                                                                                                                        | No       |
 
 
