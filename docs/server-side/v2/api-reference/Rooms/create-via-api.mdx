@@ -67,6 +67,8 @@ curl --location --request POST 'https://api.100ms.live/v2/rooms' \
 | headers     | `object`   | Any custom headers (key-value pairs) you want to set.                    | No       |
 | active      | `boolean`  | Enable this for receiving webhooks on the above URL. Default is false.   | No       |
 
+> **Note:** If you set webhooks on a room, then the workspace level webhooks (if set) won't be used. To re-enable workspace level webhooks, remove the webhooks from the room object.
+
 ## recording_info arguments
 
 > **Note**: This object enables recording and configuring storage during room creation. But we recommend configuring it at a template level through the [Dashboard](https://dashboard.100ms.live/dashboard), where the config validator can help with validating inputs proactively.
