@@ -55,7 +55,7 @@ curl --location --request POST 'https://api.100ms.live/v2/rooms' \
 | large_room <br/>           | `boolean` | Enable this flag if the requirement is to support more than 2500 peers in the room. You are also required to update to latest SDKs to support this functionality. By default, this value is set to `false`. Learn more about it in the [large room creation guide](/server-side/v2/how-to-guides/create-large-rooms).                                          | No       |                                                                                                             | No       |
 | size <br/>                 | `int`     | This value is used to define the maximum number of peers expected to be joining the given room. Following are the acceptable ranges: <br/> <br/>  With `large_room: false`, Minimum `size` = 0; Maximum `size` = 2500  <br/> <br/>  With `large_room: true`, Minimum `size` = 0; Maximum `size` = 20000                                                        | No       |
 | max_duration_seconds <br/> | `int`     | This value is used to define the maximum duration in seconds for a room session. Following are the acceptable ranges: <br/> Minimum `max_duration_seconds` = 120 <br/> Maximum `max_duration_seconds` = 43200  <br/> <br/>                                                                                                                                     | No       |
-| webhook <br/>       | `object`  | Object of type `webhook`. This object contains webhook information like url, headers and an active flag to enable or disable the webhook. <br/><br/>Check the [webhook arguments](#webhook-arguments) below for more information.                                                                                                                        | No       |
+| webhook <br/>       | `object`  | Object of type `webhook`. This object contains webhook information like url and headers. <br/><br/>Check the [webhook arguments](#webhook-arguments) below for more information.                                                                                                                        | No       |
 
 > **Warning:** If you create a room with the name of an existing room, the same room will be updated with the new configuration passed in the request payload. <br/> For example, if the existing room was assigned to **'template-ABC'** earlier and in the request payload you've used **'template-DEF'**, then **'template-DEF'** will be assigned to the existing room.
 
@@ -65,7 +65,6 @@ curl --location --request POST 'https://api.100ms.live/v2/rooms' \
 | :---------- | :--------- | :----------------------------------------------------------------------- | :------- |
 | url         | `string`   | The webhook URL.                                                         | Yes      |
 | headers     | `object`   | Any custom headers (key-value pairs) you want to set.                    | No       |
-| active      | `boolean`  | Enable this for receiving webhooks on the above URL. Default is false.   | No       |
 
 > **Note:** If you set webhooks on a room, then the workspace level webhooks (if set) won't be used. To re-enable workspace level webhooks, remove the webhooks from the room object.
 
