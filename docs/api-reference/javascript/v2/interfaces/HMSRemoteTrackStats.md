@@ -98,6 +98,16 @@ BaseTrackStats.enabled
 
 ---
 
+### estimatedPlayoutTimestamp
+
+• `Optional` **estimatedPlayoutTimestamp**: `number`
+
+#### Inherited from
+
+MissingInboundStats.estimatedPlayoutTimestamp
+
+---
+
 ### fecPacketsDiscarded
 
 • `Optional` **fecPacketsDiscarded**: `number`
