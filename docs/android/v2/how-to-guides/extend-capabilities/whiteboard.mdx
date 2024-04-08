@@ -5,9 +5,7 @@ nav: 4.7
 
 ## Introduction
 
-Android SDK provides support for starting/stopping whiteboard using webview.
-
-The Android SDK provided by 100ms offers support for starting and stopping a whiteboard feature using a WebView. 
+The Android SDK provided by 100ms offers support for starting and stopping a whiteboard feature using a `WebView`. 
 This feature allows users to collaborate on a shared digital whiteboard in real-time. However, it's important to note that for a user to be able to start or view the whiteboard, 
 their role must have the whiteboard functionality enabled in the 100ms dashboard.
 
@@ -15,9 +13,9 @@ their role must have the whiteboard functionality enabled in the 100ms dashboard
 
 -   Minimum 100ms SDK version it can work with is `2.9.53`
 
-## Intialising WebView
+## WebView configuration for whiteboard
 
-To make sure whiteboard work correctly with android's webview the follwing configuration needs to be added.
+To make sure whiteboard work correctly with android's `WebView` the follwing configuration needs to be added.
 
 ```kotlin
 
@@ -27,6 +25,8 @@ webview.apply {
 }
 
 ```
+
+
 
 # Listen for whiteboard updates
 
@@ -80,7 +80,7 @@ In this case, you can implement the necessary logic to handle the stop of the wh
 # Starting/Stopping whiteboard
 
 ## Starting whiteboard
-To start a whiteboard make sure the role has appropriate permission and the current whiteboard is not open.
+To start a whiteboard, ensure that the role has the appropriate permission and the current whiteboard is not already open.
 The callback will be sent to `setWhiteboardUpdateListener()`.
 
 ```kotlin
@@ -120,18 +120,14 @@ if (currentWhiteBoardModel?.isOpen == true) {
     override fun onError(error: HMSException) {}
     override fun onSuccess() {}
   })
-
 }
 
-If the `isOwner` is true in `HMSWhiteboard` model then user has to refresh and close the `WebiView`
+```
+
+If the `isOwner` is true in `HMSWhiteboard` model then user has to refresh and close the `WebiView` to make the whiteboard session stop.
 
 ```kotlin 
  webview?.loadUrl(")
-```
-
-
-
-
 ```
 
 
