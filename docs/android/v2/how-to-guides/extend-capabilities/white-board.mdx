@@ -1,0 +1,88 @@
+---
+title: Whiteboard
+nav: 4.7
+---
+
+## Introduction
+
+Android SDK provides support for starting/stopping whiteboard using webview.
+
+The Android SDK provided by 100ms offers support for starting and stopping a whiteboard feature using a WebView. 
+This feature allows users to collaborate on a shared digital whiteboard in real-time. However, it's important to note that for a user to be able to start or view the whiteboard, 
+their role must have the whiteboard functionality enabled in the 100ms dashboard.
+
+## Supported Versions
+
+-   Minimum 100ms SDK version it can work with is `2.9.53`
+
+## Intialising WebView
+
+To make sure whiteboard work correctly with android's webview the follwing configuration needs to be added.
+
+```kotlin
+
+webview.apply {
+  settings?.javaScriptEnabled = true
+  settings?.domStorageEnabled = true
+}
+
+```
+
+# Handling whiteboard updates
+
+When the `HMSWhiteboardUpdateListener` is triggered, it will receive an instance of `HMSWhiteboardUpdate`, which can be one of two types:
+
+- `HMSWhiteboardUpdate.Start`: Indicates that the whiteboard has been started.
+- `HMSWhiteboardUpdate.Stop`: Indicates that the whiteboard has been stopped.
+
+```kotlin
+
+val hmsSDK = HMSSDK
+    .Builder(application) //application context
+    .build()
+
+hmsSDK.getHmsInteractivityCenter().setWhiteboardUpdateListener(object : HMSWhiteboardUpdateListener {
+    override fun onUpdate(hmsWhiteboardUpdate: HMSWhiteboardUpdate) {
+        when(hmsWhiteboardUpdate) {
+            is HMSWhiteboardUpdate.Start -> //handle start
+            is HMSWhiteboardUpdate.Stop -> //handle stop
+        }
+    }
+})
+
+```
+
+## Start Whiteboard update
+
+When the `HMSWhiteboardUpdateListener` receives an instance of `HMSWhiteboardUpdate.Start`, it indicates that the whiteboard has been started. 
+In this case, you can load the `url` from `HMSWhiteboard` class into a Webview. This will render the whiteboard on the webview.
+
+## Stop Whiteboard update
+
+When the `HMSWhiteboardUpdateListener` receives an instance of `HMSWhiteboardUpdate.Stop`, it indicates that the whiteboard has been stopped. 
+In this case, you can implement the necessary logic to handle the stop of the whiteboard, such as hiding the webview visibility.
+
+## HMSWhiteboard model 
+
+`HMSWhiteboard` model is returned on both start/stop of the `HMSWhiteboardUpdate`. The model contains information releated to the current whiteboard in the seesion.
+
+### Properties
+- `id`: A unique identifier for the whiteboard session.
+- `title`: The title or name of the whiteboard session
+- `owner`: The HMSPeer object representing the owner of the whiteboard session. This property can be null if the owner information is not available.
+- `isOwner`: A boolean flag indicating whether the current user has started the whiteboard session.
+- `isAdmin`: A boolean flag indicating whether the current user can start/stop the whiteboard session.
+- `url`: The link to the whiteboard session.
+- `isOpen`: A boolean flag indicating whether the whiteboard session is currently open and active.
+
+
+
+
+
+
+
+
+
+
+
+
