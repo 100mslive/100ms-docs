@@ -28,7 +28,7 @@ webview.apply {
 
 ```
 
-# Handling whiteboard updates
+# Listen for whiteboard updates
 
 When the `HMSWhiteboardUpdateListener` is triggered, it will receive an instance of `HMSWhiteboardUpdate`, which can be one of two types:
 
@@ -41,6 +41,7 @@ val hmsSDK = HMSSDK
     .Builder(application) //application context
     .build()
 
+//setting up whiteboard listener.
 hmsSDK.getHmsInteractivityCenter().setWhiteboardUpdateListener(object : HMSWhiteboardUpdateListener {
     override fun onUpdate(hmsWhiteboardUpdate: HMSWhiteboardUpdate) {
         when(hmsWhiteboardUpdate) {
@@ -52,19 +53,19 @@ hmsSDK.getHmsInteractivityCenter().setWhiteboardUpdateListener(object : HMSWhite
 
 ```
 
-## Start Whiteboard update
+## Start whiteboard update
 
 When the `HMSWhiteboardUpdateListener` receives an instance of `HMSWhiteboardUpdate.Start`, it indicates that the whiteboard has been started. 
 In this case, you can load the `url` from `HMSWhiteboard` class into a Webview. This will render the whiteboard on the webview.
 
-## Stop Whiteboard update
+## Stop whiteboard update
 
 When the `HMSWhiteboardUpdateListener` receives an instance of `HMSWhiteboardUpdate.Stop`, it indicates that the whiteboard has been stopped. 
 In this case, you can implement the necessary logic to handle the stop of the whiteboard, such as hiding the webview visibility.
 
 ## HMSWhiteboard model 
 
-`HMSWhiteboard` model is returned on both start/stop of the `HMSWhiteboardUpdate`. The model contains information releated to the current whiteboard in the seesion.
+`HMSWhiteboard` model is returned on both start/stop of the `HMSWhiteboardUpdate`. The model contains information releated to the current whiteboard in the session.
 
 ### Properties
 - `id`: A unique identifier for the whiteboard session.
@@ -76,8 +77,62 @@ In this case, you can implement the necessary logic to handle the stop of the wh
 - `isOpen`: A boolean flag indicating whether the whiteboard session is currently open and active.
 
 
+# Starting/Stopping whiteboard
+
+## Starting whiteboard
+To start a whiteboard make sure the role has appropriate permission and the current whiteboard is not open.
+The callback will be sent to `setWhiteboardUpdateListener()`.
+
+```kotlin
+val currentWhiteBoardModel : HMSWhiteboard?  = //you can get HMSWhiteboard model from HMSWhiteboardUpdate
+
+//make sure you the current whiteboard is not opened by someone else 
+if (currentWhiteBoardModel?.isOpen == true && currentWhiteBoardModel.isOwner.not())
+return
 
 
+if (currentWhiteBoardModel == null || currentWhiteBoardModel?.isOpen == false) {
+  localHmsInteractivityCenter.startWhiteboard(
+    title = <Add your whiteboard title>,
+    object : HMSActionResultListener {
+      override fun onError(error: HMSException) {}
+      override fun onSuccess() {}
+    })
+}
+```
+
+## Stopping whiteboard
+
+To stop currently opened whiteboard make sure the role has appropriate permission and the current whiteboard session is opened by the user.
+The callback will be sent to `setWhiteboardUpdateListener()`.
+
+
+```kotlin
+
+val currentWhiteBoardModel : HMSWhiteboard?  = //you can get HMSWhiteboard model from HMSWhiteboardUpdate
+
+//early exit if the whiteboard is already closed and the peer didn't start the whiteboard
+if (currentWhiteBoardModel?.isOpen == true && currentWhiteBoardModel.isOwner.not())
+return
+
+if (currentWhiteBoardModel?.isOpen == true) {
+  localHmsInteractivityCenter.stopWhiteboard(object : HMSActionResultListener{
+    override fun onError(error: HMSException) {}
+    override fun onSuccess() {}
+  })
+
+}
+
+If the `isOwner` is true in `HMSWhiteboard` model then user has to refresh and close the `WebiView`
+
+```kotlin 
+ webview?.loadUrl(")
+```
+
+
+
+
+```
 
 
 
