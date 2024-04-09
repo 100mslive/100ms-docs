@@ -81,14 +81,12 @@ In this case, you can implement the necessary logic to handle the stop of the wh
 
 ## Starting whiteboard
 To start a whiteboard, ensure that the role has the appropriate permission and the current whiteboard is not already open.
-The callback will be sent to `setWhiteboardUpdateListener()`.
+The callback will be sent as `HMSWhiteboardUpdate.Start` in `setWhiteboardUpdateListener()`.
+
+> Note: Remember to check if the peer starting whiteboard has owner permission
 
 ```kotlin
 val currentWhiteBoardModel : HMSWhiteboard?  = //you can get HMSWhiteboard model from HMSWhiteboardUpdate
-
-//make sure you the current whiteboard is not opened by someone else 
-if (currentWhiteBoardModel?.isOpen == true && currentWhiteBoardModel.isOwner.not())
-return
 
 
 if (currentWhiteBoardModel == null || currentWhiteBoardModel?.isOpen == false) {
@@ -104,7 +102,7 @@ if (currentWhiteBoardModel == null || currentWhiteBoardModel?.isOpen == false) {
 ## Stopping whiteboard
 
 To stop currently opened whiteboard make sure the role has appropriate permission and the current whiteboard session is opened by the user.
-The callback will be sent to `setWhiteboardUpdateListener()`.
+The callback will be sent as `HMSWhiteboardUpdate.Stop` in `setWhiteboardUpdateListener()`.
 
 
 ```kotlin
@@ -125,6 +123,8 @@ if (currentWhiteBoardModel?.isOpen == true) {
 ```
 
 If the `isOwner` is true in `HMSWhiteboard` model then user has to refresh and close the `WebView` to make the whiteboard session stop.
+
+> Note: Only owner can close the currently opened whiteboard session 
 
 ```kotlin 
  webview?.loadUrl(")
