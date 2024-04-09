@@ -106,6 +106,16 @@ Ref: https://www.w3.org/TR/webrtc-stats/#dom-rtcoutboundrtpstreamstats
 
 ---
 
+### estimatedPlayoutTimestamp
+
+• `Optional` **estimatedPlayoutTimestamp**: `number`
+
+#### Inherited from
+
+[HMSRemoteTrackStats](/api-reference/javascript/v2/interfaces/HMSRemoteTrackStats).[estimatedPlayoutTimestamp](/api-reference/javascript/v2/interfaces/HMSRemoteTrackStats#estimatedplayouttimestamp)
+
+---
+
 ### fecPacketsDiscarded
 
 • `Optional` **fecPacketsDiscarded**: `number`

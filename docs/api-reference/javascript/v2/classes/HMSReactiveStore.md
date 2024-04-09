@@ -1,6 +1,6 @@
 ---
 title: HMSReactiveStore<T>
-nav: '3.1'
+nav: '3.2'
 ---
 
 ## Type parameters

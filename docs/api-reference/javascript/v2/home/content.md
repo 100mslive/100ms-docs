@@ -6,11 +6,13 @@ nav: '1.1'
 ## Enumerations
 
 - [DeviceType](/api-reference/javascript/v2/enums/DeviceType)
+- [DomainCategory](/api-reference/javascript/v2/enums/DomainCategory)
 - [HLSPlaylistType](/api-reference/javascript/v2/enums/HLSPlaylistType)
 - [HMSAudioPluginType](/api-reference/javascript/v2/enums/HMSAudioPluginType)
 - [HMSLogLevel](/api-reference/javascript/v2/enums/HMSLogLevel)
 - [HMSNotificationSeverity](/api-reference/javascript/v2/enums/HMSNotificationSeverity)
 - [HMSNotificationTypes](/api-reference/javascript/v2/enums/HMSNotificationTypes)
+- [HMSPeerType](/api-reference/javascript/v2/enums/HMSPeerType)
 - [HMSPlaylistType](/api-reference/javascript/v2/enums/HMSPlaylistType)
 - [HMSPluginUnsupportedTypes](/api-reference/javascript/v2/enums/HMSPluginUnsupportedTypes)
 - [HMSPollQuestionType](/api-reference/javascript/v2/enums/HMSPollQuestionType)
@@ -23,6 +25,7 @@ nav: '1.1'
 
 ## Classes
 
+- [EventBus](/api-reference/javascript/v2/classes/EventBus)
 - [HMSReactiveStore](/api-reference/javascript/v2/classes/HMSReactiveStore)
 
 ## Core Interfaces
@@ -1691,6 +1694,26 @@ Select the first peer who is currently sharing their audio only screen
 #### Returns
 
 `undefined` \| [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)
+
+---
+
+### selectPeerTypeByID
+
+▸ **selectPeerTypeByID**(`id?`): `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `undefined` \| [`HMSPeerType`](/api-reference/javascript/v2/enums/HMSPeerType)\>
+
+takes in a normal selector which has store and id as input and curries it to make it easier to use.
+Before: store.getState((store) => normalSelector(store, peerID))
+After: store.getState(curriedSelector(peerID))
+
+#### Parameters
+
+| Name  | Type     |
+| :---- | :------- |
+| `id?` | `string` |
+
+#### Returns
+
+`StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `undefined` \| [`HMSPeerType`](/api-reference/javascript/v2/enums/HMSPeerType)\>
 
 ---
 

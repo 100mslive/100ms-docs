@@ -79,6 +79,12 @@ HMSPeer stores the details of individual participants in the room
 
 ---
 
+### type
+
+• **type**: [`HMSPeerType`](/api-reference/javascript/v2/enums/HMSPeerType)
+
+---
+
 ### videoTrack
 
 • `Optional` **videoTrack**: `string`
