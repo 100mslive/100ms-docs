@@ -21,4 +21,100 @@ The Noise Cancellation feature employs a sophisticated AI model trained specific
 
 `@100mslive/react-native-hms` version 1.10.2 or later is required to utilize the Noise Cancellation feature in your React Native application.
 
-Also, this feature has gated access currently. To enable noise canellation in your rooms, reach out to **support@100ms.live** or connect with us on [100ms Discord](https://discord.com/invite/kGdmszyzq2).
+Also, this feature has gated access currently. To enable Noise Cancellation in your rooms, reach out to **support@100ms.live** or connect with us on [100ms Discord](https://discord.com/invite/kGdmszyzq2).
+
+## Usage
+
+<div className="steps-container">
+
+### Step 1: Create instance of HMSNoiseCancellationPlugin
+
+```js
+const noiseCancellationPlugin = new HMSNoiseCancellationPlugin();
+```
+
+### Step 2: Create instance of HMSAudioTrackSettings
+
+```js{4}
+let audioSettings = new HMSAudioTrackSettings({
+    initialState: HMSTrackSettingsInitState.MUTED
+    // The noise cancellation plugin to use for the audio track. @type {HMSNoiseCancellationPlugin}
+    noiseCancellationPlugin,
+});
+
+let trackSettings = new HMSTrackSettings({
+    audio: audioSettings,
+});
+```
+
+### Step 3: Pass the Track Settings to the HMSSDK
+
+```js{2}
+const hmsInstance = await HMSSDK.build({
+    trackSettings,
+});
+```
+
+### Step 4: Enable Noise Cancellation after Joining the Room
+
+```js
+await noiseCancellationPlugin.enable();
+```
+
+To disable the noise cancellation, you can use the `disable` method.
+
+```js
+await noiseCancellationPlugin.disable();
+```
+
+To check the current status of the noise cancellation, you can use the `isEnabled` method.
+
+```js
+const isEnabled = await noiseCancellationPlugin.isEnabled();
+```
+
+
+### Complete Code Example
+
+```js
+const noiseCancellationPlugin = new HMSNoiseCancellationPlugin();
+
+let audioSettings = new HMSAudioTrackSettings({
+    initialState: HMSTrackSettingsInitState.MUTED
+    // The noise cancellation plugin to use for the audio track. @type {HMSNoiseCancellationPlugin}
+    noiseCancellationPlugin,
+});
+
+let trackSettings = new HMSTrackSettings({
+    audio: audioSettings,
+});
+
+const hmsInstance = await HMSSDK.build({
+    trackSettings,
+});
+
+hmsInstance.addEventListener(
+    HMSUpdateListenerActions.ON_JOIN,
+    () => {
+        console.log("Joined Room");
+        // Noise Cancellation can be enabled only after Joining the Room
+        noiseCancellationPlugin.enable().then(() => {
+            console.log("Noise Cancellation Enabled");
+        });
+        }
+    }
+);
+
+let hmsConfig = new HMSConfig({...}); // Your config object
+
+hmsInstance.join(hmsConfig)
+```
+</div>
+
+## Check if Noise Cancellation is Supported in the Room
+
+By default, Noise Cancellation is not enabled in a Room. To enable Noise Cancellation in your rooms, reach out to **support@100ms.live** or connect with us on [100ms Discord](https://discord.com/invite/kGdmszyzq2).
+
+```js
+const isAvailable = await noiseCancellationPlugin?.isNoiseCancellationAvailable();
+```
