@@ -1,6 +1,10 @@
 ---
 title: HMSPollQuestionType
+<<<<<<< HEAD
 nav: '2.11'
+=======
+nav: '2.12'
+>>>>>>> c900c38dbcd66a26f4df98a231c6722e62e71492
 ---
 
 ## Enumeration Members

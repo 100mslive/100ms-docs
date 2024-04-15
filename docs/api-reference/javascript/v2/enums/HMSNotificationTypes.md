@@ -1,6 +1,10 @@
 ---
 title: HMSNotificationTypes
+<<<<<<< HEAD
 nav: '2.7'
+=======
+nav: '2.8'
+>>>>>>> c900c38dbcd66a26f4df98a231c6722e62e71492
 ---
 
 ## Enumeration Members

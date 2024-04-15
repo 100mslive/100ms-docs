@@ -1,6 +1,10 @@
 ---
 title: HMSLogLevel
+<<<<<<< HEAD
 nav: '2.5'
+=======
+nav: '2.6'
+>>>>>>> c900c38dbcd66a26f4df98a231c6722e62e71492
 ---
 
 ## Enumeration Members

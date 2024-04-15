@@ -8,6 +8,7 @@ nav: '1.1'
 - [DeviceType](/api-reference/javascript/v2/enums/DeviceType)
 - [DomainCategory](/api-reference/javascript/v2/enums/DomainCategory)
 - [HLSPlaylistType](/api-reference/javascript/v2/enums/HLSPlaylistType)
+- [HLSStreamType](/api-reference/javascript/v2/enums/HLSStreamType)
 - [HMSAudioPluginType](/api-reference/javascript/v2/enums/HMSAudioPluginType)
 - [HMSLogLevel](/api-reference/javascript/v2/enums/HMSLogLevel)
 - [HMSNotificationSeverity](/api-reference/javascript/v2/enums/HMSNotificationSeverity)
