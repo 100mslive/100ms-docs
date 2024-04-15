@@ -1,10 +1,6 @@
 ---
 title: HMSRoomState
-<<<<<<< HEAD
-nav: '2.14'
-=======
 nav: '2.15'
->>>>>>> c900c38dbcd66a26f4df98a231c6722e62e71492
 ---
 
 Check out internal-docs/RoomStateFlow.tldr for flow of room state
