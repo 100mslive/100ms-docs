@@ -231,6 +231,12 @@ $token = JWT::encode(
 
 The management token is not to be exposed on the client-side.
 
+For the purpose of testing and demo, management token is exposed in the 'Developer' section of the dashboard. The default validity of the generated token is 7 days. New tokens can be generated with custom validity with a maximum validity of 14 days.
+
+![Management Token on Dashboard](/docs/v2/management-token-dashboard.png)
+
+Our recommendation is to setup your own token server once the testing is complete.
+
 #### Sample code
 
 <Tabs id="test-code" items={['Node.js', 'Python', 'Java', 'Ruby', 'PHP']} />
