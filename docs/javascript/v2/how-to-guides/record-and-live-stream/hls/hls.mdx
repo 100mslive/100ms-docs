@@ -84,6 +84,16 @@ export interface HMSHLS {
     variants: Array<HLSVariant>;
     error?: HMSException;
 }
+export enum HLSPlaylistType {
+  DVR = 'dvr',
+  NO_DVR = 'no-dvr',
+}
+
+export enum HLSStreamType {
+  REGULAR = 'regular',
+  SCREEN = 'screen',
+  COMPOSITE = 'composite',
+}
 export interface HLSVariant {
     url: string;
     meetingURL?: string;
@@ -91,6 +101,10 @@ export interface HLSVariant {
     startedAt?: Date;
     initialisedAt?: Date;
     state?: HMSStreamingState;
+    // Represent the type of playlist, no-dvr means live, dvr means event type playlist
+    playlist_type?: HLSPlaylistType;
+    // Represennt the type of stream hls is using.
+    stream_type?: HLSStreamType;
 }
 
 ```
