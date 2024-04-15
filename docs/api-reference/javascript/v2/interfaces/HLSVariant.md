@@ -41,6 +41,12 @@ nav: '4.4'
 
 ---
 
+### stream_type
+
+• `Optional` **stream_type**: [`HLSStreamType`](/api-reference/javascript/v2/enums/HLSStreamType)
+
+---
+
 ### url
 
 • **url**: `string`

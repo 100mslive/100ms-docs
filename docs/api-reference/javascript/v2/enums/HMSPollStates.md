@@ -1,6 +1,6 @@
 ---
 title: HMSPollStates
-nav: '2.12'
+nav: '2.13'
 ---
 
 ## Enumeration Members
