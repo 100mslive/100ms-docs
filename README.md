@@ -21,7 +21,7 @@ To run locally
 
 All docs are written in `MDX` this helps use to use React Components along with the flavor of Markdown Syntax.
 
-All Docs reside in the [/docs](https://github.com/100mslive/100ms-docs/tree/main/docs) folder.
+All docs reside in the [/docs](https://github.com/100mslive/100ms-docs/tree/main/docs) folder.
 
 ## 📒 Adding Docs
 
