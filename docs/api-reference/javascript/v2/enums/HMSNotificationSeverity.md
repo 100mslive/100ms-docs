@@ -1,6 +1,6 @@
 ---
 title: HMSNotificationSeverity
-nav: '2.6'
+nav: '2.7'
 ---
 
 ## Enumeration Members
