@@ -50,7 +50,7 @@ nav: 14 // Ranking of Item in the Sidebar
 ---
 ```
 
-By Default Nav is given the value of `Infinity` it's important to add `nav` value to order the Sidebar.
+By default Nav is given the value of `Infinity` it's important to add `nav` value to order the Sidebar.
 
 But suppose you wanna update the order of 1 doc , then you don't need to change nav value of all them simply make the nav value in between the preceding and next doc it can be in decimal value too.
 
@@ -61,7 +61,7 @@ Suppose we now need a `v3` docs
 -   Create a folder `/docs/v3`
 -   Create a file in `/pages/v3/index.tsx`
 
-in the File add the following
+in the file add the following
 
 ```jsx
 import redirect from '@/lib/redirect';
@@ -71,11 +71,11 @@ export default redirect('/v3/100ms-v3/basics');
 
 This is needed because we need it to route somewhere if someone hits `/v3` this would redirect it to `/v3/100ms-v3/basics` i.e the MDX file `/v3/100ms-v3/basics.mdx`
 
-Then Follow the Steps in 1. to add docs to it.
+Then follow the Steps in 1. to add docs to it.
 
 ### 3. Aliasing Repeating Content
 
-So you don't have to copy paste it again and again.
+So you don't have to copy paste common content multiple times.
 
 1. Create a new file with a .md extension e.g `common/test.md` and add your Markdown content or a file with .mdx extension e.g `common/test.mdx` if you want to embed JSX inside it (make sure to escape these characters `<>{}` with backslash or use backtick if it's a code snippet if you don't want it to be parsed as JSX).
 2. Import it at the top of the mdx file as a component in PascalCase e.g `import Test from '@/common/test.md'`
