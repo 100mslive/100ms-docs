@@ -21,11 +21,13 @@ The Noise Cancellation feature employs a sophisticated AI model trained specific
 
 `hmssdk_flutter` version 1.9.15 or later is required to utilize the Noise Cancellation feature in your Flutter application.
 
-Also, this feature has gated access currently. To enable Noise Cancellation in your rooms, reach out to **support@100ms.live** or connect with us on [100ms Discord](https://discord.com/invite/kGdmszyzq2).
+Also, this feature has gated access currently. To enable Noise Cancellation in your Rooms, reach out to **support@100ms.live** or connect with us on [100ms Discord](https://discord.com/invite/kGdmszyzq2).
 
 ## Usage
 
-HMSSDK provides `HMSNoiseCancellationController` to control noise cancellation in your rooms. `HMSNoiseCancellationController` exposes several methods to enable, disable, and check the availability of noise cancellation etc. in the room.
+HMSSDK provides `HMSNoiseCancellationController` to control noise cancellation in your Rooms. `HMSNoiseCancellationController` exposes several methods to enable, disable, and check the availability of noise cancellation etc. in the Room.
+
+![NC](/docs/v2/flutter-nc.png)
 
 <div className="steps-container">
 
@@ -61,7 +63,7 @@ var hmsSDK = HMSSDK(
 
 ### Step 3: Check for noise cancellation availability
 
-> 🔑 Note: You can call this API to check the state of noise cancellation only after successfully joining the room.
+> 🔑 Note: You can call this API to check the state of noise cancellation only after successfully joining the Room.
 
 ```dart
 class Meeting implements HMSUpdateListener, HMSActionResultListener{
@@ -121,9 +123,9 @@ class Meeting implements HMSUpdateListener, HMSActionResultListener{
 
 That's it - you've successfully integrated the Noise Cancellation feature into your Flutter application using HMSSDK.
 
-## How to check whether noise cancellation is enabled in the room
+## How to check whether noise cancellation is enabled in the Room
 
-To check whether noise cancellation is enabled in the room, you can use the HMSNoiseCancellationController's `isEnabled` method as shown below:
+To check whether noise cancellation is enabled in the Room, you can use the HMSNoiseCancellationController's `isEnabled` method as shown below:
 
 ```dart
 class Meeting implements HMSUpdateListener, HMSActionResultListener{
