@@ -27,12 +27,12 @@ All docs reside in the [/docs](https://github.com/100mslive/100ms-docs/tree/main
 
 ### 1. To an existing Doc
 
-Suppose you wanna add a new section `VUE SDK` in `/v2` docs
+Suppose you want to add a new section `VUE SDK` in `/v2` docs:
 
 -   Create a Folder inside `/v2/vue-sdk`
 -   Folder name would be capitalised and "-" would be replaced with space for the section header
 
-Now you wanna add docs in section
+To add docs in the section:
 
 -   Create .mdx files in `v2/vue-sdk/file-name.mdx`
 -   Avoid decimal numbers (For example `v-1.3.2.mdx`) in filename (doesn't cause any loss)
