@@ -1,0 +1,32 @@
+---
+title: SIP Interconnect
+nav: 13.2
+---
+
+## Overview
+
+Session Initiation Protocol (SIP) Interconnect refers to the setup where two or more different SIP-based networks or systems are connected to enable the flow of voice traffic between them.
+
+100ms SIP Interconnect makes it easy to integrate VoIP calls from external third-party services into 100ms WebRTC meetings, ensuring a seamless bridge to participants connected through 100ms Client SDKs over WebRTC.
+
+## Identifying peers joining through SIP
+
+`HMSPeer` contains a type property which is an enum of `HMSPeerType` that can be used to identify the type of peer. The type can be `regular` or `sip`.
+
+```dart
+class Meeting implements HMSUpdateListener, HMSActionResultListener{
+
+    ...
+
+    ///Checks whether a peer is SIP peer
+    void isSIPPeer(HMSPeer peer){
+        if(peer.type == HMSPeerType.sip){
+            //Peer is a SIP peer
+        } else {
+            //Peer is a regular peer
+        }
+    }
+
+    ...
+}
+```

@@ -1,0 +1,136 @@
+---
+title: Noise Cancellation
+nav: 13.1
+---
+
+The Noise Cancellation feature is an invaluable tool designed to enhance the audio quality in scenarios such as conferences, live streams, and recordings where unwanted background noise can degrade the listening experience. By leveraging advanced Artificial Intelligence (AI) algorithms, this feature intelligently identifies and suppresses extraneous sounds, ensuring clear and crisp audio output.
+
+## Key Benefits
+
+- **Enhanced Audio Quality**: Eliminates unwanted noise, including background chatter, clicks, claps, barking, and other sudden audio disturbances, resulting in a more pleasant listening experience for your audience.
+
+- **Improved Clarity**: Ensures that the primary audio content remains prominent and intelligible by reducing distractions caused by ambient noise.
+
+- **Optimized Communication**: Facilitates seamless communication in conferences and live streams by minimizing disruptions caused by environmental factors, thereby enhancing the overall professionalism of the presentation.
+
+## How it Works
+
+The Noise Cancellation feature employs a sophisticated AI model trained specifically to discern between desired audio signals and unwanted noise. Upon detecting extraneous sounds in the microphone input, the algorithm analyzes the audio waveform in real-time and generates an inverse sound wave, effectively canceling out the unwanted noise. This process occurs seamlessly and in near-real-time, preserving the integrity of the primary audio content without introducing noticeable delays.
+
+## Minimum Requirements
+
+`hmssdk_flutter` version 1.9.15 or higher is required to utilize the Noise Cancellation feature in your Flutter application.
+
+Also, this feature has gated access currently. To enable Noise Cancellation in your Rooms, reach out to **support@100ms.live** or connect with us on [100ms Discord](https://discord.com/invite/kGdmszyzq2).
+
+## Usage
+
+HMSSDK provides `HMSNoiseCancellationController` to control Noise Cancellation in your Rooms. `HMSNoiseCancellationController` exposes several methods to enable, disable, and check the availability of Noise Cancellation etc. in the Room.
+
+![NC](/docs/v2/flutter-nc.png)
+
+<div className="steps-container">
+
+### Step 1: Set the enableNoiseCancellation property in HMSAudioTrackSetting as true
+
+```dart{6}
+/// To enable noise cancellation set the `enableNoiseCancellation` property to true
+var audioTrackSetting = HMSAudioTrackSetting(
+            trackInitialState: joinWithMutedAudio
+                ? HMSTrackInitState.MUTED
+                : HMSTrackInitState.UNMUTED,
+            enableNoiseCancellation: true);
+```
+
+### Step 2: Pass the Track Settings to the HMSSDK constructor
+
+```dart{4}
+/// Create Instance of `HMSTrackSetting`
+var trackSettings = HMSTrackSetting(
+        audioTrackSetting: HMSAudioTrackSetting(
+            enableNoiseCancellation: isNoiseCancellationEnabled),
+        videoTrackSetting: HMSVideoTrackSetting(
+            trackInitialState: joinWithMutedVideo
+                ? HMSTrackInitState.MUTED
+                : HMSTrackInitState.UNMUTED,
+        ));
+
+/// Set the track settings to HMSSDK
+var hmsSDK = HMSSDK(
+        hmsTrackSetting: trackSettings);
+```
+
+### Step 3: Check for Noise Cancellation availability
+
+> 🔑 Note: You can call this API to check the state of Noise Cancellation only after successfully joining the Room.
+
+```dart{7}
+class Meeting implements HMSUpdateListener, HMSActionResultListener{
+
+    bool isNoiseCancellationAvailable = false;
+
+    /// This method checks the noise cancellation availability
+    void checkNoiseCancellationAvailability() async {
+        isNoiseCancellationAvailable = await HMSNoiseCancellationController.isAvailable();
+    }
+}
+```
+
+### Step 4: If Noise Cancellation is available, enable it
+
+```dart{13}
+class Meeting implements HMSUpdateListener, HMSActionResultListener{
+
+    bool isNoiseCancellationAvailable = false;
+
+    /// This method checks the Noise Cancellation availability
+    void checkNoiseCancellationAvailability() async {
+        isNoiseCancellationAvailable = await HMSNoiseCancellationController.isAvailable();
+    }
+
+    /// This method enables Noise Cancellation if it's available
+    void enableNoiseCancellation() {
+        if(isNoiseCancellationAvailable){
+            HMSNoiseCancellationController.enable();
+        }
+    }
+}
+```
+
+### Step 5: To disable Noise Cancellation use HMSNoiseCancellationController's disable method
+
+```dart{12}
+class Meeting implements HMSUpdateListener, HMSActionResultListener{
+
+    bool isNoiseCancellationAvailable = false;
+
+    /// This method checks the Noise Cancellation availability
+    void checkNoiseCancellationAvailability() async {
+        isNoiseCancellationAvailable = await HMSNoiseCancellationController.isAvailable();
+    }
+
+    /// This method disables Noise Cancellation
+    void disableNoiseCancellation() {
+        HMSNoiseCancellationController.disable();
+    }
+}
+```
+</div>
+
+That's it - you've successfully integrated the Noise Cancellation feature into your Flutter application using HMSSDK.
+
+## How to check whether Noise Cancellation is enabled in the Room
+
+To check whether Noise Cancellation is enabled in the Room, you can use the HMSNoiseCancellationController's `isEnabled` method as shown below:
+
+```dart{7}
+class Meeting implements HMSUpdateListener, HMSActionResultListener{
+
+    bool isNoiseCancellationEnabled = false;
+
+    /// is noise cancellation enabled
+    void isNoiseCancellationEnabled() async{
+        isNoiseCancellationEnabled = await HMSNoiseCancellationController.isEnabled();
+    }
+}
+```
