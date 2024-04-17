@@ -12,6 +12,8 @@ This guide provides an overview of usage of the noise suppression plugin of 100m
 
 ## Pre-requisites
 
+Minimum version requirement for `hms-video-store` - 0.11.7
+
 **Get the 100ms noise cancellation Package**
 
 ```bash section=GetHMSNoiseCancellationPackage sectionIndex=1
@@ -53,7 +55,7 @@ const plugin = new HMSKrispPlugin();
 // check if audio track is available
 const localAudioTrack = hmsStore.getState(selectLocalAudioTrackID);
 let inProgress = false;
-hmsStore.subscribe((isPluginAdded) => {
+hmsStore.subscribe(async (isPluginAdded) => {
     if(!isPluginAdded && !inProgress) {
      inProgress = true;
      await hmsActions.addPluginToAudioTrack(plugin);
