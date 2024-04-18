@@ -10,6 +10,47 @@ nav: 99
 | hms_room_kit   | [![Pub Version](https://img.shields.io/pub/v/hms_room_kit)](https://pub.dev/packages/hms_room_kit)     |
 | hmssdk_flutter | [![Pub Version](https://img.shields.io/pub/v/hmssdk_flutter)](https://pub.dev/packages/hmssdk_flutter) |
 
+# 1.10.0 - 2024-04-19
+
+| Package                                | Version                                                                                                                                  |
+| -------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| hms_room_kit                | 1.1.0 |
+| hmssdk_flutter              | 1.10.0 |
+
+### hmssdk_flutter
+
+- Added noise cancellation capabilities in HMSSDK
+
+  - HMSSDK now supports noise cancellation to improve audio quality in your app. You can control noise cancellation using the `HMSNoiseCancellationController` methods. Checkout the docs [here](https://www.100ms.live/docs/flutter/v2/how-to-guides/extend-capabilities/noise-cancellation)
+
+- Added SIP Capabilities in HMSSDK
+
+  - HMSSDK now offers way to differentiate between SIP and Non-SIP users in the room. You can use the `type` property in `HMSPeer` class to check if a peer is a SIP user. Learn more about SIP Capabilities [here](https://www.100ms.live/docs/flutter/v2/how-to-guides/extend-capabilities/sip)
+
+- `HMSHLSPlayer` now uses Hybrid Composition on Android for better performance.
+
+### hms_room_kit
+
+- Newly designed UI for SIP Peers
+  
+  SIP peers will now have a newly designed UI to match the overall theme of the application.
+
+- Enhanced Prebuilt with Noise Cancellation
+
+  Prebuilt supports noise cancellation out of the box. Users can enable or disable noise cancellation from the prebuilt interface.
+
+- All-New HLS Player Interface
+
+  HLS Player now has a new look and feel to enhance the overall user experience.
+
+- Removed `flutter_foreground_task` dependency from prebuilt
+
+  Prebuilt no longer uses `flutter_foreground_task` package. For apps that require foreground service, the package can be added on the application level.
+
+Uses Android SDK 2.9.52 & iOS SDK 1.8.0
+
+**Full Changelog**: [1.9.14...1.10.0](https://github.com/100mslive/100ms-flutter/compare/1.9.14...1.10.0)
+
 ## 1.9.14 - 2024-04-01
 
 | Package                                | Version                                                                                                                                  |
