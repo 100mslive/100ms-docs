@@ -84,7 +84,7 @@ So you don't have to copy paste common content multiple times.
 ## 🥵 Components
 
 Components is what makes this docs standout
-All Components mentioned are already auto imported so you don't need to do them.
+All Components mentioned are auto imported.
 
 Here's some of them added and can be easily added:
 
