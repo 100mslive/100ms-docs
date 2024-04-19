@@ -1,6 +1,6 @@
 ---
 title: useVideoInput
-nav: '5.2.16'
+nav: '5.2.18'
 ---
 
 ## Properties

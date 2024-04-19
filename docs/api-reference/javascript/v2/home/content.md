@@ -21,6 +21,8 @@ nav: '1.1'
 - [HMSRecordingState](/api-reference/javascript/v2/enums/HMSRecordingState)
 - [HMSRoomState](/api-reference/javascript/v2/enums/HMSRoomState)
 - [HMSSimulcastLayer](/api-reference/javascript/v2/enums/HMSSimulcastLayer)
+- [HMSTranscriptionMode](/api-reference/javascript/v2/enums/HMSTranscriptionMode)
+- [HMSTranscriptionState](/api-reference/javascript/v2/enums/HMSTranscriptionState)
 - [HMSVideoPluginCanvasContextType](/api-reference/javascript/v2/enums/HMSVideoPluginCanvasContextType)
 - [HMSVideoPluginType](/api-reference/javascript/v2/enums/HMSVideoPluginType)
 
@@ -108,6 +110,7 @@ nav: '1.1'
 - [HMSStore](/api-reference/javascript/v2/interfaces/HMSStore)
 - [HMSTrackNotification](/api-reference/javascript/v2/interfaces/HMSTrackNotification)
 - [HMSTrackStats](/api-reference/javascript/v2/interfaces/HMSTrackStats)
+- [HMSTranscriptionInfo](/api-reference/javascript/v2/interfaces/HMSTranscriptionInfo)
 - [HMSVideoPlugin](/api-reference/javascript/v2/interfaces/HMSVideoPlugin)
 - [HMSVideoTrack](/api-reference/javascript/v2/interfaces/HMSVideoTrack)
 - [HMSVideoTrackSettings](/api-reference/javascript/v2/interfaces/HMSVideoTrackSettings)
@@ -1205,6 +1208,22 @@ Select a boolean denoting whether you've muted the screen share audio track of a
 ▸ **selectIsSomeoneScreenSharing**(`state`): `boolean`
 
 Select a boolean denoting whether someone is sharing screen in the room.
+
+#### Parameters
+
+| Name    | Type                                                                                                            |
+| :------ | :-------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+
+#### Returns
+
+`boolean`
+
+---
+
+### selectIsTranscriptionEnabled
+
+▸ **selectIsTranscriptionEnabled**(`state`): `boolean`
 
 #### Parameters
 
