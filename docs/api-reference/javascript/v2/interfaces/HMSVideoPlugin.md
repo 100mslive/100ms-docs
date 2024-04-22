@@ -1,6 +1,6 @@
 ---
 title: HMSVideoPlugin
-nav: '4.75'
+nav: '4.76'
 ---
 
 A plugin implementing this interface can be registered with HMSLocalVideoTrack to transform, process or

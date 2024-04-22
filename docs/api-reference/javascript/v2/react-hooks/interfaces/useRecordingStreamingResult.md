@@ -1,6 +1,6 @@
 ---
 title: useRecordingStreamingResult
-nav: '5.2.13'
+nav: '5.2.15'
 ---
 
 ## Properties

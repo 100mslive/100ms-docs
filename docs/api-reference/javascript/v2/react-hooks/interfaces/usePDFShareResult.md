@@ -1,6 +1,6 @@
 ---
 title: usePDFShareResult
-nav: '5.2.7'
+nav: '5.2.9'
 ---
 
 ## Properties
