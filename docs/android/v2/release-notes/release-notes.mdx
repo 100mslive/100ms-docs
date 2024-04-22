@@ -18,6 +18,30 @@ import AndroidSdkVersionShield from '@/common/android-sdk-version-shield.md';
 | live.100ms:video-filters: |<AndroidSdkVersionShield />|
 | live.100ms:virtual-background: |<AndroidSdkVersionShield />|
 
+## v2.9.54 - 2024-04-19
+### Added
+- Transcriptions for live/webrtc audio.
+- `getPeerById` simplifies getting the `HMSPeer` object for a given `peerId`.
+- Fix issue where flutter could crash in rare cases involving disconnection, leaving and rejoining.
+- Better support for unknown VPNs.
+
+## v2.9.53 - 2024-04-05
+### Added
+- Whiteboard feature
+- Applications can now publish audio from background when screen-share is running on Android 11 and above by adding `FOREGROUND_SERVICE_MICROPHONE` permission on their manifest.
+
+## v2.9.52 - 2024-03-22
+## Fixed
+- Error setting noise cancellation from the audio track settings was fixed.
+- Rare crash involving analytics.
+- AOBR
+
+## Added
+- SIP is now a peer type. 100ms calls can be joined via regular phone calls.
+- Closed caption availability is now exposed from the `HmsHlsPlayer` with `player.areClosedCaptionsSupported`.
+- Analytics changes.
+- `peerListUpdated` is a new callback that simplifies showing the peers in the room.
+
 ## v2.9.51 - 2024-03-11
 ### Fixed
 - Multi choice answers in polls not being recorded correctly.
