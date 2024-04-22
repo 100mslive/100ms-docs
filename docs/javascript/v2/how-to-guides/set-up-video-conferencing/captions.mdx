@@ -1,0 +1,51 @@
+---
+title: Captions (Transcription) (Beta)
+nav: 1.24
+---
+
+You can implement captions (subtitles) in your iOS conferencing app easily with 100ms SDK. The SDK provides a callback with transcript for each peer when they speak.
+
+## Minimum Requirements
+
+-   Minimum 100ms SDK version required is 0.10.8
+
+## What are captions?
+
+Captions are automatic subtitles that are generated with an AI model, and provided to your app with a easy to implement callback.
+
+## How to implement captions?
+
+You implement `useTranscript` hook with `onTranscript` callback like below:
+
+```ts
+    export interface HMSTranscript {
+        // start time in second
+        start: number;
+        // end time in seconds
+        end: number;
+        // peer_id of the speaker
+        peer_id: string;
+        // transcription will continue update the transcript until you receive final keyword
+        final: boolean;
+        // transcripted caption
+        transcript: string;
+    }
+
+    export interface useHMSTranscriptInput {
+        onTranscript?: (data: HMSTranscript[]) => void;
+        handleError?: hooksErrHandler;
+    }
+
+    export const useTranscript = ({ onTranscript, handleError = logErrorHandler }: useHMSTranscriptInput);
+}
+```
+
+### How to know if transcript is enabled in a room
+
+```ts
+
+import { selectIsTranscriptionEnabled, useHMSStore } from '@100mslive/react-sdk';
+// use this to check if caption is enabled for your room.
+const isCaptionPresent: boolean = useHMSStore(selectIsTranscriptionEnabled);
+
+```
