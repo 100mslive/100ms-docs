@@ -24,7 +24,7 @@ import View from './View';
 import Callout, { DynamicIcon } from './Callout';
 import FlexContainer from './FlexContainer';
 import { PortraitImage } from './PortraitImage';
-import { Collapsible } from './CollapsibleSection';
+import { CollapsibleRoot, CollapsiblePreview, CollapsibleContent } from './CollapsibleSection';
 import SuggestedBlogs from './SuggestedBlogs';
 
 const CodeCustom = (props: any) => <Code {...props}>{props.children}</Code>;
@@ -109,7 +109,7 @@ const MDXComponents = {
     StepsContainer,
     SuggestedBlogs,
     PortraitImage,
-    Collapsible,
+    CollapsibleRoot, CollapsiblePreview, CollapsibleContent,
     DynamicIcon
 };
 

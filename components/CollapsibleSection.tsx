@@ -4,20 +4,20 @@ import { ChevronRightIcon } from '@100mslive/react-icons';
 /*
 Usage:
 
-<Collapsible.Root title="Title for this section">
+<CollapsibleRoot title="Title for this section">
     
-    <Collapsible.Preview>
+    <CollapsiblePreview>
         This will always be visible but is optional
-    </Collapsible.Preview>
+    </CollapsiblePreview>
     
-    <Collapsible.Content>
+    <CollapsibleContent>
         This will be hidden after closing. Content should always be defined
-    </Collapsible.Content>
+    </CollapsibleContent>
 
-</Collapsible.Root>
+</CollapsibleRoot>
  */
 
-const CollapsibleRoot = ({ title, children }: { title: string; children: ReactNode[] }) => {
+export const CollapsibleRoot = ({ title, children }: { title: string; children: ReactNode[] }) => {
     let [previewContent, mainContent] = children;
     if (!mainContent) {
         mainContent = previewContent;
@@ -51,16 +51,11 @@ const CollapsibleRoot = ({ title, children }: { title: string; children: ReactNo
     );
 };
 
-const CollapsiblePreview = ({ children }: { children: ReactNode }) => (
+export const CollapsiblePreview = ({ children }: { children: ReactNode }) => (
     <div style={{ margin: '0.5rem 0' }}>{children}</div>
 );
 
-const CollapsibleContent = ({ children }: { children: ReactNode }) => (
+export const CollapsibleContent = ({ children }: { children: ReactNode }) => (
     <div style={{ margin: '0.5rem 0' }}>{children}</div>
 );
 
-export const Collapsible = {
-    Root: CollapsibleRoot,
-    Preview: CollapsiblePreview,
-    Content: CollapsibleContent
-};
