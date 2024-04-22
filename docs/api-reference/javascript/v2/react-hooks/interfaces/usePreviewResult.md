@@ -1,6 +1,6 @@
 ---
 title: usePreviewResult
-nav: '5.2.12'
+nav: '5.2.14'
 ---
 
 ## Properties

@@ -1,6 +1,6 @@
 ---
 title: useCustomEventResult<T>
-nav: '5.2.4'
+nav: '5.2.5'
 ---
 
 ## Type parameters

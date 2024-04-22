@@ -5,12 +5,14 @@ nav: '5.1.1'
 
 ## Interfaces
 
+- [HMSTranscript](/api-reference/javascript/v2/react-hooks/interfaces/HMSTranscript)
 - [useAVToggleResult](/api-reference/javascript/v2/react-hooks/interfaces/useAVToggleResult)
 - [useAutoplayErrorResult](/api-reference/javascript/v2/react-hooks/interfaces/useAutoplayErrorResult)
 - [useCustomEventInput](/api-reference/javascript/v2/react-hooks/interfaces/useCustomEventInput)
 - [useCustomEventResult](/api-reference/javascript/v2/react-hooks/interfaces/useCustomEventResult)
 - [useDevicesResult](/api-reference/javascript/v2/react-hooks/interfaces/useDevicesResult)
 - [useEmbedShareResult](/api-reference/javascript/v2/react-hooks/interfaces/useEmbedShareResult)
+- [useHMSTranscriptInput](/api-reference/javascript/v2/react-hooks/interfaces/useHMSTranscriptInput)
 - [usePDFShareResult](/api-reference/javascript/v2/react-hooks/interfaces/usePDFShareResult)
 - [usePaginatedParticipantsResult](/api-reference/javascript/v2/react-hooks/interfaces/usePaginatedParticipantsResult)
 - [useParticipantListResult](/api-reference/javascript/v2/react-hooks/interfaces/useParticipantListResult)
@@ -567,6 +569,26 @@ For implementing control bar for local peer, this is used based with useAVToggle
 #### Returns
 
 [`useScreenShareResult`](/api-reference/javascript/v2/react-hooks/interfaces/useScreenShareResult)
+
+---
+
+### useTranscript
+
+▸ **useTranscript**(`«destructured»`): `void`
+
+A generic function to implement [custom events](https://www.100ms.live/docs/javascript/v2/features/chat#custom-events) in your UI.
+The data to be sent to remote is expected to be a serializable JSON. The serialization
+and deserialization is taken care of by the hook.
+
+#### Parameters
+
+| Name             | Type                                                                                                 |
+| :--------------- | :--------------------------------------------------------------------------------------------------- |
+| `«destructured»` | [`useHMSTranscriptInput`](/api-reference/javascript/v2/react-hooks/interfaces/useHMSTranscriptInput) |
+
+#### Returns
+
+`void`
 
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: useDevicesResult
-nav: '5.2.5'
+nav: '5.2.6'
 ---
 
 ## Properties
