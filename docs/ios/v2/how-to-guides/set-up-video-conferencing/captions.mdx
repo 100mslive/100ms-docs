@@ -1,0 +1,55 @@
+---
+title: Live Transcription for Conferencing (Closed Captions - Beta)
+nav: 4.99
+---
+
+100ms real-time transcription engine generates a live transcript (closed captions) during a conferencing session. 
+The SDK provides a callback with the transcript for each peer when they speak.
+
+## Minimum Requirements
+
+- Minimum 100ms SDK version required is 1.9.0
+
+## How to implement closed captioning?
+
+Implement `on(transcripts: HMSTranscripts)` from `HMSUpdateListener` callback like below:
+
+```swift
+    public func on(transcripts: HMSTranscripts) {
+        transcripts.transcripts.forEach { transcript in
+            // handle transcript
+        }
+    }
+}
+```
+
+Here is an example implemenation:
+
+```swift
+    public func on(transcripts: HMSTranscripts) {
+        transcripts.transcripts.forEach { transcript in
+            let peerModel = transcript.peer
+            
+            if !(lastTranscript?.isFinal ?? false) {
+                _ = self.transcriptArray.popLast()
+            }
+            
+            if peerModel == lastTranscript?.peer {
+                self.transcriptArray += [" " + transcript.transcript]
+            }
+            else {
+                // if last transcript was not final pop the speaker label as well
+                if !(lastTranscript?.isFinal ?? false) {
+                    if transcriptArray.last?.contains(":") ?? false {
+                        _ = self.transcriptArray.popLast()
+                    }
+                }
+                self.transcriptArray += ["\n**\(peerModel.name.trimmingCharacters(in: .whitespacesAndNewlines)):** "]
+                self.transcriptArray += ["\(transcript.transcript)"]
+            }
+            
+            lastTranscript = transcript
+        }
+    }
+}
+```
