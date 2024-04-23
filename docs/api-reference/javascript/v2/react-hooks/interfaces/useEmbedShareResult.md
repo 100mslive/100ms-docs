@@ -1,6 +1,6 @@
 ---
 title: useEmbedShareResult
-nav: '5.2.6'
+nav: '5.2.7'
 ---
 
 ## Properties

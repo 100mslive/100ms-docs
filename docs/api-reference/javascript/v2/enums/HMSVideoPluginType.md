@@ -1,6 +1,6 @@
 ---
 title: HMSVideoPluginType
-nav: '2.18'
+nav: '2.20'
 ---
 
 Specifies the type of the plugin a transforming plugin will get an output canvas to give the resulting

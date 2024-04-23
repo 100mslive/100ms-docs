@@ -112,3 +112,9 @@ if this number is available room.peers is not guaranteed to have all the peers.
 ### startedAt
 
 • `Optional` **startedAt**: `Date`
+
+---
+
+### transcriptions
+
+• `Optional` **transcriptions**: [`HMSTranscriptionInfo`](/api-reference/javascript/v2/interfaces/HMSTranscriptionInfo)[]
