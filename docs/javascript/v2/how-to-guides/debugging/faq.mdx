@@ -167,7 +167,7 @@ You can get the HLS URL in several ways based on whether you use 100ms client SD
 
 #### I get type errors related to WebRTC Stats, for example, 'Cannot find name RTCInboundRtpStreamStats'.
 
-The minimum supported version of TypeScript for the SDK is '4.4'. You could update to any version above 4.4 or if you are on an old version of TypeScript and cannot do a major upgrade you can set `skipLibCheck: true` in your tsconfig file.
+The supported version of TypeScript for the SDK is `4.7.4`. You could update to any version above 4.4 or if you are on an old version of TypeScript and cannot do a major upgrade you can set `skipLibCheck: true` in your tsconfig file.
 
 #### Why is my screenshare not working on mobile browsers?
 
@@ -206,3 +206,11 @@ Gotchas:
 `await hmsActions.setAudioSettings({ advanced:[{ noiseSuppression: false}, { echoCancellation: false }, { autoGainControl: false } ]})`
 
 You can enabled/disable the above properties depending on your use case.
+
+
+#### I am getting build errors after cloning the web-sdks repository and building roomkit-react
+
+Follow these steps to develop and test roomkit-react on your local device:
+- Install and build web-sdks at the root level using the `yarn ybys` command which builds all the packages and starts the storybook component to preview the prebuilt component with your changes
+- The storybook will auto refresh whenever changes are made to the roomkit-react package
+- Currently the version of typescript used by the repository is `4.7.4`
