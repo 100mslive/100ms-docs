@@ -1,21 +1,18 @@
 ---
-title: Captions (Transcription) (Beta)
+title: Live Transcription for Conferencing (Closed Captions - Beta)
 nav: 4.99
 ---
 
-You can implement captions (subtitles) in your iOS conferencing app easily with 100ms SDK. The SDK provides a callback with transcript for each peer when they speak.
+100ms real-time transcription engine generates a live transcript (closed captions) during a conferencing session. 
+The SDK provides a callback with transcript for each peer when they speak.
 
 ## Minimum Requirements
 
--   Minimum 100ms SDK version required is 1.9
-
-## What are captions?
-
-Captions are automatic subtitles that are generated with an AI model, and provided to your app with a easy to implement callback.
+-   Minimum 100ms SDK version required is 1.9.0
 
 ## How to implement captions?
 
-You implement on(transcripts: HMSTranscripts) callback like below:
+Implement `on(transcripts: HMSTranscripts)` from `HMSUpdateListener` callback like below:
 
 ```swift
     public func on(transcripts: HMSTranscripts) {
@@ -31,13 +28,13 @@ Here is an example implemenation:
 ```swift
     public func on(transcripts: HMSTranscripts) {
         transcripts.transcripts.forEach { transcript in
-            guard let peerModel = peerModels.first(where: { $0.peer == transcript.peer }) else { return }
+            let peerModel = transcript.peer
             
             if !(lastTranscript?.isFinal ?? false) {
                 _ = self.transcriptArray.popLast()
             }
             
-            if peerModel.peer == lastTranscript?.peer {
+            if peerModel == lastTranscript?.peer {
                 self.transcriptArray += [" " + transcript.transcript]
             }
             else {
