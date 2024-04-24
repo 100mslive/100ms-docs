@@ -9,7 +9,7 @@ Icon usage
 For color, "blue", "white" etc works too
 */
 
-const Callout = ({ title, icon, color = "$textHighEmp", children }) => (
+const Callout = ({ title, icon, color = '$textHighEmp', children }) => (
     <Flex
         className="callout"
         direction="column"

@@ -43,7 +43,7 @@ export const CollapsibleRoot = ({ title, children }: { title: string; children: 
                     }}
                 />
 
-                <h2 style={{ margin: 0 }}>{title}</h2>
+                <h2 style={{ margin: 0, display: 'inline-block' }}>{title}</h2>
             </div>
             {previewContent}
             <div style={{ height: open ? 'auto' : '0', overflowY: 'hidden' }}>{mainContent}</div>
@@ -58,4 +58,3 @@ export const CollapsiblePreview = ({ children }: { children: ReactNode }) => (
 export const CollapsibleContent = ({ children }: { children: ReactNode }) => (
     <div style={{ margin: '0.5rem 0' }}>{children}</div>
 );
-
