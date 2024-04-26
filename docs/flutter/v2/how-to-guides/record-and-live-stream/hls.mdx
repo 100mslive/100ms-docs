@@ -432,7 +432,7 @@ Transform.scale(
 ```dart
 ///[running]: bool value `true` indicates that HLS streaming is running
 ///[variants]: a list of HMSHLSVariants
-  ///[state]: Contains info about current state of HLS streaming
+///[state]: Contains info about current state of HLS streaming
 
 class HMSHLSStreamingState(
   bool running;
@@ -448,10 +448,13 @@ class HMSHLSStreamingState(
 ///[meetingUrl]: URL of the room which is getting streamed
 ///[metadata]: Extra info about the room corresponding to meetingUrl which is passed in `HMSHLSMeetingURLVariant` while starting HLS
 ///[startedAt]: time at which RTMP streaming was started
+///[playlistType]: Enum to differentiate whether a stream is seekable or non-seekable. For seekabable it's set to `HMSHLSPlaylistType.dvr`
+///for non-seekable it's set to `HMSHLSPlaylistType.noDvr`
 class HMSHLSVariant(
   String? hlsStreamUrl;
   String? meetingUrl;
   String? metadata;
   DateTime? startedAt;
+  HMSHLSPlaylistType playlistType;
 )
 ```
