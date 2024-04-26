@@ -265,6 +265,130 @@ hmsHlsPlayerRef.current?.setVolume(50); // use value from 0-100 range
 ```
 
 
+## How to enable or disable Closed Captions
+
+<div className="steps-container">
+
+### Check If Closed Captions are supported in stream
+
+We can use `isClosedCaptionSupported` method available on the `ref` of `HMSHLSPlayer` component to check if captions are supported and available in the stream.
+
+```js{12}
+// Create `ref` for `HMSHLSPlayer` component
+const hmsHlsPlayerRef = useRef(null);
+
+...
+
+// Assign above created ref to `ref` prop of `HMSHLSPlayer` component
+<HMSHLSPlayer ref={hmsHlsPlayerRef} />
+
+...
+
+const isSupported = await hmsHlsPlayerRef.current?.isClosedCaptionSupported();
+```
+
+### Enable Closed Captions
+
+We can use `enableClosedCaption` method available on the `ref` of `HMSHLSPlayer` component to enable the captions in the stream.
+
+Before enabling or disabling captions, you should check if captions are supported in the stream.
+
+```js{12}
+// Create `ref` for `HMSHLSPlayer` component
+const hmsHlsPlayerRef = useRef(null);
+
+...
+
+// Assign above created ref to `ref` prop of `HMSHLSPlayer` component
+<HMSHLSPlayer ref={hmsHlsPlayerRef} />
+
+...
+
+await hmsHlsPlayerRef.current?.enableClosedCaption();
+```
+
+### Disable Closed Captions
+
+We can use `disableClosedCaption` method available on the `ref` of `HMSHLSPlayer` component to disable the captions in the stream.
+
+Before enabling or disabling captions, you should check if captions are supported in the stream.
+
+```js{12}
+// Create `ref` for `HMSHLSPlayer` component
+const hmsHlsPlayerRef = useRef(null);
+
+...
+
+// Assign above created ref to `ref` prop of `HMSHLSPlayer` component
+<HMSHLSPlayer ref={hmsHlsPlayerRef} />
+
+...
+
+await hmsHlsPlayerRef.current?.disableClosedCaption();
+```
+
+### Check If Closed Captions is enabled or not
+
+We can use `isClosedCaptionEnabled` method available on the `ref` of `HMSHLSPlayer` component to check if captions are enabled in stream or not.
+
+```js{12}
+// Create `ref` for `HMSHLSPlayer` component
+const hmsHlsPlayerRef = useRef(null);
+
+...
+
+// Assign above created ref to `ref` prop of `HMSHLSPlayer` component
+<HMSHLSPlayer ref={hmsHlsPlayerRef} />
+
+...
+
+const isEnabled = await hmsHlsPlayerRef.current?.isClosedCaptionEnabled();
+```
+
+### Show Closed Captions in UI
+
+<strong>In case of iOS -</strong> iOS shows captions on its own. We can only enable, disable, check support or check enabled status in case of iOS.
+
+<strong>In case of Android -</strong> Android also shows a default UI for captions. It is tied up with reset of the default controls of player, meaning captions only show up when you have enabled default controls of player. If you turn off default controls with `enableControls = false` prop, captions will also be hidden.
+
+However, Unlike iOS, Android gives us an option to render captions on UI ourselves, If captions are supported in stream, We can use `useHMSHLSPlayerSubtitles` hook to get the live captions.
+
+```js
+// Get live captions
+const captions = useHMSHLSPlayerSubtitles();
+
+...
+
+// Render captions
+<Text>{captions}</Text>
+```
+
+> Note: If you are not getting captions, check if captions are supported and enabled.
+
+</div>
+
+
+## How to get stream properties
+
+We can use `getPlayerDurationDetails` method available on the `ref` of `HMSHLSPlayer` component to get stream properties like duration, rolling window, etc.
+
+```js{12}
+// Create `ref` for `HMSHLSPlayer` component
+const hmsHlsPlayerRef = useRef(null);
+
+...
+
+// Assign above created ref to `ref` prop of `HMSHLSPlayer` component
+<HMSHLSPlayer ref={hmsHlsPlayerRef} />
+
+...
+
+const { streamDuration, rollingWindowTime } = await hmsHlsPlayerRef.current?.getPlayerDurationDetails();
+```
+
+> Note: In case of iOS, check the `rollingWindowTime` property for getting the rolling window or duration of the stream. For android check the `streamDuration` property.
+
+
 ## How to Know the Stats Related to HLS Playback
 
 
