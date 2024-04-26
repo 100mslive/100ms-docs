@@ -193,6 +193,7 @@ interface HMSHLSVariant {
     meetingUrl?: string; // URL of the room which is getting streamed
     metadata?: string; // Extra info about the room corresponding to meetingUrl which is passed in `HMSHLSMeetingURLVariant` while starting HLS
     startedAt?: Date; // time at which HLS Stream was started
+    playlistType?: HMSHLSPlaylistType; // Enum to differentiate whether a stream is seekable or non-seekable. For seekabable it is set to `HMSHLSPlaylistType.DVR` and for non-seekable it's set to `HMSHLSPlaylistType.noDVR`.
 }
 ```
 
