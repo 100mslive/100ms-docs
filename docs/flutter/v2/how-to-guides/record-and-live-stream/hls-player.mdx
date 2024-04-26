@@ -117,13 +117,58 @@ HMSHLSPlayerController.seekBackward(seconds:"Time in seconds you wish to seek ba
 
 ### How to Change Volume of HLS Playback
 
+- **setVolume**
+
 To set volume for HLS Playback we can use the `setVolume` method
 
 ```dart
-HMSHLSPlayerController.seekBackward(volume:"Volume between 0 to 100");
+HMSHLSPlayerController.setVolume(volume:"Volume between 0 to 100");
 ```
 
 > Note: `volume` can only take values from 0 to 100. It is set to 100 by default.
+
+### How to enable/disable captions
+
+- **areClosedCaptionsSupported**
+
+To check if the HLS stream supports closed captions we can use the `areClosedCaptionsSupported` method
+
+```dart
+HMSHLSPlayerController.areClosedCaptionsSupported();
+```
+
+- **enableClosedCaptions**
+
+If the HLS stream supports closed captions we can enable them using the `enableClosedCaptions` method
+
+```dart
+HMSHLSPlayerController.enableClosedCaptions();
+```
+
+- **disableClosedCaptions**
+
+To disable the closed captions we can use the `disableClosedCaptions` method
+
+```dart
+HMSHLSPlayerController.disableClosedCaptions();
+```
+
+Applications can get the captions using the `onCues` callback in `HMSHLSPlaybackEventsListener`.
+
+### How to get stream properties
+
+- **getStreamProperties**
+
+To get stream properties like duration, rolling window, etc. we can use the `getStreamProperties` method
+
+```dart
+///This returns an object of HLSStreamProperties
+///that has properties like duration and rolling window.
+HMSHLSPlayerController.getStreamProperties();
+```
+
+>  Note: In case of iOS, check the `rollingWindowTime` for getting the rolling window or duration of the stream.
+> For android check the `streamDuration` property.
 
 ### How to get HLS Callbacks
 
@@ -201,6 +246,21 @@ class Meeting implements HMSHLSPlaybackEventsListener{
   @override
   void onHLSEventUpdate({required HMSHLSPlayerStats playerStats}) {
     /// Render the HLS Player stats here.
+  }
+
+  /// Callback to get the stream height/width changes
+  /// - Parameter: size: A [Size] object containing the new height and width of the stream
+  void onVideoSizeChanged({required Size size}) {
+    /// Use this to set the hls Player aspect ratio
+  }
+
+  ///[Android only]
+  /// Callback to get the subtitles
+  /// - Parameter: subtitles: A list of [String] containing the subtitles
+  void onCues({required List<String> subtitles}) {
+    ///Set the subtitles here
+    ///This is only available for Android for iOS it doesn't do anything since
+    ///iOS renders subtitles internally.
   }
 
 
