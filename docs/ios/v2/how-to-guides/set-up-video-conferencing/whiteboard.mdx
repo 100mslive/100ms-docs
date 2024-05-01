@@ -67,3 +67,14 @@ sdk.interactivityCenter.stopWhiteboard() { success, error in
 ```
 
 Note: Please note that you don't need any additional handling to start/stop the whiteboard. The WhiteboardUpdateListener will get called upon calling startWhiteboard() and stopWhiteboard() APIs. Thus showing/hiding of WebView is already taken care of in one place.
+
+## How to know if whiteboard feature is enabled/available in the current room
+
+After joining the room you can check isWhiteboardEnabled property on the interactivityCenter like below:
+
+```swift
+func on(join room: HMSRoom) {
+    let isWhiteboardEnabled = hmsSDK.interactivityCenter.isWhiteboardEnabled
+    ...
+}
+```
