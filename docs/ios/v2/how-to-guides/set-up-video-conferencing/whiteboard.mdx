@@ -10,58 +10,57 @@ nav: 4.99
 - Minimum 100ms SDK version required is 1.9.0
 - For user to be able to start or view the whiteboard, their role must have the whiteboard functionality enabled in the 100ms dashboard.
 
-## How to implement a shared whiteboard?
+## How to show the shared whiteboard in the room?
 
-You can startWhiteboard() and stopWhiteboard() to start and stop the shared whiteboard in the conference room. To show the whiteboard in your app, you listen to whiteboard updates using interactivity center like below:
+To show the whiteboard in your app, you listen to whiteboard updates using interactivity center's WhiteboardUpdateListener like below:
 
 ```swift
 
-    var whiteboard: HMSWhiteboard?
-
+let webview: WKWebView?
 ...
 
-    sdk.interactivityCenter.addWhiteboardUpdateListener { [weak self] whiteboard, updateType in
-      switch updateType {
-          case .started:
-              self.whiteboard = whiteboard
-              break
-          case .stopped:
-              self.whiteboard = nil
-              break
-          @unknown default:
-              break
-      }
-    }
+sdk.interactivityCenter.addWhiteboardUpdateListener { [weak self] whiteboard, updateType in
+  switch updateType {
+      case .started:
+
+          webview = WKWebView()
+          let whiteboardUrl = whiteboard.url
+          let request = URLRequest(url: whiteboardUrl)
+          webView.load(request)
+
+          break
+      case .stopped:
+          self.whiteboard = nil
+          webview = nil
+          break
+      @unknown default:
+          break
+  }
 }
 ```
 
-Here is an example implemenation:
+The HMSWhiteboard object that you get here has a url property. You can load this url in a WKWebview to show the whiteboard like shown above.
+
+That's all you have to do to show the room's whiteboard.
+
+## How to start/stop shared whiteboard in the room?
+
+You call startWhiteboard() and stopWhiteboard() to start and stop the shared whiteboard in the conference room. Please note that you don't need any additional handling to start/stop the whiteboard because the WhiteboardUpdateListener will get called upon calling startWhiteboard() and stopWhiteboard() APIs. Thus showing/hiding of webview is already taken care of in one place.
+
 
 ```swift
-    public func on(transcripts: HMSTranscripts) {
-        transcripts.transcripts.forEach { transcript in
-            let peerModel = transcript.peer
-            
-            if !(lastTranscript?.isFinal ?? false) {
-                _ = self.transcriptArray.popLast()
-            }
-            
-            if peerModel == lastTranscript?.peer {
-                self.transcriptArray += [" " + transcript.transcript]
-            }
-            else {
-                // if last transcript was not final pop the speaker label as well
-                if !(lastTranscript?.isFinal ?? false) {
-                    if transcriptArray.last?.contains(":") ?? false {
-                        _ = self.transcriptArray.popLast()
-                    }
-                }
-                self.transcriptArray += ["\n**\(peerModel.name.trimmingCharacters(in: .whitespacesAndNewlines)):** "]
-                self.transcriptArray += ["\(transcript.transcript)"]
-            }
-            
-            lastTranscript = transcript
-        }
+
+// Start whiteboard
+sdk.interactivityCenter.startWhiteboard() { success, error in
+    if let error = error {
+        // handle error
+    }
+}
+
+// Stop whiteboard
+sdk.interactivityCenter.stopWhiteboard() { success, error in
+    if let error = error {
+        // handle error
     }
 }
 ```
