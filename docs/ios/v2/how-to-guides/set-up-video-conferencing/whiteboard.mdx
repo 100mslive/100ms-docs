@@ -1,0 +1,67 @@
+---
+title: Whiteboard (Beta)
+nav: 4.99
+---
+
+100ms SDK provides APIs to support whiteboard collaboration during a conferencing session. Participants can draw, write and collaborate on a common digital whiteboard in real-time. You can start and stop a whiteboard and show it in a WebView.
+
+## Minimum Requirements
+
+- Minimum 100ms SDK version required is 1.9.0
+- For user to be able to start or view the whiteboard, their role must have the whiteboard functionality enabled in the 100ms dashboard.
+
+## How to implement a shared whiteboard?
+
+You can startWhiteboard() and stopWhiteboard() to start and stop the shared whiteboard in the conference room. To show the whiteboard in your app, you listen to whiteboard updates using interactivity center like below:
+
+```swift
+
+    var whiteboard: HMSWhiteboard?
+
+...
+
+    sdk.interactivityCenter.addWhiteboardUpdateListener { [weak self] whiteboard, updateType in
+      switch updateType {
+          case .started:
+              self.whiteboard = whiteboard
+              break
+          case .stopped:
+              self.whiteboard = nil
+              break
+          @unknown default:
+              break
+      }
+    }
+}
+```
+
+Here is an example implemenation:
+
+```swift
+    public func on(transcripts: HMSTranscripts) {
+        transcripts.transcripts.forEach { transcript in
+            let peerModel = transcript.peer
+            
+            if !(lastTranscript?.isFinal ?? false) {
+                _ = self.transcriptArray.popLast()
+            }
+            
+            if peerModel == lastTranscript?.peer {
+                self.transcriptArray += [" " + transcript.transcript]
+            }
+            else {
+                // if last transcript was not final pop the speaker label as well
+                if !(lastTranscript?.isFinal ?? false) {
+                    if transcriptArray.last?.contains(":") ?? false {
+                        _ = self.transcriptArray.popLast()
+                    }
+                }
+                self.transcriptArray += ["\n**\(peerModel.name.trimmingCharacters(in: .whitespacesAndNewlines)):** "]
+                self.transcriptArray += ["\(transcript.transcript)"]
+            }
+            
+            lastTranscript = transcript
+        }
+    }
+}
+```
