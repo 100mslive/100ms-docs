@@ -10,16 +10,16 @@ The 100ms SDK provides robust APIs for integrating whiteboard collaboration into
 - Minimum 100ms SDK version required is 1.9.0
 - User roles must be configured to enable whiteboard functionality via the 100ms dashboard for starting or viewing the whiteboard.
 
-## Displaying the Shared Whiteboard?
+## Displaying the Shared Whiteboard
 
-To incorporate the shared whiteboard into your application, subscribe to whiteboard updates using the `WhiteboardUpdateListener` provided by the interactivity center. Below is an example implementation in Swift:
+To incorporate the shared whiteboard into your application, subscribe to whiteboard updates using the `WhiteboardUpdateListener` provided by the interactivity center of HMSSDK. Below is an example implementation in Swift:
 
 ```swift
 
 let webview: WKWebView?
 ...
 
-sdk.interactivityCenter.addWhiteboardUpdateListener { [weak self] whiteboard, updateType in
+hmsSdk.interactivityCenter.addWhiteboardUpdateListener { [weak self] whiteboard, updateType in
   switch updateType {
       case .started:
 
