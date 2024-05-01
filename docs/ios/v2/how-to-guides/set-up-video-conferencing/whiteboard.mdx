@@ -3,16 +3,16 @@ title: Whiteboard (Beta)
 nav: 4.99
 ---
 
-100ms SDK provides APIs to support whiteboard collaboration during a conferencing session. Participants can draw, write and collaborate on a common digital whiteboard in real-time. You can start and stop a whiteboard and show it in a WebView.
+The 100ms SDK provides robust APIs for integrating whiteboard collaboration into your conferencing sessions. Participants can engage in real-time by drawing, writing, and collaborating on a shared digital whiteboard. This documentation outlines how to implement the start and stop functionality for a whiteboard and display it within a WebView.
 
 ## Minimum Requirements
 
 - Minimum 100ms SDK version required is 1.9.0
-- For user to be able to start or view the whiteboard, their role must have the whiteboard functionality enabled in the 100ms dashboard.
+- User roles must be configured to enable whiteboard functionality via the 100ms dashboard for starting or viewing the whiteboard.
 
-## How to show the shared whiteboard in the room?
+## Displaying the Shared Whiteboard?
 
-To show the whiteboard in your app, you listen to whiteboard updates using interactivity center's WhiteboardUpdateListener like below:
+To incorporate the shared whiteboard into your application, subscribe to whiteboard updates using the `WhiteboardUpdateListener` provided by the interactivity center. Below is an example implementation in Swift:
 
 ```swift
 
@@ -42,15 +42,14 @@ sdk.interactivityCenter.addWhiteboardUpdateListener { [weak self] whiteboard, up
 }
 ```
 
-The HMSWhiteboard object that you get here has a url property. You can load this url in a WKWebview to show the whiteboard like shown above.
-Note: Please note that it is required that you close the webview when you receive whiteboard stopped update.
+You can see above that the HMSWhiteboard object that you get in the WhiteboardUpdateListener callback has a url property. You load this url in a WKWebview to show the whiteboard.
+Note: It's crucial to close the WebView when the whiteboard session is stopped to release resources.
 
 That's all you have to do to show the room's whiteboard.
 
-## How to start/stop shared whiteboard in the room?
+## Starting and Stopping the Whiteboard
 
-You call startWhiteboard() and stopWhiteboard() to start and stop the shared whiteboard in the conference room. Please note that you don't need any additional handling to start/stop the whiteboard because the WhiteboardUpdateListener will get called upon calling startWhiteboard() and stopWhiteboard() APIs. Thus showing/hiding of webview is already taken care of in one place.
-
+The shared whiteboard can be started and stopped in the room using the startWhiteboard() and stopWhiteboard() methods.
 
 ```swift
 
@@ -68,3 +67,5 @@ sdk.interactivityCenter.stopWhiteboard() { success, error in
     }
 }
 ```
+
+Note: Please note that you don't need any additional handling to start/stop the whiteboard. The WhiteboardUpdateListener will get called upon calling startWhiteboard() and stopWhiteboard() APIs. Thus showing/hiding of webview is already taken care of in one place.
