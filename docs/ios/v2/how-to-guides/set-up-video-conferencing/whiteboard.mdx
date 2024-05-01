@@ -78,3 +78,16 @@ func on(join room: HMSRoom) {
     ...
 }
 ```
+
+
+## How to know if a role is allowed to show/hide whiteboard
+
+Every peer has a role assigned. This HMSRole object contains whiteboard permissions in a whiteboard permission object. You can check what whiteboord permissions the current user has like below:
+
+```swift
+let userRole = localPeer.role
+let whiteboardPermissions = userRole.permissions.whiteboard
+let isUserAdmin = whiteboardPermissions.admin
+let canWrite = whiteboardPermissions.write
+let canRead = whiteboardPermissions.read
+```
