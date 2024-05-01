@@ -23,14 +23,17 @@ sdk.interactivityCenter.addWhiteboardUpdateListener { [weak self] whiteboard, up
   switch updateType {
       case .started:
 
+          // Open the whiteboard url in a webview
           webview = WKWebView()
           let whiteboardUrl = whiteboard.url
           let request = URLRequest(url: whiteboardUrl)
           webView.load(request)
-
+          // show the webview in app UI
+          ...
           break
       case .stopped:
-          self.whiteboard = nil
+          // close the webview
+          webView.removeFromSuperview()
           webview = nil
           break
       @unknown default:
@@ -40,6 +43,7 @@ sdk.interactivityCenter.addWhiteboardUpdateListener { [weak self] whiteboard, up
 ```
 
 The HMSWhiteboard object that you get here has a url property. You can load this url in a WKWebview to show the whiteboard like shown above.
+Note: Please note that it is required that you close the webview when you receive whiteboard stopped update.
 
 That's all you have to do to show the room's whiteboard.
 
