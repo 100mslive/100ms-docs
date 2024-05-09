@@ -3,8 +3,8 @@ import {
     DiscordIcon,
     FacebookIcon,
     LinkedInIcon,
-    Svg100MsLogo,
-    TwitterIcon
+    Svg100MsLogoIcon as Svg100MsLogo,
+    TwitterXIcon
 } from '@100mslive/react-icons';
 import { Box, CSS, Flex, HorizontalDivider, Text } from '@100mslive/react-ui';
 import { useStatusPage } from 'hooks';
@@ -54,11 +54,10 @@ const Footer: React.FC<Props> = ({ css = {} }) => (
                             </a>
                             <a href="https://twitter.com/100mslive">
                                 <Box css={{ color: '$textMedEmp' }}>
-                                    <TwitterIcon
+                                    <TwitterXIcon
                                         style={{
-                                            width: '27px',
-                                            height: '27px',
-                                            padding: '4.5px',
+                                            width: '36px',
+                                            height: '36px',
                                             color: 'inherit'
                                         }}
                                     />
@@ -89,6 +88,7 @@ const Footer: React.FC<Props> = ({ css = {} }) => (
                         </Flex>
                     </Box>
                     <Box className="subscribe">
+
                         <UtmLinkWrapper href="https://status.100ms.live">
                             <a>
                                 <Flex
