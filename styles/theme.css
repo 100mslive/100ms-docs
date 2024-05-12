@@ -124,14 +124,14 @@ to decide colors
     --docs_text_secondary: hsla(216, 40%, 80%, 0.7);
     --docs_text_category: var(--primary_light);
 
-    --docs_border_default: hsla(217, 20%, 10%, 1);
+    --docs_border_default: #1C2027;
     --docs_border_strong: hsla(217, 20%, 14%, 1);
 
     --docs_bg_header: hsla(217, 20%, 7%, 1);
     --docs_bg_content: #0B0D0F;
     --docs_bg_footer: var(--docs_bg_header);
-    --docs_bg_table_header: hsla(217, 20%, 8%, 1);
-    --docs_bg_table_body: hsla(217, 20%, 10%, 1);
+    --docs_bg_table_header: #0F1115;
+    --docs_bg_table_body: #13161B;
     --docs_bg_code_highlight: hsla(217, 20%, 14%, 1);
     --docs_bg_sandbox: hsla(217, 20%, 15%, 1);
     --docs_bg_header_button: hsla(217, 20%, 15%, 1);
@@ -602,6 +602,10 @@ table tr:last-of-type td:last-of-type {
     border-bottom-width: 1px !important;
 }
 
+table tr td:first-of-type {
+    font-weight: 600;
+}
+
 .table-wrapper {
     overflow-x: auto;
 }
@@ -614,8 +618,8 @@ table td {
     background: var(--docs_bg_table_body) !important;
 }
 
-table th,
-tr,
+table tr, 
+th,
 td {
     border-color: var(--docs_border_default) !important;
     border-bottom-width: 0px !important;
