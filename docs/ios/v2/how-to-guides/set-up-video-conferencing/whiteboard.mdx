@@ -1,0 +1,93 @@
+---
+title: Whiteboard (Beta)
+nav: 4.99
+---
+
+The 100ms SDK provides robust APIs for integrating whiteboard collaboration into your conferencing sessions. Participants can engage in real-time by drawing, writing, and collaborating on a shared digital whiteboard. This documentation outlines how to implement the start and stop functionality for a whiteboard and display it within a WebView.
+
+## Minimum Requirements
+
+- Minimum 100ms SDK version required is 1.9.0
+- User roles must be configured to enable whiteboard functionality via the 100ms dashboard for starting or viewing the whiteboard.
+
+## Displaying the Shared Whiteboard
+
+To incorporate the shared whiteboard into your application, subscribe to whiteboard updates using the `WhiteboardUpdateListener` provided by the interactivity center of HMSSDK. Below is an example implementation in Swift:
+
+```swift
+
+let webview: WKWebView?
+...
+
+hmsSdk.interactivityCenter.addWhiteboardUpdateListener { [weak self] whiteboard, updateType in
+  switch updateType {
+      case .started:
+
+          // Open the whiteboard url in a webview
+          webview = WKWebView()
+          let whiteboardUrl = whiteboard.url
+          let request = URLRequest(url: whiteboardUrl)
+          webView.load(request)
+          // show the webview in app UI
+          ...
+          break
+      case .stopped:
+          // close the webview
+          webView.removeFromSuperview()
+          webview = nil
+          break
+      @unknown default:
+          break
+  }
+}
+```
+
+You can see above that the HMSWhiteboard object that you get in the WhiteboardUpdateListener callback has a url property. You load this url in a WKWebview to show the whiteboard.
+Note: It's crucial to close the WebView when the whiteboard session is stopped to release resources.
+
+## Starting and Stopping the Whiteboard
+
+The shared whiteboard can be started and stopped in the room using the startWhiteboard() and stopWhiteboard() methods.
+
+```swift
+
+// Start whiteboard
+sdk.interactivityCenter.startWhiteboard() { success, error in
+    if let error = error {
+        // handle error
+    }
+}
+
+// Stop whiteboard
+sdk.interactivityCenter.stopWhiteboard() { success, error in
+    if let error = error {
+        // handle error
+    }
+}
+```
+
+Note: Please note that you don't need any additional handling to start/stop the whiteboard. The WhiteboardUpdateListener will get called upon calling startWhiteboard() and stopWhiteboard() APIs. Thus showing/hiding of WebView is already taken care of in one place.
+
+## How to know if whiteboard feature is enabled/available in the current room
+
+After joining the room you can check isWhiteboardEnabled property on the interactivityCenter like below:
+
+```swift
+func on(join room: HMSRoom) {
+    let isWhiteboardEnabled = hmsSDK.interactivityCenter.isWhiteboardEnabled
+    ...
+}
+```
+
+
+## How to know if a role is allowed to show/hide whiteboard
+
+Every peer has a role assigned. This HMSRole object contains whiteboard permissions in a whiteboard permission object. You can check what whiteboord permissions the current user has like below:
+
+```swift
+let userRole = localPeer.role
+let whiteboardPermissions = userRole.permissions.whiteboard
+let isUserAdmin = whiteboardPermissions.admin
+let canWrite = whiteboardPermissions.write
+let canRead = whiteboardPermissions.read
+```

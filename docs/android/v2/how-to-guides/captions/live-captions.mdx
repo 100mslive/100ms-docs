@@ -1,0 +1,20 @@
+---
+title:  Live Transcription for Conferencing (Closed Captions - Beta)
+nav: 15.1
+---
+
+100ms' real-time transcription engine generates a live transcript (closed captions) during a conferencing session. The SDK provides a callback with transcript for each peer when they speak.
+
+## Minimum Requirements
+
+-   Minimum 100ms SDK version required is `2.9.54`
+
+## Checking if captions are enabled in a room.
+To check if WebRTC (not hls) captions are enabled in a room. Look for any transcriptions being in a started state in the room data.
+`val captionsEnabled = hmsSDK.getRoom()?.transcriptions?.find { it.state == TranscriptionState.STARTED } != null`
+
+## How to implement captions?
+
+Implement `fun onTranscripts(transcripts: HmsTranscripts)` in the `HMSUpdateListener` callback.
+
+For an example implementation look at [`TranscriptionUseCase.kt`](https://github.com/100mslive/100ms-android/blob/ac66fa76503ec990322c293f8ce6a504c0c3c444/room-kit/src/main/java/live/hms/roomkit/ui/meeting/TranscriptionUseCase.kt#L44) in the 100ms-android [sample app](https://github.com/100mslive/100ms-android/blob/ac66fa76503ec990322c293f8ce6a504c0c3c444/room-kit/src/main/java/live/hms/roomkit/ui/meeting/TranscriptionUseCase.kt#L44) repository.
