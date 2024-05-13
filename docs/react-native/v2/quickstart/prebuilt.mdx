@@ -199,36 +199,17 @@ npm install --save @100mslive/react-native-room-kit
 `react-native-room-kit` package depends upon many other packages. These packages to be your app's direct dependencies so that `react-native` can link them.
 
 ```bash
-npm install @100mslive/react-native-hms
-  @100mslive/types-prebuilt
-  @react-native-community/blur@^4.3.2
-  @react-native-masked-view/masked-view@^0.2.9
-  @shopify/flash-list@1.4.3
-  lottie-react-native@5.1.6
-  react-native-gesture-handler@2.12.1
-  react-native-linear-gradient@2.7.3
-  react-native-modal
-  react-native-safe-area-context@3.3.0
+npm install @100mslive/react-native-hms \
+  @100mslive/types-prebuilt \
+  @react-native-community/blur@^4.3.2 \
+  @react-native-masked-view/masked-view@^0.2.9 \
+  @shopify/flash-list@1.4.3 \
+  lottie-react-native@5.1.6 \
+  react-native-gesture-handler@2.12.1 \
+  react-native-linear-gradient@2.8.3 \
+  react-native-modal \
+  react-native-safe-area-context@3.3.0 \
   react-native-simple-toast@1.1.3
-```
-
-Ensure that the final `package.json` file contains the following dependencies -
-
-```json
-  "@100mslive/react-native-room-kit": "^1.0.3",
-  "@100mslive/react-native-hms": "^1.9.2",
-  "@100mslive/types-prebuilt": "^0.12.7",
-  "@react-native-community/blur": "^4.3.2",
-  "@react-native-masked-view/masked-view": "^0.2.9",
-  "@shopify/flash-list": "1.4.3",
-  "lottie-react-native": "5.1.6",
-  "react-native-gesture-handler": "2.12.1",
-  "react-native-linear-gradient": "2.7.3",
-  "react-native-modal": "^13.0.1",
-  "react-native-permissions": "3.4.0",
-  "react-native-reanimated": "2.17.0",
-  "react-native-safe-area-context": "3.3.0",
-  "react-native-simple-toast": "1.1.3"
 ```
 
 1. Native File Changes for `@100mslive/react-native-hms` package
@@ -253,7 +234,7 @@ Follow the official installation steps of these libraries if you encounter any p
 
 #### Configure Inter Font Family
 
-`react-native-room-kit` package uses 'Inter' font family for texts. You need to add 'Inter' fonts in your app.
+`react-native-room-kit` package uses 'Inter' font family for texts. You need to add 'Inter' fonts in your app. You can download Inter font family from [Google Fonts](https://fonts.google.com/share?query=Inter).
 
 #### Enable Background modes for iOS
 
@@ -300,8 +281,8 @@ After doing changes related to ScreenShare feature, To use screenshare feature o
         userName: "John Appleseed",
         userId: "My_Unique_UserId",    
         ios: {
-            appGroup: 'group.rnroomkit',
-            preferredExtension: 'live.100ms.reactnative.RNExampleBroadcastUpload',
+            appGroup: 'group....',
+            preferredExtension: '...',
         },
       }}
       onLeave={handleRoomLeave}
@@ -317,33 +298,90 @@ const handleRoomLeave: OnLeaveHandler = useCallback((reason) => {
 
 ### Complete code example
 
-Now that your project setup is complete, let's replace the code in the `App.js` file with the complete code sample below -
+Now that your project setup is complete -
+
+1. add `react-native-gesture-handler` import statement __at the top__ in `index.js` file
+
+```js{1} section=importGestureHandler
+import 'react-native-gesture-handler';
+
+...
+
+AppRegistry.registerComponent(appName, () => App);
+```
+
+2. let's replace the code in the `App.js` file with the complete code sample below -
 
 ```js section=completeCodeExample
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   StatusBar,
   StyleSheet,
   Button,
-  View
+  View,
+  Alert,
+  Platform,
 } from 'react-native';
 import { HMSPrebuilt } from '@100mslive/react-native-room-kit';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { PERMISSIONS, requestMultiple } from 'react-native-permissions';
 
 const App = () => {
   const [showHMSPrebuilt, setShowHMSPrebuilt] = useState(false);
 
-  return (
-    <View style={styles.container}>
-      <StatusBar barStyle={'dark-content'} />
+  const start = () => {
+    if (Platform.OS === "ios") {
+      setShowHMSPrebuilt(true);
+      return;
+    }
 
-      {showHMSPrebuilt ? (
-        <HMSPrebuilt roomCode='abc-lmno-xyz' options={{ userName: 'John Appleseed' }} />
-      ) : (
-        <View style={styles.joinContainer}>
-          <Button title='Start' onPress={() => setShowHMSPrebuilt(true)} />
+    requestMultiple([
+      PERMISSIONS.ANDROID.CAMERA,
+      PERMISSIONS.ANDROID.RECORD_AUDIO
+    ])
+      .then((data) => {
+        const cameraPermissionStatus = data[PERMISSIONS.ANDROID.CAMERA];
+        const audioPermissionStatus = data[PERMISSIONS.ANDROID.RECORD_AUDIO];
+        if (
+          cameraPermissionStatus === "granted" &&
+          audioPermissionStatus === "granted"
+        ) {
+          setShowHMSPrebuilt(true);
+        } else {
+          Alert.alert('Permission Not Granted', "Camera and Audio permissions are required!");
+        }
+      })
+      .catch((error) => {
+        Alert.alert('Error', error.description);
+      });
+  };
+
+  const handleRoomLeave = useCallback((reason) => {
+    console.log(':: Reason for Leaving the Room > ', reason);
+    setShowHMSPrebuilt(false);
+  }, []);
+
+  return (
+    <GestureHandlerRootView style={styles.container}>
+      <SafeAreaProvider>
+        <View style={styles.container}>
+          <StatusBar barStyle={'dark-content'} />
+
+          {showHMSPrebuilt ? (
+            <HMSPrebuilt
+              roomCode={"edr-ftkl-dsc"}
+              options={{ userName: "John Appleseed" }}
+              onLeave={handleRoomLeave}
+            />
+          ) : (
+            <View style={styles.joinContainer}>
+              <Button title='Start' onPress={start} />
+            </View>
+          )}
         </View>
-      )}
-    </View>
+      </SafeAreaProvider>
+    </GestureHandlerRootView>
   );
 };
 
