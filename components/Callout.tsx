@@ -3,7 +3,13 @@ import dynamic from 'next/dynamic';
 import { InfoIcon } from '@100mslive/react-icons';
 import { Flex, Text, Box } from '@100mslive/react-ui';
 
-const Callout = ({ title, icon, children }) => (
+/*
+Icon usage
+<DynamicIcon name="AddIcon" color="$textHighEmp" />
+For color, "blue", "white" etc works too
+*/
+
+const Callout = ({ title, icon, color = '$textHighEmp', children }) => (
     <Flex
         className="callout"
         direction="column"
@@ -19,7 +25,7 @@ const Callout = ({ title, icon, children }) => (
         }}>
         <Box css={{ m: '20px 24px' }}>
             <Flex align="center" css={{ color: '$textHighEmp', gap: '$2', mb: '$2' }}>
-                <DynamicIcon name={icon} />
+                <DynamicIcon name={icon} color={color} />
                 <Text css={{ color: '$textHighEmp', fontWeight: '$semiBold' }}>{title}</Text>
             </Flex>
             {children}
@@ -31,13 +37,14 @@ const iconStyle = { color: 'inherit' };
 
 interface DynamicIconProps {
     name: string;
+    color?: string;
 }
 
-const DynamicIcon: React.FC<DynamicIconProps> = ({ name }) => {
+export const DynamicIcon: React.FC<DynamicIconProps> = ({ name, color = '$textHighEmp' }) => {
     let Icon;
     try {
         Icon = dynamic(() => import(`@100mslive/react-icons/dist/${name}.js`) as any, {
-            loading: () => <InfoIcon style={iconStyle} />,
+            loading: () => <InfoIcon style={{ ...iconStyle, color }} />,
             ssr: false // Disable server-side rendering for dynamic imports
         });
     } catch (error) {
