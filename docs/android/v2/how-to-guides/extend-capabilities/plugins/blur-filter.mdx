@@ -7,20 +7,19 @@ import AndroidSdkVersionShield from '@/common/android-sdk-version-shield.md';
 
 ## Introduction
 
-Blur filter plugin helps in bluring the non-face background of a video frame.
+Blur filter plugin helps in bluring the background of a video frame.
 This guide provides an overview of usage of the Blur Filter plugin of 100ms.
 
 
 ## Supported Versions/Resolutions
 
 -   Minimum 100ms SDK version it can work with is `2.9.2`
--   Works best on 15fps
 -   Has poor fps on older android phones
 
 
 ## Add dependency
 
--   Adding the Blur plugin and SDK dependency to your app-level `build.gradle`.
+-   Adding the Blur filter plugin and SDK dependency to your app-level `build.gradle`.
 
 <AndroidSdkVersionShield />
 
@@ -41,7 +40,7 @@ dependencies {
 </Tab>
 
 
-## How to Integrate Blur Filters
+## How to Integrate Blur Filter
 
 ### Instantiate 
 
@@ -58,8 +57,8 @@ Instantiate the 100ms Blur Filter plugin like this:
 
      val blurFilterPlugin  by lazy { HMSBlurFilter(hmsSDK) }
 
-     //call this after onJoin()
-     fun addBeautyFilterPlugin() {
+     //call this after onJoin() or after onPreview()
+     fun addBlurFilterPlugin() {
 
         if (hmsSDK.getLocalPeer()?.videoTrack != null) {
 
@@ -74,6 +73,10 @@ Instantiate the 100ms Blur Filter plugin like this:
 ```
 
 </Tab>
+
+<Note title="💡On instantiating Blur filter plugin">
+This is a async operation. It takes a few seconds on some devices to start.
+</Note>
 
 
 Now let's take a look at the method signature of `HMSBlurFilter`.
