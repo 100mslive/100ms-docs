@@ -1,0 +1,156 @@
+---
+title: Whiteboard
+nav: 13.2
+---
+
+## Introduction
+
+The 100ms SDK provides robust APIs for integrating whiteboard collaboration into your conferencing sessions.
+ Participants can engage in real-time by drawing, writing, and collaborating on a shared digital whiteboard.
+
+This documentation outlines how to implement the start and stop functionality for a whiteboard and display it within a "WebView".
+
+
+## Minimum Requirements
+
+- Minimum React Native HMSSDK version - `@100mslive/react-native-hms@^1.10.5`
+- Whiteboard is enabled for the room via the 100ms dashboard
+- User roles must be configured to enable whiteboard functionality via the 100ms dashboard for starting or viewing the whiteboard.
+
+
+## Displaying the Shared Whiteboard
+
+To display the shared whiteboard into your application, subscribe to whiteboard updates using the `addWhiteboardUpdateListener` method
+ available on the interactivity center of HMSSDK (`hmsInstance.interactivityCenter`) -
+
+```js
+useEffect(() => {
+  // Add listener for whiteboard updates
+  const subscription =
+    hmsInstance.interactivityCenter.addWhiteboardUpdateListener(
+      (hmsWhiteboard, updateType) => {
+        if (updateType === HMSWhiteboardUpdateType.STARTED) {
+            // Whiteboard started, Use webview to show Whiteboard
+            // you can use `hmsWhiteboard` variable to get info about the started whiteboard
+            //  like accessing url of the whiteboard - `hmsWhiteboard.url`
+        }
+        if (updateType === HMSWhiteboardUpdateType.STOPPED) {
+            // Whiteboard stopped
+            // Unmount Webview or let the user know that whiteboard has stopped
+        }
+      }
+    );
+
+  // Removing whiteboard updates listener
+  return () => subscription.remove();
+}, [hmsInstance]);
+```
+
+function passed to `addWhiteboardUpdateListener` method will be invoked with -
+
+- `whiteboard object` as first argument, whiteboard object has the following interface -
+  ```js
+  interface HMSWhiteboard {
+    id: string; // A unique identifier for the whiteboard session.
+    title?: string; // The title or name of the whiteboard session
+    owner?: HMSPeer; // HMSPeer object of the peer who started the whiteboard
+    url?: string; // URL to load whiteboard in webview
+  }
+  ```
+
+- `whiteboard update type` as second argument, update type is an enum -
+  ```js
+  enum HMSWhiteboardUpdateType {
+    STARTED = 'STARTED', // Indicates that the whiteboard has been started.
+    STOPPED = 'STOPPED', // Indicates that the whiteboard has been stopped.
+  }
+  ```
+
+### Render Webview
+
+When whiteboard has started and you have the url of whiteboard, you can use webview from [react-native-webview](https://www.npmjs.com/package/react-native-webview) package as follows -
+
+```js{8-9}
+import { WebView } from 'react-native-webview';
+
+...
+
+<WebView
+  source={{ uri: hmsWhiteboard.url }}
+  style={{ flex: 1 }}
+  javaScriptEnabled={true} // Needed for whiteboard to work correctly on android
+  domStorageEnabled={true} // Needed for whiteboard to work correctly on android
+/>
+```
+
+> Note: It's crucial to Unmount the WebView when the whiteboard session is stopped to release resources.
+
+
+## Starting whiteboard
+
+We can use `startWhiteboard` method available on the interactivity center of HMSSDK (`hmsInstance.interactivityCenter`) -
+
+```js
+hmsInstance.interactivityCenter
+  .startWhiteboard('Interactive Session')
+  .then((success) => {
+    console.log('#startWhiteboard started whiteboard ', success);
+  })
+  .catch((error) => {
+    console.log('#startWhiteboard error ', error);
+  });
+```
+
+> Ensure that the role has the appropriate permission and the current whiteboard is not already open.
+
+
+## Stopping whiteboard
+
+We can use `stopWhiteboard` method available on the interactivity center of HMSSDK (`hmsInstance.interactivityCenter`) to stop currently opened whiteboard -
+
+> Note: Only owner can close the currently opened whiteboard session 
+
+```js
+hmsInstance.interactivityCenter
+  .stopWhiteboard()
+  .then((success) => {
+    console.log('#stopWhiteboard stopped whiteboard ', success);
+  })
+  .catch((error) => {
+    console.log('#stopWhiteboard error ', error);
+  });
+```
+
+> Ensure the role has appropriate permission and the current whiteboard session is opened by the user.
+
+
+## How to know if local peer is allowed to show/hide whiteboard
+
+Every peer has a role assigned. This HMSRole object contains whiteboard permissions in a whiteboard permission object. You can check what whiteboord permissions the current user has like below:
+
+```js
+// local peer role
+let userRole = localPeer.role;
+
+// whiteboard permissions of local peer
+let whiteboardPermissions = userRole.permissions.whiteboard;
+
+let isUserAdmin = whiteboardPermissions.admin; // user can start, stop and view
+let canWrite = whiteboardPermissions.write; // user can collaborate and view
+let canRead = whiteboardPermissions.read; // user can only view
+```
+
+
+## How to know if local peer started the whiteboard
+
+As stated above, whiteboard object has `owner` property which is an instance of `HMSPeer` class. We can compare local peer's `peerID` with `peerID` of `hmsWhiteboard.owner` -
+
+```js
+const whiteboardOwner = hmsWhiteboard.owner; // Nullable HMSPeer
+
+// Checking if local peer is owner of whiteboard
+const isUserOwner = localPeer.peerID === whiteboardOwner?.peerID;
+
+// if `isUserOwner` is `true`, means local peer started the whiteboard and can stop it
+// if `isUserOwner` is `false`, means someone else started the whiteboard, local peer can't stop it
+```
