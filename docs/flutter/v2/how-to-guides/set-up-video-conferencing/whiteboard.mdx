@@ -61,31 +61,62 @@ class HMSWhiteboardModel {
 
   ///[url] is the url of the whiteboard which can be used to display whiteboard
   final String? url;
+
+  ///[isOwner] is a boolean which tells if the current user is the owner of the whiteboard
+  final bool? isOwner;
+
+  ///[state] is an enum of type [WhiteboardState] which tells the state of the whiteboard
+  final hmsWhiteboardState state;
 }
 ```
 
 To show whiteboard in a webview, we can use [webview_flutter](https://pub.dev/packages/webview_flutter) package. Below is an example implementation:
 
 ```dart
-return WebViewWidget(
-    controller: WebViewController()
-    ..setJavaScriptMode(JavaScriptMode.unrestricted)
-    ..setBackgroundColor(const Color(0x00000000))
-    ..setNavigationDelegate(
+class WhiteboardWebView extends StatefulWidget {
+  const WhiteboardWebView({Key? key}) : super(key: key);
+
+  @override
+  State<WhiteboardWebView> createState() => _WhiteboardWebViewState();
+}
+
+class _WhiteboardWebViewState extends State<WhiteboardWebView> {
+  late WebViewController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = WebViewController()
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setBackgroundColor(const Color(0x00000000))
+      ..setNavigationDelegate(
         NavigationDelegate(
-        onNavigationRequest: (_) {
+          onNavigationRequest: (_) {
             return NavigationDecision.navigate;
-        },
-        onProgress: (int progress) {},
-        onPageStarted: (String url) {},
-        onPageFinished: (String url) {},
-        onWebResourceError: (WebResourceError error) {
+          },
+          onProgress: (int progress) {},
+          onPageStarted: (String url) {},
+          onPageFinished: (String url) {},
+          onWebResourceError: (WebResourceError error) {
             log("Error occured in whiteboard tile: ${error.description}");
-        },
+          },
         ),
-    )
+      );
+  }
+
+  @override
+  void dispose() {
+    ///Here we add any random url to stop the webview
+    _controller.loadHtmlString("https://www.100ms.live/");
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     /// `whiteboardUrl` is the URL of the whiteboard we get from HMSWhiteboardModel
-    ..loadRequest(Uri.parse(whiteboardUrl)));
+    return  WebViewWidget(controller: _controller..loadRequest(Uri.parse(whiteboardUrl)));
+  }
+}
 ```
 
 ## How to start and stop whiteboard
@@ -150,7 +181,7 @@ class Meeting implements HMSUpdateListener,HMSActionResultListener, HMSWhiteboar
         ///Before stopping whiteboard check whether the peer has permission to stop whiteboard
         ///and is the owner of the whiteboard
         ///[localPeer] is the peer that is trying to stop whiteboard
-        if(localPeer?.role.permissions.whiteboard?.admin && localPeer?.peerId == whiteboardModel?.owner?.peerId){
+        if(localPeer?.role.permissions.whiteboard?.admin &&  whiteboardModel?.isOwner ?? false){
             HMSException? error = await HMSWhiteboardController.stop();
             if (error != null) {
                 ///Log the error here
@@ -175,5 +206,16 @@ class Meeting implements HMSUpdateListener,HMSActionResultListener, HMSWhiteboar
 
     ...
 
+}
+```
+
+After calling stop ensure disposing the widget which contains `WebViewWidget` similar to the implementation below:
+
+```dart
+@override
+void dispose() {
+    ///Here we add any random url to stop the webview
+    _controller.loadHtmlString("https://www.100ms.live/");
+    super.dispose();
 }
 ```
