@@ -170,6 +170,31 @@ HMSHLSPlayerController.getStreamProperties();
 >  Note: In case of iOS, check the `rollingWindowTime` for getting the rolling window or duration of the stream.
 > For android check the `streamDuration` property.
 
+### How to get HLS Stream layers
+
+- **getHLSLayers**
+
+To get HLS Stream layers we can use the `getHLSLayers` method
+
+```dart
+var layers = await HMSHLSPlayerController.getHLSLayers();
+```
+
+To sort layers in decreasing order based on bitrate we can use the following code:
+
+```dart
+layers.sort((a, b) => (b.bitrate ?? 0).compareTo(a.bitrate ?? 0));
+```
+
+- **setHLSLayer**
+
+To set a particular HLS layer we can use the `setHLSLayer` method
+
+```dart
+///[hmsHLSLayer] is the layer that you wish to set
+HMSHLSPlayerController.setHLSLayer(hmsHLSLayer: hmsHLSLayer);
+```
+
 ### How to get HLS Callbacks
 
 HMSSDK exposes `HMSHLSPlaybackEventsListener` to get the callbacks related to HLS Playback.
