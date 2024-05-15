@@ -7,13 +7,12 @@ import AndroidSdkVersionShield from '@/common/android-sdk-version-shield.md';
 
 ## Introduction
 
-Blur filter plugin helps in bluring the background of a video frame.
-This guide provides an overview of usage of the Blur Filter plugin of 100ms.
-
+Blur filter plugin helps in blurring the background of a video frame.
+This guide provides an overview of the 100ms Blur Filter plugin.
 
 ## Supported Versions/Resolutions
 
--   Minimum 100ms SDK version it can work with is `2.9.2`
+-   Minimum 100ms SDK version required is `2.9.56`
 -   Has poor fps on older android phones
 
 
@@ -51,25 +50,25 @@ Instantiate the 100ms Blur Filter plugin like this:
 <Tab id='instanstiate-VirtualBackgroundPlugin-0'>
 
 ```kotlin
-     val hmsSDK = HMSSDK
-        .Builder(application)
-        .build()
+val hmsSDK = HMSSDK
+    .Builder(application)
+    .build()
 
-     val blurFilterPlugin  by lazy { HMSBlurFilter(hmsSDK) }
+val blurFilterPlugin  by lazy { HMSBlurFilter(hmsSDK) }
 
-     //call this after onJoin() or after onPreview()
-     fun addBlurFilterPlugin() {
+//call this after onJoin() or after onPreview()
+fun addBlurFilterPlugin() {
 
-        if (hmsSDK.getLocalPeer()?.videoTrack != null) {
+    if (hmsSDK.getLocalPeer()?.videoTrack != null) {
 
-            hmsSDK.addPlugin(blurFilterPlugin, object : HMSActionResultListener {
-                override fun onError(error: HMSException) {}
+        hmsSDK.addPlugin(blurFilterPlugin, object : HMSActionResultListener {
+            override fun onError(error: HMSException) {}
 
-                override fun onSuccess() { }
+            override fun onSuccess() { }
 
-            }, 30)
-        }
+        })
     }
+}
 ```
 
 </Tab>
@@ -108,14 +107,12 @@ To remove/detach video plugin at runtime:
 
 ```kotlin
 
-            hmsSDK.removePlugin(blurFilterPlugin, object : HMSActionResultListener {
-                override fun onError(error: HMSException) {}
+hmsSDK.removePlugin(blurFilterPlugin, object : HMSActionResultListener {
+    override fun onError(error: HMSException) {}
 
-                override fun onSuccess() {}
+    override fun onSuccess() {}
 
-            })
-
-
+})
 ```
 
 </Tab>
