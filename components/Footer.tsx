@@ -1,3 +1,4 @@
+import React from 'react';
 import {
     ChatIcon,
     DiscordIcon,
@@ -9,7 +10,6 @@ import {
 import { Box, CSS, Flex, HorizontalDivider, Text } from '@100mslive/react-ui';
 import { useStatusPage } from 'hooks';
 import UtmLinkWrapper from './UtmLinkWrapper';
-import React from 'react';
 
 interface Props {
     css?: CSS;
@@ -58,7 +58,6 @@ const Footer: React.FC<Props> = ({ css = {} }) => (
                                         style={{
                                             width: '27px',
                                             height: '27px',
-                                            padding: '4.5px',
                                             color: 'inherit'
                                         }}
                                     />

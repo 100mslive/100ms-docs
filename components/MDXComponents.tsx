@@ -2,8 +2,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import Image from 'next/image';
-import UtmLinkWrapper from './UtmLinkWrapper';
 import { useRouter } from 'next/router';
+import UtmLinkWrapper from './UtmLinkWrapper';
 import APILink from './APILink';
 import BaseRequest from './BaseRequest';
 import Code from './Code';
@@ -21,9 +21,11 @@ import StepsToc from './StepsToc';
 import StepsContainer from './StepsContainer';
 import Text from './Text';
 import View from './View';
-import Callout from './Callout';
+import Callout, { DynamicIcon } from './Callout';
 import FlexContainer from './FlexContainer';
 import { PortraitImage } from './PortraitImage';
+import { CollapsibleRoot, CollapsiblePreview, CollapsibleContent } from './CollapsibleSection';
+import { CollapsibleStep } from './CollapsibleStep';
 import SuggestedBlogs from './SuggestedBlogs';
 
 const CodeCustom = (props: any) => <Code {...props}>{props.children}</Code>;
@@ -51,7 +53,7 @@ const LinkCustom = (props) => {
         const asPathSplit = asPath.split('/');
         asPathSplit.splice(asPathSplit.length - instanceCount);
         const cleanedHref = href.split('../').join('');
-        href = asPathSplit.join('/') + '/' + cleanedHref;
+        href = `${asPathSplit.join('/')}/${cleanedHref}`;
     }
 
     if (isInternalLink) {
@@ -107,7 +109,12 @@ const MDXComponents = {
     StepsToc,
     StepsContainer,
     SuggestedBlogs,
-    PortraitImage
+    PortraitImage,
+    CollapsibleRoot,
+    CollapsiblePreview,
+    CollapsibleContent,
+    CollapsibleStep,
+    DynamicIcon
 };
 
 export default MDXComponents;
