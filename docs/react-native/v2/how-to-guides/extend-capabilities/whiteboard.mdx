@@ -59,6 +59,16 @@ function passed to `addWhiteboardUpdateListener` method will be invoked with -
     title?: string; // The title or name of the whiteboard session
     owner?: HMSPeer; // HMSPeer object of the peer who started the whiteboard
     url?: string; // URL to load whiteboard in webview
+    isOwner: boolean; // Indicates if the local peer started the whiteboard
+    state: HMSWhiteboardState; // State of the whiteboard
+  }
+  ```
+
+- `whiteboard state` is an enum -
+  ```js
+  enum HMSWhiteboardState {
+    STARTED = 'STARTED', // Indicates that the whiteboard has been started.
+    STOPPED = 'STOPPED', // Indicates that the whiteboard has been stopped.
   }
   ```
 
@@ -128,7 +138,7 @@ hmsInstance.interactivityCenter
 > Ensure the role has appropriate permission and the current whiteboard session is opened by the user.
 
 
-## How to know if local peer is allowed to show/hide whiteboard
+## How to know if local peer is allowed to show/hide whiteboard?
 
 Every peer has a role assigned. This HMSRole object contains whiteboard permissions in a whiteboard permission object. You can check what whiteboord permissions the current user has like below:
 
@@ -145,16 +155,10 @@ let canRead = whiteboardPermissions.read; // user can only view
 ```
 
 
-## How to know if local peer started the whiteboard
+## How to know if local peer started the whiteboard?
 
-As stated above, whiteboard object has `owner` property which is an instance of `HMSPeer` class. We can compare local peer's `peerID` with `peerID` of `hmsWhiteboard.owner` -
+As stated above, whiteboard object has an `isOwner` property which is a boolean indicating if the local peer started the whiteboard -
 
 ```js
-const whiteboardOwner = hmsWhiteboard.owner; // Nullable HMSPeer
-
-// Checking if local peer is owner of whiteboard
-const isUserOwner = localPeer.peerID === whiteboardOwner?.peerID;
-
-// if `isUserOwner` is `true`, means local peer started the whiteboard and can stop it
-// if `isUserOwner` is `false`, means someone else started the whiteboard, local peer can't stop it
+const isOwner = hmsWhiteboard.isOwner;
 ```
