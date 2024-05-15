@@ -209,6 +209,26 @@ const onSessionStoreAvailableListener = ({
     // For example, below we are saving `sessionStore` reference in `Redux`
     dispatch(saveUserData({hmsSessionStore: sessionStore}));
 };
+
+hmsInstance?.addEventListener(
+    HMSUpdateListenerActions.ON_PEER_LIST_UPDATED,
+    onPeerListUpdatedHandler,
+);
+
+const onPeerListUpdatedHandler = ({
+  addedPeers,
+  removedPeers,
+}: {
+  addedPeers: HMSPeer[];
+  removedPeers: HMSPeer[];
+}) => {
+    // In Large Room, `ON_PEER_LIST_UPDATED` event is emitted
+    // with list of all the peers present in the room.
+
+    // You can subscribe to `ON_PEER_LIST_UPDATED` event to get list of added or removed peers -
+    // `addedPeers` is list of added peers in room
+    // `removedPeers` is list of removed peers from room
+};
 ```
 
 Check out the [Event Listener Enums](/react-native/v2/features/event-listeners-enums) docs to understand the Update Types emitted by the SDK for events like `ON_PEER_UPDATE`, `ON_TRACK_UPDATE`, `ON_ROOM_UPDATE`, etc.
