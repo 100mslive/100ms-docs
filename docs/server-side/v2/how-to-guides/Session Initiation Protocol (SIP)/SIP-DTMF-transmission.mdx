@@ -18,13 +18,13 @@ The DTMF API provided by 100ms enables the transmission of DTMF tones directly t
 
 ## REST API Endpoint for DTMF Transmission
 
-**Host:** `https://sip.100ms.live/dtmf`
+**Endpoint:** `https://api.100ms.live/v2/sip/dtmf`
 
 **Method:** `POST`
 
 **Headers:**
 
-- `Authorization: Bearer <AUTH TOKEN>` -> Client Auth Tokens are required to access this API; Management Tokens are not compatible for this API. For instructions on generating an auth token, please refer to this [documentation](/get-started/v2/get-started/security-and-tokens#auth-token-for-client-sdks).
+- `Authorization: Bearer <AUTH TOKEN>` -> Client Auth Tokens are required to access this API; Management Tokens are not compatible with this API. For instructions on generating the auth tokens, please refer to [this documentation](/get-started/v2/get-started/security-and-tokens#auth-token-for-client-sdks).
 - `Content-Type: application/json`
 
 **Request Body Example:**
@@ -37,9 +37,9 @@ The DTMF API provided by 100ms enables the transmission of DTMF tones directly t
 
 **Request Parameters Description:**
 
-| Parameter | Type | Description |
-| --- | --- | --- |
-| digits | array | An array of strings, where each string is a character representing a DTMF tone. Valid characters are 0-9, *, #, a, b, c, d. |
+| Parameter | Type  | Description                                                                                                                 |
+|-----------|-------|-----------------------------------------------------------------------------------------------------------------------------|
+| digits    | array | An array of strings, where each string is a character representing a DTMF tone. Valid characters are 0-9, *, #, a, b, c, d. |
 
 - **Target Recipients:** The DTMF tones will only be sent to all SIP participants present in the call. WebRTC participants will not receive these tones.
 - **Transmission Order:** Requests are queued and processed sequentially; subsequent requests will not be processed until all previous tones have been sent.
@@ -47,18 +47,14 @@ The DTMF API provided by 100ms enables the transmission of DTMF tones directly t
 
 ## Responses
 
-**200 OK**
-
-Indicates successful request processing. The body will be empty as the focus is on the action performed rather than data returned.
+**200 OK** - Indicates successful request processing. The body will be empty as the focus is on the action performed rather than data returned.
 
 ```json
 {}
 
 ```
 
-**400 Bad Request**
-
-Occurs when there are no SIP participants in the call to receive the DTMF tones.
+**400 Bad Request** - Occurs when there are no SIP participants in the call to receive the DTMF tones.
 
 ```json
 {
