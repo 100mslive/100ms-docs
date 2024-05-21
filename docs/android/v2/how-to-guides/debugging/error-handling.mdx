@@ -7,6 +7,50 @@ When you make an API call to access an HMS SDK, the SDK may return error codes. 
 
 These are returned as `HMSException` in the `onError` callback of the `HMSUpdateListner`.
 
+# Errors that need to be handled
+While the number of possible errors is large, the handling is very concise.
+
+The errors for general sdk features are self-explanatory, here we will list only the core handling needed for the `join` and `preview` methods. You don't need to handle specific errors, just categories of `isTerminal` or not.
+
+Here's a typical example of a join method with only the error handling methods:
+
+```kotlin
+
+hmsSDK.join(hmsConfig, object : HMSUpdateListener {
+
+            override fun onError(error: HMSException) {
+                // Show a different dialog if error is terminal else a dismissible dialog
+                if (error.isTerminal) {
+                    // The meeting cannot continue, display the error and return to your previous screen.
+                    
+                    // 1. Hide the progress bar that you were showing for a join call.
+                    // 2. You may choose to give a retry button that will attempt the join again.
+                } else {
+                    // The meeting can continue, there may be temporary issues.
+                    // The SDK will recover from these automatically.
+                    // Only inform the user that it's happening.
+                    
+                    // 1. `error.message` may be shown to the user.
+                }
+            }
+
+            // Show UI for temporary disconnections and if the sdk could reconnect.
+            // If there was a permanent failure, it will be sent in `onError`.
+            override fun onReconnecting() {}
+            override fun onReconnected() {}
+}
+
+```
+
+
+# Preview
+The same handling can be applied for the onError method of the `HMSPreviewListener`.
+
+# Others
+Permissions handling has also been simplified and you may look at how to handle those [here](../set-up-video-conferencing/permissions).
+
+# Index
+
 Following are the different error codes that are returned by the SDK . Before returning any error code, SDK retries the errors\(whichever is possible\).
 
 | **Error Code** | **Cause of the error**                                 | **Action to be taken**                                                                                      |
@@ -24,8 +68,7 @@ Following are the different error codes that are returned by the SDK . Before re
 | **3006**       | Invalid Video Settings                                 | Simulcast cannot be started without providing video settings.                                               |
 | **3007**       | Codec cannot change mid call                           | Codec cannot be changed mid call.                                                                           |
 | **3011**       | Mic Capture Failed                                     | Failed to capture mic access.                                                                               |
-| **3012**       | Bluetooth Inaccessible                                 | BLUETOOTH_CONNECT permission missing .                                                                      |
-| **3013**       | Bluetooth Inaccessible                                 | General Bluetooth Permission missing.                                                                       |
+| **3017**       | Media Projection Permission Error                      | Cannot start screen-share, due to FOREGROUND_SERVICE_MEDIA_PROJECTION being absent                          |
 | **4001**       | WebRTC error                                           | Some webRTC error has occurred. Need more logs to debug.                                                    |
 | **4002**       | WebRTC error                                           | Some webRTC error has occurred. Need more logs to debug.                                                    |
 | **4003**       | WebRTC error                                           | Some webRTC error has occurred. Need more logs to debug.                                                    |
@@ -34,15 +77,19 @@ Following are the different error codes that are returned by the SDK . Before re
 | **5001**       | Trying to join a room which is already joined          | Trying to join an already joined room.                                                                      |
 | **5002**       | Trying to start Preview which is already started       | Trying to start Preview which is already started.                                                           |
 | **6000**       | Client failed to connect                               | Client failed to connect.                                                                                   |
+| **6002**       | Unknown                                                | Further debugging needed.                                                                                   |
 | **6002**       | webRTC Error: Error while renegotiating                | Please try again.                                                                                           |
 | **6004**       | Json parsing failed                                    | Need to debug further with logs.                                                                            |
 | **6008**       | Unable to send message                                 | Cannot send message. Peer is null. The SDK must be disconnected from a room.                                |
-| **6008**       | API not supported                                      | This API is not support on the current Android Version (Android-31).                                        |
+| **6010**       | API not supported                                      | This API is not support on the current Android Version (Android-31).                                        |
+| **6012**       | Poll Not Found                                         | `getPollResults` throws this if the poll for which results are sought is not found                          |
 | **7001**       | Platform Not Supported                                 | The platform is not supported for plugin                                                                    |
 | **7002**       | Plugin Init Failed                                     | Plugin initialization has failed                                                                            |
 | **7003**       | Plugin Processing Failed                               | Plugin processing failed                                                                                    |
 | **7004**       | Plugin Add Already Going on                            | Plugin add is already in progress                                                                           |
 | **7005**       | Bluetooth Sco Connection Failed                        | Bluetooth headset is either not available or in a processing state.                                         |
+| **8001**       | Image Capture Exception                                | An error that can happen during a call to `captureImageAtMaxResolution`. Details in the message.            |
+| **9001**       | Blur Plugin Exception                                  | Device needs to support OpenGL ES > 3.1 for blur to work. Addtional debugging may be needed.                |
 | **400**        | Error occurred                                         | This can usually happen due to token issues(Check logs for more description). Need more logs to debug.      |
 | **401**        | Error occurred                                         | This can usually happen due to token issues(Check logs for more description). Need more logs to debug.      |
 | **410**        | Peer is gone                                           | The peer is no more present in the room.                                                                    |
