@@ -137,6 +137,30 @@ Renames and re-exports [HMSNotifications](/api-reference/javascript/v2/interface
 
 ---
 
+### HMSICEServer
+
+Ƭ **HMSICEServer**: `Object`
+
+the config object tells the SDK options you want to join with
+
+**`Link`**
+
+https://docs.100ms.live/javascript/v2/features/preview
+
+**`Link`**
+
+https://docs.100ms.live/javascript/v2/features/join
+
+#### Type declaration
+
+| Name        | Type       |
+| :---------- | :--------- |
+| `password?` | `string`   |
+| `urls`      | `string`[] |
+| `userName?` | `string`   |
+
+---
+
 ### HMSMessageID
 
 Ƭ **HMSMessageID**: `string`
