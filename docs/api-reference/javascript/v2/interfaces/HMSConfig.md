@@ -3,16 +3,6 @@ title: HMSConfig
 nav: '4.14'
 ---
 
-the config object tells the SDK options you want to join with
-
-**`Link`**
-
-https://docs.100ms.live/javascript/v2/features/preview
-
-**`Link`**
-
-https://docs.100ms.live/javascript/v2/features/join
-
 ## Hierarchy
 
 - **`HMSConfig`**
@@ -61,7 +51,7 @@ dimensions of the video element to conserve bandwidth.
 
 • `Optional` **autoManageWakeLock**: `boolean`
 
-if this flag is enabled, wake lock will be acquired automatically(if supported) when joining the room, so the device
+if this flag is enabled, wake lock will be acquired automatically (if supported) when joining the room, so the device
 will be kept awake.
 
 ---
@@ -80,6 +70,14 @@ Enable to get a network quality score while in preview. The score ranges from -1
 -1 when we are not able to connect to 100ms servers within an expected time limit
 0 when there is a timeout/failure when measuring the quality
 1-5 ranges from poor to good quality.
+
+---
+
+### iceServers
+
+• `Optional` **iceServers**: [`HMSICEServer`](/api-reference/javascript/v2/home/content#hmsiceserver)[]
+
+use custom STUN/TURN servers for media connection (advanced)
 
 ---
 
