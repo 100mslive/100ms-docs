@@ -1,0 +1,69 @@
+---
+title: DTMF Transmission via SIP
+nav: 10.2
+---
+
+This documentation describes how to transmit Dual-Tone Multi-Frequency (DTMF) signaling through the SIP (Session Initiation Protocol) interface using 100ms' REST API. DTMF tones are used for telecommunication signaling over the line in voice-frequency bands to the call control.
+
+## Overview
+
+The DTMF API provided by 100ms enables the transmission of DTMF tones directly to SIP participants during a call. This capability is essential for interacting with voice response systems, navigating phone trees or for controlling aspects of a session that require numeric input.
+
+## Points on Server-Side DTMF Generation
+
+1. **Simplified Client Logic:** Offloading DTMF generation to the server reduces complexity on client devices (iOS, Android, Web), which don't need to implement DTMF logic.
+2. **Data Integrity:** Keeping data in digital form until necessary minimizes the risk of data loss due to packet loss, which can occur when converting digital signals to analog prematurely.
+3. **Selective Transmission:** Ensures that DTMF tones are only sent to SIP connections, avoiding unnecessary transmission to non-SIP participants.
+4. **Vendor Limitations:** Not all service providers support server-side DTMF transmission. This could limit flexibility if switching providers or integrating with other systems. However, this is mitigated by 100ms providing a simple client-side implementation for generating DTMF.
+
+## REST API Endpoint for DTMF Transmission
+
+**Endpoint:** `https://api.100ms.live/v2/sip/dtmf`
+
+**Method:** `POST`
+
+**Headers:**
+
+- `Authorization: Bearer <AUTH TOKEN>` -> Client Auth Tokens are required to access this API; Management Tokens are not compatible with this API. For instructions on generating the auth tokens, please refer to [this documentation](/get-started/v2/get-started/security-and-tokens#auth-token-for-client-sdks).
+- `Content-Type: application/json`
+
+**Request Body Example:**
+
+```json
+{
+  "digits": ["0", "1"]  // Array of DTMF digits
+}
+```
+
+**Request Parameters Description:**
+
+| Parameter | Type  | Description                                                                                                                 |
+|-----------|-------|-----------------------------------------------------------------------------------------------------------------------------|
+| digits    | array | An array of strings, where each string is a character representing a DTMF tone. Valid characters are 0-9, *, #, a, b, c, d. |
+
+- **Target Recipients:** The DTMF tones will only be sent to all SIP participants present in the call. WebRTC participants will not receive these tones.
+- **Transmission Order:** Requests are queued and processed sequentially; subsequent requests will not be processed until all previous tones have been sent.
+- **Timing:** Tones are transmitted at an interval of 100 milliseconds and last for 100 milliseconds. This timing is consistent across all requests.
+
+## Responses
+
+**200 OK** - Indicates successful request processing. The body will be empty as the focus is on the action performed rather than data returned.
+
+```json
+{}
+
+```
+
+**400 Bad Request** - Occurs when there are no SIP participants in the call to receive the DTMF tones.
+
+```json
+{
+  "code": 400,
+  "message": "no sip participants in the call",
+  "details": [""]
+}
+
+```
+
+
+This documentation provides a clear pathway for integrating DTMF transmission capabilities within your applications, ensuring effective interaction with systems requiring numerical input during SIP calls.
