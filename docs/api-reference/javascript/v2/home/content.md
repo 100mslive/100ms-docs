@@ -2481,6 +2481,22 @@ Select the [HMSTrack](/api-reference/javascript/v2/home/content#hmstrack) object
 
 ---
 
+### selectTranscriptionsState
+
+▸ **selectTranscriptionsState**(`state`): `undefined` \| [`HMSTranscriptionInfo`](/api-reference/javascript/v2/interfaces/HMSTranscriptionInfo)[]
+
+#### Parameters
+
+| Name    | Type                                                                                                            |
+| :------ | :-------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+
+#### Returns
+
+`undefined` \| [`HMSTranscriptionInfo`](/api-reference/javascript/v2/interfaces/HMSTranscriptionInfo)[]
+
+---
+
 ### selectUnreadHMSBroadcastMessagesCount
 
 ▸ **selectUnreadHMSBroadcastMessagesCount**(`state`): `number`

@@ -11,6 +11,12 @@ nav: '2.18'
 
 ---
 
+### INITIALISED
+
+• **INITIALISED** = `"initialised"`
+
+---
+
 ### STARTED
 
 • **STARTED** = `"started"`
