@@ -137,6 +137,30 @@ Renames and re-exports [HMSNotifications](/api-reference/javascript/v2/interface
 
 ---
 
+### HMSICEServer
+
+Ƭ **HMSICEServer**: `Object`
+
+the config object tells the SDK options you want to join with
+
+**`Link`**
+
+https://docs.100ms.live/javascript/v2/features/preview
+
+**`Link`**
+
+https://docs.100ms.live/javascript/v2/features/join
+
+#### Type declaration
+
+| Name        | Type       |
+| :---------- | :--------- |
+| `password?` | `string`   |
+| `urls`      | `string`[] |
+| `userName?` | `string`   |
+
+---
+
 ### HMSMessageID
 
 Ƭ **HMSMessageID**: `string`
@@ -2454,6 +2478,22 @@ Select the [HMSTrack](/api-reference/javascript/v2/home/content#hmstrack) object
 #### Returns
 
 `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `null` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack) \| [`HMSVideoTrack`](/api-reference/javascript/v2/interfaces/HMSVideoTrack) \| [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack)\>
+
+---
+
+### selectTranscriptionsState
+
+▸ **selectTranscriptionsState**(`state`): `undefined` \| [`HMSTranscriptionInfo`](/api-reference/javascript/v2/interfaces/HMSTranscriptionInfo)[]
+
+#### Parameters
+
+| Name    | Type                                                                                                            |
+| :------ | :-------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+
+#### Returns
+
+`undefined` \| [`HMSTranscriptionInfo`](/api-reference/javascript/v2/interfaces/HMSTranscriptionInfo)[]
 
 ---
 
