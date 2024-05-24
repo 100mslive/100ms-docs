@@ -648,10 +648,12 @@ Please check the documentation of input and output types for more details.
 
 `Object`
 
-| Name        | Type                                               |
-| :---------- | :------------------------------------------------- |
-| `iframeRef` | `MutableRefObject`<`null` \| `HTMLIFrameElement`\> |
-| `isAdmin`   | `boolean`                                          |
-| `isOwner`   | `boolean`                                          |
-| `open`      | `boolean`                                          |
-| `toggle`    | `undefined` \| () => `Promise`<`void`\>            |
+| Name            | Type                                    |
+| :-------------- | :-------------------------------------- |
+| `endpoint`      | `undefined` \| `string`                 |
+| `isAdmin`       | `boolean`                               |
+| `isOwner`       | `boolean`                               |
+| `open`          | `boolean`                               |
+| `toggle`        | `undefined` \| () => `Promise`<`void`\> |
+| `token`         | `undefined` \| `string`                 |
+| `zoomToContent` | `any`                                   |
