@@ -18,6 +18,15 @@ import AndroidSdkVersionShield from '@/common/android-sdk-version-shield.md';
 | live.100ms:video-filters: |<AndroidSdkVersionShield />|
 | live.100ms:virtual-background: |<AndroidSdkVersionShield />|
 
+## v2.9.58 - 2024-05-24
+### Fixed
+- Crash fix on adding and removing plugin multiple times.
+- Proguard related issues that prevented blur and virtual background from working in release configs.
+
+### Added (Breaking Changes) : 
+- HMSVirtualBackground API - Please note that we have made some changes in the way background blur and image are applied in terms of usage. 
+- There is only one HMSVirtualBackground class that you need to instantiate. Add it to the plugin using addPlugin. Then choose enableBlur() or enableBackground(bitmap) as per the UI.
+
 ## v2.9.57 - 2024-05-17
 ### Fixed
 - In rare conditions the blur plugin could cause a crash.
