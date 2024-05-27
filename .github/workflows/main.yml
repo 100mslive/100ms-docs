@@ -40,7 +40,7 @@ jobs:
           reporter: github-pr-check # optional, default is github-pr-check
           
           # Fix vale version, uses latest by default
-           version: 2.30.0
+          version: 2.30.0
 
           # Exit code for reviewdog when errors are found [true,false]
           # Default is `false`.
@@ -52,7 +52,8 @@ jobs:
           # Filtering for the reviewdog command [added,diff_context,file,nofilter].
           # Default is added.
           filter_mode: diff_context # optional, default is added
-          # Optional step to echo a message if file count exceeds 300
+ 
+        # Optional step to echo a message if file count exceeds 300
       - name: Too many files
         if: env.FILE_COUNT > 300
         run: echo "Skipping Vale Linter as the number of changed files exceeds the limit of 300."
