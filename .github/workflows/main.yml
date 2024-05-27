@@ -17,7 +17,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: errata-ai/vale-action@reviewdog
+      
+      # Step to get the list of changed files in the pull request
+      - name: Get changed files
+        id: get_changed_files
+        run: |
+          CHANGED_FILES=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | head -n 300)
+          FILE_COUNT=$(echo "$CHANGED_FILES" | wc -l)
+          echo "CHANGED_FILES=$CHANGED_FILES" >> $GITHUB_ENV
+          echo "FILE_COUNT=$FILE_COUNT" >> $GITHUB_ENV
+      
+      # Conditional step to run Vale Linter only if FILE_COUNT <= 300
+      - name: Run Vale Linter
+        if: env.FILE_COUNT <= 300
+        uses: errata-ai/vale-action@reviewdog
         env:
           # Required, set by GitHub actions automatically:
           # https://docs.github.com/en/actions/security-guides/automatic-token-authentication#about-the-github_token-secret
@@ -26,7 +39,7 @@ jobs:
           # Reporter of reviewdog command [github-pr-check,github-pr-review,github-check].
           reporter: github-pr-check # optional, default is github-pr-check
           
-           # Fix vale version, uses latest by default
+         # Fix vale version, uses latest by default
           version: 2.30.0
 
           # Exit code for reviewdog when errors are found [true,false]
@@ -39,6 +52,8 @@ jobs:
           # Filtering for the reviewdog command [added,diff_context,file,nofilter].
           # Default is added.
           filter_mode: diff_context # optional, default is added
+          # Optional step to echo a message if file count exceeds 300
+      - name: Too many files
+        if: env.FILE_COUNT > 300
+        run: echo "Skipping Vale Linter as the number of changed files exceeds the limit of 300."
           
-          # Space-delimited list of flags for the Vale CLI.
-          # vale_flags: # optional, default is 
