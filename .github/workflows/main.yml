@@ -17,7 +17,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: errata-ai/vale-action@reviewdog
+      
+      # Step to count the number of files
+      - name: Count files
+        id: file_count
+        run: |
+          FILE_COUNT=$(git ls-files | wc -l)
+          echo "FILE_COUNT=${FILE_COUNT}" >> $GITHUB_ENV
+      
+      # Conditional step to run Vale linter only if FILE_COUNT <= 300
+      - name: Run Vale Linter
+        if: env.FILE_COUNT <= 300
+        uses: errata-ai/vale-action@reviewdog
         env:
           # Required, set by GitHub actions automatically:
           # https://docs.github.com/en/actions/security-guides/automatic-token-authentication#about-the-github_token-secret
@@ -26,7 +37,7 @@ jobs:
           # Reporter of reviewdog command [github-pr-check,github-pr-review,github-check].
           reporter: github-pr-check # optional, default is github-pr-check
           
-           # Fix vale version, uses latest by default
+          # Fix vale version, uses latest by default
           version: 2.30.0
 
           # Exit code for reviewdog when errors are found [true,false]
@@ -41,4 +52,9 @@ jobs:
           filter_mode: diff_context # optional, default is added
           
           # Space-delimited list of flags for the Vale CLI.
-          # vale_flags: # optional, default is 
+          # vale_flags: # optional, default is
+          
+      # Optional step to echo a message if file count exceeds 300
+      - name: Too many files
+        if: env.FILE_COUNT > 300
+        run: echo "Skipping Vale Linter as the number of files (${env.FILE_COUNT}) exceeds the limit of 300."
