@@ -14,7 +14,17 @@ You can also optionally pass these fields -
 
 1. settings: `{isAudioMuted, isVideoMuted}` - you can use this to set the initial audio/video state at time of join.
 2. User metadata - this can be used to pass any additional metadata associated with the user.
-3. ICE server config - you can use custom STUN/TURN servers for media connection. The config is defined [here](/api-reference/javascript/v2/home/content#hmsiceserver).
+3. ICE server config - you can use custom STUN/TURN servers for media connection. A sample config is defined below:
+
+```js
+
+iceServers: [{
+  urls: ["turn:turn-in.abc.live:1234"], // supports multiple URLs
+  userName: "userName",
+  password: "password"
+}]
+
+```
 
 We'll call the `join` method on `hmsActions` object with a config containing above fields to join the room.
 
