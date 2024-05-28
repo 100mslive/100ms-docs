@@ -14,6 +14,17 @@ You can also optionally pass these fields -
 
 1. settings: `{isAudioMuted, isVideoMuted}` - you can use this to set the initial audio/video state at time of join.
 2. User metadata - this can be used to pass any additional metadata associated with the user.
+3. ICE server config - you can use custom STUN/TURN servers for media connection. A sample config is defined below:
+
+```js
+
+iceServers: [{
+  urls: ["turn:turn-in.abc.live:1234"], // supports multiple URLs
+  userName: "userName",
+  password: "password"
+}]
+
+```
 
 We'll call the `join` method on `hmsActions` object with a config containing above fields to join the room.
 
@@ -129,7 +140,7 @@ We provide a simple, no fuss API to do exactly that. Invoke the leave method usi
 [room state](./join#getting-current-room-state) to render the UI accordingly post leave.
 
 ```jsx
-hmsActions.leave()
+hmsActions.leave();
 ```
 
 ## Leave on Navigating Away
@@ -149,5 +160,4 @@ page leave or tab close, you can opt out of this by passing the following prop.
 
 `<HMSRoomProvider leaveOnUnload={false} />`
 
-> Note: Leave does not happen on page unload in all browsers. For example, iOS Safari and Chrome, this doesn't happen as there won't
-be enough time for the leave request to be completed.
+> Note: Leave does not happen on page unload in all browsers. For example, iOS Safari and Chrome, this doesn't happen as there won't be enough time for the leave request to be completed.
