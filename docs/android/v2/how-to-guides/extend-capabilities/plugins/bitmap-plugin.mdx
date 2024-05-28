@@ -78,6 +78,21 @@ Always call `addPlugin()` after `onJoin()` from `hmsSDK.join()` or `onPreview()`
         }
     }
 ```
+<Note title="💡On instantiating Bitmap Plugin">
+The longer the processing of bitmap takes, the lower would be FPS. Ideally try to process the bitmap under 33 ms to achieve 30 FPS
+</Note>
+
+```kotlin
+   val bitmapListener = object : HMSBitmapUpdateListener {
+             override fun onFrame(bitmap: Bitmap): Bitmap {
+                //analyze or process bitmap here 
+                val processedBitmap = // Send bitmap for processing here and return the processed bitmap
+                return processedBitmap
+             }
+
+         }
+
+```
 
 </Tab>
 
