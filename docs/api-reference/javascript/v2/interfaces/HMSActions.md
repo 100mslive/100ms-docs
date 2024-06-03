@@ -412,6 +412,22 @@ enable sending audio speaker data to beam
 
 ---
 
+### getPeer
+
+▸ **getPeer**(`peerId`): `Promise`<`undefined` \| [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)\>
+
+#### Parameters
+
+| Name     | Type     |
+| :------- | :------- |
+| `peerId` | `string` |
+
+#### Returns
+
+`Promise`<`undefined` \| [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)\>
+
+---
+
 ### getPeerListIterator
 
 ▸ **getPeerListIterator**(`options?`): [`HMSPeerListIterator`](/api-reference/javascript/v2/interfaces/HMSPeerListIterator)
@@ -1244,6 +1260,24 @@ If you want to start RTMP streaming or recording.
 
 ---
 
+### startTranscription
+
+▸ **startTranscription**(`params`): `Promise`<`void`\>
+
+If you want to start transcriptions(Closed Caption).
+
+#### Parameters
+
+| Name     | Type                  |
+| :------- | :-------------------- |
+| `params` | `TranscriptionConfig` |
+
+#### Returns
+
+`Promise`<`void`\>
+
+---
+
 ### stopHLSStreaming
 
 ▸ **stopHLSStreaming**(`params?`): `Promise`<`void`\>
@@ -1267,6 +1301,24 @@ If you want to stop HLS streaming. The passed in arguments is not considered at 
 ▸ **stopRTMPAndRecording**(): `Promise`<`void`\>
 
 If you want to stop both RTMP streaming and recording.
+
+#### Returns
+
+`Promise`<`void`\>
+
+---
+
+### stopTranscription
+
+▸ **stopTranscription**(`params`): `Promise`<`void`\>
+
+If you want to stop transcriptions(Closed Caption).
+
+#### Parameters
+
+| Name     | Type                  |
+| :------- | :-------------------- |
+| `params` | `TranscriptionConfig` |
 
 #### Returns
 
