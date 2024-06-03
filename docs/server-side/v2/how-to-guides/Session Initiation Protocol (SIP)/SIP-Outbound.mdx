@@ -1,0 +1,180 @@
+---
+title: SIP Outbound
+nav: 10.2
+---
+
+## Overview
+
+<Note type='warning'>
+This feature is in *restricted access*. Please drop a message to us through the Support center on the 100ms dashboard or book a [meeting with us](https://www.100ms.live/contact) to get your account whitelisted for SIP.
+</Note>
+
+100ms’ SIP bridge allows you to bridge participants on SIP calls by using a third-party service (like Twilio, Telnyx) into your 100ms room. 
+
+A SIP outbound trunk enables customers to set up credentials for outbound communication from 100ms room.
+
+This documentation details the steps to create and update a SIP outbound trunk for outbound communication, as well as to initiate an outbound call. It includes API endpoints and sample JSON payloads for these procedures.
+
+## Create an outbound trunk - Provision 100ms room for SIP dial-out
+
+This API allows you to set up a dedicated trunk and generate a `trunk_id` which is required before initiating an outbound call from a 100ms room. 
+
+Most SIP trunks provide a `username` and `password` for authentication along with a SIP address. Additionally, you are also required to purchase a phone number from the PSTN to the SIP service provider. For our example requests and tests, we’ve used Twilio.
+
+### **Request**
+
+**API Endpoint**
+
+**POST** `https://api.100ms.live/v2/sip/outbound/trunks`
+
+```json
+//Request Body
+{
+    "username": "<USERNAME>",
+    "password": "<PASSWORD>",
+    "address": "<trunk-name>.pstn.twilio.com", // Twilio has been used as an example. This could be any SIP trunk provider's address.
+    "from": "+971667*****"
+}
+```
+
+**Request arguments**
+
+| Arguments   | Description                                                            |
+|-------------|------------------------------------------------------------------------|
+| `username`  | SIP Credentials shared by the SIP Trunk service provider               |
+| `password`  | SIP Credentials shared by the SIP Trunk service provider               |
+| `address`   | This is the SIP address of the SIP Trunk service provider.             |
+| `from`      | This is the phone number acquired from the SIP Trunk service provider. |
+
+These credentials are used for authentication when bridging the call between the SIP Trunk and 100ms' SIP bridge. They are usually provided by all major service providers. For Twilio, follow these steps:
+
+1. Create an account on Twilio.
+2. Get a phone number. Refer [this](https://help.twilio.com/articles/223135247-How-to-Search-for-and-Buy-a-Twilio-Phone-Number-from-Console).
+3. Create a [SIP Credential Resource](https://www.twilio.com/docs/voice/sip/api/sip-credential-resource) - `username` and `password`. 
+4. Get the address → [Twilio Documentation](https://www.twilio.com/docs/voice/api/sending-sip) 
+
+### Response
+
+```json
+{
+    "id": "4a3b7c9d91"
+}
+```
+
+**Trunk Object**
+
+| Name | Description                                       |
+|------|---------------------------------------------------|
+| `id` | This is the trunk_id for the newly created trunk. |
+
+## Initiating an outbound call
+
+This API initiates a SIP call from a 100ms room to the SIP destination.
+
+The API will be blocked and will not share a response until the caller has either received or denied the call. In case, you want to initiate another call from the same trunk, the API can be called again.
+
+### Request
+
+**API Endpoint**
+
+**POST** `https://api.100ms.live/v2/sip/outbound/call`
+
+Headers: `Authorization: Bearer <Management Token>`
+
+```json
+//Request body
+{
+    "to": "+971776656",
+    "name": "Alex",
+    "user_id": "",
+    "room_code": "xxx-xxxx-xxx",
+    "trunk_id": "4a3b7c9d91"
+}
+```
+
+**Request cURL Example**
+
+```json
+curl --location --request POST 'https://api.100ms.live/v2/sip/outbound/call' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer <MANAGEMENT TOKEN>' \
+--data '{
+	"to": "+16692418750", // Phone Number
+	"name": "Alex",       // Name shown when the peer accepts the call and joins the room through SIP
+	"user_id": "",
+	"room_code": "***-abc-***",
+    "trunk_id": "65c6700f340713c4f7d*****"
+}
+
+'
+```
+
+**Request Arguments**
+
+| Argument    | Description                                                                                                                                                                                                                                                           | Required |
+|-------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------|
+| `to`        | Generally phone number of an identifier that the trunk service understands.                                                                                                                                                                                           | Yes      |
+| `name`      | Peer name to be shown when the peer on voice call accepts and joins the call.                                                                                                                                                                                         | No       |
+| `user_id`   | A 'user_id' is an internal identifier that you can use to map a 100ms peer object to your internal user object. It's a unique identifier for each user in your system. You can pass the 'user_id' to 100ms when you generate an auth token for a user to join a room. | No       |
+| `room_code` | This is a unique encrypted shortcode generated by 100ms for a given Role and Room. A Room Code represents a unique role and room_id combination.                                                                                                                      | Yes      |
+| `trunk_id`  | ID of the trunk to be used for this outbound call. This is generated using the ‘Create an outbound trunk’ API                                                                                                                                                         | Yes      |
+
+To get a room code, refer to the following documentation:
+1. [Getting room codes from the dashboard and authentication](/prebuilt/v2/prebuilt/room-codes/room-code-auth)
+2. [Room Code API](/server-side/v2/api-reference/room-codes/room-code-overview)
+
+### **Response**
+
+```json
+{
+    "id": "a8b7c9d9e7f74" // This is the call ID
+}
+```
+
+**Error Responses**
+
+| Error Code | Message                | Description                            |
+|------------|------------------------|----------------------------------------|
+| 408        | timed out              | Request time out                       |
+| 400        | to is mandatory        | In case of missing mandatory arguments |
+| 400        | room_code is mandatory | In case of missing mandatory arguments |
+| 400        | trunk_id is mandatory  | In case of missing mandatory arguments |
+
+## Update an outbound trunk
+
+This API allows you to update an existing outbound trunk in case of any changes in the SIP trunk credentials, SIP address, or phone number.
+
+### **Request**
+
+**API Endpoint**
+
+POST `https://api.100ms.live/v2/sip/outbound/trunks/:trunkId`
+
+```json
+//Request Body
+{
+    "username": "<USERNAME>",
+    "password": "<PASSWORD>",
+    "address": "xx.pstn.twilio.com",
+    "from": "+1667666****"
+}
+```
+
+| Path Parameter | Description                                                                                 |
+|----------------|---------------------------------------------------------------------------------------------|
+| `trunk_id`     | ID of the trunk to be modified. This is generated using the ‘Create an outbound trunk’ API. |
+
+### Response
+
+```json
+{
+	"id": "4a3b7c9d91"
+}
+```
+
+**Trunk Object**
+
+| Name | Description                                   |
+|------|-----------------------------------------------|
+| `id` | This is the `trunk_id` for the updated trunk. |
+
