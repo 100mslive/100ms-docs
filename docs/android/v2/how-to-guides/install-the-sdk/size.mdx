@@ -2,10 +2,83 @@
 title: SDK Size Impact
 nav: 3.4
 ---
+There are several libraries provided for 100ms-android. Generally the SDK core is required for doing anything with meetings and you can add each individual library if you want it.
 
-| Increase APK size                 |           |
-| --------------------------------- | --------- |
-| (armeabi-v7)                      | **5.8MB** |
-| (arm64-v8a) **(most common one)** | **6.4MB** |
-| (x86_64)                          | **7.1MB** |
-| (x86)                             | **7.2MB** |
+Each library has its own size impact that can vary been ABIs (x86, arm64-v8a etc), the table below lists them all.
+
+These sizes are caculated by building release versions of abi split apks from the same project, and then subtracting the size of the same project without any 100ms libraries added.
+
+You can take a look at the reference project [here](https://github.com/100mslive/Android-Size-Reference-App/)
+
+These are accuarate for sdk version `2.9.59` and room-kit version `1.2.13`.
+
+## Increase in Android APK size:
+
+|  Phone Architecture     	|  Core Sdk   |
+| --------------------------------- | ---------  |
+| (armeabi-v7)                      | **5.7MB**  |
+| (arm64-v8a) **(most common one)** | **6.7MB**  |
+| (x86_64)                          | **7.6MB**  |
+| (x86)                             | **7.3MB**  |
+
+|  Phone Architecture     	|  Room Kit   |
+| --------------------------------- | ---------  |
+| (armeabi-v7)                      | **10.9MB**  |
+| (arm64-v8a) **(most common one)** | **11.8MB**  |
+| (x86_64)                          | **12.7MB**  |
+| (x86)                             | **12.5MB**  |
+
+|  Phone Architecture     	|  Virtual Background   |
+| --------------------------------- | ---------  |
+| (armeabi-v7)                      | **18.6MB**  |
+| (arm64-v8a) **(most common one)** | **22.0MB**  |
+| (x86_64)                          | **11.5MB**  |
+| (x86)                             | **11.3MB**  |
+
+
+|  Phone Architecture     	|  Noise Cancellation   |
+| --------------------------------- | ---------  |
+| (armeabi-v7)                      | **11.3MB**  |
+| (arm64-v8a) **(most common one)** | **12.3MB**  |
+| (x86_64)                          | **13.2MB**  |
+| (x86)                             | **12.9MB**  |
+
+
+|  Phone Architecture     	|  Hls Player   |
+| --------------------------------- | ---------  |
+| (armeabi-v7)                      | **6.6MB**  |
+| (arm64-v8a) **(most common one)** | **7.6MB**  |
+| (x86_64)                          | **8.5MB**  |
+| (x86)                             | **8.2MB**  |
+
+
+|  Phone Architecture     	|  Hls Player Stats   |
+| --------------------------------- | ---------  |
+| (armeabi-v7)                      | **6.1MB**  |
+| (arm64-v8a) **(most common one)** | **7.1MB**  |
+| (x86_64)                          | **8.0MB**  |
+| (x86)                             | **7.7MB**  |
+
+
+|  Phone Architecture     	|  Video Filters   |
+| --------------------------------- | ---------  |
+| (armeabi-v7)                      | **5.7MB**  |
+| (arm64-v8a) **(most common one)** | **6.7MB**  |
+| (x86_64)                          | **7.6MB**  |
+| (x86)                             | **7.3MB**  |
+
+
+|  Phone Architecture     	|  Video View   |
+| --------------------------------- | ---------  |
+| (armeabi-v7)                      | **5.7MB**  |
+| (arm64-v8a) **(most common one)** | **6.7MB**  |
+| (x86_64)                          | **7.6MB**  |
+| (x86)                             | **7.3MB**  |
+
+|  Phone Architecture     	|  Room Kit With Every Library   |
+| --------------------------------- | ---------  |
+| (armeabi-v7)                      | **31.3MB**  |
+| (arm64-v8a) **(most common one)** | **34.7MB**  |
+| (x86_64)                          | **24.2MB**  |
+| (x86)                             | **24.0MB**  |
+
