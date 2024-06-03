@@ -69,7 +69,7 @@ These credentials are used for authentication when bridging the call between the
 
 ## Initiating an outbound call
 
-This API initiates a SIP call from a 100ms room to an external peer.
+This API initiates a SIP call from a 100ms room to the SIP destination.
 
 The API will be blocked and will not share a response until the caller has either received or denied the call. In case, you want to initiate another call from the same trunk, the API can be called again.
 
@@ -136,9 +136,9 @@ To get a room code, refer to the following documentation:
 | Error Code | Message                | Description                            |
 |------------|------------------------|----------------------------------------|
 | 408        | timed out              | Request time out                       |
-| 500        | to is mandatory        | In case of missing mandatory arguments |
-| 500        | room_code is mandatory | In case of missing mandatory arguments |
-| 500        | trunk_id is mandatory  | In case of missing mandatory arguments |
+| 400        | to is mandatory        | In case of missing mandatory arguments |
+| 400        | room_code is mandatory | In case of missing mandatory arguments |
+| 400        | trunk_id is mandatory  | In case of missing mandatory arguments |
 
 ## Update an outbound trunk
 
