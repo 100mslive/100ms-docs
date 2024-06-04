@@ -74,9 +74,12 @@ export const Tabs: React.FC<TabsProps> = ({ items, id, isSelector = false }) => 
             style={{
                 borderBottom: '0.5px solid var(--docs_border_strong)',
                 marginTop: 'var(--docs_spacing_2)',
-                backgroundColor: isSelector ? '#13161B' : 'transparent',
+                width: 'max-content',
+                backgroundColor: isSelector ? 'var(--surface_default)' : 'transparent',
                 borderRadius: isSelector ? '12px' : '0',
-                padding: isSelector ? '10px' : '0'
+                padding: isSelector ? '10px' : '0',
+                display: 'flex',
+                gap: '1rem'
             }}>
             {items.map((el, i) => (
                 <button
@@ -90,15 +93,10 @@ export const Tabs: React.FC<TabsProps> = ({ items, id, isSelector = false }) => 
                         outline: 'none',
                         cursor: 'pointer',
                         border: 'none',
-                        marginRight: '1rem',
                         borderBottom: tab === i && !isSelector ? '2px solid var(--gray12)' : 'none',
                         padding: isSelector ? '10px 15px' : '0',
                         borderRadius: isSelector ? '8px' : '0',
-                        backgroundColor: tab === i && isSelector ? '#143466' : 'transparent',
-                        color:
-                            tab === i && isSelector
-                                ? 'var(--docs_selected_text)'
-                                : 'var(--docs_text)'
+                        backgroundColor: tab === i && isSelector ? 'var(--blue6)' : 'transparent'
                     }}
                     key={el}
                     id={`${id}-button-${i}`}>

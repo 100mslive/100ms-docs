@@ -16,7 +16,10 @@ Create an Xcode project and select "iOS" for platform and "App" for application
 
 ![Xcode](/guides/xcode1.png)
 
-<Tabs id="sample-code" items={['UIKit', 'SwiftUI']} />
+<Tabs
+  id="sample-code"
+  items={["UIKit", "SwiftUI"]}
+/>
 
 <Tab id='sample-code-0'>
 ## Prerequisites
@@ -28,11 +31,9 @@ Select "Storyboard" for interface and "Swift" for language
 You can either use Swift Package Manager or Cocoapods to add 100ms iOS SDK to your project.
 
 #### Use Swift Package Manager
-
 Add 100ms iOS SDK through Swift Package Manager in Xcode. Use https://github.com/100mslive/100ms-ios-sdk.git as the package source.
 
 #### Use Cocoapods
-
 Assuming your project name is "basicvideocall", create "Podfile" in the project folder with the following contents
 then run `pod install`
 
@@ -263,7 +264,6 @@ Checkout complete project code on github: [https://github.com/100mslive/100ms-io
 Checkout a sample code for a full featured conferencing app:
 
 [https://github.com/100mslive/100ms-ios-sdk/tree/main/Example](https://github.com/100mslive/100ms-ios-sdk/tree/main/Example)
-
 </Tab>
 
 <Tab id='sample-code-1'>
@@ -275,7 +275,6 @@ Checkout a sample code for a full featured conferencing app:
 Select SwiftUI for interface and "Swift" for language
 
 ## Integration
-
 You can integrate RoomModels SDK into your project using Swift Package Manager (SPM). Follow these steps:
 
 1. Open your Xcode project.
@@ -324,9 +323,9 @@ Pass room-code that you obtained in previous steps in `HMSRoomModel` initializer
 
 ```swift
 struct MeetingView: View {
-
+    
     @ObservedObject var roomModel = HMSRoomModel(roomCode: "qdr-mik-seb")
-
+    
     var body: some View {
 
       VStack {
@@ -363,9 +362,9 @@ Let's iterate through all the peers in the room using `peerModels` property in `
 
 ```swift
 struct MeetingView: View {
-
+    
     @ObservedObject var roomModel = HMSRoomModel(roomCode: "qdr-mik-seb")
-
+    
     var body: some View {
 
       VStack {
@@ -423,9 +422,9 @@ import SwiftUI
 import HMSRoomModels
 
 struct MeetingView: View {
-
+    
     @ObservedObject var roomModel = HMSRoomModel(roomCode: "qdr-mik-seb")
-
+    
     var body: some View {
 
       VStack {
@@ -442,7 +441,7 @@ struct MeetingView: View {
         case .inMeeting:
             VStack {
                 List {
-
+                    
                     // If a participant is sharing their screen, show their screen at the top of the list
                     if roomModel.peersSharingScreen.count > 0 {
                         TabView {
@@ -453,10 +452,10 @@ struct MeetingView: View {
                         .tabViewStyle(.page(indexDisplayMode: .never))
                         .frame(height: 200)
                     }
-
+                    
                     // Render video of each peer in the call
                     ForEach(roomModel.peerModels) { peerModel in
-
+                        
                         VStack {
                             Text(peerModel.name)
                             HMSVideoTrackView(peer: peerModel)
@@ -464,21 +463,21 @@ struct MeetingView: View {
                         }
                     }
                 }
-
+                
                 HStack {
-
+                    
                     // Toggle local user's mic
                     Image(systemName: roomModel.isMicMute ? "mic.slash" : "mic")
                         .onTapGesture {
                             roomModel.toggleMic()
                         }
-
+                    
                     // Toggle local user's camera
                     Image(systemName: roomModel.isCameraMute ? "video.slash" : "video")
                         .onTapGesture {
                             roomModel.toggleCamera()
                         }
-
+                    
                     // Button to leave the room
                     Image(systemName: "phone.down.fill")
                         .onTapGesture {
@@ -492,9 +491,7 @@ struct MeetingView: View {
       }
       .environmentObject(roomModel)
     }
-
 }
-
 ```
 </details>
 
@@ -506,4 +503,3 @@ Checkout a sample code for a full featured conferencing app:
 
 [https://github.com/100mslive/100ms-roomkit-ios/tree/main/HMSRoomKitExample](https://github.com/100mslive/100ms-roomkit-ios/tree/main/HMSRoomKitExample)
 </Tab>
-```
