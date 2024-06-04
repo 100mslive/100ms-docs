@@ -27,6 +27,7 @@ import { PortraitImage } from './PortraitImage';
 import { CollapsibleRoot, CollapsiblePreview, CollapsibleContent } from './CollapsibleSection';
 import { CollapsibleStep } from './CollapsibleStep';
 import SuggestedBlogs from './SuggestedBlogs';
+import Subtitle from './Subtitle';
 
 const CodeCustom = (props: any) => <Code {...props}>{props.children}</Code>;
 
@@ -114,7 +115,8 @@ const MDXComponents = {
     CollapsiblePreview,
     CollapsibleContent,
     CollapsibleStep,
-    DynamicIcon
+    DynamicIcon,
+    Subtitle
 };
 
 export default MDXComponents;
