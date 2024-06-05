@@ -77,7 +77,7 @@ export const Tabs: React.FC<TabsProps> = ({ items, id, isSelector = false }) => 
                 width: 'max-content',
                 backgroundColor: isSelector ? 'var(--surface_default)' : 'transparent',
                 borderRadius: isSelector ? '12px' : '0',
-                padding: isSelector ? '10px' : '0',
+                padding: isSelector ? '8px' : '0',
                 display: 'flex',
                 gap: '1rem'
             }}>
@@ -94,9 +94,10 @@ export const Tabs: React.FC<TabsProps> = ({ items, id, isSelector = false }) => 
                         cursor: 'pointer',
                         border: 'none',
                         borderBottom: tab === i && !isSelector ? '2px solid var(--gray12)' : 'none',
-                        padding: isSelector ? '10px 15px' : '0',
-                        borderRadius: isSelector ? '8px' : '0',
-                        backgroundColor: tab === i && isSelector ? 'var(--blue6)' : 'transparent'
+                        padding: isSelector ? '5px 12px' : '0',
+                        borderRadius: isSelector ? '4px' : '0',
+                        backgroundColor:
+                            tab === i && isSelector ? 'var(--selector_blue)' : 'transparent'
                     }}
                     key={el}
                     id={`${id}-button-${i}`}>
