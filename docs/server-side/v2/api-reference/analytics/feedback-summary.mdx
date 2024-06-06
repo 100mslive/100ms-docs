@@ -1,0 +1,59 @@
+---
+title: Feedback Summary
+nav: 3.64
+---
+
+Feedback Summary API can be used to fetch the feedback summary for a given session.
+
+<GetRequest title="https://api.100ms.live/v2/analytics/feedback/summary/<session_id>" />
+<Request id="req-0">
+
+```bash
+curl --location --request GET \
+    'https://api.100ms.live/v2/analytics/feedback/summary/<session_id>' \
+    --header 'Authorization: Bearer <management_token>'
+```
+
+</Request>
+
+## Allowed Filters
+To be specified as query parameters
+
+| Name       | Type     | Description                                 | Required |
+| ---------- | -------- | ------------------------------------------- | -------- |
+| scale_min  | `int`    | Minimum value of the rating scale           | no       |
+| scale_max  | `int`    | Maximum value of the rating scale           | no       |
+
+## Feedback Summary Object
+
+| Attribute               | Type                 | Description                                                                                                                |
+| ----------------------- | -------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| avg_session_rating      | `float64`            | Average session rating scaled as per given scale <br/><br/> Example: 3.6                                                   |
+| num_feedback_submitted  | `int64`              | Number of feedbacks submitted <br/><br/> Example: 5                                                                        |
+| scale                   | `object`             | Object containing the rating scale                                                                                         |
+
+### Scale Object
+
+
+| Attribute               | Type                 | Description                                                                                                                |
+| ----------------------- | -------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| min                     | `int64`              | Minimum value of the rating scale <br/><br/> Example: 1                                                                    |
+| max                     | `int64`              | Maximum value of the rating scale <br/><br/> Example: 5                                                                    |
+
+
+<ResponseBox id="res-2" status="200 OK">
+
+```json
+{
+    "avg_session_rating": 3.6,
+    "scale": {
+        "min": 1,
+        "max": 5
+    },
+    "num_feedback_submitted": 5
+}
+```
+
+</ResponseBox>
+
+

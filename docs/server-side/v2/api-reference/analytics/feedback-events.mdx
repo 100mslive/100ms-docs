@@ -1,0 +1,159 @@
+---
+title: Feedback Events
+nav: 3.65
+---
+
+Feedback APIs can be used to fetch the feedback events for a given session.
+
+<GetRequest title="https://api.100ms.live/v2/analytics/feedback" />
+<Request id="req-3">
+
+```bash
+curl --location 'https://api.100ms.live/v2/analytics/feedback' \
+--header 'Authorization: Bearer <token>'
+```
+
+</Request>
+
+## Allowed Filters
+To be specified as query parameters
+
+| Name       | Type     | Description                                                                                                                              | Required |
+| ---------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| room_id    | `string` | Unique identifier of the room you wish to fetch events for                                                                               | no       |
+| session_id | `string` | Unique session identifier                                                                                                                | no       |
+| user_id    | `string` | Unique identifier of the user                                                                                                            | no       |
+| limit      | `int`    | Determines the number of event objects to be included in response (Default: `10`, Min: `1`, Max: `100`)                                   | no       |
+| start      | `string` | Specify [next](/server-side/v2/api-reference/analytics/feedback-events#response-object) value from the last response to get next set of result. | no       |
+
+## Response Object
+
+| Attribute | Description                                                                                                                                                                      |
+| --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `limit`   | Number of events in current response                                                                                                                                             |
+| `total`   | Total number of events                                                                                                                                                           |
+| `next`    | Used to fetch next set of results, to be specified in the `start` query parameter in subsequent request. Next has non empty value only when there are more events to be queried. |
+| `data`    | List of [feedback events](/server-side/v2/api-reference/analytics/feedback-events#feedback-event-object)                     |
+
+### Feedback Event Object
+
+| Attribute               | Type                 | Description                                                                                                                |
+| ----------------------- | -------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| peer_id                 | `string`             | Unique identifier of peer/participant <br/><br/> Example: 1c6048c2-f1be-4c24-8082-4d1e49b062bd                              |
+| user_id                 | `string`             | Unique identifier of the user <br/><br/> Example: 91a977c5-9cf9-468a-aa31-30d73e34622c                                      |
+| account_id              | `string`             | Unique identifier of the account <br/><br/> Example: 61acb398a53602f379efada1                                               |
+| peer_name               | `string`             | Name of the peer <br/><br/> Example: awesome_peer                                                                               |
+| role                    | `string`             | Role of the peer <br/><br/> Example: host                                                                                  |
+| session_id              | `string`             | Unique session identifier <br/><br/> Example: 6655915f5e8609bb4290fe1f                                                     |
+| room_id                 | `string`             | Unique identifier of the room <br/><br/> Example: 62c2cb6676f8697390a6f694                                                 |
+| template_id             | `string`             | Template ID of the room <br/><br/> Example: 62c2cb66048b0e92876a9148                                                       |
+| rating                  | `int`                | Rating given by the peer <br/><br/> Example: 4                                                                             |
+| min_rating              | `int`                | Minimum value of the rating scale <br/><br/> Example: 1                                                                    |
+| max_rating              | `int`                | Maximum value of the rating scale <br/><br/> Example: 5                                                                    |
+| reasons                 | `array`              | List of reasons for the rating <br/><br/> Example: ["very good"]                                                           |
+| comment                 | `string`             | Additional comments by the peer <br/><br/> Example: "very nice"                                                            |
+| timestamp               | `timestamp (in UTC)` | Timestamp of the feedback <br/><br/> Example: 2024-05-29T16:47:06.245508775Z                                               |
+
+<ResponseBox id="res-3" status="200 OK">
+
+```json
+{
+    "limit": 5,
+    "total": 5,
+    "next": "",
+    "data": [
+        {
+            "peer_id": "1c6048c2-f1be-4c24-8082-4d1e49b062bd",
+            "user_id": "91a977c5-9cf9-468a-aa31-30d73e34622c",
+            "account_id": "61acb398a53602f379efada1",
+            "peer_name": "awesome_peer_1",
+            "role": "host",
+            "session_id": "6655915f5e8609bb4290fe1f",
+            "room_id": "62c2cb6676f8697390a6f694",
+            "template_id": "62c2cb66048b0e92876a9148",
+            "rating": 4,
+            "min_rating": 1,
+            "max_rating": 5,
+            "reasons": [
+                "very good"
+            ],
+            "comment": "very nice",
+            "timestamp": "2024-05-29T16:47:06.245508775Z"
+        },
+        {
+            "peer_id": "1c6048c2-f1be-4c24-8082-4d1e49b062bd",
+            "user_id": "91a977c5-9cf9-468a-aa31-30d73e34622c",
+            "account_id": "61acb398a53602f379efada1",
+            "peer_name": "awesome_peer_2",
+            "role": "host",
+            "session_id": "6655915f5e8609bb4290fe1f",
+            "room_id": "62c2cb6676f8697390a6f694",
+            "template_id": "62c2cb66048b0e92876a9148",
+            "rating": 5,
+            "min_rating": 1,
+            "max_rating": 5,
+            "reasons": [
+                "very good"
+            ],
+            "comment": "very nice",
+            "timestamp": "2024-05-28T08:14:20.391746334Z"
+        },
+        {
+            "peer_id": "1c6048c2-f1be-4c24-8082-4d1e49b062bd",
+            "user_id": "91a977c5-9cf9-468a-aa31-30d73e34622c",
+            "account_id": "61acb398a53602f379efada1",
+            "peer_name": "awesome_peer_3",
+            "role": "host",
+            "session_id": "6655915f5e8609bb4290fe1f",
+            "room_id": "62c2cb6676f8697390a6f694",
+            "template_id": "62c2cb66048b0e92876a9148",
+            "rating": 2,
+            "min_rating": 1,
+            "max_rating": 5,
+            "reasons": [
+                "very good"
+            ],
+            "comment": "very nice",
+            "timestamp": "2024-05-28T08:14:33.959303586Z"
+        },
+        {
+            "peer_id": "1c6048c2-f1be-4c24-8082-4d1e49b062bd",
+            "user_id": "91a977c5-9cf9-468a-aa31-30d73e34622c",
+            "account_id": "61acb398a53602f379efada1",
+            "peer_name": "awesome_peer_4",
+            "role": "host",
+            "session_id": "6655915f5e8609bb4290fe1f",
+            "room_id": "62c2cb6676f8697390a6f694",
+            "template_id": "62c2cb66048b0e92876a9148",
+            "rating": 4,
+            "min_rating": 1,
+            "max_rating": 5,
+            "reasons": [
+                "very good"
+            ],
+            "comment": "very nice",
+            "timestamp": "2024-05-28T08:14:41.038659506Z"
+        },
+        {
+            "peer_id": "1c6048c2-f1be-4c24-8082-4d1e49b062bd",
+            "user_id": "91a977c5-9cf9-468a-aa31-30d73e34622c",
+            "account_id": "61acb398a53602f379efada1",
+            "peer_name": "awesome_peer_5",
+            "role": "host",
+            "session_id": "6655915f5e8609bb4290fe1f",
+            "room_id": "62c2cb6676f8697390a6f694",
+            "template_id": "62c2cb66048b0e92876a9148",
+            "rating": 3,
+            "min_rating": 1,
+            "max_rating": 5,
+            "reasons": [
+                "very good"
+            ],
+            "comment": "very nice",
+            "timestamp": "2024-05-28T08:14:37.161584258Z"
+        }
+    ]
+}
+```
+
+</ResponseBox>
