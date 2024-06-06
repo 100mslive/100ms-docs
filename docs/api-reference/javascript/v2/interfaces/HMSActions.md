@@ -379,6 +379,22 @@ enable sending audio speaker data to beam
 
 ---
 
+### findPeerByName
+
+▸ **findPeerByName**(`options`): `Promise`<{ `eof?`: `boolean` ; `offset`: `number` ; `peers`: [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[] }\>
+
+#### Parameters
+
+| Name      | Type                          |
+| :-------- | :---------------------------- |
+| `options` | `FindPeerByNameRequestParams` |
+
+#### Returns
+
+`Promise`<{ `eof?`: `boolean` ; `offset`: `number` ; `peers`: [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[] }\>
+
+---
+
 ### getAuthTokenByRoomCode
 
 ▸ **getAuthTokenByRoomCode**(`tokenRequest`, `tokenRequestOptions?`): `Promise`<`string`\>
