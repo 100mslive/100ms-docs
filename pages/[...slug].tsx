@@ -44,6 +44,7 @@ export interface PaginationType {
 interface Props {
     frontMatter: {
         title: string;
+        subtitle: string;
         nav: number;
     };
     nav: Record<string, Record<string, NavRoute>>;
@@ -133,6 +134,11 @@ const DocSlugs = ({ source, frontMatter, pagination, showToc = true }: Props) =>
                     paddingBottom: '80px'
                 }}>
                 <h1>{frontMatter.title}</h1>
+                {frontMatter.subtitle ? (
+                    <h3 className="subtitle">{frontMatter.subtitle}</h3>
+                ) : (
+                    <></>
+                )}
                 <MDXProvider components={components}>
                     <Component />
                 </MDXProvider>
