@@ -44,7 +44,7 @@ export interface PaginationType {
 interface Props {
     frontMatter: {
         title: string;
-        subtitle: string;
+        subtitle?: string;
         nav: number;
     };
     nav: Record<string, Record<string, NavRoute>>;
