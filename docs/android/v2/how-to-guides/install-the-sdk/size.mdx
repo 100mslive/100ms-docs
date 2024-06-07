@@ -2,11 +2,7 @@
 title: SDK Size Impact
 nav: 3.4
 ---
-There are several libraries provided for 100ms-android. Generally the SDK core is required for doing anything with meetings and you can add each individual library if you want it.
-
 Each library has its own size impact that can vary been ABIs (x86, arm64-v8a etc), the table below lists them all.
-
-These sizes are caculated by building release versions of abi split apks from the same project, and then subtracting the size of the same project without any 100ms libraries added.
 
 You can take a look at the reference project [here](https://github.com/100mslive/Android-Size-Reference-App/)
 
@@ -14,12 +10,17 @@ These are accuarate for sdk version `2.9.59` and room-kit version `1.2.13`.
 
 ## Increase in Android APK size:
 
-|  Phone Architecture     	|  Room Kit   |
-| --------------------------------- | ---------  |
-| (armeabi-v7)                      | **10.9MB**  |
-| (arm64-v8a) **(most common one)** | **11.8MB**  |
-| (x86_64)                          | **12.7MB**  |
-| (x86)                             | **12.5MB**  |
+|  Module Name     	|  arm64-v8a   |	armeabi-v7	|	x86		| x86_64
+| -------------------|--------------|----------------|-----------|-------|
+| Room Kit 	| **12.0MB**	|	**11.0MB**  	|	**12.6MB**	| 	**12.8MB** 	|
+| Android Sdk 	| **6.7MB**	|	**5.7MB**  	|	**7.3MB**	| 	**7.6MB** 	|
+| Video View 	| **8.5KB**	|	**8.5KB**  	|	**8.5KB**	| 	**8.5KB** 	|
+| Virtual Background 	| **15.4MB**	|	**12.9MB**  	|	**4.0MB**	| 	**4.0MB** 	|
+| Noise Cancellation 	| **5.6MB**	|	**5.6MB**  	|	**5.6MB**	| 	**5.6MB** 	|
+| Video Filters 	| **20.7KB**	|	**25.0KB**  	|	**20.7KB**	| 	**21.1KB** 	|
+| Hls Player 	| **959.4KB**	|	**959.4KB**  	|	**959.4KB**	| 	**959.4KB** 	|
+| Hls Player Stats 	| **463.3KB**	|	**463.3KB**  	|	**463.3KB**	| 	**463.3KB** 	|
+
 
 The base `room-kit` already includes the following libraries:
 
@@ -27,63 +28,4 @@ The base `room-kit` already includes the following libraries:
 - `video-view`
 - `hls-player`
 - `video-filters`
-
-To add, for instance `noise-cancellation`, take a look at the table below.
-
-## SDK and each addon library
-> Note: Most SDK addon libraries cannot be used without the sdk. 
-
-|  Phone Architecture     	|  Android Sdk   |
-| --------------------------------- | ---------  |
-| (armeabi-v7)                      | **5.7MB**  |
-| (arm64-v8a) **(most common one)** | **6.7MB**  |
-| (x86_64)                          | **7.6MB**  |
-| (x86)                             | **7.3MB**  |
-
-|  Phone Architecture     	|  Video View   |
-| --------------------------------- | ---------  |
-| (armeabi-v7)                      | **8.5KB**  |
-| (arm64-v8a) **(most common one)** | **8.5KB**  |
-| (x86_64)                          | **8.5KB**  |
-| (x86)                             | **8.5KB**  |
-
-
-|  Phone Architecture     	|  Virtual Background   |
-| --------------------------------- | ---------  |
-| (armeabi-v7)                      | **12.9MB**  |
-| (arm64-v8a) **(most common one)** | **15.4MB**  |
-| (x86_64)                          | **4.0MB**  |
-| (x86)                             | **4.0MB**  |
-
-
-|  Phone Architecture     	|  Video Filters   |
-| --------------------------------- | ---------  |
-| (armeabi-v7)                      | **24.9KB**  |
-| (arm64-v8a) **(most common one)** | **20.6KB**  |
-| (x86_64)                          | **21.0KB**  |
-| (x86)                             | **20.6KB**  |
-
-
-|  Phone Architecture     	|  Noise Cancellation   |
-| --------------------------------- | ---------  |
-| (armeabi-v7)                      | **5.6MB**  |
-| (arm64-v8a) **(most common one)** | **5.6MB**  |
-| (x86_64)                          | **5.6MB**  |
-| (x86)                             | **5.6MB**  |
-
-
-|  Phone Architecture     	|  Hls Player Stats   |
-| --------------------------------- | ---------  |
-| (armeabi-v7)                      | **443.2KB**  |
-| (arm64-v8a) **(most common one)** | **443.2KB**  |
-| (x86_64)                          | **443.2KB**  |
-| (x86)                             | **443.2KB**  |
-
-
-|  Phone Architecture     	|  Hls Player   |
-| --------------------------------- | ---------  |
-| (armeabi-v7)                      | **939.4KB**  |
-| (arm64-v8a) **(most common one)** | **939.4KB**  |
-| (x86_64)                          | **939.4KB**  |
-| (x86)                             | **939.4KB**  |
 
