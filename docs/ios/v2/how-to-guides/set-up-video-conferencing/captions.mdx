@@ -10,6 +10,15 @@ The SDK provides a callback with the transcript for each peer when they speak.
 
 - Minimum 100ms SDK version required is 1.9.0
 
+## How to check if captions are started in a room?
+
+To check if live captions are enabled in a room, check if transcriptionState of type caption is in started state in HMSRoom object like below:
+
+```swift
+    let captionsEnabled = hmsSDK.room?.transcriptionStates?.first { $0.state == HMSTranscriptionStatus.started } != nil
+}
+```
+
 ## How to implement closed captioning?
 
 Implement `on(transcripts: HMSTranscripts)` from `HMSUpdateListener` callback like below:
