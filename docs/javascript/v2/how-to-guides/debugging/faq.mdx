@@ -214,3 +214,29 @@ Follow these steps to develop and test roomkit-react on your local device:
 - Install and build the `web-sdks` repository at the root level using the `yarn ybys` command which builds all the packages and starts the storybook component to preview the prebuilt component with your changes
 - The storybook will auto refresh whenever changes are made to the roomkit-react package
 - Currently the version of typescript used by the repository is `4.7.4`
+
+#### I'm getting TypeScript errors when importing from the 100ms libraries
+
+If you're using a TypeScript version below 3.8, you might encounter issues with type-only imports from the 100ms libraries. To resolve this, we recommend upgrading to TypeScript 3.8 or later. Sample error messages thrown in this scenario:
+```
+ERROR in node_modules/@100mslive/hms-video-store/dist/schema/role.d.ts:1:13 - error TS1005: '=' expected.
+1 import type { HMSRole } from '../interfaces';
+```
+
+#### What can I do if I'm stuck with an older TypeScript version?
+
+If you can't upgrade your TypeScript version, you can use a workaround by importing the libraries using `require` instead of `import`, and suppressing ESLint/TypeScript warnings where necessary.
+
+```
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { HMSReactiveStore} = require('@100mslive/hms-video-store');
+
+// or
+
+// ts-ignore
+const { HMSReactiveStore} = require('@100mslive/hms-video-store');
+```
+
+By implementing one of these workarounds, you should be able to resolve the TypeScript errors and continue using the libraries.
+
