@@ -53,3 +53,26 @@ Here is an example implemenation:
     }
 }
 ```
+
+## How to toggle Live Transcriptions on/off
+You can toggle live transcriptions on/off at runtime that can help save costs. Use startTranscription() method to start the transcription and stopTranscription() method to stop transcription like below:
+```swift
+    // Start Real Time Transcription
+    sdk.startTranscription() { success, error in
+        if let error = error {
+            // handle error
+        } else {
+            // success
+        }
+    }
+
+    // Stop Real Time Transcription
+    sdk.stopTranscription() { success, error in
+        if let error = error {
+            // handle error
+        } else {
+            // success
+        }
+    }
+```
+
