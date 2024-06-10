@@ -1,44 +1,20 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/router';
-import UtmLinkWrapper from './UtmLinkWrapper';
-import FlutterIcon from '@/assets/FlutterIcon';
-import AndroidIcon from '@/assets/icons/AndroidIcon';
-import IosIcon from '@/assets/icons/IosIcon';
-import JavascriptIcon from '@/assets/icons/JavascriptIcon';
-import ReactIcon from '@/assets/icons/ReactIcon';
-import ServerIcon from '@/assets/icons/ServerIcon';
 import useKeyPress from '@/lib/useKeyPress';
 import {
     ChevronDownIcon,
     ChevronLeftIcon,
     ChevronRightIcon,
-    AppleIcon as Ios,
-    FlutterIcon as Flutter,
-    AndroidIcon as Android,
-    ReactIcon as ReactNative,
-    JavascriptIcon as JavaScript,
-    RocketIcon,
-    PlayIcon,
-    SearchIcon,
-    BrushDesignIcon
+    SearchIcon
 } from '@100mslive/react-icons';
 import { Listbox } from '@headlessui/react';
 import { Flex, Box, Text, CSS } from '@100mslive/react-ui';
 import { getUpdatedPlatformName } from '@/lib/utils';
 import SidebarSection from './SidebarSection';
 import ReleaseNotes from './ReleaseNotes';
-import PlatformAccordion from './PlatformAccordion';
-
-const accordionIconStyle = { height: '24px', width: '24px', color: 'inherit' };
-
-const platformOrder = [
-    { text: 'Web', icon: <JavaScript style={accordionIconStyle} />, key: 'javascript' },
-    { text: 'Android', icon: <Android style={accordionIconStyle} />, key: 'android' },
-    { text: 'iOS', icon: <Ios style={accordionIconStyle} />, key: 'ios' },
-    { text: 'Flutter', icon: <Flutter style={accordionIconStyle} />, key: 'flutter' },
-    { text: 'React Native', icon: <ReactNative style={accordionIconStyle} />, key: 'react-native' }
-];
+import SidebarHeadingGroup from './SidebarHeadingGroup';
+import { menuItem, platformOrder, sidebarHeadingOrder, sidebarHeadings, sidebarHeadingsDetails } from './constants';
 
 const platformlist = ['javascript', 'android', 'ios', 'flutter', 'react-native', 'server-side'];
 
@@ -239,72 +215,22 @@ const Sidebar: React.FC<Props> = ({
                     }}>
                     <DocsSearchBar setHelperState={setHelperState} />
                 </Box>
-                <UtmLinkWrapper passHref href="/get-started/v2/get-started/overview">
-                    <Flex as="a" gap="2" align="center" css={{ color: '$primaryLight' }}>
-                        <PlayIcon style={{ color: 'inherit' }} />
-                        <Text as="span" css={{ fontWeight: '$semiBold', color: '$textHighEmp' }}>
-                            Get started
-                        </Text>
-                    </Flex>
-                </UtmLinkWrapper>
-                <UtmLinkWrapper passHref href="/prebuilt/v2/prebuilt/overview">
-                    <Flex
-                        as="a"
-                        gap="2"
-                        align="center"
-                        css={{
-                            color: '$primaryLight',
-                            mt: '$10'
-                        }}>
-                        <BrushDesignIcon style={{ color: 'inherit' }} />
-                        <Text as="span" css={{ fontWeight: '$semiBold', color: '$textHighEmp' }}>
-                            Prebuilt
-                        </Text>
-                    </Flex>
-                </UtmLinkWrapper>
 
-                <UtmLinkWrapper passHref href="/examples">
-                    <Flex
-                        as="a"
-                        gap="2"
-                        align="center"
-                        css={{
-                            color: '$primaryLight',
-                            mt: '$10',
-                            display: 'none',
-                            '@md': { display: 'flex' }
-                        }}>
-                        <RocketIcon style={{ color: 'inherit' }} />
-                        <Text as="span" css={{ fontWeight: '$semiBold', color: '$textHighEmp' }}>
-                            Examples
-                        </Text>
-                    </Flex>
-                </UtmLinkWrapper>
-
-                <hr style={{ margin: '24px 0' }} />
-
-                {platformOrder.map((platform) => (
-                    <PlatformAccordion
-                        id={platform.key}
-                        key={platform.text}
-                        title={platform.text}
-                        icon={platform.icon}
-                        data={allNav[platform.key]}
-                        openPlatformAccordion={openPlatformAccordion}
-                        setOpenPlatformAccordion={setOpenPlatformAccordion}
-                    />
-                ))}
-
-                <hr style={{ margin: '24px 0' }} />
-
-                <PlatformAccordion
-                    id="server-side"
-                    title="Server side"
-                    icon={<ServerIcon style={accordionIconStyle} />}
-                    data={allNav['server-side']}
-                    openPlatformAccordion={openPlatformAccordion}
-                    setOpenPlatformAccordion={setOpenPlatformAccordion}
-                />
+                {sidebarHeadingOrder.map((key) => {
+                    const headings = sidebarHeadings[key]?.headings;
+                    return (
+                        <>
+                            <SidebarHeadingGroup
+                                headings={headings}
+                                openPlatformAccordion={openPlatformAccordion}
+                                setOpenPlatformAccordion={setOpenPlatformAccordion}
+                                platformOrder={platformOrder}
+                                allNav={allNav}
+                                title={sidebarHeadings[key].title}
+                            />
+                        </>
+                    );
+                })}
             </div>
 
             {/* Platform specific view */}
@@ -324,6 +250,16 @@ const Sidebar: React.FC<Props> = ({
                                     backgroundColor: 'var(--docs_bg_content)'
                                 }
                             }}>
+                            <Box
+                                css={{
+                                    display: 'block',
+                                    margin: '0',
+                                    marginBottom: '$md',
+                                    '@md': { display: 'none' }
+                                }}>
+                                <DocsSearchBar setHelperState={setHelperState} />
+                            </Box>
+
                             <Flex
                                 align="center"
                                 gap="1"
@@ -342,19 +278,9 @@ const Sidebar: React.FC<Props> = ({
                                 }}>
                                 <ChevronLeftIcon height="16px" width="16px" />
                                 <Text variant="sm" css={{ color: '$primaryLight' }}>
-                                    Go back up
+                                    Back to Main Menu
                                 </Text>
                             </Flex>
-
-                            <Box
-                                css={{
-                                    display: 'block',
-                                    margin: '0',
-                                    marginBottom: '$md',
-                                    '@md': { display: 'none' }
-                                }}>
-                                <DocsSearchBar setHelperState={setHelperState} />
-                            </Box>
 
                             {showPlatformSelector ? (
                                 <section
@@ -428,19 +354,22 @@ const Sidebar: React.FC<Props> = ({
                         </Box>
                         {/* Sidebar Menu Section */}
                         {nav
-                            ? Object.entries(nav).map(([key, children], index) =>
-                                  children?.['release-notes'] ? (
+                            ? Object.entries(nav).map(([key, children], index) => {
+                                  return children?.['release-notes'] ? (
                                       <ReleaseNotes key={key} dataObj={children['release-notes']} />
                                   ) : (
-                                      <SidebarSection
-                                          key={`${key}-${index}-section`}
-                                          value={key}
-                                          index={index}
-                                          nested={false}>
-                                          {children as React.ReactChildren}
-                                      </SidebarSection>
-                                  )
-                              )
+                                      <>
+                                          <SidebarSection
+                                              key={`${key}-${index}-section`}
+                                              value={key}
+                                              index={index}
+                                              nested={0}
+                                              rootDetails={sidebarHeadingsDetails[key]}>
+                                              {children as React.ReactChildren}
+                                          </SidebarSection>
+                                      </>
+                                  );
+                              })
                             : null}
                     </>
                 ) : null}
@@ -463,50 +392,3 @@ const DocsSearchBar = ({ setHelperState }) => (
         <span className="hot-key">/</span>
     </Flex>
 );
-
-const iconStyle = { height: '20px', width: '20px', fill: 'var(--docs_text_primary)' };
-
-export const menuItem = [
-    {
-        link: '/android/v2/get-started/quickstart',
-        name: 'Android',
-        key: 'android',
-        icon: <AndroidIcon style={iconStyle} />,
-        apiRef: '/api-reference/android/v2/index.html'
-    },
-    {
-        link: '/ios/v2/guides/quickstart',
-        name: 'iOS',
-        key: 'ios',
-        icon: <IosIcon style={iconStyle} />,
-        apiRef: '/api-reference/ios/v2/documentation/hmssdk'
-    },
-    {
-        link: '/javascript/v2/get-started/javascript-quickstart',
-        name: 'JavaScript',
-        key: 'javascript',
-        icon: <JavascriptIcon style={iconStyle} />,
-        apiRef: '/api-reference/javascript/v2/home/content'
-    },
-    {
-        link: '/react-native/v2/guides/quickstart',
-        name: 'React Native',
-        key: 'react-native',
-        icon: <ReactIcon style={iconStyle} />,
-        apiRef: '/api-reference/react-native/v2/modules.html'
-    },
-    {
-        link: '/flutter/v2/guides/quickstart',
-        name: 'Flutter',
-        key: 'flutter',
-        icon: <FlutterIcon style={iconStyle} />,
-        apiRef: 'https://pub.dev/documentation/hmssdk_flutter/latest/hmssdk_flutter/hmssdk_flutter-library.html'
-    },
-    {
-        link: '/server-side/v2/how--to-guides/make-api-calls',
-        name: 'Server-side',
-        key: 'server-side',
-        icon: <ServerIcon style={{ ...iconStyle, fill: 'transparent' }} />,
-        apiRef: '/server-side/v2/api-reference/Rooms/overview'
-    }
-];

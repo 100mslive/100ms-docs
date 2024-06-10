@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import UtmLinkWrapper from './UtmLinkWrapper';
+import UtmLinkWrapper from '../UtmLinkWrapper';
 import { ChevronDownIcon } from '@100mslive/react-icons';
 import { Flex, Text } from '@100mslive/react-ui';
-import { titleCasing } from '../lib/utils';
+import { titleCasing } from '../../lib/utils';
 import { SidebarAPIReference } from './SidebarAPIReference';
-import { references } from '../api-references';
+import { references } from '../../api-references';
 
 const recursivelyGetLink = (data) => {
     const currentLevel = data?.[Object.keys(data)[0]];
@@ -19,7 +19,6 @@ const recursivelyGetLink = (data) => {
 
 const PlatformAccordion = ({
     title,
-    icon,
     data,
     openPlatformAccordion,
     setOpenPlatformAccordion,
@@ -40,11 +39,10 @@ const PlatformAccordion = ({
                 }}
                 className="plat-accordion"
                 style={{
-                    minWidth: '240px',
+                    minWidth: '200px',
                     width: '100%'
                 }}>
                 <Flex gap="2">
-                    <Flex css={{ color: '$primaryLight' }}>{icon}</Flex>
                     <Text css={{ color: '$textHighEmp', fontWeight: '$semiBold' }}>{title}</Text>
                 </Flex>
                 <Flex css={{ color: open ? '$textMedEmp' : '$textHighEmp' }}>
@@ -52,7 +50,9 @@ const PlatformAccordion = ({
                         style={{
                             color: 'inherit',
                             transition: 'all 0.3s ease',
-                            transform: open ? 'rotateZ(-180deg)' : ''
+                            transform: open ? 'rotateZ(-180deg)' : '',
+                            width: '18px',
+                            marginBottom: '4px'
                         }}
                     />
                 </Flex>
@@ -69,10 +69,17 @@ const PlatformAccordion = ({
                             as="a"
                             variant="sm"
                             css={{
-                                pl: '$12',
-                                my: '$8',
+                                pl: '$8',
+                                py: '$4',
                                 color: 'var(--docs_text_primary)',
-                                display: 'block'
+                                display: 'block',
+                                borderLeft: '2px solid var(--docs_border_strong)',
+                                '&:hover': {
+                                    color: 'var(--docs_text_primary)',
+                                    fontWeight: '500',
+                                    borderLeft: '2px solid var(--text_high_emp)',
+                                    background: 'var(--api_surface_light_default)'
+                                }
                             }}>
                             {titleCasing(item)}
                         </Text>
