@@ -18,6 +18,50 @@ import AndroidSdkVersionShield from '@/common/android-sdk-version-shield.md';
 | live.100ms:video-filters: |<AndroidSdkVersionShield />|
 | live.100ms:virtual-background: |<AndroidSdkVersionShield />|
 
+## v2.9.59 - 2024-05-31
+### Added
+- Transcriptions for live video can now be toggled on and off in realtime.
+- Analytics for virtual background.
+- `disableEffects` API to clear any ongoing video effects.
+- Bluetooth name support for legacy API to get names, provided the Bluetooth connect permission is granted by the app.
+
+### Fixed
+- Analytics for some features.
+- Proguard rules for apps compiling with gradle 8.4.0 and above.
+- `enableBlur` and `enableBackground` can now be called before `addPlugin`
+
+## v2.9.58 - 2024-05-24
+### Fixed
+- Crash fix on adding and removing plugin multiple times.
+- Proguard related issues that prevented blur and virtual background from working in release configs.
+
+### Added (Breaking Changes) : 
+- HMSVirtualBackground API - Please note that we have made some changes in the way background blur and image are applied in terms of usage. 
+- There is only one HMSVirtualBackground class that you need to instantiate. Add it to the plugin using addPlugin. Then choose enableBlur() or enableBackground(bitmap) as per the UI.
+
+## v2.9.57 - 2024-05-17
+### Fixed
+- In rare conditions the blur plugin could cause a crash.
+- Owner in whiteboard will not be null.
+
+### Added
+- Names for bluetooth devices are now listed.
+
+## v2.9.56 - 2024-04-13
+### Fixed:
+- Whiteboard permissions issues.
+
+### Added:
+- Background Blur.
+- Local image tile capturing now has a helper method to get orientation corrected bitmaps.
+
+### Changed:
+- Kotlin version bumped from 1.6.10 to 1.7.20
+- Compile sdk version and target sdk version bumped from 31 to 33.
+- Ktx verion bumped from 1.6.0 to 1.10.1
+- Kotlin gradle plugin bumped from 1.5.20 to 1.8.0
+
+
 ## v2.9.55 - 2024-04-26
 ### Fixed
 - IndexOutOfBounds Exception on new remote track addition in rare cases.

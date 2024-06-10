@@ -175,7 +175,8 @@ struct MeetingView: View {
     @ObservedObject var roomModel = HMSRoomModel(roomCode: "qdr-mik-seb")
     
     var body: some View {
-        
+
+      VStack {
         switch roomModel.roomState {
 
         case .notJoined, .leftMeeting:
@@ -191,6 +192,8 @@ struct MeetingView: View {
             // Button to leave the room
             ...
         }
+      }
+      .environmentObject(roomModel)
     }
 }
 ```
@@ -209,7 +212,8 @@ struct MeetingView: View {
     @ObservedObject var roomModel = HMSRoomModel(roomCode: "qdr-mik-seb")
     
     var body: some View {
-        
+
+      VStack {
         switch roomModel.roomState {
 
         case .notJoined, .leftMeeting:
@@ -233,6 +237,8 @@ struct MeetingView: View {
                 }
             }
         }
+      }
+      .environmentObject(roomModel)
     }
 }
 ```

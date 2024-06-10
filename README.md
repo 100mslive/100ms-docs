@@ -151,7 +151,7 @@ Super easy just get the `id`
 
 ## ✅ Do's
 
--   Use Emojis 😅😂🚀✅🙂🎉😇🌟🥵
+-   Use Emojis 😅😂🚀✅🙂🎉😇🌟
 -   Maintain the Header Order (H1 , H2 , H3 ...)
 -   Use Language Attributes in Code Blocks for Syntax Highlight
 -   Use https://tableconvert.com/ to create Markdown Tables

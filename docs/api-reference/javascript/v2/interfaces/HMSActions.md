@@ -379,6 +379,22 @@ enable sending audio speaker data to beam
 
 ---
 
+### findPeerByName
+
+▸ **findPeerByName**(`options`): `Promise`<{ `eof?`: `boolean` ; `offset`: `number` ; `peers`: [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[] }\>
+
+#### Parameters
+
+| Name      | Type                          |
+| :-------- | :---------------------------- |
+| `options` | `FindPeerByNameRequestParams` |
+
+#### Returns
+
+`Promise`<{ `eof?`: `boolean` ; `offset`: `number` ; `peers`: [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[] }\>
+
+---
+
 ### getAuthTokenByRoomCode
 
 ▸ **getAuthTokenByRoomCode**(`tokenRequest`, `tokenRequestOptions?`): `Promise`<`string`\>
@@ -409,6 +425,22 @@ enable sending audio speaker data to beam
 #### Returns
 
 `undefined` \| `MediaStreamTrack`
+
+---
+
+### getPeer
+
+▸ **getPeer**(`peerId`): `Promise`<`undefined` \| [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)\>
+
+#### Parameters
+
+| Name     | Type     |
+| :------- | :------- |
+| `peerId` | `string` |
+
+#### Returns
+
+`Promise`<`undefined` \| [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)\>
 
 ---
 
@@ -1244,6 +1276,24 @@ If you want to start RTMP streaming or recording.
 
 ---
 
+### startTranscription
+
+▸ **startTranscription**(`params`): `Promise`<`void`\>
+
+If you want to start transcriptions(Closed Caption).
+
+#### Parameters
+
+| Name     | Type                  |
+| :------- | :-------------------- |
+| `params` | `TranscriptionConfig` |
+
+#### Returns
+
+`Promise`<`void`\>
+
+---
+
 ### stopHLSStreaming
 
 ▸ **stopHLSStreaming**(`params?`): `Promise`<`void`\>
@@ -1267,6 +1317,24 @@ If you want to stop HLS streaming. The passed in arguments is not considered at 
 ▸ **stopRTMPAndRecording**(): `Promise`<`void`\>
 
 If you want to stop both RTMP streaming and recording.
+
+#### Returns
+
+`Promise`<`void`\>
+
+---
+
+### stopTranscription
+
+▸ **stopTranscription**(`params`): `Promise`<`void`\>
+
+If you want to stop transcriptions(Closed Caption).
+
+#### Parameters
+
+| Name     | Type                  |
+| :------- | :-------------------- |
+| `params` | `TranscriptionConfig` |
 
 #### Returns
 

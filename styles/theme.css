@@ -46,19 +46,20 @@ to decide colors
     --blue5: hsl(213 71.2% 20.2%);
     --blue6: hsl(212 77.4% 23.1%);
     --blue11: hsl(210 100% 66.1%);
+    --selector_blue: hsl(217, 85%, 54%);
 
     --cyan11: hsl(186 100% 42.2%);
 
-    --surface_default: #13161B;
-    --surface_light: #1E232A;
-    --surface_lighter: #282F39;
+    --surface_default: #13161b;
+    --surface_light: #1e232a;
+    --surface_lighter: #282f39;
 
     --secondary_default: #475366;
-    --background_default: #0B0D0F;
+    --background_default: #0b0d0f;
 
-    --text_med_emp: #E0ECFC;
-    --text_high_emp: #F5F9FF;
-    --text_disabled: #C3D0E580;
+    --text_med_emp: #e0ecfc;
+    --text_high_emp: #f5f9ff;
+    --text_disabled: #c3d0e580;
     --primary_light: hsla(217, 100%, 70%, 1);
 
     --token_code_class: var(--docs_text_primary);
@@ -73,29 +74,29 @@ to decide colors
     --token_inserted: rgba(38, 166, 155, 0.5);
     --token_comment: var(--gray10);
 
-    --twin_green: #14B881;
-    --success: #36B37E;
-    --white: #FFF;
+    --twin_green: #14b881;
+    --success: #36b37e;
+    --white: #fff;
     --warning: #f5a623;
-    --alert_error: #CC525F;
+    --alert_error: #cc525f;
     --error: var(--alert_error);
 
-    --surface_default: #13161B;
+    --surface_default: #13161b;
 
     --border_default: hsla(217, 20%, 12%, 1);
     --border_light: hsla(217, 20%, 14%, 1);
 
-    --background_default: #0B0D0F;
+    --background_default: #0b0d0f;
 
     --code: #061937;
     --code_text: var(--primary_light);
 
-    --sidebar_bg: #0B0C0F;
+    --sidebar_bg: #0b0c0f;
     --header_bg: hsla(217, 20%, 8%, 1);
     --article_bg: var(--sidebar_bg);
-    --new_surface_light: #171B21;
+    --new_surface_light: #171b21;
     --new_border_default: var(--docs_border_default);
-    --new_surface_lighter: #1B2027;
+    --new_surface_lighter: #1b2027;
 
     --dropdown_hover: hsla(217, 15%, 20%, 1);
 
@@ -107,9 +108,9 @@ to decide colors
     --badge_post: rgba(20, 184, 129, 0.1);
     --badge_delete: rgba(204, 82, 95, 0.1);
 
-    --api_surface_light_default: #171B21;
-    --api_surface_light_1: #1B2027;
-    --api_surface_light_2: #1B2027;
+    --api_surface_light_default: #171b21;
+    --api_surface_light_1: #1b2027;
+    --api_surface_light_2: #1b2027;
     --api_surface_light_3: #222730;
 
     --endpoint_url: var(--primary_light);
@@ -124,14 +125,14 @@ to decide colors
     --docs_text_secondary: hsla(216, 40%, 80%, 0.7);
     --docs_text_category: var(--primary_light);
 
-    --docs_border_default: hsla(217, 20%, 10%, 1);
+    --docs_border_default: #1c2027;
     --docs_border_strong: hsla(217, 20%, 14%, 1);
 
     --docs_bg_header: hsla(217, 20%, 7%, 1);
-    --docs_bg_content: #0B0D0F;
+    --docs_bg_content: #0b0d0f;
     --docs_bg_footer: var(--docs_bg_header);
-    --docs_bg_table_header: hsla(217, 20%, 8%, 1);
-    --docs_bg_table_body: hsla(217, 20%, 10%, 1);
+    --docs_bg_table_header: #0f1115;
+    --docs_bg_table_body: #13161b;
     --docs_bg_code_highlight: hsla(217, 20%, 14%, 1);
     --docs_bg_sandbox: hsla(217, 20%, 15%, 1);
     --docs_bg_header_button: hsla(217, 20%, 15%, 1);
@@ -143,7 +144,6 @@ to decide colors
     --docs_bg_home_page_card: hsla(217, 20%, 8%, 1);
     --docs_bg_home_page_card_hover: hsla(217, 20%, 10%, 1);
     --docs_bg_home_page_card_button: hsla(217, 20%, 10%, 1);
-
 
     --docs_bg_category: hsla(217, 50%, 12%, 1);
 
@@ -173,12 +173,12 @@ to decide colors
     --display-dark: block;
     --display-light: none;
     --docs_search_result_breadcrumb: hsla(217, 60%, 70%, 1);
-    --docs_search_result_shadow: #0F1115;
+    --docs_search_result_shadow: #0f1115;
 }
 
 .ch-scrollycoding-step-content[data-selected],
 .ch-scrollycoding-step-content:hover {
-    background-color: var(--surface_light)
+    background-color: var(--surface_light);
 }
 
 .ch-scrollycoding-step-content:hover {
@@ -465,6 +465,12 @@ code:not(.ch-code-scroll-parent) {
     font-weight: 600;
 }
 
+.subtitle {
+    color: #a0a0a0;
+    font-weight: 400;
+    font-size: 1.25em;
+    margin-top: 5px;
+}
 
 pre code:not(.ch-code-scroll-parent) {
     border: none;
@@ -536,7 +542,6 @@ iframe {
     border: 1px solid var(--docs_border_strong);
 }
 
-
 table {
     border-collapse: separate;
     border-spacing: 0;
@@ -602,6 +607,10 @@ table tr:last-of-type td:last-of-type {
     border-bottom-width: 1px !important;
 }
 
+table tr td:first-of-type {
+    font-weight: 600;
+}
+
 .table-wrapper {
     overflow-x: auto;
 }
@@ -614,8 +623,8 @@ table td {
     background: var(--docs_bg_table_body) !important;
 }
 
-table th,
-tr,
+table tr,
+th,
 td {
     border-color: var(--docs_border_default) !important;
     border-bottom-width: 0px !important;
@@ -715,7 +724,7 @@ pre[class*='language-'] {
     stroke: var(--request_code);
 }
 
-.request .code-block>div {
+.request .code-block > div {
     color: var(--request_code) !important;
     font-weight: 500;
     font-size: 13px;
@@ -764,7 +773,6 @@ input {
     background-color: transparent;
 }
 
-
 /* Header Anchor Links */
 .head-link {
     color: inherit;
@@ -802,7 +810,7 @@ input {
     font-weight: bold;
 }
 
-.remark-code-title+pre {
+.remark-code-title + pre {
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;
 }
@@ -882,7 +890,7 @@ h4:hover .copy-anchor:active {
 }
 
 .dropdown-chevron-container:hover {
-    background-color: hsla(217, 18%, 20%, 1)
+    background-color: hsla(217, 18%, 20%, 1);
 }
 
 .dropdown:focus-visible {
@@ -920,7 +928,7 @@ h4:hover .copy-anchor:active {
 }
 
 .dropdown svg {
-    color: var(--docs_text_primary)
+    color: var(--docs_text_primary);
 }
 
 .filter-dropdown {
@@ -1061,7 +1069,6 @@ div#hs-eu-cookie-confirmation div#hs-eu-cookie-confirmation-inner a#hs-eu-cookie
 }
 
 @media screen and (max-width: 1160px) {
-
     .footer-contact {
         width: 100%;
     }
@@ -1076,7 +1083,6 @@ div#hs-eu-cookie-confirmation div#hs-eu-cookie-confirmation-inner a#hs-eu-cookie
 }
 
 @media screen and (max-width: 840px) {
-
     div.home-dropdown-option {
         width: 120px;
     }
@@ -1090,7 +1096,9 @@ div#hs-eu-cookie-confirmation div#hs-eu-cookie-confirmation-inner a#hs-eu-cookie
 }
 
 @media screen and (max-width: 768px) {
-    div#hs-eu-cookie-confirmation div#hs-eu-cookie-confirmation-inner div#hs-en-cookie-confirmation-buttons-area {
+    div#hs-eu-cookie-confirmation
+        div#hs-eu-cookie-confirmation-inner
+        div#hs-en-cookie-confirmation-buttons-area {
         display: flex;
         flex-direction: column;
         align-items: center;
