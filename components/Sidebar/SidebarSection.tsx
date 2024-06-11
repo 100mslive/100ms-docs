@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
-import { ChevronRightIcon } from '@100mslive/react-icons';
+import { ChevronDownIcon } from '@100mslive/react-icons';
 import { Flex, Text } from '@100mslive/react-ui';
 import SidebarItem from './SidebarItem';
 import { updateOpenedAccordionsList, getOpenedAccordionsList } from '../../lib/utils';
@@ -117,12 +117,12 @@ const SidebarSection: React.FC<Props> = ({
                             }}>
                             {titleCasing(key)}
                         </Text>
-                        <ChevronRightIcon
+                        <ChevronDownIcon
                             style={{
                                 width: '18px',
                                 minWidth: '14px',
                                 transition: 'all 0.2s ease',
-                                transform: openSection ? 'rotateZ(90deg)' : ''
+                                transform: openSection ? 'rotateZ(-180deg)' : ''
                             }}
                         />
                     </Flex>
