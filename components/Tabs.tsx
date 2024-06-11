@@ -99,7 +99,8 @@ export const Tabs: React.FC<TabsProps> = ({ items, id, isSelector = false }) => 
                         outline: 'none',
                         cursor: 'pointer',
                         border: 'none',
-                        borderBottom: tab === i && !isSelector ? '2px solid var(--gray12)' : 'none',
+                        borderBottom:
+                            tab === i && !isSelector ? '2px solid var(--selector_blue)' : 'none',
                         padding: isSelector ? '5px 12px' : '0',
                         borderRadius: isSelector ? '4px' : '0',
                         backgroundColor:
