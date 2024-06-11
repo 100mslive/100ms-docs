@@ -89,6 +89,12 @@ export const Tabs: React.FC<TabsProps> = ({ items, id, isSelector = false }) => 
                     }}
                     type="button"
                     style={{
+                        color: !isSelector
+                            ? 'var(--docs_text_primary)'
+                            : tab === i
+                            ? 'var(--docs_text_primary)'
+                            : 'var(--docs_text_secondary)',
+                        fontWeight: tab === i ? 'bold' : 'normal',
                         background: 'none',
                         outline: 'none',
                         cursor: 'pointer',
