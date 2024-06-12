@@ -1,0 +1,227 @@
+---
+title: Virtual Background Plugin (Beta)
+nav: 13.4
+---
+
+Virtual Background plugin helps customise one’s background by replacing the background with a static image or blurring the background. This guide provides an overview of using the Virtual Background plugin of 100ms.
+
+<video loop="true" autoplay="autoplay" controls="controls" id="vid" muted height="700" width="300">
+    <source src="/docs/guides/virtual-background-ui-demo.mov" type="video/mp4" />
+</video>
+<br />
+
+## Supported Versions/Resolutions
+
+-   Minimum 100ms SDK version it can work with is `1.10.3`
+
+## Limitations
+
+- Has poor fps on older android phones
+- Minimum iOS version required to support Virtual Background plugin is `iOS 15`
+- Virtual background plugin is in beta stage and may have performance issues on iPhone X, 8, 7, 6 and other older devices. We recommend that you use this feature on a high performance device for smooth experience.
+
+## Add dependency
+
+To add virtual background to your application add `hms_video_plugin` to your application's `pubspec.yaml` file.
+
+```yaml
+hms_video_plugin:
+```
+
+## How to Integrate Virtual Background Plugin:
+
+> 🔑 Note: `hms_video_plugin` cannot be used independently. Always call the virtual background APIs after `onJoin` or `onPreview`.
+
+<div className="steps-container">
+
+### Step 1: Set the isVirtualBackgroundEnabled property in HMSVideoTrackSetting as true
+
+```dart
+var videoTrackSetting = HMSVideoTrackSetting(
+            trackInitialState: joinWithMutedVideo
+                ? HMSTrackInitState.MUTED
+                : HMSTrackInitState.UNMUTED,
+            isVirtualBackgroundEnabled: true);
+```
+
+### Step 2: Pass the Track Settings to the HMSSDK constructor
+
+```dart
+/// Create Instance of `HMSTrackSetting`
+var trackSettings = HMSTrackSetting(
+        audioTrackSetting: HMSAudioTrackSetting(),
+        videoTrackSetting: videoTrackSetting);
+
+/// Set the track settings to HMSSDK
+var hmsSDK = HMSSDK(
+        hmsTrackSetting: trackSettings);
+```
+
+### Step 3: Check for Virtual Background availability
+
+```dart
+class Meeting implements HMSUpdateListener, HMSActionResultListener{
+
+    ...
+
+    bool isVirtualBackgroundSupported = false;
+
+    /// This method checks the virtual background availability
+    void checkIsVirtualBackgroundSupported() async {
+        isVirtualBackgroundSupported = await HMSVideoPlugin.isSupported();
+    }
+
+    ...
+}
+```
+
+### Step 4: If Virtual Background is available, enable it
+
+To enable virtual background, call the `enable` method.
+
+```dart
+class Meeting implements HMSUpdateListener, HMSActionResultListener{
+
+    ...
+
+    bool isVirtualBackgroundSupported = false;
+
+    /// This method checks the virtual background availability
+    void checkIsVirtualBackgroundSupported() async {
+        isVirtualBackgroundSupported = await HMSVideoPlugin.isSupported();
+    }
+
+    void enableVirtualBackground(Uint8List? image) async{
+        ///[image] is the image to be set as background
+        if(isVirtualBackgroundSupported){
+            HMSException? isEnabled = await HMSVideoPlugin.enable(image: image);
+            if(isEnabled == null){
+                ///Virtual background started successfully
+            }else{
+                ///Error enabling virtual background
+            }
+        }
+    }
+
+    ...
+}
+```
+
+To enabled background blur, call the `enableBlur` method.
+
+```dart
+class Meeting implements HMSUpdateListener, HMSActionResultListener{
+
+    ...
+
+    bool isVirtualBackgroundSupported = false;
+
+    /// This method checks the virtual background availability
+    void checkIsVirtualBackgroundSupported() async {
+        isVirtualBackgroundSupported = await HMSVideoPlugin.isSupported();
+    }
+
+    void enableBackgroundBlur(int blurRadius) async{
+        ///[blurRadius] is the radius of the blur effect
+        if(isVirtualBackgroundSupported){
+            HMSException? isEnabled = await HMSVideoPlugin.enableBlur(blurRadius: blurRadius);
+            if(isEnabled == null){
+                ///Background blur started successfully
+            }else{
+                ///Error enabling blur
+            }
+        }
+    }
+
+    ...
+}
+```
+
+### Step 5: To change virtual background image use changeVirtualBackground method
+
+```dart
+class Meeting implements HMSUpdateListener, HMSActionResultListener{
+
+    ...
+
+    bool isVirtualBackgroundSupported = false;
+
+    /// This method checks the virtual background availability
+    void checkIsVirtualBackgroundSupported() async {
+        isVirtualBackgroundSupported = await HMSVideoPlugin.isSupported();
+    }
+
+    ///If virtual background is enabled, then we can change the virtual background image
+    void changeVirtualBackground(Uint8List? image) {
+
+        ///[image] is the image new image to be set as background
+        ///[isVirtualBackgroundSupported] is the flag to check if virtual background is supported
+        ///[isVirtualBackgroundEnabled] is the flag to check if virtual background is enabled
+        if(isVirtualBackgroundSupported && isVirtualBackgroundEnabled){
+            HMSVideoPlugin.changeVirtualBackground(image: image);
+        }
+    }
+
+    ...
+}
+```
+
+### Step 6: To disable Virtual Background use disable methods
+
+To disable virtual background, call the `disable` method.
+
+```dart
+class Meeting implements HMSUpdateListener, HMSActionResultListener{
+
+    ...
+
+    bool isVirtualBackgroundSupported = false;
+
+    /// This method checks the virtual background availability
+    void checkIsVirtualBackgroundSupported() async {
+        isVirtualBackgroundSupported = await HMSVideoPlugin.isSupported();
+    }
+
+    void disableVirtualBackground() async{
+        if(isVirtualBackgroundSupported){
+            HMSException? isDisabled = await HMSVideoPlugin.disable();
+            if(isDisabled == null){
+                ///Virtual Background disabled successfully
+            }else{
+                ///Error disabling virtual background
+            }
+        }
+    }
+    ...
+}
+```
+
+To disable background blur use `disableBlur` method
+
+```dart
+class Meeting implements HMSUpdateListener, HMSActionResultListener{
+
+    ...
+
+    bool isVirtualBackgroundSupported = false;
+
+    /// This method checks the virtual background availability
+    void checkIsVirtualBackgroundSupported() async {
+        isVirtualBackgroundSupported = await HMSVideoPlugin.isSupported();
+    }
+
+    void disableBackgroundBlur() async{
+        if(isVirtualBackgroundSupported){
+            HMSException? isDisabled = await HMSVideoPlugin.disableBlur();
+            if(isDisabled == null){
+                ///Background blur disabled successfully
+            }else{
+                ///Error disabling blur
+            }
+        }
+    }
+    ...
+}
+```
+
+</div>
