@@ -1,6 +1,5 @@
 import React from 'react';
-import { Flex, Text, Button } from '@100mslive/react-ui';
-import { DynamicIcon } from './Callout';
+import { Flex, Text } from '@100mslive/react-ui';
 import { ArrowRightIcon } from '@100mslive/react-icons';
 
 const ItemGridLayout = ({ title, children, showViewAll = true }) => {
