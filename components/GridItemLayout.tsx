@@ -1,27 +1,38 @@
 import React from 'react';
 import { Flex, Text, Button } from '@100mslive/react-ui';
-import FlexContainer from './FlexContainer';
+import { DynamicIcon } from './Callout';
+import { ArrowRightIcon } from '@100mslive/react-icons';
 
 const ItemGridLayout = ({ title, children, showViewAll = true }) => {
     return (
         <div>
             <Flex justify="between" align="center" css={{ marginBottom: '20px' }}>
-                <Text css={{ fontSize: '24px', fontWeight: 'bold', color: '#fff' }}>{title}</Text>
+                <Text css={{ fontSize: '24px', fontWeight: 'bold', color: 'var(--white)' }}>
+                    {title}
+                </Text>
                 {showViewAll && (
-                    <Button
+                    <Flex
+                        align="center"
                         css={{
-                            background: 'transparent',
-                            color: '#1e90ff',
-                            padding: '10px 20px',
-                            border: 'none',
-                            cursor: 'pointer',
-                            '&:hover': { textDecoration: 'underline' }
+                            color: '$textHighEmp',
+                            gap: '$2',
+                            mb: '$2'
                         }}>
-                        View All Features
-                    </Button>
+                        <Text
+                            css={{
+                                background: 'transparent',
+                                color: 'var(--selector_blue)',
+                                border: 'none',
+                                cursor: 'pointer',
+                                '&:hover': { textDecoration: 'underline' }
+                            }}>
+                            View All Features
+                        </Text>
+                        <ArrowRightIcon color="var(--selector_blue)" height={20} width={20} />
+                    </Flex>
                 )}
             </Flex>
-            <FlexContainer>{children}</FlexContainer>
+            <Flex css={{ flexWrap: 'wrap', gap: '8px' }}>{children}</Flex>
         </div>
     );
 };
