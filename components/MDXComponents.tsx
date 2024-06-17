@@ -27,6 +27,10 @@ import { PortraitImage } from './PortraitImage';
 import { CollapsibleRoot, CollapsiblePreview, CollapsibleContent } from './CollapsibleSection';
 import { CollapsibleStep } from './CollapsibleStep';
 import SuggestedBlogs from './SuggestedBlogs';
+import GridItemLayout from './GridItemLayout';
+import GridItem from './GridItem';
+import InfoComponent, { InfoTile } from './InfoTile';
+import InfoTileLayout from './InfoTile';
 
 const CodeCustom = (props: any) => <Code {...props}>{props.children}</Code>;
 
@@ -114,7 +118,11 @@ const MDXComponents = {
     CollapsiblePreview,
     CollapsibleContent,
     CollapsibleStep,
-    DynamicIcon
+    DynamicIcon,
+    GridItemLayout,
+    GridItem,
+    InfoTileLayout,
+    InfoTile
 };
 
 export default MDXComponents;
