@@ -18,6 +18,20 @@ import AndroidSdkVersionShield from '@/common/android-sdk-version-shield.md';
 | live.100ms:video-filters: |<AndroidSdkVersionShield />|
 | live.100ms:virtual-background: |<AndroidSdkVersionShield />|
 
+## v2.9.61 - 2024-06-17
+## Fixed
+* Bug that could cause tracks to remain muted if the same HMSSDK instance is used to join a room fixed.
+* `setNoiseCancellationEnabled` now takes a mandatory `HMSActionResultListener` because it may not have been enabled if it's either off from the dashboard or the library isn't added and it was unclear if it was enabled. It is also renamed to `enableNoiseCancellation`
+* `getNoiseCancellationEnabled` renamed to `isNoiseCancellationEnabled`
+* `isNoiseCancellationAvailable` renamed to `isNoiseCancellationSupported`
+* 
+
+
+## Added
+* Set up to add diagnostic tests.
+* Added noise cancellation start/stop events.
+* Added support to enable noise cancellation from the dashboard.
+
 ## v2.9.60 - 2024-06-07
 ### Added
 - New API `VideoFrameInfoListener` to receive `rotatedWidth`, `rotatedHeight` and `rotation` to help change the virtual background on orientation changes to avoid stretching.
