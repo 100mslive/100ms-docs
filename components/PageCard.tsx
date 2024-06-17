@@ -42,7 +42,7 @@ const PageCard = ({
                         aspectRatio: '16/9',
                         padding: '0px !important',
                         transition: 'transform 0.3s',
-                        transform: hover ? 'translateY(9rem)' : 'translateY(0)'
+                        transform: hover ? 'translateY(7rem)' : 'translateY(0)'
                     }}
                 />
             )}
