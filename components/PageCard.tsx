@@ -17,11 +17,13 @@ const PageCard = ({
         <Flex
             direction="column"
             css={{
-                background: 'var(--surface_light)',
+                background: 'var(--new_surface_light)',
                 borderRadius: '16px',
                 width: '40%',
                 boxSizing: 'border-box',
-                border: hover ? '1px solid #2C333F' : '1px solid #1C2027',
+                border: hover
+                    ? '1px solid var(--new_border_default)'
+                    : '1px solid var(--new_surface_lighter)',
                 transition: 'border-color 0.3s'
             }}
             onMouseEnter={() => setHover(true)}
@@ -99,14 +101,14 @@ const PageCard = ({
                         paddingTop: '12px',
                         paddingBottom: '12px',
                         textAlign: 'center',
-                        backgroundColor: '#2C333F',
+                        backgroundColor: 'var(--new_surface_lighter)',
                         borderRadius: '0px 0px 16px  16px'
                     }}>
                     <a
                         href="#"
                         className="cta"
                         style={{
-                            color: 'var(--selector_blue)',
+                            color: '#66A1FF',
                             textDecoration: 'none',
                             paddingLeft: '24px'
                         }}>
