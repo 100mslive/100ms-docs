@@ -32,6 +32,7 @@ setBlur(blur) {}
 /**
  * Sets the virtual background using the provided media URL.
  * @param {HMSEffectsBackground} url - The media URL to set as the virtual background.
+ * Alternatively, the background image can be loaded beforehand and passed to setBackground as objectURL
  * @returns {void}
  */
 setBackground(url) {}
@@ -75,6 +76,23 @@ removeEffects() {}
  */
 stop() {}
 
+```
+
+Callbacks supported by the plugin:
+
+On initialization
+
+```
+const effectsPlugin = new HMSEffectsPlugin(<key>, () => console.log("Plugin initialised"));
+
+```
+
+On resolution change (on device rotation or when the video aspect ratio changes)
+
+```
+effectsPlugin.onResolutionChange = (width: number, height: number) => {
+  console.log(`Resolution changed to ${width}x${height}`)
+}
 ```
 
 
