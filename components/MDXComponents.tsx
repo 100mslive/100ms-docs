@@ -27,6 +27,7 @@ import { PortraitImage } from './PortraitImage';
 import { CollapsibleRoot, CollapsiblePreview, CollapsibleContent } from './CollapsibleSection';
 import { CollapsibleStep } from './CollapsibleStep';
 import SuggestedBlogs from './SuggestedBlogs';
+import PageCard from './PageCard';
 
 const CodeCustom = (props: any) => <Code {...props}>{props.children}</Code>;
 
@@ -114,7 +115,8 @@ const MDXComponents = {
     CollapsiblePreview,
     CollapsibleContent,
     CollapsibleStep,
-    DynamicIcon
+    DynamicIcon,
+    PageCard
 };
 
 export default MDXComponents;
