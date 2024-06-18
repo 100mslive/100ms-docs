@@ -76,7 +76,7 @@ const SidebarSection: React.FC<Props> = ({
         <section
             className="sidebar-section"
             style={{
-                margin: '0',
+                margin: '0.1rem 0',
                 borderLeft: '0',
                 marginBottom: 'var(--hms-ui-space-4)'
             }}

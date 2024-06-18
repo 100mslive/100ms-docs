@@ -1,3 +1,4 @@
+import React from 'react';
 import IosIcon from '@/assets/icons/IosIcon';
 import {
     AndroidIcon,

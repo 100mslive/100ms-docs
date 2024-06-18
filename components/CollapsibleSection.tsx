@@ -25,7 +25,7 @@ export const CollapsibleRoot = ({ title, children }: { title: string; children: 
     }
     const [open, setOpen] = useState(true);
     return (
-        <div style={{ margin: '1rem 0' }}>
+        <div style={{ margin: '0.5rem 0' }}>
             {/* eslint-disable-next-line */}
             <div
                 style={{
@@ -33,7 +33,8 @@ export const CollapsibleRoot = ({ title, children }: { title: string; children: 
                     alignItems: 'center',
                     gap: '0.5rem',
                     color: 'var(--docs_text_primary)',
-                    cursor: 'pointer'
+                    cursor: 'pointer',
+                    flexWrap: 'nowrap'
                 }}
                 onClick={() => setOpen((prev) => !prev)}>
                 <ChevronRightIcon

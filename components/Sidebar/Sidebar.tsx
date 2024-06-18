@@ -14,7 +14,13 @@ import { getUpdatedPlatformName } from '@/lib/utils';
 import SidebarSection from './SidebarSection';
 import ReleaseNotes from './ReleaseNotes';
 import SidebarHeadingGroup from './SidebarHeadingGroup';
-import { menuItem, platformOrder, sidebarHeadingOrder, sidebarHeadings, sidebarHeadingsDetails } from './constants';
+import {
+    menuItem,
+    platformOrder,
+    sidebarHeadingOrder,
+    sidebarHeadings,
+    sidebarHeadingsDetails
+} from './constants';
 
 const platformlist = ['javascript', 'android', 'ios', 'flutter', 'react-native', 'server-side'];
 
@@ -354,8 +360,8 @@ const Sidebar: React.FC<Props> = ({
                         </Box>
                         {/* Sidebar Menu Section */}
                         {nav
-                            ? Object.entries(nav).map(([key, children], index) => {
-                                  return children?.['release-notes'] ? (
+                            ? Object.entries(nav).map(([key, children], index) =>
+                                  children?.['release-notes'] ? (
                                       <ReleaseNotes key={key} dataObj={children['release-notes']} />
                                   ) : (
                                       <>
@@ -368,8 +374,8 @@ const Sidebar: React.FC<Props> = ({
                                               {children as React.ReactChildren}
                                           </SidebarSection>
                                       </>
-                                  );
-                              })
+                                  )
+                              )
                             : null}
                     </>
                 ) : null}

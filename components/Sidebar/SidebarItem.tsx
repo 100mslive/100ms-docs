@@ -24,9 +24,8 @@ const SidebarItem = ({
                     ref={isActive ? activeItem : null}
                     style={{
                         cursor: 'pointer',
-                        padding: '0.25rem 0',
+                        padding: '0.35rem 0',
                         color: isActive ? 'var(--docs_text_primary)' : 'var(--docs_text_secondary)',
-                        fontWeight: isActive ? '500' : '400',
                         fontSize: isNested || !hasSideBarIcon ? '14px' : '16px',
                         borderLeft:
                             isNested || !hasSideBarIcon
@@ -43,7 +42,7 @@ const SidebarItem = ({
                                 ? 'var(--api_surface_light_default)'
                                 : ''
                     }}>
-                    <Flex css={{ gap: '$6' }}>
+                    <Flex css={{ gap: '$6', fontWeight: isActive ? '600' : '400' }}>
                         {route.sidebarIcon ? <DynamicIcon name={route.sidebarIcon} /> : null}
                         {route.title}
                     </Flex>
