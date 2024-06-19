@@ -843,6 +843,11 @@ Minimum between `width` and `height` should be in range [144, 1080] and Maximum 
 | writer | `array` | This contains an array of roles with the permission to write and collaborate on the whiteboard. Users in this role, unless other explicitly added to `admin` permission levels will only be able to draw and view the whiteboard, but not launch or close it. | No       |
 | reader | `array` | This contains an array of roles with the permission to only view the whiteboard. Users in this role, unless other explicitly added to `admin` or `writer` permission levels, will only be able to view the whiteboard, but not launch, close or draw on it.   | No       |
 
+> **Note on Multiple Permissions**
+>
+> A role can be a part multiple permission level array. For example, a ‘teacher’ role can be a part both the `admin` and `writer` permission arrays, allowing them to launch, close and write on the whiteboard. But a 'student' which is a part of `reader` but not of other permission levels will only be able to view the whiteboard.
+>
+
 ### plugins - transcriptions object
 
 | Name        | Type     | Description                                                                                                                      | Required |
