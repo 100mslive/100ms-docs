@@ -268,6 +268,21 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
             }
         }
     }
+    "plugins": {
+        "whiteboard": {
+            "permissions": {
+                 "admin": ["host"],
+                "writer": ["host"],
+                "reader": ["guest"]
+            }
+        },
+        "transcriptions": {
+            "permissions": {
+                "admin": ["host","guest"]
+            },
+            "mode": "caption"
+        }
+    }
 }'
 ```
 
@@ -533,6 +548,21 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
                 }
             }
         }
+    "plugins": {
+        "whiteboard": {
+            "permissions": {
+                 "admin": ["host"],
+                "writer": ["host"],
+                "reader": ["guest"]
+            }
+        },
+        "transcriptions": {
+            "permissions": {
+                "admin": ["host","guest"]
+            },
+            "mode": "caption"
+        }
+    }
     },
     "createdAt": "2022-09-16T12:03:40.068Z",
     "updatedAt": "2022-09-16T12:03:40.068Z",
@@ -790,3 +820,43 @@ Minimum between `width` and `height` should be in range [144, 1080] and Maximum 
 | ------ | -------- | ------------------------------------------------------------------------------------------------------------------ | -------- |
 | title  | `string` | Title of the section `Agenda`, `Short Summary`, `Follow Up Action Items`, `Short Summary`. (limit: 100 characters) | Yes      |
 | format | `string` | Format of the section. Valid values: [`bullets`, `paragraph`]                                                      | Yes      |
+
+
+## plugins object
+
+| Name           | Type     | Description                                                                                                                            | Required |
+|:---------------|:---------|:---------------------------------------------------------------------------------------------------------------------------------------|:---------|
+| whiteboard     | `object` | Object of type `whiteboard`. This can be used enable and configure permissions of the whiteboard.                                      | No       |
+| transcriptions | `object` | Object of type `transcriptions`. This can be used configure permission levels for transcriptions, and specifically, closed captioning. | No       |
+
+### plugins - whiteboard object
+
+| Name        | Type     | Description                                                                                                                                                           | Required |
+|-------------|----------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------|
+| permissions | `object` | Object of type `permissions`. This is used to classify roles in different permission levels of the whiteboard. Same role can be a part of multiple permission levels. | No       |
+
+#### plugins - whiteboard - permissions object
+
+| Name   | Type    | Description                                                                                                                                                                                                                                                   | Required |
+|--------|---------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------|
+| admin  | `array` | This contains an array of roles with the permission to launch, close and view the whiteboard. Users in this role, unless other explicitly added to `writer` permission level, will only be able to launch, close or view the whiteboard, but not draw on it.  | No       |
+| writer | `array` | This contains an array of roles with the permission to write and collaborate on the whiteboard. Users in this role, unless other explicitly added to `admin` permission levels will only be able to draw and view the whiteboard, but not launch or close it. | No       |
+| reader | `array` | This contains an array of roles with the permission to only view the whiteboard. Users in this role, unless other explicitly added to `admin` or `writer` permission levels, will only be able to view the whiteboard, but not launch, close or draw on it.   | No       |
+
+> **Note on Multiple Permissions**
+>
+> A role can be a part multiple permission level array. For example, a ‘teacher’ role can be a part both the `admin` and `writer` permission arrays, allowing them to launch, close and write on the whiteboard. But a 'student' which is a part of `reader` but not of other permission levels will only be able to view the whiteboard.
+>
+
+### plugins - transcriptions object
+
+| Name        | Type     | Description                                                                                                                      | Required |
+|-------------|----------|----------------------------------------------------------------------------------------------------------------------------------|----------|
+| permissions | `object` | Object of type `permissions`. This is used to classify roles in different permission levels for specific mode of transcription.  | No       |
+| mode        | `string` | Mode defines the transcription mode that the permission level is defined for. Currently, it only accepts `caption` as its value. | No       |
+
+#### plugins - transcriptions - permissions object
+
+| Name  | Type    | Description                                                                                                                                                                                                                | Required |
+|-------|---------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------|
+| admin | `array` | This contains an array of roles with the permission to enable or disable closed captioning for a given room during a live session. They can enable closed captions so that all the participants in the room can access it. | No       |
