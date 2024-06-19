@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { NextSeo } from 'next-seo';
 import Header from '@/components/Header';
 import SegmentAnalytics from '@/components/SegmentAnalytics';
-import Sidebar from '@/components/Sidebar';
+import Sidebar from '@/components/Sidebar/Sidebar';
 import useLockBodyScroll from '@/lib/useLockBodyScroll';
 import { SEOText } from '@/lib/utils';
 

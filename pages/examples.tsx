@@ -6,7 +6,7 @@ import ExampleCard from '@/components/ExampleCard';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import SegmentAnalytics from '@/components/SegmentAnalytics';
-import Sidebar from '@/components/Sidebar';
+import Sidebar from '@/components/Sidebar/Sidebar';
 import TechnologySelect, { TECHNOLOGIES, Technologies } from '@/components/TechnologySelect';
 import { getAllDocs, getNavfromDocs } from '@/lib/mdxUtils';
 import { Box, Button, Flex, Text } from '@100mslive/react-ui';

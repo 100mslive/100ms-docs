@@ -5,7 +5,7 @@ import { Listbox } from '@headlessui/react';
 import useClickOutside from '@/lib/useClickOutside';
 import { getUpdatedPlatformName } from '@/lib/utils';
 import Chip from './Chip';
-import { menuItem } from './Sidebar';
+import { menuItem } from './Sidebar/constants';
 
 const ChipDropDown = ({
     openFilter,

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { LayersIcon, LayoutIcon, RocketIcon } from '@100mslive/react-icons';
 import { Box, Flex, Text } from '@100mslive/react-ui';
 import Header from 'components/Header';
-import Sidebar from '@/components/Sidebar';
+import Sidebar from '@/components/Sidebar/Sidebar';
 import MainCard from '@/components/Home/MainCard';
 import Card from '@/components/Card';
 import PopularGuides from '@/components/Home/PopularGuides';
@@ -21,21 +21,21 @@ const cards = [
         title: 'Concepts',
         subText: 'Learn concepts to help you build your use-case with 100ms',
         link: '/get-started/v2/get-started/concepts/basics',
-        cta: "View Concepts"
+        cta: 'View Concepts'
     },
     {
         icon: <LayoutIcon width={20} />,
         title: 'Prebuilt',
         subText: 'Use links and UI components to go live with a feature-rich live video app',
         link: '/get-started/v2/get-started/prebuilt/overview',
-        cta: "View Prebuilt"
+        cta: 'View Prebuilt'
     },
     {
         icon: <RocketIcon width={20} />,
         title: 'Examples',
         subText: 'Discover open-source examples for your preferred platform',
         link: '/examples',
-        cta: "View Examples"
+        cta: 'View Examples'
     }
 ];
 
