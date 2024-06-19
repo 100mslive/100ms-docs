@@ -3,6 +3,14 @@ title: Whiteboard
 nav: 3.7
 ---
 
+The Whiteboard feature in 100ms is designed to enhance collaborative and interactive experiences across various setups, particularly in educational environments where student-teacher interactions are crucial. 
+
+The Whiteboard is invaluable in a range of setups, including:
+- Education: Facilitates interactive learning sessions between students and teachers.
+- Corporate Training: Enhances training programs with real-time annotations and visual aids.
+- Remote Team Collaboration: Supports brainstorming and planning sessions with a shared visual space.
+- Creative Workshops: Enables collaborative drawing and design tasks.
+
 This is a guide to enabling, configuring and using the Whiteboard on 100ms.
 
 <StepsToc
@@ -81,11 +89,12 @@ Once you’ve enabled and saved the configuration, the Whiteboard can be launche
 
 #### Default behaviour
 1. **Session Persistence** - The whiteboard does not retain any information after a session ends. However, during a session, it maintains all drawn shapes and information even if it is closed and reopened multiple times.
-2. **Canvas Limitations** - Although the whiteboard inherently supports an infinite canvas, its movement is restricted to fit the device’s viewport in Prebuilt Web to avoid canvas scrolling beyond the visible area.
-3. **Zoom Capabilities** - Zoom-in and zoom-out functionality have been disabled on the whiteboard in Prebuilt Web. Although, it is available on Prebuilt Mweb, Android, iOS, React Native and Flutter.
-4. **Unified Page View** - When one participant changes the whiteboard page, it synchronizes across all participants’ views. Current implementation does not support independent page navigation by different users, but future updates will include this capability.
-5. **Launch and Closure Control** - Only the participant who launches the whiteboard can close it. If this participant disconnects, the whiteboard will automatically close. Other participants with the required role permissions can relaunch the whiteboard if needed.
-6. **Screenshare Priority** - Screenshare takes precedence over the whiteboard. If screensharing is initiated, the whiteboard will automatically close. Additionally, the option to launch the whiteboard is disabled in the Prebuilt UI during an active screenshare session. To access the whiteboard, screensharing must be stopped first.
+2. **No Follow-along** - The current version of the whiteboard does not support a true follow-along feature. This means participants cannot follow the presenter’s cursor movements across different parts of the canvas or see the exact zoom level that the presenter is using. This has been solved in Prebuilt by limiting the canvas and disabling the zoom on web.
+3. **Canvas Limitations** - Although the whiteboard inherently supports an infinite canvas, its movement is restricted to fit the device’s viewport in Prebuilt Web to avoid canvas scrolling beyond the visible area.
+4. **Zoom Capabilities** - Zoom-in and zoom-out functionality have been disabled on the whiteboard in Prebuilt Web. Although, it is available on Prebuilt Mweb, Android, iOS, React Native and Flutter.
+5. **Unified Page View** - When one participant changes the whiteboard page, it synchronizes across all participants’ views. Current implementation does not support independent page navigation by different users, but future updates will include this capability.
+6. **Launch and Closure Control** - Only the participant who launches the whiteboard can close it. If this participant disconnects, the whiteboard will automatically close. Other participants with the required role permissions can relaunch the whiteboard if needed.
+7. **Screenshare Priority** - Screenshare takes precedence over the whiteboard. If screensharing is initiated, the whiteboard will automatically close. Additionally, the option to launch the whiteboard is disabled in the Prebuilt UI during an active screenshare session. To access the whiteboard, screensharing must be stopped first.
 
 #### Features
 The following features are supported within the Whiteboard:
