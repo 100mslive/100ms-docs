@@ -46,6 +46,8 @@ Future<HMSTrackSetting> getTrackSettings() async {
 
 This is used to get all the roles available in the current room. It returns a list of `HMSRole` objects as:
 
+> 🔑 Note: `getRoles` should only be called after the `onJoin` method. 
+
 ```dart
 Future<List<HMSRole>> getRoles() async {
     return await hmsSDK.getRoles();
