@@ -1,0 +1,93 @@
+---
+title:  Live Transcription for Conferencing (Closed Captions - Beta)
+nav: 14.1
+---
+
+100ms' real-time transcription engine generates a live transcript (closed captions) during a conferencing session. The SDK provides a callback with transcript for each peer when they speak.
+
+
+## Minimum Requirements
+
+-   Minimum 100ms SDK version required is `1.10.7`
+
+
+## Checking if captions are enabled in a room
+
+To check if WebRTC (not hls) captions are enabled in a room. Look for any transcriptions being in a started state in the room data.
+
+```js
+const captionsEnabled = (
+                          hmsInstance.getRoom()
+                            ?.transcriptions
+                            ?.some((transcription) => {
+                              return transcription.state === TranscriptionState.STARTED;
+                            })
+                        ) || false; // Using `false` as default
+```
+
+
+## How to implement captions?
+
+Implement `fun onTranscripts(transcripts: HmsTranscripts)` in the `HMSUpdateListener` callback.
+
+
+## Toggling Live Transcripts
+To save on cost, live transcriptions can be disabled for everyone at runtime and toggled on again when required.
+
+```js
+// Start Real Time Transcription
+try {
+  await hmsInstance.startRealTimeTranscription()
+} catch (error) {
+  // Handle error occurred while starting Transcription
+}
+```
+
+```js
+// Stop Real Time Transcription
+try {
+  await hmsInstance.stopRealTimeTranscription()
+} catch (error) {
+  // Handle error occurred while starting Transcription
+}
+```
+
+Only user with admin permissions can toggle Live Transcripts using `startRealTimeTranscription` and `stopRealTimeTranscription` methods. You can check if user has admin permission for Live Transcriptions on their role object -
+
+```js{5-7,10}
+// Getting instance of local peer
+const localPeer = hmsInstance.getLocalPeer();
+
+// getting `CAPTION` permission object
+const captionPermissions = localPeer.role?.permissions?.transcriptions?.find(
+  (element) => element.mode === TranscriptionsMode.CAPTION
+);
+
+const isAdmin = captionPermissions?.admin || false; // using `false` as default
+```
+
+When Live Transcripts are toggled for room, you get `TRANSCRIPTIONS_UPDATED` update type in `ON_ROOM_UPDATE` event -
+
+```js
+hmsInstance.addEventListener(
+  HMSUpdateListenerActions.ON_ROOM_UPDATE,
+  (data: { room: HMSRoom; type: HMSRoomUpdate; }) => {
+
+    if (data.type === HMSRoomUpdate.TRANSCRIPTIONS_UPDATED) {
+      // Handle Transcriptions Update like you may update UI if transcriptions were started or stopped
+
+      const captionTranscription = data.room.transcriptions?.find(
+        (transcription) => transcription.mode === TranscriptionsMode.CAPTION
+      );
+
+      if (captionTranscription?.state === TranscriptionState.STARTED) {
+        // Transcriptions Started in Room
+      } else if (captionTranscription?.state === TranscriptionState.STOPPED) {
+        // Transcriptions Stopped in Room
+      } else if (captionTranscription?.state === TranscriptionState.FAILED) {
+        // Transcriptions failed to Start or Stop
+      }
+    }
+  }
+);
+```
