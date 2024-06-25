@@ -64,31 +64,32 @@ You can toggle live transcriptions on/off at runtime that can help save costs.
 
 ```
 
-Use startTranscription() method to start the transcription
+Use `hmsActions.startTranscription()` method to start the transcription
 
 
 ```ts
-
-    try {
-        await actions.startTranscription({
-            mode: HMSTranscriptionMode.CAPTION,
-        });
-    } catch(err) {
-        console.log(err);
+    async startCaption() {
+        try {
+            await hmsActions.startTranscription({
+                mode: HMSTranscriptionMode.CAPTION,
+            });
+        } catch(err) {
+            console.log(err);
+        }
     }
 
 ```
 
-Use stopTranscription() method to stop transcription:
+Use `hmsActions.stopTranscription()` method to stop transcription:
 
-``ts
-
-    try {
-        await actions.stopTranscription({
-            mode: HMSTranscriptionMode.CAPTION,
-        });
-    } catch(err) {
-        console.log(err);
+```ts
+    async stopCaption() {
+        try {
+            await hmsActions.stopTranscription({
+                mode: HMSTranscriptionMode.CAPTION,
+            });
+        } catch(err) {
+            console.log(err);
+        }
     }
-
 ```
