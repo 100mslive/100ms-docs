@@ -155,6 +155,41 @@ HMSPrebuilt accepts the following props:
     - `userId` (optional): The user ID to be assigned to the peer.
 
     
+## Accessing events, states and more
+
+HMSPrebuilt accepts a ref which is assigned the following:
+```
+ {
+  hmsActions,
+  hmsStats,
+  hmsStore,
+  hmsNotifications,
+};
+```
+
+You can then listen to events, subscribe to states as required in the parent code.
+
+```
+import { selectRoomState } from '@100mslive/hms-video-store';
+import { HMSPrebuilt } from '@100mslive/roomkit-react';
+import { useEffect, useRef } from 'react';
+import { getRoomCodeFromUrl } from './utils';
+
+export default function App() {
+  const roomCode = getRoomCodeFromUrl();
+  const prebuiltRef = useRef(null);
+
+  useEffect(() => {
+    if (prebuiltRef.current) {
+      prebuiltRef.current.hmsNotifications.onNotification(msg => console.log(msg));
+      prebuiltRef.current.hmsStore.subscribe(currentRoomState => console.log(currentRoomState), selectRoomState);
+    }
+  }, []);
+
+  return <HMSPrebuilt roomCode={roomCode} ref={prebuiltRef} />;
+}
+```
+
 ## Deploying with customization
 
 To further customize the prebuilt UI, [the repository](https://github.com/100mslive/web-sdks) can be easily forked and edited. The README lists the steps and commands needed for the same, including deployment.
