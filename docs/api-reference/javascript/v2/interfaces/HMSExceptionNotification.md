@@ -1,6 +1,6 @@
 ---
 title: HMSExceptionNotification
-nav: '4.19'
+nav: '4.24'
 ---
 
 ## Hierarchy

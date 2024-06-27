@@ -1,6 +1,6 @@
 ---
 title: DeviceMap
-nav: '4.1'
+nav: '4.2'
 ---
 
 ## Properties

@@ -1,6 +1,6 @@
 ---
 title: HLSStreamType
-nav: '2.4'
+nav: '2.5'
 ---
 
 ## Enumeration Members
