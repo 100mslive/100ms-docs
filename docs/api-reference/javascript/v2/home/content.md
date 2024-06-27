@@ -5,10 +5,12 @@ nav: '1.1'
 
 ## Enumerations
 
+- [ConnectivityState](/api-reference/javascript/v2/enums/ConnectivityState)
 - [DeviceType](/api-reference/javascript/v2/enums/DeviceType)
 - [DomainCategory](/api-reference/javascript/v2/enums/DomainCategory)
 - [HLSPlaylistType](/api-reference/javascript/v2/enums/HLSPlaylistType)
 - [HLSStreamType](/api-reference/javascript/v2/enums/HLSStreamType)
+- [HMSAudioMode](/api-reference/javascript/v2/enums/HMSAudioMode)
 - [HMSAudioPluginType](/api-reference/javascript/v2/enums/HMSAudioPluginType)
 - [HMSLogLevel](/api-reference/javascript/v2/enums/HMSLogLevel)
 - [HMSNotificationSeverity](/api-reference/javascript/v2/enums/HMSNotificationSeverity)
@@ -28,6 +30,7 @@ nav: '1.1'
 
 ## Classes
 
+- [Diagnostics](/api-reference/javascript/v2/classes/Diagnostics)
 - [EventBus](/api-reference/javascript/v2/classes/EventBus)
 - [HMSReactiveStore](/api-reference/javascript/v2/classes/HMSReactiveStore)
 
@@ -39,7 +42,10 @@ nav: '1.1'
 
 ## Other Interfaces
 
+- [ConnectivityCheckResult](/api-reference/javascript/v2/interfaces/ConnectivityCheckResult)
 - [DeviceMap](/api-reference/javascript/v2/interfaces/DeviceMap)
+- [DiagnosticsRTCStats](/api-reference/javascript/v2/interfaces/DiagnosticsRTCStats)
+- [DiagnosticsRTCStatsReport](/api-reference/javascript/v2/interfaces/DiagnosticsRTCStatsReport)
 - [HLSConfig](/api-reference/javascript/v2/interfaces/HLSConfig)
 - [HLSMeetingURLVariant](/api-reference/javascript/v2/interfaces/HLSMeetingURLVariant)
 - [HLSVariant](/api-reference/javascript/v2/interfaces/HLSVariant)
@@ -55,6 +61,8 @@ nav: '1.1'
 - [HMSConfigInitialSettings](/api-reference/javascript/v2/interfaces/HMSConfigInitialSettings)
 - [HMSDeviceChangeEvent](/api-reference/javascript/v2/interfaces/HMSDeviceChangeEvent)
 - [HMSDeviceChangeEventNotification](/api-reference/javascript/v2/interfaces/HMSDeviceChangeEventNotification)
+- [HMSDiagnosticsConnectivityListener](/api-reference/javascript/v2/interfaces/HMSDiagnosticsConnectivityListener)
+- [HMSDiagnosticsInterface](/api-reference/javascript/v2/interfaces/HMSDiagnosticsInterface)
 - [HMSException](/api-reference/javascript/v2/interfaces/HMSException)
 - [HMSExceptionNotification](/api-reference/javascript/v2/interfaces/HMSExceptionNotification)
 - [HMSFrameworkInfo](/api-reference/javascript/v2/interfaces/HMSFrameworkInfo)
@@ -119,8 +127,11 @@ nav: '1.1'
 - [IHMSSessionStoreActions](/api-reference/javascript/v2/interfaces/IHMSSessionStoreActions)
 - [IHMSStatsStore](/api-reference/javascript/v2/interfaces/IHMSStatsStore)
 - [IHMSStore](/api-reference/javascript/v2/interfaces/IHMSStore)
+- [MediaPermissionCheck](/api-reference/javascript/v2/interfaces/MediaPermissionCheck)
+- [MediaServerReport](/api-reference/javascript/v2/interfaces/MediaServerReport)
 - [RTMPRecordingConfig](/api-reference/javascript/v2/interfaces/RTMPRecordingConfig)
 - [ScreenCaptureHandle](/api-reference/javascript/v2/interfaces/ScreenCaptureHandle)
+- [SignallingReport](/api-reference/javascript/v2/interfaces/SignallingReport)
 - [TokenRequest](/api-reference/javascript/v2/interfaces/TokenRequest)
 - [TokenRequestOptions](/api-reference/javascript/v2/interfaces/TokenRequestOptions)
 

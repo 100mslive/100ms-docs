@@ -1,6 +1,6 @@
 ---
 title: HMSFrameworkInfo
-nav: '4.20'
+nav: '4.25'
 ---
 
 Used in the user agent sent to INIT, BIZ and in offline cached events.
