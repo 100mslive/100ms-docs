@@ -10,13 +10,51 @@ import AndroidSdkVersionShield from '@/common/android-sdk-version-shield.md';
 | Package                                | Version                                                                                                                                |
 | -------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
 | live.100ms:room-kit             | [![](https://img.shields.io/badge/dynamic/xml.svg?label=100ms-Prebuilt&color=blue&query=%2F%2Fmetadata%2Fversioning%2Flatest&url=https%3A%2F%2Frepo1.maven.org%2Fmaven2%2Flive%2F100ms%2Froom-kit%2Fmaven-metadata.xml)](https://jitpack.io/#100mslive/room-kit)
- |
+|
 | live.100ms:android-sdk:                   |  <AndroidSdkVersionShield />  |
 | live.100ms:video-view:               |   <AndroidSdkVersionShield />  |
 | live.100ms:hls-player:                  |<AndroidSdkVersionShield />            |
 | live.100ms:hls-player-stats: |<AndroidSdkVersionShield /> 
 | live.100ms:video-filters: |<AndroidSdkVersionShield />|
 | live.100ms:virtual-background: |<AndroidSdkVersionShield />|
+
+## v2.9.61 - 2024-06-17
+## Fixed
+* Bug that could cause tracks to remain muted if the same HMSSDK instance is used to join a room fixed.
+* `setNoiseCancellationEnabled` now takes a mandatory `HMSActionResultListener` because it may not have been enabled if it's either off from the dashboard or the library isn't added and it was unclear if it was enabled. It is also renamed to `enableNoiseCancellation`
+* `getNoiseCancellationEnabled` renamed to `isNoiseCancellationEnabled`
+* `isNoiseCancellationAvailable` renamed to `isNoiseCancellationSupported`
+
+
+## Added
+* Set up to add diagnostic tests.
+* Added noise cancellation start/stop events.
+* Added support to enable noise cancellation from the dashboard.
+
+## v2.9.60 - 2024-06-07
+### Added
+- New API `VideoFrameInfoListener` to receive `rotatedWidth`, `rotatedHeight` and `rotation` to help change the virtual background on orientation changes to avoid stretching.
+
+## v2.9.59 - 2024-05-31
+### Added
+- Transcriptions for live video can now be toggled on and off in realtime.
+- Analytics for virtual background.
+- `disableEffects` API to clear any ongoing video effects.
+- Bluetooth name support for legacy API to get names, provided the Bluetooth connect permission is granted by the app.
+
+### Fixed
+- Analytics for some features.
+- Proguard rules for apps compiling with gradle 8.4.0 and above.
+- `enableBlur` and `enableBackground` can now be called before `addPlugin`
+
+## v2.9.58 - 2024-05-24
+### Fixed
+- Crash fix on adding and removing plugin multiple times.
+- Proguard related issues that prevented blur and virtual background from working in release configs.
+
+### Added (Breaking Changes) : 
+- HMSVirtualBackground API - Please note that we have made some changes in the way background blur and image are applied in terms of usage. 
+- There is only one HMSVirtualBackground class that you need to instantiate. Add it to the plugin using addPlugin. Then choose enableBlur() or enableBackground(bitmap) as per the UI.
 
 ## v2.9.57 - 2024-05-17
 ### Fixed

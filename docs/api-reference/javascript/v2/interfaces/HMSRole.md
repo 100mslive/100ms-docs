@@ -1,6 +1,6 @@
 ---
 title: HMSRole
-nav: '4.60'
+nav: '4.65'
 ---
 
 ## Properties
@@ -17,19 +17,20 @@ nav: '4.60'
 
 #### Type declaration
 
-| Name               | Type                  |
-| :----------------- | :-------------------- |
-| `browserRecording` | `boolean`             |
-| `changeRole`       | `boolean`             |
-| `endRoom`          | `boolean`             |
-| `hlsStreaming`     | `boolean`             |
-| `mute`             | `boolean`             |
-| `pollRead`         | `boolean`             |
-| `pollWrite`        | `boolean`             |
-| `removeOthers`     | `boolean`             |
-| `rtmpStreaming`    | `boolean`             |
-| `unmute`           | `boolean`             |
-| `whiteboard?`      | `HMSPermissionType`[] |
+| Name               | Type                                                                                                           |
+| :----------------- | :------------------------------------------------------------------------------------------------------------- |
+| `browserRecording` | `boolean`                                                                                                      |
+| `changeRole`       | `boolean`                                                                                                      |
+| `endRoom`          | `boolean`                                                                                                      |
+| `hlsStreaming`     | `boolean`                                                                                                      |
+| `mute`             | `boolean`                                                                                                      |
+| `pollRead`         | `boolean`                                                                                                      |
+| `pollWrite`        | `boolean`                                                                                                      |
+| `removeOthers`     | `boolean`                                                                                                      |
+| `rtmpStreaming`    | `boolean`                                                                                                      |
+| `transcriptions?`  | `Record`<[`CAPTION`](/api-reference/javascript/v2/enums/HMSTranscriptionMode#caption), `HMSPermissionType`[]\> |
+| `unmute`           | `boolean`                                                                                                      |
+| `whiteboard?`      | `HMSPermissionType`[]                                                                                          |
 
 ---
 

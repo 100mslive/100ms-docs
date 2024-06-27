@@ -2,10 +2,33 @@
 title: SDK Size Impact
 nav: 3.4
 ---
+Each library has its own size impact that can vary been ABIs (x86, arm64-v8a etc), the table below lists them all.
 
-| Increase APK size                 |           |
-| --------------------------------- | --------- |
-| (armeabi-v7)                      | **5.8MB** |
-| (arm64-v8a) **(most common one)** | **6.4MB** |
-| (x86_64)                          | **7.1MB** |
-| (x86)                             | **7.2MB** |
+You can take a look at the reference project [here](https://github.com/100mslive/Android-Size-Reference-App/)
+
+These are accurate for sdk version `2.9.59` and room-kit version `1.2.13`.
+
+## Increase in Android APK size:
+
+|  Module Name     	|  arm64-v8a   |	armeabi-v7	|	x86		| x86_64
+| -------------------|--------------|----------------|-----------|-------|
+| Android Sdk 	| **6.7MB**	|	**5.7MB**  	|	**7.3MB**	| 	**7.6MB** 	|
+| Video View 	| **8.5KB**	|	**8.5KB**  	|	**8.5KB**	| 	**8.5KB** 	|
+| Virtual Background 	| **15.4MB**	|	**12.9MB**  	|	**4.0MB**	| 	**4.0MB** 	|
+| Noise Cancellation 	| **5.6MB**	|	**5.6MB**  	|	**5.6MB**	| 	**5.6MB** 	|
+| Video Filters 	| **20.7KB**	|	**25.0KB**  	|	**20.7KB**	| 	**21.1KB** 	|
+| Hls Player 	| **959.4KB**	|	**959.4KB**  	|	**959.4KB**	| 	**959.4KB** 	|
+| Hls Player Stats 	| **463.3KB**	|	**463.3KB**  	|	**463.3KB**	| 	**463.3KB** 	|
+
+### Room Kit
+
+|  Module Name     	|  arm64-v8a   |	armeabi-v7	|	x86		| x86_64
+| -------------------|--------------|----------------|-----------|-------|
+| Room Kit 	| **12.0MB**	|	**11.0MB**  	|	**12.6MB**	| 	**12.8MB** 	|
+
+The `room-kit` module already includes the following libraries:
+- `android-sdk`
+- `video-view`
+- `hls-player`
+- `video-filters`
+

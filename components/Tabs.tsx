@@ -3,7 +3,7 @@ import React, { PropsWithChildren, useCallback, useEffect, useState } from 'reac
 
 /**
  *
- * <Tabs items={['Node.js','Python']}>
+ * <Tabs items={['Node.js','Python']} isSelector={true}>
  *
  * <Tab id={1}>
  *  Code
@@ -13,15 +13,16 @@ import React, { PropsWithChildren, useCallback, useEffect, useState } from 'reac
 /**
  * Just because Compound Component React Pattern
  * Wasn't Working in MDX (children code not getting parsed)
- * So Took this Vanilla API approahc WORKS.
+ * So Took this Vanilla API approach WORKS.
  */
 
 interface TabsProps {
     items: string[];
     id: string;
+    isSelector?: boolean;
 }
 
-export const Tabs: React.FC<TabsProps> = ({ items, id }) => {
+export const Tabs: React.FC<TabsProps> = ({ items, id, isSelector = false }) => {
     const [tab, setTab] = useState(0);
     const [currentPlatform, setCurrentPlatform] = useState('');
 
@@ -60,7 +61,7 @@ export const Tabs: React.FC<TabsProps> = ({ items, id }) => {
     );
 
     // For setting value on future visits / reload
-    React.useEffect(() => {
+    useEffect(() => {
         const tabSelection = JSON.parse(localStorage.getItem('tabSelection') || '{}');
         const storedValue = items.indexOf(tabSelection[currentPlatform]);
         const idx = storedValue !== -1 ? storedValue : 0;
@@ -72,7 +73,13 @@ export const Tabs: React.FC<TabsProps> = ({ items, id }) => {
         <div
             style={{
                 borderBottom: '0.5px solid var(--docs_border_strong)',
-                marginTop: 'var(--docs_spacing_2)'
+                marginTop: 'var(--docs_spacing_2)',
+                width: 'max-content',
+                backgroundColor: isSelector ? 'var(--surface_default)' : 'transparent',
+                borderRadius: isSelector ? '12px' : '0',
+                padding: isSelector ? '8px' : '0',
+                display: 'flex',
+                gap: '1rem'
             }}>
             {items.map((el, i) => (
                 <button
@@ -82,12 +89,22 @@ export const Tabs: React.FC<TabsProps> = ({ items, id }) => {
                     }}
                     type="button"
                     style={{
+                        color: !isSelector
+                            ? 'var(--docs_text_primary)'
+                            : tab === i
+                            ? 'var(--docs_text_primary)'
+                            : 'var(--docs_text_secondary)',
+                        fontWeight: tab === i ? 'bold' : 'normal',
                         background: 'none',
                         outline: 'none',
                         cursor: 'pointer',
                         border: 'none',
-                        marginRight: '1rem',
-                        borderBottom: tab === i ? '2px solid var(--gray12)' : 'none'
+                        borderBottom:
+                            tab === i && !isSelector ? '2px solid var(--selector_blue)' : 'none',
+                        padding: isSelector ? '5px 12px' : '0',
+                        borderRadius: isSelector ? '4px' : '0',
+                        backgroundColor:
+                            tab === i && isSelector ? 'var(--selector_blue)' : 'transparent'
                     }}
                     key={el}
                     id={`${id}-button-${i}`}>

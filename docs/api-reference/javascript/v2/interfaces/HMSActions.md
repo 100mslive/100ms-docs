@@ -1,6 +1,6 @@
 ---
 title: HMSActions<T>
-nav: '4.5'
+nav: '4.8'
 ---
 
 The below interface defines our SDK API Surface for taking room related actions.
@@ -379,6 +379,22 @@ enable sending audio speaker data to beam
 
 ---
 
+### findPeerByName
+
+▸ **findPeerByName**(`options`): `Promise`<{ `eof?`: `boolean` ; `offset`: `number` ; `peers`: [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[] }\>
+
+#### Parameters
+
+| Name      | Type                          |
+| :-------- | :---------------------------- |
+| `options` | `FindPeerByNameRequestParams` |
+
+#### Returns
+
+`Promise`<{ `eof?`: `boolean` ; `offset`: `number` ; `peers`: [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[] }\>
+
+---
+
 ### getAuthTokenByRoomCode
 
 ▸ **getAuthTokenByRoomCode**(`tokenRequest`, `tokenRequestOptions?`): `Promise`<`string`\>
@@ -496,6 +512,16 @@ Notifications for the ignored messages will still be sent, it'll only not be put
 #### Returns
 
 `void`
+
+---
+
+### initDiagnostics
+
+▸ **initDiagnostics**(): [`HMSDiagnosticsInterface`](/api-reference/javascript/v2/interfaces/HMSDiagnosticsInterface)
+
+#### Returns
+
+[`HMSDiagnosticsInterface`](/api-reference/javascript/v2/interfaces/HMSDiagnosticsInterface)
 
 ---
 
