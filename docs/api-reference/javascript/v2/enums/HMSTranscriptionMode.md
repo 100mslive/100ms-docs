@@ -1,6 +1,6 @@
 ---
 title: HMSTranscriptionMode
-nav: '2.17'
+nav: '2.19'
 ---
 
 ## Enumeration Members

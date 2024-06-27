@@ -1,6 +1,6 @@
 ---
 title: HMSReactiveStore<T>
-nav: '3.2'
+nav: '3.3'
 ---
 
 ## Type parameters
@@ -41,6 +41,16 @@ through the IHMSActions instance returned by this
 #### Returns
 
 [`HMSActions`](/api-reference/javascript/v2/interfaces/HMSActions)<`T`\>
+
+---
+
+### getDiagnosticsSDK
+
+▸ **getDiagnosticsSDK**(): [`HMSDiagnosticsInterface`](/api-reference/javascript/v2/interfaces/HMSDiagnosticsInterface)
+
+#### Returns
+
+[`HMSDiagnosticsInterface`](/api-reference/javascript/v2/interfaces/HMSDiagnosticsInterface)
 
 ---
 
