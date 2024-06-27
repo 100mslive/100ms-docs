@@ -82,32 +82,21 @@ permission_handler:
 
 Please follow the below instructions to test the app for the android target platform:
 
-1. Allow camera, recording audio and internet permissions by adding the below snippet to the `AndroidManifest.xml` file (at the application tag level).
+1. Allow application to use below features by adding the below snippet to the `AndroidManifest.xml` file (at the application tag level).
 
     <br />
 
     ```xml section=androidPermissions
-    <uses-feature android:name="android.hardware.camera"/>
+    <!-- Required for devices above android 12 for disabling mute while receving the call-->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_NUMBERS" />
 
-    <uses-feature android:name="android.hardware.camera.autofocus"/>
+    <!--Required for android 14 and above -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION" />
 
-    <uses-permission android:name="android.permission.CAMERA"/>
-
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
-
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
-
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
-
-    <uses-permission android:name="android.permission.INTERNET"/>
-
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-
-    <uses-permission android:name="android.permission.BLUETOOTH" android:maxSdkVersion="30" />
-
-    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <!-- This is required if the application uses foreground service for android 14 and above-->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CAMERA"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" /> 
     ```
 
 2. Add minimum SDK version (`minSdkVersion 21`) in "android/app/build.gradle" file (inside "defaultConfig").
