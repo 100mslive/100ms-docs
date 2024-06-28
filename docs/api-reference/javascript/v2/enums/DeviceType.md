@@ -1,6 +1,6 @@
 ---
 title: DeviceType
-nav: '2.1'
+nav: '2.2'
 ---
 
 ## Enumeration Members

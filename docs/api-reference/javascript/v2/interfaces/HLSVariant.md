@@ -1,6 +1,6 @@
 ---
 title: HLSVariant
-nav: '4.4'
+nav: '4.7'
 ---
 
 ## Properties

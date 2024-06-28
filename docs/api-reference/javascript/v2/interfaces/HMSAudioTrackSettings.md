@@ -1,6 +1,6 @@
 ---
 title: HMSAudioTrackSettings
-nav: '4.8'
+nav: '4.11'
 ---
 
 ## Properties
@@ -8,6 +8,12 @@ nav: '4.8'
 ### advanced
 
 • `Optional` **advanced**: `MediaTrackConstraintSet`[]
+
+---
+
+### audioMode
+
+• `Optional` **audioMode**: [`HMSAudioMode`](/api-reference/javascript/v2/enums/HMSAudioMode)
 
 ---
 
