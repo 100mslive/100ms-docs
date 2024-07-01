@@ -55,30 +55,19 @@ flutter pub upgrade
 
 ### Android
 
-Camera, Recording Audio and Internet permissions are required. Add them to your AndroidManifest.xml.
+Add below permissions to your AndroidManifest.xml file if you intend to use the following features:
 
 ```xml
-<uses-feature android:name="android.hardware.camera"/>
+<!-- Required for devices above android 12 for disabling mute while receving the call-->
+<uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+<uses-permission android:name="android.permission.READ_PHONE_NUMBERS" />
 
-<uses-feature android:name="android.hardware.camera.autofocus"/>
+<!--Required for android 14 and above -->
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION" />
 
-<uses-permission android:name="android.permission.CAMERA"/>
-
-<uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
-
-<uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
-
-<uses-permission android:name="android.permission.RECORD_AUDIO"/>
-
-<uses-permission android:name="android.permission.INTERNET"/>
-
-<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-
-<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-
-<uses-permission android:name="android.permission.BLUETOOTH" android:maxSdkVersion="30" />
-
-<uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+<!-- This is required if the application uses foreground service for android 14 and above-->
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE_CAMERA"/>
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" /> 
 ```
 
 ### Update target Android version

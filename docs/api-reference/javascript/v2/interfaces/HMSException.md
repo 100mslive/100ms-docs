@@ -1,6 +1,6 @@
 ---
 title: HMSException
-nav: '4.18'
+nav: '4.23'
 ---
 
 any mid call error notification will be in this format

@@ -69,6 +69,8 @@ The `setSessionMetaData` method can be used to set session metadata.
 
 The `getRoles` method is used to retrieve all of the roles available in the current room. This method returns a `promise` that resolves with a list of `HMSRole` objects.
 
+> 🔑 Note: `getRoles` should only be called after the `onJoin` method. 
+
 ```js{2}
 try {
   const roles: HMSRole[] = await hmsInstance.getRoles();

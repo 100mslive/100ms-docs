@@ -1,6 +1,6 @@
 ---
 title: HMSPlaylistItem<T>
-nav: '4.39'
+nav: '4.44'
 ---
 
 ## Type parameters

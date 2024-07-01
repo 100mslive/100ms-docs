@@ -1,6 +1,6 @@
 ---
 title: HMSLeaveRoomRequestNotification
-nav: '4.24'
+nav: '4.29'
 ---
 
 ## Hierarchy
