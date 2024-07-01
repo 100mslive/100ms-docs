@@ -1,6 +1,6 @@
 ---
 title: EventBus
-nav: '3.1'
+nav: '3.2'
 ---
 
 ## Constructors
