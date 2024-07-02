@@ -1,6 +1,6 @@
 ---
 title: HMSMediaStreamPlugin
-nav: '4.27'
+nav: '4.32'
 ---
 
 ## Methods

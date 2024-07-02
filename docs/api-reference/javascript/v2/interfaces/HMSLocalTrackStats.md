@@ -1,6 +1,6 @@
 ---
 title: HMSLocalTrackStats
-nav: '4.25'
+nav: '4.30'
 ---
 
 Extends RTCOutboundRtpStreamStats
