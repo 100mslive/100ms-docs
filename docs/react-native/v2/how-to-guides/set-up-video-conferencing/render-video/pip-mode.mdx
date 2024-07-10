@@ -198,10 +198,144 @@ const pipConfig: HMSPIPConfig = {
 hmsInstance.setPipParams(pipConfig);
 ```
 
+### Use Active Speaker's video track in PIP mode [iOS Only]
+
+  You can use the active speaker's video track in PIP mode by setting the `useActiveSpeaker` property to `true` in the `HMSPIPConfig` object. This configuration will show the video track of the currently speaking peer in the PIP window.
+
+```js
+const pipConfig: HMSPIPConfig = {
+  ...
+  useActiveSpeaker: true, // iOS Only
+  ...
+};
+```
+  Alternatively, you can use the `setActiveSpeakerInIOSPIP` method to set the active speaker's video track in PIP mode. iOS Only.
+```js
+hmsInstance.setActiveSpeakerInIOSPIP(true); // to use active speaker's video track in PIP mode
+```
+
+### Set a specific video track in PIP mode [iOS Only]
+
+  If you want to change the video track that is shown in the PIP window, you can call the `changeIOSPIPVideoTrack` method. Use this method when you don't want to show the active speaker's video track in the PIP window.
+
+  For example, use this method when you want to show the video track of a Screen Share in the PIP window.
+
+```js
+hmsInstance.changeIOSPIPVideoTrack(videoTrack);
+```
+
+
 ### That's it!
   You have successfully enabled Picture in Picture mode in your React Native app.
 
 </div>
+
+## PiP Helper Methods
+
+```js
+/**
+ * Attaches a listener that gets notified whenever Picture-in-Picture (PIP) mode changes.
+ *
+ * Call this function to subscribe to PIP mode changes. The provided callback will be
+ * invoked with an object containing an `isInPictureInPictureMode` property indicating
+ * the current PIP mode state.
+ *
+ * @example
+ * onPIPModeChangedListener((data) => {
+ *   if (data.isInPictureInPictureMode) {
+ *     console.log("App entered PIP mode");
+ *   } else {
+ *     console.log("App exited PIP mode");
+ *   }
+ * });
+ */
+const onPIPModeChangedListener = async (): Promise<{ isInPictureInPictureMode: boolean }> => {
+  // ... (implementation details)
+};
+
+/**
+ * Checks if the current device supports Picture-in-Picture (PIP) mode.
+ *
+ * This function asynchronously determines whether the device running the application
+ * can utilize PIP mode. It resolves to `true` if PIP is supported, `undefined` otherwise.
+ *
+ * @returns A Promise resolving to `true` if PIP is supported, `undefined` otherwise.
+ */
+async isPipModeSupported(): Promise<undefined | boolean> {
+  // ... (implementation details)
+};
+
+/**
+ * Attempts to manually enter Picture-in-Picture (PIP) mode on the device.
+ *
+ * This function triggers the application to enter PIP mode. It accepts an optional
+ * `HMSPIPConfig` object for configuration (details omitted for brevity). The function
+ * resolves to `true` if PIP mode is successfully entered, `undefined` otherwise.
+ *
+ * @param data An optional HMSPIPConfig object for PIP mode configuration.
+ * @returns A Promise resolving to `true` if PIP is entered, `undefined` otherwise.
+ */
+async enterPipMode(data?: HMSPIPConfig): Promise<undefined | boolean> {
+  // ... (implementation details)
+};
+
+/**
+ * Configures the Picture-in-Picture (PIP) window.
+ *
+ * This function allows you to customize the PIP window's behavior. It accepts an optional
+ * `HMSPIPConfig` object for configuration (details omitted for brevity). The function
+ * resolves to `true` if the configuration is successful, `undefined` otherwise.
+ *
+ * @param data An optional HMSPIPConfig object for PIP window configuration.
+ * @returns A Promise resolving to `true` if configuration is successful, `undefined` otherwise.
+ */
+async setPipParams(data?: HMSPIPConfig): Promise<undefined | boolean> {
+  // ... (implementation details)
+};
+
+/**
+ * Sets the video track for Picture-in-Picture mode (iOS only).
+ *
+ * This function allows you to specify the video track you want to display within the
+ * PIP window. It's exclusive to iOS devices. The `track` parameter represents the
+ * `HMSVideoTrack` object you wish to display.
+ *
+ * @param track The HMSVideoTrack object representing the video to show in PIP.
+ * @throws {Error} Throws an error if the function is called on a non-iOS device.
+ */
+async changeIOSPIPVideoTrack(track: HMSVideoTrack) {
+  // ... (implementation details)
+};
+
+/**
+ * Shows or hides the active speaker's video in the PIP window (iOS only).
+ *
+ * This function allows you to control the visibility of the active speaker's video
+ * within the PIP window. It's exclusive to iOS devices. The `enable` parameter is a
+ * boolean value indicating whether to show (`true`) or hide (`false`) the video.
+ *
+ * @param enable A boolean value indicating whether to show (`true`) or hide (`false`) the active speaker's video.
+ * @throws {Error} Throws an error if the function is called on a non-iOS device.
+ */
+async setActiveSpeakerInIOSPIP(enable: boolean) {
+  // ... (implementation details)
+};
+
+/**
+ * This listener fires when the room is left while in Picture-in-Picture mode (Android only).
+ *
+ * This function serves as a listener specifically for Android devices. It's triggered
+ * whenever the user leaves the room while the application is in PIP mode. The provided
+ * callback receives a data object containing details about the event (details omitted
+ * for brevity).
+ *
+ * @param data An object containing details about leaving the room in PIP mode (Android only).
+ */
+function onPIPRoomLeaveListener(data): void {
+  // ... (implementation details)
+}
+
+```
 
 ## Checkout Video of PIP in Action on Android
 
