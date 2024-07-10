@@ -6,19 +6,51 @@ nav: 4.44
 100ms React Native SDK provides support for creating Picture in Picture mode experience for video calls.
 
 PIP Mode lets the user watch the room video in a small window pinned to a corner of the screen while navigating between apps or browsing content on the main screen.
+It is a great feature to provide a seamless experience to the users while they are in a video call.
+It is especially useful when the user wants to multitask while being in a video call.
 
-Currently this functionality is only available on Android.
+Due to inherent platform differences, the PIP setup is different for Android & iOS platforms.
 
 ## Minimum Requirements
 
 -   Minimum version required to support PiP is Android 8.0 (API level 26)
--   Minimum `react-native-hms` SDK version required is 1.0.0
+-   Minimum `react-native-hms` SDK version required is 1.10.8
+-   Minimum iOS version required to support PiP is iOS 15 or above
+-   [iOS Only] Your app should have [com.apple.developer.avfoundation.multitasking-camera-access](https://developer.apple.com/documentation/bundleresources/entitlements/com_apple_developer_avfoundation_multitasking-camera-access) entitlement on iOS to use PiP mode during video calls. Without this entitlement, the app will not be able to access Camera while in PiP or Background mode. When your app enters a multitasking mode, this entitlement allows your app to continue using the camera.
+Before submitting an app with this entitlement to the App Store, you need permission to use the entitlement. To request permission, see [Multitasking Camera Access](https://developer.apple.com/contact/request/multitasking-camera-access/). After you receive permission, add the entitlement to your app by opening the entitlement file in Xcode.
 
-### How to add PiP support
+## How Picture in Picture works during a video call?
+
+When your app goes into the background, it can no longer access the camera and publish it to other peers in the room. Also, you can't see the video of other participants in the call if your app is in the background. Both of these issues are resolved by implementing PiP mode for video calling in your app.
+
+While enabling PIP Mode you can configure the PIP Window Aspect Ratio, Scale Type, Buttons shown to perform actions, etc using the `HMSPIPConfig` interface.
+
+Actionable buttons like Mute/Unmute Audio/Video, Leave Room for local peers can be customized while enabling PIP Mode.
+
+The `HMSPIPConfig` interface has the following properties:
+
+- `autoEnterPipMode?: boolean` - To automatically enter PIP Mode when the app goes to background.
+
+- `aspectRatio?: [number, number]` - The Aspect Ratio of the PIP Window which will be appear. Default is [16, 9] on Android & [9, 16] on iOS. Other values can be [3, 4], [1, 1], [4, 3] ratios.
+
+- `scaleType?: HMSVideoViewMode` - [iOS Only] The scale type of the PIP window. Default is `ASPECT_FILL`. Other values can be `ASPECT_FIT`, `ASPECT_BALANCED`.
+
+- `useActiveSpeaker?: boolean` - [iOS Only] To use the active speaker's video track in PIP mode. Default is true, so the currently speaking Peer's video track will be shown in PIP mode.
+
+- `endButton?: boolean` - [Android Only] To enable/disable showing of a button through which user can leave the room. Default is false, so the button is not visible by default.
+
+- `videoButton?: boolean` - [Android Only] To enable/disable showing of a button through which user can Mute/Unmute their Video Camera. Default is false, so the button is not visible by default.
+
+- `audioButton?: boolean` - [Android Only] To enable/disable showing of a button through which user can Mute/Unmute their Video Camera. Default is false, so the button is not visible by default.
+
+
+## Android
+
+### How to add PiP support on Android?
 
 <div className="steps-container">
 
-### Update the activity tag in the AndroidManifest.xml
+### First, update the activity tag in the AndroidManifest.xml
 
 ```xml
   <activity
@@ -68,36 +100,21 @@ if (isEnabled) {
 }
 ```
 
-</div>
-
-
-While enabling PIP Mode you can configure the PIP Window Aspect Ratio & buttons shown to perform actions.
-
-
-Actionable buttons like Mute/Unmute Audio/Video, Leave Room for local peers can be customized while enabling PIP Mode.
-
-
-- `aspectRatio`: The Aspect Ratio of the PIP Window which will be appear. Default value is 16:9 aspect ratio. Other commonly used values are 4:3, 1:1, 9:16 & 3:4 ratios.
-
-- `endButton`: To enable/disable showing of a button through which user can leave the room. Default is false, so the button is not visible by default.
-
-- `videoButton`: To enable/disable showing of a button through which user can Mute/Unmute their Video Camera. Default is false, so the button is not visible by default.
-
-- `audioButton`: To enable/disable showing of a button through which user can Mute/Unmute their Video Camera. Default is false, so the button is not visible by default.
-
+### How to use PIP mode in your app on Android?
 
 ```js
 const isEnabled = await hmsInstance?.enterPipMode({
-                          aspectRatio: [9, 16],   // for 9:16 aspect ratio
+                          aspectRatio: [16, 9],   // for 16:9 aspect ratio
                           endButton: true,        // for showing/hiding leave room button
                           videoButton: true,      // for showing/hiding local Video button
                           audioButton: true,      // for showing/hiding local Audio button
                         });
 ```
 
-Pip mode resizes your whole activity to a small container. So, you should hide the content that you don't want to show.
 
-3. Detect when App goes to "fullscreen" from PIP mode
+### Detect when App goes to "fullscreen" from PIP mode
+
+  PIP mode on Android resizes your whole activity to a small container. So, you should hide the content that you don't want to show.
 
 ```js
   import { AppState, AppStateStatus } from 'react-native';
@@ -157,8 +174,36 @@ Pip mode resizes your whole activity to a small container. So, you should hide t
 
   ...
 ```
+</div>
 
-## Checkout Video of PIP in Action
+## iOS
+
+<div className="steps-container">
+
+### How to add PiP support on iOS?
+
+  After you have joined the Room, you should configure Picture in Picture mode by calling the `setPipParams` method. Ensure that you have the required entitlements in your app to use PiP mode during video calls. Also, ensure that you are setting this configuration only after joining the Room.
+
+```js
+const pipConfig: HMSPIPConfig = {
+  aspectRatio: [9, 16],
+  autoEnterPipMode: true,
+  useActiveSpeaker: true,
+  scaleType: HMSVideoViewMode.ASPECT_FILL,
+  endButton: false, // this option is not available on iOS
+  audioButton: false, // this option is not available on iOS
+  videoButton: false, // this option is not available on iOS
+};
+
+hmsInstance.setPipParams(pipConfig);
+```
+
+### That's it!
+  You have successfully enabled Picture in Picture mode in your React Native app.
+
+</div>
+
+## Checkout Video of PIP in Action on Android
 
 <video width="295" height="640" controls>
     <source
