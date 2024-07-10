@@ -65,12 +65,22 @@ Noise cancellation can be turned on or off dynamically. When starting calls it i
 
 Toggle it on or off during a call with:
 ```kotlin
-hmsSDK.setNoiseCancellationEnabled(true) // or false
+val ncEnabled = true  // or false
+hmsSDK.enableNoiseCancellation(ncEnabled, object : HMSActionResultListener {
+    override fun onSuccess() {
+        // was successful
+    }
+
+    override fun onError(error: HMSException) {
+        // was an error, read error.message to see what
+    }
+})
 ```
+> It's encouraged to check for success especially if it's the first time you're integrating.
 
 To get the current state of noise cancellation call:
 ```kotlin
-val enabled : Boolean = hmsSDK.getNoiseCancellationEnabled()
+val enabled : Boolean = hmsSDK.isNoiseCancellationEnabled()
 ```
 
 ## Availability
