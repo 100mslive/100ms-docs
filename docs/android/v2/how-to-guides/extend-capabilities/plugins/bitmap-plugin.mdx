@@ -1,0 +1,121 @@
+---
+title: Bitmap Plugin
+nav: 14.3
+---
+
+import AndroidSdkVersionShield from '@/common/android-sdk-version-shield.md';
+
+## Introduction
+
+
+The Bitmap Plugin facilitates the analysis or transformation of bitmap images. This doc provides an overview of using the Bitmap Plugin within the 100ms SDK.
+
+
+## Supported Versions/Resolutions
+
+-   Minimum 100ms SDK version it can work with is `2.9.58`
+-   Has poor fps on older android phones
+
+
+## Add dependency
+
+<AndroidSdkVersionShield />
+
+<Tabs id="sdk-imports" items={['Maven Central']} />
+
+<Tab id='sdk-imports-0'>
+
+```json{5-8}:build.gradle section=AddSDKDependencies sectionIndex=1
+dependencies {
+ // See the version in the badge above.
+
+ def hmsVersion = "x.x.x"
+ implementation "live.100ms:android-sdk:$hmsVersion"    // Essential
+}
+```
+
+</Tab>
+
+
+## How to enable Bitmap Plugin:
+
+### Instantiate 
+
+<Tabs id="instanstiate-VirtualBackgroundPlugin" items={['Kotlin']} />
+
+<Tab id='instanstiate-VirtualBackgroundPlugin-0'>
+
+<Note title="💡On instantiating Bitmap Plugin">
+Always call `addPlugin()` after `onJoin()` from `hmsSDK.join()` or `onPreview()` from `hmsSDK.preview()`
+</Note>
+
+```kotlin
+     val hmsSDK = HMSSDK
+        .Builder(application)
+        .build()
+
+      val bitmapListener = object : HMSBitmapUpdateListener {
+             override fun onFrame(bitmap: Bitmap): Bitmap {
+                //analyze or process bitmap here 
+                return bitmap
+             }
+
+         }
+
+
+    val bitmapPlugin by lazy { HMSBitmapPlugin(hmsSDK, bitmapListener) }
+
+     //call this after onJoin() or after onPreview()
+     fun addBitmapPlugin() {
+
+        if (hmsSDK.getLocalPeer()?.videoTrack != null) {
+
+            hmsSDK.addPlugin(bitmapPlugin, object : HMSActionResultListener {
+                override fun onError(error: HMSException) {}
+
+                override fun onSuccess() { }
+            })
+        }
+    }
+```
+<Note title="💡Bitmap Plugin">
+The longer the processing of bitmap takes, the lower would be FPS. Ideally try to process the bitmap under 33 ms to achieve 30 FPS
+</Note>
+
+```kotlin
+   val bitmapListener = object : HMSBitmapUpdateListener {
+             override fun onFrame(bitmap: Bitmap): Bitmap {
+                //analyze or process bitmap here 
+                val processedBitmap = // Send bitmap for processing here and return the processed bitmap
+                return processedBitmap
+             }
+
+         }
+
+```
+
+</Tab>
+
+## Remove/Detach/Disable Bitmap Plugin
+
+To remove/detach bitmap plugin at runtime:
+
+<Tabs id="remove-plugin" items={['Kotlin']} />
+
+<Tab id='remove-plugin-0'>
+
+```kotlin
+
+            hmsSDK.removePlugin(bitmapPlugin, object : HMSActionResultListener {
+                override fun onError(error: HMSException) {}
+
+                override fun onSuccess() {}
+
+            })
+
+
+```
+
+</Tab>
+
+

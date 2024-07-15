@@ -71,7 +71,7 @@ export default redirect('/v3/100ms-v3/basics');
 
 This is needed because we need it to route somewhere if someone hits `/v3` this would redirect it to `/v3/100ms-v3/basics` i.e the MDX file `/v3/100ms-v3/basics.mdx`
 
-Then follow the Steps in 1. to add docs to it.
+Then follow the steps in 1 to add docs to it.
 
 ### 3. Aliasing Repeating Content
 
@@ -151,7 +151,7 @@ Super easy just get the `id`
 
 ## ✅ Do's
 
--   Use Emojis 😅😂🚀✅🙂🎉😇🌟🥵
+-   Use Emojis 😅😂🚀✅🙂🎉😇🌟
 -   Maintain the Header Order (H1 , H2 , H3 ...)
 -   Use Language Attributes in Code Blocks for Syntax Highlight
 -   Use https://tableconvert.com/ to create Markdown Tables

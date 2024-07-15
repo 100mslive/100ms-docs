@@ -9,6 +9,127 @@ nav: 4.1
 | -------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
 | @100mslive/react-native-room-kit | [![npm](https://img.shields.io/npm/v/@100mslive/react-native-room-kit)](https://www.npmjs.com/package/@100mslive/react-native-room-kit) |
 | @100mslive/react-native-hms      | [![npm](https://img.shields.io/npm/v/@100mslive/react-native-hms)](https://www.npmjs.com/package/@100mslive/react-native-hms)           |
+| @100mslive/react-native-video-plugin      | [![npm](https://img.shields.io/npm/v/@100mslive/react-native-video-plugin)](https://www.npmjs.com/package/@100mslive/react-native-video-plugin)  |
+
+
+## 1.10.8 - 2024-07-10
+
+| Package                          | Version |
+| -------------------------------- | ------- |
+| @100mslive/react-native-room-kit | 1.2.1   |
+| @100mslive/react-native-hms      | 1.10.8  |
+
+### react-native-hms
+
+- Added support for PIP Mode in iOS
+
+    Users can now switch to Picture-in-Picture mode on iOS devices while in a Room. Read more about it [here](https://www.100ms.live/docs/react-native/v2/how-to-guides/set-up-video-conferencing/render-video/pip-mode).
+
+### react-native-room-kit
+
+- Added support for PIP Mode in Prebuilt UI
+
+    Users can now switch to Picture-in-Picture mode in the Prebuilt UI.
+
+Uses Android SDK 2.9.62 & iOS SDK 1.13.0
+
+**Full Changelog**: [1.10.7...1.10.8](https://github.com/100mslive/react-native-hms/compare/1.10.7...1.10.8)
+
+
+## 1.10.7 - 2024-07-01
+
+| Package                          | Version |
+| -------------------------------- | ------- |
+| @100mslive/react-native-room-kit | 1.2.0   |
+| @100mslive/react-native-hms      | 1.10.7  |
+| @100mslive/react-native-video-plugin | 0.1.2  |
+
+### react-native-hms
+
+- Live Transcriptions in WebRTC Calls
+
+    HMSSDK now provides support for Live Transcriptions in WebRTC calls. Users can now enable/disable Live Transcriptions during a call. The SDK provides a callback with the transcript for each peer when they speak. Read more about it [here](https://www.100ms.live/docs/react-native/v2/how-to-guides/extend-capabilities/live-captions).
+
+### react-native-room-kit
+
+- Introducing Live Transcriptions options in Prebuilt
+
+    Prebuilt now supports live transcription for better accessibility. Users can enable or disable live transcription from the prebuilt interface.
+
+Uses Android SDK 2.9.60 & iOS SDK 1.12.0
+
+**Full Changelog**: [1.10.6...1.10.7](https://github.com/100mslive/react-native-hms/compare/1.10.6...1.10.7)
+
+
+## 1.10.6 - 2024-06-10
+
+| Package                          | Version |
+| -------------------------------- | ------- |
+| @100mslive/react-native-room-kit | 1.1.9   |
+| @100mslive/react-native-hms      | 1.10.6  |
+| @100mslive/react-native-video-plugin | 0.1.2  |
+
+### react-native-hms
+
+- Introducing Virtual Background support in 100ms
+
+    HMSSDK now provides support for Virtual Background using [`@100mslive/react-native-video-plugin`](https://github.com/100mslive/react-native-video-plugin).
+    It allows users to change their background during a call. Users can choose from a variety of backgrounds or upload their own custom background.
+    It also provides a feature to blur the background. Read more about it [here](https://www.100ms.live/docs/react-native/v2/how-to-guides/extend-capabilities/virtual-background).
+
+- Resolved warnings on Android & iOS when using HMSSDK in development mode
+
+### react-native-room-kit
+
+- Added support for Virtual Background in Prebuilt UI
+
+    By just adding [`@100mslive/react-native-video-plugin`](https://github.com/100mslive/react-native-video-plugin) package, users can now change their background during a call using the Virtual Background feature in the Prebuilt UI.
+
+- Added support for Hyperlinks in Chat Messages on Prebuilt UI
+
+    Users can now click on hyperlinks in chat messages to open them in a browser.
+
+### react-native-video-plugin
+
+- The first version of the plugin is released. It provides support for Virtual Background in 100ms. Read more about it [here](https://www.100ms.live/docs/react-native/v2/how-to-guides/extend-capabilities/virtual-background).
+
+
+Uses Android SDK 2.9.59 & iOS SDK 1.11.0
+
+**Full Changelog**: [1.10.5...1.10.6](https://github.com/100mslive/react-native-hms/compare/1.10.5...1.10.6)
+
+
+
+## 1.10.5 - 2024-05-15
+
+| Package                          | Version |
+| -------------------------------- | ------- |
+| @100mslive/react-native-room-kit | 1.1.8   |
+| @100mslive/react-native-hms      | 1.10.5  |
+
+### react-native-hms
+
+- Introducing Whiteboard support in 100ms
+
+    HMSSDK now provides support for Whiteboard. You can now start/stop a Whiteboard using `startWhiteboard` & `stopWhiteboard` methods on `HMSInteractivityCenter`. HMSSDK provides also provides callbacks for whiteboard start/stop events. Learn more about it [here](https://www.100ms.live/docs/react-native/v2/how-to-guides/extend-capabilities/whiteboard).
+
+
+### react-native-room-kit
+
+- Whiteboard
+
+    Whiteboard is now supported in the Prebuilt UI. Users can now start/stop a Whiteboard using the Whiteboard button in the Prebuilt UI.
+
+- Updated PIP Mode support for HLS Player
+
+    PIP Mode is now supported in the HLS Player UI. Users can now switch to PIP mode while watching a video in the HLS Player.
+
+- Resolved an issue where tile content was clipping from bottom in the Prebuilt UI
+
+Uses Android SDK 2.9.56 & iOS SDK 1.10.0
+
+**Full Changelog**: [1.10.4...1.10.5](https://github.com/100mslive/react-native-hms/compare/1.10.4...1.10.5)
+
 
 ## 1.10.4 - 2024-04-26
 
@@ -21,7 +142,11 @@ nav: 4.1
 
 - Support for captions in HLS Player
 
-HMSSDK now provides support for captions in HLS Player. You can now check the support of captions in the stream, and enable or disable captions in the HLS Player using the methods available on its' `ref`. Moreover, HMSSDK provides a new `useHMSHLSPlayerSubtitles` hook to get captions. Learn more about it [here](https://www.100ms.live/docs/react-native/v2/how-to-guides/record-and-live-stream/hls-player#how-to-enable-or-disable-closed-captions)
+    HMSSDK now provides support for Closed Captions in HLS Player. You can now check the support of captions in the stream, and enable or disable captions in the HLS Player using the methods available on its `ref`
+
+    Moreover, HMSSDK provides a new `useHMSHLSPlayerSubtitles` hook to get the captions.
+
+    Learn more about it [here](https://www.100ms.live/docs/react-native/v2/how-to-guides/record-and-live-stream/hls-player#how-to-enable-or-disable-closed-captions).
 
 
 ### react-native-room-kit
@@ -37,7 +162,7 @@ Added controls are - "Go Live", "Seekbar", "Closed Captions", "Pause", "Resume" 
 - Added support for "Pinch and Zoom" in the HLS Player UI
 
 
-Updated to Android SDK 2.9.54 & iOS SDK 1.9.0
+Uses Android SDK 2.9.54 & iOS SDK 1.9.0
 
 **Full Changelog**: [1.10.3...1.10.4](https://github.com/100mslive/react-native-hms/compare/1.10.3...1.10.4)
 

@@ -1,6 +1,6 @@
 ---
 title: HMSNotificationTypes
-nav: '2.8'
+nav: '2.10'
 ---
 
 ## Enumeration Members
@@ -176,3 +176,9 @@ nav: '2.8'
 ### TRACK_UNMUTED
 
 • **TRACK_UNMUTED** = `"TRACK_UNMUTED"`
+
+---
+
+### TRANSCRIPTION_STATE_UPDATED
+
+• **TRANSCRIPTION_STATE_UPDATED** = `"TRANSCRIPTION_STATE_UPDATED"`

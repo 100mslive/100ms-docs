@@ -1,6 +1,6 @@
 ---
 title: HMSStore<T>
-nav: '4.71'
+nav: '4.76'
 ---
 
 ## Type parameters

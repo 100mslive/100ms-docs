@@ -1,9 +1,21 @@
 ---
 title: HMSTranscriptionInfo
-nav: '4.75'
+nav: '4.80'
 ---
 
 ## Properties
+
+### error
+
+• `Optional` **error**: `HMSException`
+
+---
+
+### initialised_at
+
+• `Optional` **initialised_at**: `Date`
+
+---
 
 ### mode
 
@@ -11,6 +23,24 @@ nav: '4.75'
 
 ---
 
+### started_at
+
+• `Optional` **started_at**: `Date`
+
+---
+
 ### state
 
 • `Optional` **state**: [`HMSTranscriptionState`](/api-reference/javascript/v2/enums/HMSTranscriptionState)
+
+---
+
+### stopped_at
+
+• `Optional` **stopped_at**: `Date`
+
+---
+
+### updated_at
+
+• `Optional` **updated_at**: `Date`

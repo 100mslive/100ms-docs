@@ -1,6 +1,6 @@
 ---
 title: HMSPreviewConfig
-nav: '4.52'
+nav: '4.57'
 ---
 
 the config object tells the SDK options you want to preview with(use if you want preview and join with different roles)
@@ -87,7 +87,7 @@ dimensions of the video element to conserve bandwidth.
 
 • `Optional` **autoManageWakeLock**: `boolean`
 
-if this flag is enabled, wake lock will be acquired automatically(if supported) when joining the room, so the device
+if this flag is enabled, wake lock will be acquired automatically (if supported) when joining the room, so the device
 will be kept awake.
 
 #### Inherited from
@@ -118,6 +118,18 @@ Enable to get a network quality score while in preview. The score ranges from -1
 #### Inherited from
 
 [HMSConfig](/api-reference/javascript/v2/interfaces/HMSConfig).[captureNetworkQualityInPreview](/api-reference/javascript/v2/interfaces/HMSConfig#capturenetworkqualityinpreview)
+
+---
+
+### iceServers
+
+• `Optional` **iceServers**: [`HMSICEServer`](/api-reference/javascript/v2/home/content#hmsiceserver)[]
+
+use custom STUN/TURN servers for media connection (advanced)
+
+#### Inherited from
+
+[HMSConfig](/api-reference/javascript/v2/interfaces/HMSConfig).[iceServers](/api-reference/javascript/v2/interfaces/HMSConfig#iceservers)
 
 ---
 

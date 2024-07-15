@@ -49,6 +49,14 @@ function to handle errors happening during preview
 
 ---
 
+### iceServers
+
+• `Optional` **iceServers**: `HMSICEServer`[]
+
+use custom STUN/TURN servers for media connection (advanced)
+
+---
+
 ### initEndpoint
 
 • `Optional` **initEndpoint**: `string`

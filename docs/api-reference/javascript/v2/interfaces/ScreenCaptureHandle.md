@@ -1,6 +1,6 @@
 ---
 title: ScreenCaptureHandle
-nav: '4.84'
+nav: '4.92'
 ---
 
 ## Properties

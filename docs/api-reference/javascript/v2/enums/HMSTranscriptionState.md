@@ -1,6 +1,6 @@
 ---
 title: HMSTranscriptionState
-nav: '2.18'
+nav: '2.20'
 ---
 
 ## Enumeration Members
@@ -8,6 +8,12 @@ nav: '2.18'
 ### FAILED
 
 • **FAILED** = `"failed"`
+
+---
+
+### INITIALISED
+
+• **INITIALISED** = `"initialised"`
 
 ---
 
