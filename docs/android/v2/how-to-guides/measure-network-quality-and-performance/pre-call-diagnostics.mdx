@@ -14,7 +14,8 @@ You can use these APIs in your application to detect issues before a Participant
 ## How to use the Pre Call Diagnostic APIs
 
 To use the diagnostic apis first you need to get an instance of `HMSDiagnostic` from the `HMSSDK` instance.
-<Tab id='instantiate-HMSDiagnostic'>
+<Tabs id="instantiate-HMSDiagnostic" items={['Kotlin']} />
+<Tab id='instantiate-HMSDiagnostic-0'>
 
 ```kotlin
             // get the HMSSDK instance
@@ -37,7 +38,8 @@ To test if the microphone is correctly working, call the `startMicCheck` API. Di
 
 Ensure to give the microphone permission before calling this
 
-<Tab id='HMSDiagnostic-checkMicrophone'>
+<Tabs id="HMSDiagnostic-checkMicrophone" items={['Kotlin']} />
+<Tab id='HMSDiagnostic-checkMicrophone-0'>
 
 ```kotlin
             // get the diagnostic instance
@@ -65,7 +67,8 @@ Ensure to give the microphone permission before calling this
 </Tab>
 
 The recording will continue un-till `stopMicCheck` is called. Ensure to call this method, otherwise the mic will be not be released by the SDK
-<Tab id='HMSDiagnostic-stopMicCheck'>
+<Tabs id="HMSDiagnostic-stopMicCheck" items={['Kotlin']} />
+<Tab id='HMSDiagnostic-stopMicCheck-0'>
 
 ```kotlin
             // get the diagnostic instance
@@ -82,7 +85,9 @@ To test the device speaker phone, call the `startSpeakerTest` API. This will pla
 If there is no recorded file present in the cache, either due to microphone issues or `startMicCheck` not being called, the speaker test API will play a pre-recorded file
 
 You can check if the speaker is working correctly if you are able to properly listen to the recording from `startMicCheck` API or the pre recorded file
-<Tab id='HMSDiagnostic-startSpeakerCheck'>
+<Tabs id="HMSDiagnostic-startSpeakerCheck" items={['Kotlin']} />
+
+<Tab id='HMSDiagnostic-startSpeakerCheck-0'>
 
 ```kotlin
             // get the diagnostic instance
@@ -95,7 +100,9 @@ You can check if the speaker is working correctly if you are able to properly li
 </Tab>
 
 To stop the speaker check, call the `stopSpeakerCheck` API. This will release any resources that the SDK might be holding while playing back
-<Tab id='HMSDiagnostic-stopSpeakerCheck'>
+<Tabs id="HMSDiagnostic-stopSpeakerCheck" items={['Kotlin']} />
+
+<Tab id='HMSDiagnostic-stopSpeakerCheck-0'>
 
 ```kotlin
             // get the diagnostic instance
@@ -112,7 +119,9 @@ To check if the camera on the device is working fine, call the `startCameraCheck
 Applications can use `HMSVideoView` to show the video track to users, using the same way any other `HMSVideoTrack` is shown.startMicCheck
 This API takes the `CameraFacing` as a parameter, where you can specify either the FRONT or REAR camera. By default FRONT camera is chosen.
 
-<Tab id='HMSDiagnostic-startCameraCheck'>
+<Tabs id="HMSDiagnostic-startCameraCheck" items={['Kotlin']} />
+
+<Tab id='HMSDiagnostic-startCameraCheck-0'>
 
 ```kotlin
             // get the diagnostic instance
@@ -133,7 +142,9 @@ This API takes the `CameraFacing` as a parameter, where you can specify either t
 </Tab>
 
 To stop the camera check and release all the resources, call `stopCameraCheck` API
-<Tab id='HMSDiagnostic-startCameraCheck'>
+<Tabs id="HMSDiagnostic-stopCameraCheck" items={['Kotlin']} />
+
+<Tab id='HMSDiagnostic-stopCameraCheck-0'>
 
 ```kotlin
             // get the diagnostic instance
@@ -153,7 +164,9 @@ This test runs for 20 seconds. It may finish earlier if connection cannot be est
 While the connectivity test is being performed, regular updates are sent by the SDK via the `onConnectivityStateChanged` callback. The application can listen to these updates and notify the UI to show updates regarding the test.
 When the test is completed, `onCompleted` callback is sent to the application with the complete `ConnectivityCheckResult` that has details about all the reports generated.
 
-<Tab id='HMSDiagnostic-startConnectivityCheck'>
+<Tabs id="HMSDiagnostic-startConnectivityCheck" items={['Kotlin']} />
+
+<Tab id='HMSDiagnostic-startConnectivityCheck-0'>
 
 ```kotlin
             // get the diagnostic instance
@@ -174,7 +187,9 @@ When the test is completed, `onCompleted` callback is sent to the application wi
 
 ## Understanding ConnectivityState updates
 The `startConnectivityCheck` API sends regular updates while the test is going on. `ConnectivityState` is an enum which has the following states:
-<Tab id='HMSDiagnostic-ConnectivityState'>
+<Tabs id="HMSDiagnostic-ConnectivityState" items={['Kotlin']} />
+
+<Tab id='HMSDiagnostic-ConnectivityState-0'>
 
 ```kotlin
            enum class ConnectivityState {
