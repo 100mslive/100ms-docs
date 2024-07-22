@@ -5,11 +5,11 @@ nav: 13.5
 
 ## Pre Call Diagnostic APIs
 
-The Pre Call Diagnostic APIs provide two type of functionality :
-1. APIs to test connected I/O devices like camera, mic and speaker functionality
-2. APIs to test connectivity to the 100ms Servers - This can identify signaling and media connectivity issues and provide a report at the end of the test.
+The Pre Call Diagnostic APIs provide two type of functionalities :
+1. APIs to test the connected I/O devices like camera, mic and speaker functionality
+2. APIs to test the connectivity to 100ms Servers - This can identify signaling and media connectivity issues and provide a report at the end of the test.
 
-You can use these APIs in your application to detect issues before a Participant joins a video Room or as part of a troubleshooting page while already joined in the room or at a later stage to debug some issues at the end user device/network
+You can use these APIs in your application to detect issues before a Participant joins a video Room or as part of a troubleshooting page while already joined in the room or at a later stage to debug some issues at the end user's device/network
 
 ## How to use the Pre Call Diagnostic APIs
 
@@ -31,8 +31,8 @@ If you are planning to use the connectivity checks while you have already joined
 
 ## Test microphone
 
-To test if the microphone is correctly working, call the `startMicCheck` API. Diagnostics SDK will open the microphone in recording mode and record the stream captured into a file in the cache memory.
-`onSuccess` callback will be called if SDK is able to open the microphone and start recording
+To test if the microphone is correctly working, call the `startMicCheck` API. Diagnostics SDK will open the microphone in recording mode and record the stream being captured into a file in the cache memory.
+`onSuccess` callback will be called if Diagnostics is able to open the microphone and start recording
 `onAudioLevelChanged` is called every second with the decibel level detected by the microphone. This can be used on the UI to show an indication that mic is listening to user's audio
 `onError` is called in case there was any issue while starting the microphone or if permission not given
 
@@ -56,7 +56,7 @@ Ensure to give the microphone permission before calling this
                         }
 
                         override fun onAudioLevelChanged(decibel: Int) {
-
+                            // Show a UI to indicate microphone is listening to user's audio
 
                         }
 
@@ -66,7 +66,7 @@ Ensure to give the microphone permission before calling this
 
 </Tab>
 
-The recording will continue un-till `stopMicCheck` is called. Ensure to call this method, otherwise the mic will be not be released by the SDK
+The recording will continue un-till `stopMicCheck` is called. Ensure to call this method, otherwise the mic will be not be released by the Diagnostics SDK
 <Tabs id="HMSDiagnostic-stopMicCheck" items={['Kotlin']} />
 <Tab id='HMSDiagnostic-stopMicCheck-0'>
 
@@ -99,7 +99,7 @@ You can check if the speaker is working correctly if you are able to properly li
 
 </Tab>
 
-To stop the speaker check, call the `stopSpeakerCheck` API. This will release any resources that the SDK might be holding while playing back
+To stop the speaker check, call the `stopSpeakerCheck` API. This will release any resources that the Diagnostics SDK might be holding while playing back
 <Tabs id="HMSDiagnostic-stopSpeakerCheck" items={['Kotlin']} />
 
 <Tab id='HMSDiagnostic-stopSpeakerCheck-0'>
@@ -115,9 +115,9 @@ To stop the speaker check, call the `stopSpeakerCheck` API. This will release an
 </Tab>
 
 ## Test Camera
-To check if the camera on the device is working fine, call the `startCameraCheck` API. This API creates a local video track and returns it. Incase there are any issues with the camera module it will be sent in the `onError` callback of the `HMSCameraCheckListener`
-Applications can use `HMSVideoView` to show the video track to users, using the same way any other `HMSVideoTrack` is shown.startMicCheck
-This API takes the `CameraFacing` as a parameter, where you can specify either the FRONT or REAR camera. By default FRONT camera is chosen.
+To check if the camera on the device is working fine, call the `startCameraCheck` API. This API creates a local video track and returns it. In case there are any issues with the camera module it will be sent in the `onError` callback of the `HMSCameraCheckListener`
+Applications can use `HMSVideoView` to show the video track to users, using the same way any other `HMSVideoTrack` is shown.
+This API takes the `CameraFacing` as a parameter, where you can specify either the FRONT or REAR camera. By default FRONT camera is chosen if nothing is specified
 
 <Tabs id="HMSDiagnostic-startCameraCheck" items={['Kotlin']} />
 
@@ -156,10 +156,10 @@ To stop the camera check and release all the resources, call `stopCameraCheck` A
 </Tab>
 
 ## Test Connectivity to 100ms Servers
-To test if there is proper connectivity to 100ms signalling and media servers, you have to call the `startConnectivityCheck` API. This API establishes connections to both the signalling an media server and publishes audio and video data to determine the network quality and generates a report of the connection.
+To test if there is proper connectivity to 100ms signalling and media servers, you have to call the `startConnectivityCheck` API. This API establishes connections to both the signalling and media server and publishes audio and video data to determine the network quality and generates a report of the connection.
 This API uses the local device's mic and camera to send audio-video data and receives back the same data to calculate network stats for both upload and download link of user's network.
 Please note that Camera and microphone permissions are needed to be provided by the app before making a call to this API
-This test runs for 20 seconds. It may finish earlier if connection cannot be established.
+This test runs for `20 seconds`. It may finish earlier if connection cannot be established.
 
 While the connectivity test is being performed, regular updates are sent by the SDK via the `onConnectivityStateChanged` callback. The application can listen to these updates and notify the UI to show updates regarding the test.
 When the test is completed, `onCompleted` callback is sent to the application with the complete `ConnectivityCheckResult` that has details about all the reports generated.
@@ -210,7 +210,7 @@ The `startConnectivityCheck` API sends regular updates while the test is going o
 | STARTING             | Initial state of the connectivity test
 | INIT_FETCHED         | Init API is fetched successfully
 | SIGNAL_CONNECTED     | Connected to signalling server successfully
-| ICE_ESTABLISHED      | Connected Media Server successfully
+| ICE_ESTABLISHED      | Connected to Media Server successfully
 | MEDIA_CAPTURED       | Local Media captured successfully
 | MEDIA_PUBLISHED      | Local media started uploading successfully
 | COMPLETED            | Connectivity test has completed
@@ -220,12 +220,12 @@ The above states can be used to show the progress of the test on UI
 When the test completes - either successfully or un-successfully, the `onCompleted` callback is called with the test result in `ConnectivityCheckResult` which has the following fields:
 | Name                 | Description                                                                                                                                 |
 | -------------------- | --------------------------------------------------------------------
-| `testTimestamp`      | timestamp in millisecond when the test was conducted
+| `testTimestamp`      | Timestamp in millisecond when the test was conducted
 | `connectivityState`  | The final connectivityState after the test was completed.
 | `signallingReport`   | Report describing the signalling server connection
 | `mediaServerReport`  | Report describing the media server connection
 | `deviceTestReport`   | Report describing the camera, speaker and mic test result
-| `errors`             | List of `HMSException` that were encountered while performing the test
+| `errors`             | List of `HMSException` that were encountered while performing the test, if any
 
 `SignallingReport` comprises of the following field
 | Name                 | Description                                                                                                                                 |
@@ -239,7 +239,7 @@ When the test completes - either successfully or un-successfully, the `onComplet
 | ------------------------------------- | --------------------------------------------------------------------
 | `isPublishICEConnected`               | whether the publish connection to media server was successful
 | `isSubcribeICEConnected`              | whether the subscribe connection to media server was successful
-| `connectionQualityScore`              | A floating value denoting the overall network quality of the user. It ranges from 0 to 5, with 5 being the maximum
+| `connectionQualityScore`              | A floating value denoting the overall network quality of the user. It ranges from 0 to 5, with 5 being the best score
 | `stats`                               | Denotes the overall audio and video stats that was uploaded and downloaded
 | `publishIceCandidatesGathered`        | A list of all ICE candidates that were gathered for the publish connection
 | `subscribeIceCandidatesGathered`      | A list of all ICE candidates that were gathered for the subscribe connection
@@ -249,10 +249,10 @@ When the test completes - either successfully or un-successfully, the `onComplet
 In the stats, SDK reports the following stats for both audio and video separately in the `stats` field of `MediaServerReport`
 | Name                  | Description
 | --------------------- | --------------------------------------------------------------------
-| `bytesSent`           | Number of video/audio Bytes that were uploaded from the client to remote peer
-| `bytesReceived`       | Number of video/audio Bytes that were received from the remote peer
-| `packetsReceived`     | Number of video/audio packets that were received from the remote peer
-| `packetsLost`         | Number of video/audio packets that were lost while sending to the remote peer
+| `bytesSent`           | Number of video/audio Bytes that were uploaded from the client to SFU
+| `bytesReceived`       | Number of video/audio Bytes that were downloaded from the SFU
+| `packetsReceived`     | Number of video/audio packets that were received from the SFU
+| `packetsLost`         | Number of video/audio packets that were lost while sending to the SFU
 | `bitrateSent`         | The upload audio/video bitrate in kbps
 | `bitrateReceived`     | The download or received bitrate of the remote audio/video track in kbps
 | `roundTripTime`       | The publish side round trip time from the device to the media Server of 100ms. This is same for both audio and video tracks
