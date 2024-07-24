@@ -134,3 +134,34 @@ You use **totalCount** property on **HMSPeerListIterator** to know how many peer
 ```kotlin
 let totalPeerCount = peerListIterator.totalCount
 ```
+
+### Search for peers
+To just search for peers without getting all of them use:
+```kotlin
+HMSSDK.searchPeerNameInLargeRoomsearchPeerNameInLargeRoom(
+    query: String,
+    limit: Int,
+    offset: Long,
+    listener: HmsTypedActionResultListener<PeerSearchResponse>) {
+```
+* query - substring of the peer's name that you want to search for.
+* limit - the number of peers you want returned for this query, max <<<>>>>>
+* offset - when looking for more peers than the max limit, send an offset for the next set.
+* listener: will return `PeerSearchResponse` in the onSuccess callback in this interface.
+
+```kotlin
+data class PeerSearchResponse(
+    val eof: Boolean
+    val offset: Long
+    val count: Long
+    val limit: Int
+    val peers: List<HMSPeer>
+)
+```
+The peer search response contains:
+* eof - true if there are no more results, false otherwise.
+* offset - the offset requested.
+* count - the number of results.
+* limit - the limit that was given.
+* peers - the list of `HMSPeer` that match the search query.
+
