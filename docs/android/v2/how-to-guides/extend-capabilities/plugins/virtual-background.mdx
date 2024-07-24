@@ -4,6 +4,7 @@ nav: 14.3
 ---
 
 import AndroidSdkVersionShield from '@/common/android-sdk-version-shield.md';
+import AndroidPrebuiltVersionShield from '@/common/android-prebuilt-version-shield.md';
 
 ## Introduction
 
@@ -14,25 +15,45 @@ This guide provides an overview of usage of the Virtual Background Plugin of 100
 ## Supported Versions/Resolutions
 
 -   Minimum 100ms SDK version it can work with is `2.9.58`
+-   Minimum 100ms Room Kit version it can work with is `1.2.18`
 -   Has poor fps on older android phones
 
 
 ## Add dependency
 
+### If not using room kit:
 Adding the Virtual Background plugin and SDK dependency to your app-level `build.gradle`.
 
-<AndroidSdkVersionShield />
-
-<Tabs id="sdk-imports" items={['Maven Central']} />
+<Tabs id="sdk-imports" items={['SDK integration','With Prebuilt']} />
 
 <Tab id='sdk-imports-0'>
 
-```json{5-8}:build.gradle section=AddSDKDependencies sectionIndex=1
+<AndroidSdkVersionShield />
+
+```json:build.gradle section=AddSDKDependencies sectionIndex=1
 dependencies {
  // See the version in the badge above.
 
  def hmsVersion = "x.x.x"
  implementation "live.100ms:android-sdk:$hmsVersion"    // Essential
+ implementation "live.100ms:virtual-background:$hmsVersion" 
+}
+```
+
+</Tab>
+
+<Tab id='sdk-imports-1'>
+
+<AndroidSdkVersionShield />
+<AndroidPrebuiltVersionShield />
+
+```json:build.gradle section=AddSDKDependencies sectionIndex=1
+dependencies {
+ // See the version in the badge above.
+
+ def hmsVersion = "x.x.x" // 100ms
+ def roomKitVersion = "x.x.x" // 100ms-Prebuilt
+ implementation "live.100ms:room-kit:$roomKitVersion"    // Essential
  implementation "live.100ms:virtual-background:$hmsVersion" 
 }
 ```
