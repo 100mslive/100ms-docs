@@ -24,33 +24,66 @@ import {
     HMSLeaveRoomRequest,
     HMSSpeaker,
     HMSPeer,
-    HMSTrack
+    HMSTrack,
+    HMSSessionStore,
+    HMSRole,
+    HMSRoom,
+    HMSRoomUpdate,
+    HMSPeerUpdate,
+    HMSTrackUpdate,
+    HMSAudioDevice,
+    HMSTranscript,
+    HMSPermission,
 } from '@100mslive/react-native-hms';
 
 const hmsInstance = await HMSSDK.build();
 
 hmsInstance.addEventListener(HMSUpdateListenerActions.ON_PREVIEW, onPreviewListener);
 
-const onPreviewListener = ({ previewTracks }) => {
+const onPreviewListener = ({ room: HMSRoom, previewTracks: HMSTrack[] }) => {
     const videoTrack = previewTracks.videoTrack;
     const videoTrackId = videoTrack.trackId;
-    // gets triggered when we call preview function. You can set your camera and mic on/off while joining.
-    // perform action
+    // Event emitted when the local preview is available.
+    // This event is triggered once the local user's video preview becomes available.
+    // It allows the application to display the local video stream to the user,
+    // ensuring they can see their own feed before interacting with others in the room.
+    // You can set your camera and mic on/off while joining.
 };
+
 
 hmsInstance.addEventListener(HMSUpdateListenerActions.ON_JOIN, onJoinListener);
 
-const onJoinListener = ({ localPeer, remotePeers }) => {
-    // gets triggered when join is successful. You can navigate to other screens.
-    // use these objects to update your local and remote peers.
+const onJoinListener = ({ room: HMSRoom }) => {
+    // Event emitted when the local user joins the room. You can navigate to other screens.
+    //
+    // This event signifies that the local user has successfully connected to the room and is now part of the session.
+    // It is a critical event for initiating further actions within the room, such as fetching current participants,
+    // subscribing to tracks, or sending messages. Handling this event properly is essential for setting up the user's
+    // environment and ensuring a smooth experience in the room.
 };
+
 
 hmsInstance.addEventListener(HMSUpdateListenerActions.ON_PEER_UPDATE, onPeerListener);
 
 const onPeerListener = ({ peer, type }: { peer: HMSPeer, type: HMSPeerUpdate }) => {
-    // gets triggered when peer leaves, joins, peer's audio or video is muted, starts or stops speaking, role is changed or becomes dominant speaker.
-    // use these objects to update your local and remote peers.
+    // Event emitted when there is an update related to a peer in the room.
+    //
+    // This event is triggered whenever a peer's state changes within the room, such as when a peer's video or audio track is enabled or disabled,
+    // or when a peer's metadata is updated. It provides a way for the application to react to changes in a peer's status, ensuring that the UI
+    // and application state can be updated to reflect the current state of peers in the room.
 };
+
+
+hmsInstance.addEventListener(HMSUpdateListenerActions.ON_PEER_LIST_UPDATED, onPeerListListener);
+
+const onPeerListListener = ({ addedPeers, removedPeers }: { addedPeers: HMSPeer[], removedPeers: HMSPeer[] }) => {
+    // Event emitted when there is an update related to the list of peers in the room.
+    //
+    // This event is triggered whenever the list of peers in the room changes, such as when a new peer joins the room or an existing peer leaves.
+    // It provides a way for the application to react to changes in the list of peers, ensuring that the UI and application state can be updated to
+    // reflect the current state of peers in the room.
+};
+
 
 hmsInstance.addEventListener(HMSUpdateListenerActions.ON_TRACK_UPDATE, onTrackListener);
 
@@ -67,12 +100,26 @@ const onTrackListener = ({
     // use these objects to update your local and remote peers.
 };
 
+
+hmsInstance.addEventListener(HMSUpdateListenerActions.ON_ROOM_UPDATE, onRoomListener);
+
+const onRoomListener = ({ room, type }: { room: HMSRoom, type: HMSRoomUpdate }) => {
+    // Event emitted when there is an update related to the room.
+    //
+    // This event is triggered by various room-related changes, such as updates to the room's metadata, changes in the room's state,
+    // or modifications to the list of available tracks. It serves as a general notification to the application that some aspect of the
+    // room's configuration or status has changed, enabling the application to respond appropriately, such as updating the UI or querying
+    // for new information to reflect the current state of the room.
+};
+
+
 hmsInstance.addEventListener(HMSUpdateListenerActions.ON_ERROR, onErrorListener);
 
 const onErrorListener = (data: HMSException) => {
     // gets triggered whenever some error occours with a error description. You can either log it or navigate to some error screen.
     // data contains a error code and message due to which error occoured.
 };
+
 
 hmsInstance.addEventListener(HMSUpdateListenerActions.ON_MESSAGE, onMessageListener);
 
@@ -81,6 +128,7 @@ const onMessageListener = (data: HMSMessage) => {
     // whenever local peer receives a message this is triggered. Add the message to reducer.
 };
 
+
 hmsInstance.addEventListener(HMSUpdateListenerActions.ON_SPEAKER, onSpeakerListener);
 
 const onSpeakerListener = (data: HMSSpeaker[]) => {
@@ -88,53 +136,136 @@ const onSpeakerListener = (data: HMSSpeaker[]) => {
     // an array of speakers is received. Use it to highlight the speakers.
 };
 
+
 hmsInstance.addEventListener(HMSUpdateListenerActions.RECONNECTING, onReconnectingListener);
 
-hmsInstance.addEventListener(HMSUpdateListenerActions.ON_ROOM_UPDATE, onRoomListener);
-
-const onRoomListener = ({ room, type }: { room: HMSRoom, type: HMSRoomUpdate }) => {
-    // gets triggered when room is muted or unmuted.
-};
-
-const onReconnectingListener = (data) => {
+const onReconnectingListener = () => {
     // triggered whenever local peer is trying to reconnect to room, that is bad network.
 };
 
+
 hmsInstance.addEventListener(HMSUpdateListenerActions.RECONNECTED, onReconnectedListener);
 
-const onReconnectedListener = (data) => {
+const onReconnectedListener = () => {
     // triggered when local peer is reconnected to the room.
 };
+
 
 hmsInstance.addEventListener(
     HMSUpdateListenerActions.ON_ROLE_CHANGE_REQUEST,
     onRoleChangeRequestListener
 );
 
-const onRoleChangeRequestListener = (data: HMSRoleChangeRequest) => {
+const onRoleChangeRequestListener = (data: {
+    requestedBy?: HMSPeer;
+    suggestedRole: HMSRole;
+}) => {
     // triggered when someone requests a role change for local peer. We can get data.requestedBy.name, data.suggestedRole.name
     // You can show a modal allowing user to accept or decline the role change request whenever this is triggered.
 };
+
 
 hmsInstance.addEventListener(
     HMSUpdateListenerActions.ON_REMOVED_FROM_ROOM,
     onRemovedFromRoomListener
 );
 
-const onRemovedFromRoomListener = (data: HMSLeaveRoomRequest) => {
+const onRemovedFromRoomListener = (data: {
+    requestedBy?: HMSPeer | null;
+    reason?: string;
+    roomEnded?: boolean;
+    }) => {
     // triggered whenever someone removes local peer from the room or the room is ended.
     // You can navigate to home screen, clear all reducers and reset all the states whenever this is triggered
 };
+
 
 hmsInstance.addEventListener(
     HMSUpdateListenerActions.ON_CHANGE_TRACK_STATE_REQUEST,
     onChangeTrackStateRequest
 );
 
-const onChangeTrackStateRequest = (data: HMSChangeTrackStateRequest) => {
+const onChangeTrackStateRequest = (data: {
+    requestedBy?: HMSPeer;
+    trackType: string;
+    mute: boolean;
+}) => {
     // triggered when someone requests a unmute for local peer. We can get data.requestedBy.name, data.trackType
     // You can show a modal allowing user to accept or decline the role change request whenever this is triggered.
 };
+
+
+hmsInstance?.addEventListener(
+    HMSUpdateListenerActions.ON_SESSION_STORE_AVAILABLE,
+    onSessionStoreAvailableListener,
+);
+
+const onSessionStoreAvailableListener = ({
+    sessionStore,
+}: {
+    sessionStore: HMSSessionStore;
+}) => {
+    // You can use the SessionStore object provided here according to your app logic
+    // For example, below we are saving `sessionStore` reference in `Redux`
+    dispatch(saveUserData({hmsSessionStore: sessionStore}));
+};
+
+
+hmsInstance?.addEventListener(
+    HMSUpdateListenerActions.ON_SESSION_STORE_CHANGED,
+    onSessionStoreChangedListener,
+);
+
+const onSessionStoreChangedListener = ({
+    sessionStore,
+}: {
+    sessionStore: HMSSessionStore;
+}) => {
+    // You can use the SessionStore object provided here according to your app logic
+    // For example, below we are saving `sessionStore` reference in `Redux`
+    dispatch(saveUserData({hmsSessionStore: sessionStore}));
+};
+
+
+hmsInstance?.addEventListener(
+    HMSUpdateListenerActions.ON_TRANSCRIPTS,
+    onTranscriptsListener,
+);
+
+const onTranscriptsListener = (data: {
+    transcripts: HMSTranscript[];
+}) => {
+    // This will be triggered whenever the transcripts are received.
+    // You can use this to show the transcripts in the UI.
+};
+
+
+hmsInstance?.addEventListener(
+    HMSUpdateListenerActions.ON_AUDIO_DEVICE_CHANGE,
+    onAudioDeviceChangeListener,
+);
+
+const onAudioDeviceChangeListener = (data: {
+    audioDevice: HMSAudioDevice;
+}) => {
+    // This will be triggered whenever the audio device changes. Android only.
+    // You can use this to update the UI to show the current audio device.
+};
+
+
+hmsInstance?.addEventListener(
+    HMSUpdateListenerActions.ON_PERMISSIONS_REQUESTED,
+    onPermissionsRequestedListener,
+);
+
+const onPermissionsRequestedListener = (data: {
+    requestedBy: HMSPeer;
+    permissions: HMSPermission[];
+}) => {
+    // This will be triggered whenever the permissions are requested. Android only.
+    // You can use this to show the permissions dialog to the user.
+};
+
 
 hmsInstance?.addEventListener(
     HMSUpdateListenerActions.ON_LOCAL_AUDIO_STATS,
@@ -192,42 +323,6 @@ const onChangeRemoteVideoStats = (data: {
     peer: HMSPeer
 }) => {
     // This contains stats related to remote video track.
-};
-
-
-hmsInstance?.addEventListener(
-    HMSUpdateListenerActions.ON_SESSION_STORE_AVAILABLE,
-    onSessionStoreAvailableListener,
-);
-
-const onSessionStoreAvailableListener = ({
-    sessionStore,
-  }: {
-    sessionStore: HMSSessionStore;
-}) => {
-    // You can use the SessionStore object provided here according to your app logic
-    // For example, below we are saving `sessionStore` reference in `Redux`
-    dispatch(saveUserData({hmsSessionStore: sessionStore}));
-};
-
-hmsInstance?.addEventListener(
-    HMSUpdateListenerActions.ON_PEER_LIST_UPDATED,
-    onPeerListUpdatedHandler,
-);
-
-const onPeerListUpdatedHandler = ({
-  addedPeers,
-  removedPeers,
-}: {
-  addedPeers: HMSPeer[];
-  removedPeers: HMSPeer[];
-}) => {
-    // In Large Room, `ON_PEER_LIST_UPDATED` event is emitted
-    // with list of all the peers present in the room.
-
-    // You can subscribe to `ON_PEER_LIST_UPDATED` event to get list of added or removed peers -
-    // `addedPeers` is list of added peers in room
-    // `removedPeers` is list of removed peers from room
 };
 ```
 

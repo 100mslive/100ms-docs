@@ -199,6 +199,21 @@ An e.g. use of this hook will be to apply box-shadow on parent tile based on aud
 
 ---
 
+### useAudioMode
+
+▸ **useAudioMode**(): `Object`
+
+#### Returns
+
+`Object`
+
+| Name                 | Type                     |
+| :------------------- | :----------------------- |
+| `isMusicModeEnabled` | `boolean`                |
+| `toggleMusicMode`    | () => `Promise`<`void`\> |
+
+---
+
 ### useAutoplayError
 
 ▸ **useAutoplayError**(): [`useAutoplayErrorResult`](/api-reference/javascript/v2/react-hooks/interfaces/useAutoplayErrorResult)
