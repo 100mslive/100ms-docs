@@ -11,6 +11,12 @@ nav: '4.31'
 
 ---
 
+### audioMode
+
+• `Optional` **audioMode**: [`HMSAudioMode`](/api-reference/javascript/v2/enums/HMSAudioMode)
+
+---
+
 ### audioOutputDeviceId
 
 • `Optional` **audioOutputDeviceId**: `string`
