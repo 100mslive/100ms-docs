@@ -1302,7 +1302,7 @@ Select the track ID of your local peer's primary audio track
 ▸ **selectLocalMediaSettings**(`store`): [`HMSMediaSettings`](/api-reference/javascript/v2/interfaces/HMSMediaSettings)
 
 Select your media settings
-i.e., choosen audio input device, audio output device and video input device.
+i.e., choosen audio input device, audio output device and video input device, audio mode
 
 #### Parameters
 
