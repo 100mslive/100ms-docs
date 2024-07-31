@@ -15,12 +15,20 @@
 <li><a href="../modules.html">@100mslive/react-native-hms</a></li>
 <li><a href="HMSException.html">HMSException</a></li></ul>
 <h1>Class HMSException</h1></div>
+<section class="tsd-panel tsd-comment">
+<div class="tsd-comment tsd-typography"><p>Represents an exception specific to the HMS SDK in a React Native context.</p>
+<p>This class encapsulates detailed information about errors that can occur while interacting with the HMS SDK.
+It includes a numeric code to identify the type of error, a human-readable description, and optionally,
+a message, name, and action that are primarily available on Android. Additionally, it indicates whether
+the error is terminal (i.e., cannot be recovered from) and whether a retry might be possible.</p>
+</div>
+<div class="tsd-comment tsd-typography"></div></section>
 <section class="tsd-panel tsd-hierarchy">
 <h4>Hierarchy</h4>
 <ul class="tsd-hierarchy">
 <li><span class="target">HMSException</span></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSException.ts#L1">src/classes/HMSException.ts:1</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSException.ts#L19">src/classes/HMSException.ts:19</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -69,44 +77,65 @@
 <h5><code class="tsd-tag ts-flagOptional">Optional</code> <span class="tsd-kind-property">name</span><span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span></h5></li></ul></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="HMSException.html" class="tsd-signature-type tsd-kind-class">HMSException</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSException.ts#L10">src/classes/HMSException.ts:10</a></li></ul></aside></li></ul></section></section>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSException.ts#L28">src/classes/HMSException.ts:28</a></li></ul></aside></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Properties</h2>
 <section class="tsd-panel tsd-member"><a id="action" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>action</span><a href="#action" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-property">action</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span></div><aside class="tsd-sources">
+<div class="tsd-signature"><span class="tsd-kind-property">action</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span></div>
+<div class="tsd-comment tsd-typography"><p>The action during which the error occurred (Android only).</p>
+</div>
+<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSException.ts#L6">src/classes/HMSException.ts:6</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSException.ts#L24">src/classes/HMSException.ts:24</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member"><a id="canRetry" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>can<wbr/>Retry</span><a href="#canRetry" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-property">can<wbr/>Retry</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">boolean</span></div><aside class="tsd-sources">
+<div class="tsd-signature"><span class="tsd-kind-property">can<wbr/>Retry</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">boolean</span></div>
+<div class="tsd-comment tsd-typography"><p>Indicates whether the operation that caused the error can be retried (Android only).</p>
+</div>
+<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSException.ts#L8">src/classes/HMSException.ts:8</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSException.ts#L26">src/classes/HMSException.ts:26</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member"><a id="code" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>code</span><a href="#code" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-property">code</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div><aside class="tsd-sources">
+<div class="tsd-signature"><span class="tsd-kind-property">code</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+<div class="tsd-comment tsd-typography"><p>Numeric error code representing the type of error.</p>
+</div>
+<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSException.ts#L2">src/classes/HMSException.ts:2</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSException.ts#L20">src/classes/HMSException.ts:20</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member"><a id="description" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>description</span><a href="#description" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-property">description</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div><aside class="tsd-sources">
+<div class="tsd-signature"><span class="tsd-kind-property">description</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+<div class="tsd-comment tsd-typography"><p>A brief, human-readable description of the error.</p>
+</div>
+<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSException.ts#L3">src/classes/HMSException.ts:3</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSException.ts#L21">src/classes/HMSException.ts:21</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member"><a id="isTerminal" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>is<wbr/>Terminal</span><a href="#isTerminal" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-property">is<wbr/>Terminal</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div><aside class="tsd-sources">
+<div class="tsd-signature"><span class="tsd-kind-property">is<wbr/>Terminal</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+<div class="tsd-comment tsd-typography"><p>Indicates whether the error is terminal.</p>
+</div>
+<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSException.ts#L7">src/classes/HMSException.ts:7</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSException.ts#L25">src/classes/HMSException.ts:25</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member"><a id="message" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>message</span><a href="#message" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-property">message</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span></div><aside class="tsd-sources">
+<div class="tsd-signature"><span class="tsd-kind-property">message</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span></div>
+<div class="tsd-comment tsd-typography"><p>Additional message information about the error (Android only).</p>
+</div>
+<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSException.ts#L4">src/classes/HMSException.ts:4</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSException.ts#L22">src/classes/HMSException.ts:22</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member"><a id="name" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>name</span><a href="#name" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-property">name</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span></div><aside class="tsd-sources">
+<div class="tsd-signature"><span class="tsd-kind-property">name</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span></div>
+<div class="tsd-comment tsd-typography"><p>The name of the error (Android only).</p>
+</div>
+<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSException.ts#L5">src/classes/HMSException.ts:5</a></li></ul></aside></section></section></div>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSException.ts#L23">src/classes/HMSException.ts:23</a></li></ul></aside></section></section></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">

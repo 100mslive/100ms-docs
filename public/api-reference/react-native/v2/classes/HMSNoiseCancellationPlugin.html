@@ -16,16 +16,18 @@
 <li><a href="HMSNoiseCancellationPlugin.html">HMSNoiseCancellationPlugin</a></li></ul>
 <h1>Class HMSNoiseCancellationPlugin</h1></div>
 <section class="tsd-panel tsd-comment">
-<div class="tsd-comment tsd-typography"><p>Class representing an HMS Noise Cancellation Plugin.
-Checkout <a href="https://www.100ms.live/docs/react-native/v2/how-to-guides/extend-capabilities/noise-cancellation">https://www.100ms.live/docs/react-native/v2/how-to-guides/extend-capabilities/noise-cancellation</a> for more info</p>
+<div class="tsd-comment tsd-typography"><p>Represents the HMS Noise Cancellation Plugin.
+This class encapsulates the functionality for managing noise cancellation within a room, including enabling, disabling, and checking the availability and current state of noise cancellation.</p>
 </div>
-<div class="tsd-comment tsd-typography"></div></section>
+<div class="tsd-comment tsd-typography">
+<h4>See</h4><p><a href="https://www.100ms.live/docs/react-native/v2/how-to-guides/extend-capabilities/noise-cancellation">https://www.100ms.live/docs/react-native/v2/how-to-guides/extend-capabilities/noise-cancellation</a></p>
+</div></section>
 <section class="tsd-panel tsd-hierarchy">
 <h4>Hierarchy</h4>
 <ul class="tsd-hierarchy">
 <li><span class="target">HMSNoiseCancellationPlugin</span></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSNoiseCancellationPlugin.ts#L9">src/classes/HMSNoiseCancellationPlugin.ts:9</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSNoiseCancellationPlugin.ts#L19">src/classes/HMSNoiseCancellationPlugin.ts:19</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -54,43 +56,59 @@ Checkout <a href="https://www.100ms.live/docs/react-native/v2/how-to-guides/exte
 <ul class="tsd-signatures">
 <li class="tsd-signature tsd-anchor-link" id="constructor.new_HMSNoiseCancellationPlugin"><span class="tsd-kind-constructor-signature">new HMSNoise<wbr/>Cancellation<wbr/>Plugin</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">config</span><span class="tsd-signature-symbol">?</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="HMSNoiseCancellationPlugin.html" class="tsd-signature-type tsd-kind-class">HMSNoiseCancellationPlugin</a><a href="#constructor.new_HMSNoiseCancellationPlugin" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Creates an instance of HMSNoiseCancellationPlugin.</p>
+<div class="tsd-comment tsd-typography"><p>Constructs a new HMSNoiseCancellationPlugin instance with optional configuration settings.
+This constructor allows for the initialization of the plugin with specific noise cancellation
+model and initial state settings, providing flexibility in how noise cancellation is applied
+within the application.</p>
 </div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
 <ul class="tsd-parameter-list">
 <li>
 <h5><code class="tsd-tag ts-flagOptional">Optional</code> <span class="tsd-kind-parameter">config</span>: <span class="tsd-signature-symbol">{ </span><br/><span>    </span><span class="tsd-kind-property">initialState</span><span class="tsd-signature-symbol">: </span><a href="../enums/HMSNoiseCancellationInitialState.html" class="tsd-signature-type tsd-kind-enum">HMSNoiseCancellationInitialState</a><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">modelName</span><span class="tsd-signature-symbol">: </span><a href="../enums/HMSNoiseCancellationModels.html#SmallFullBand" class="tsd-signature-type tsd-kind-enum-member">SmallFullBand</a><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span></h5>
-<div class="tsd-comment tsd-typography"><p>The configuration options.</p>
+<div class="tsd-comment tsd-typography"><p>Optional configuration object for the plugin.</p>
 </div>
 <div class="tsd-comment tsd-typography"></div>
 <ul class="tsd-parameters">
 <li class="tsd-parameter">
 <h5><span class="tsd-kind-property">initial<wbr/>State</span><span class="tsd-signature-symbol">: </span><a href="../enums/HMSNoiseCancellationInitialState.html" class="tsd-signature-type tsd-kind-enum">HMSNoiseCancellationInitialState</a></h5>
-<div class="tsd-comment tsd-typography"><p>The initial state for noise cancellation.</p>
+<div class="tsd-comment tsd-typography"><p>Sets the initial state of noise cancellation
+       (enabled or disabled) when the plugin is instantiated. Defaults to disabled if not specified.</p>
 </div>
 <div class="tsd-comment tsd-typography"></div></li>
 <li class="tsd-parameter">
 <h5><span class="tsd-kind-property">model<wbr/>Name</span><span class="tsd-signature-symbol">: </span><a href="../enums/HMSNoiseCancellationModels.html#SmallFullBand" class="tsd-signature-type tsd-kind-enum-member">SmallFullBand</a></h5>
-<div class="tsd-comment tsd-typography"><p>The model name for noise cancellation.</p>
+<div class="tsd-comment tsd-typography"><p>Specifies the noise cancellation model to be used.
+       This determines the algorithm and intensity of noise cancellation. If not provided, a default
+       model is used.</p>
 </div>
 <div class="tsd-comment tsd-typography"></div></li></ul></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="HMSNoiseCancellationPlugin.html" class="tsd-signature-type tsd-kind-class">HMSNoiseCancellationPlugin</a></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSNoiseCancellationPlugin.ts#L19">src/classes/HMSNoiseCancellationPlugin.ts:19</a></li></ul></aside></li></ul></section></section>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSNoiseCancellationPlugin.ts#L50">src/classes/HMSNoiseCancellationPlugin.ts:50</a></li></ul></aside></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Properties</h2>
 <section class="tsd-panel tsd-member"><a id="initialState" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>initial<wbr/>State</span><a href="#initialState" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-property">initial<wbr/>State</span><span class="tsd-signature-symbol">:</span> <a href="../enums/HMSNoiseCancellationInitialState.html" class="tsd-signature-type tsd-kind-enum">HMSNoiseCancellationInitialState</a></div><aside class="tsd-sources">
+<div class="tsd-signature"><span class="tsd-kind-property">initial<wbr/>State</span><span class="tsd-signature-symbol">:</span> <a href="../enums/HMSNoiseCancellationInitialState.html" class="tsd-signature-type tsd-kind-enum">HMSNoiseCancellationInitialState</a></div>
+<div class="tsd-comment tsd-typography"><p>Defines the initial state of noise cancellation
+when the plugin is instantiated. This can be either enabled or disabled, providing control over the
+noise cancellation feature&#39;s activation upon initialization.</p>
+</div>
+<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSNoiseCancellationPlugin.ts#L11">src/classes/HMSNoiseCancellationPlugin.ts:11</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSNoiseCancellationPlugin.ts#L35">src/classes/HMSNoiseCancellationPlugin.ts:35</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member"><a id="modelName" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>model<wbr/>Name</span><a href="#modelName" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-property">model<wbr/>Name</span><span class="tsd-signature-symbol">:</span> <a href="../enums/HMSNoiseCancellationModels.html#SmallFullBand" class="tsd-signature-type tsd-kind-enum-member">SmallFullBand</a></div><aside class="tsd-sources">
+<div class="tsd-signature"><span class="tsd-kind-property">model<wbr/>Name</span><span class="tsd-signature-symbol">:</span> <a href="../enums/HMSNoiseCancellationModels.html#SmallFullBand" class="tsd-signature-type tsd-kind-enum-member">SmallFullBand</a></div>
+<div class="tsd-comment tsd-typography"><p>Specifies the model of noise cancellation to be used.
+This property determines the algorithm and intensity of noise cancellation, allowing for customization
+based on the requirements of the room or application.</p>
+</div>
+<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSNoiseCancellationPlugin.ts#L10">src/classes/HMSNoiseCancellationPlugin.ts:10</a></li></ul></aside></section></section>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSNoiseCancellationPlugin.ts#L26">src/classes/HMSNoiseCancellationPlugin.ts:26</a></li></ul></aside></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Methods</h2>
 <section class="tsd-panel tsd-member"><a id="disable" class="tsd-anchor"></a>
@@ -104,7 +122,7 @@ Checkout <a href="https://www.100ms.live/docs/react-native/v2/how-to-guides/exte
 
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSNoiseCancellationPlugin.ts#L81">src/classes/HMSNoiseCancellationPlugin.ts:81</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSNoiseCancellationPlugin.ts#L112">src/classes/HMSNoiseCancellationPlugin.ts:112</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="enable" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>enable</span><a href="#enable" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -116,7 +134,7 @@ Checkout <a href="https://www.100ms.live/docs/react-native/v2/how-to-guides/exte
 
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSNoiseCancellationPlugin.ts#L62">src/classes/HMSNoiseCancellationPlugin.ts:62</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSNoiseCancellationPlugin.ts#L93">src/classes/HMSNoiseCancellationPlugin.ts:93</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="isEnabled" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>is<wbr/>Enabled</span><a href="#isEnabled" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -128,7 +146,7 @@ Checkout <a href="https://www.100ms.live/docs/react-native/v2/how-to-guides/exte
 
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSNoiseCancellationPlugin.ts#L100">src/classes/HMSNoiseCancellationPlugin.ts:100</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSNoiseCancellationPlugin.ts#L131">src/classes/HMSNoiseCancellationPlugin.ts:131</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="isNoiseCancellationAvailable" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>is<wbr/>Noise<wbr/>Cancellation<wbr/>Available</span><a href="#isNoiseCancellationAvailable" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -142,7 +160,7 @@ Checkout <a href="https://www.100ms.live/docs/react-native/v2/how-to-guides/exte
 
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSNoiseCancellationPlugin.ts#L40">src/classes/HMSNoiseCancellationPlugin.ts:40</a></li></ul></aside></li></ul></section></section></div>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSNoiseCancellationPlugin.ts#L71">src/classes/HMSNoiseCancellationPlugin.ts:71</a></li></ul></aside></li></ul></section></section></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
