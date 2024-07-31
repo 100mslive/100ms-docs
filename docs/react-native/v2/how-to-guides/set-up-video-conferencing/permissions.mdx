@@ -1,0 +1,74 @@
+---
+title: Permissions (Android Only)
+nav: 4.11
+---
+
+With `HMSRoles` it's important to only request the appropriate permissions for user comfort.
+Some roles may require camera permissions, some may require the microphones and there are complex
+ rules around whether bluetooth permission or bluetooth_connect permissions are required.
+
+On Android, `HMSSDK` can simplify this by emitting an `ON_PERMISSIONS_REQUESTED` event during `join` and `preview` that
+ contains the appropriate permissions to request from user. Perform following actions inside event handler:
+1. Request the permissions
+2. Tell the SDK when they've been granted.
+
+## Implementation
+
+### Enable ON_PERMISSIONS_REQUESTED event
+
+```js{3}
+const hmsInstance = await HMSSDK.build({
+  ...
+  haltPreviewJoinForPermissionsRequest: true,
+  ...
+});
+```
+
+### Listen to ON_PERMISSIONS_REQUESTED event
+
+```js
+import { PermissionsAndroid } from 'react-native';
+
+...
+
+useEffect(() => {
+  const onPermissionsRequested = async (data: { permissions: Array<string>; }) => {
+    // STEP 1: Request permissions
+    await PermissionsAndroid.requestMultiple(data.permissions as Permission[]);
+
+    // STEP 2: Tell the SDK when they've been granted.
+    await hmsInstance.setPermissionsAccepted();
+  };
+
+  hmsInstance.addEventListener(
+    HMSUpdateListenerActions.ON_PERMISSIONS_REQUESTED,
+    onPermissionsRequested
+  );
+
+  return () => {
+    hmsInstance.removeEventListener(
+      HMSUpdateListenerActions.ON_PERMISSIONS_REQUESTED
+    );
+  };
+}, [hmsInstance]);
+```
+
+### Tell the SDK that permissions have been granted
+
+When the permissions are granted call:
+
+```js
+hmsInstance.setPermissionsAccepted()
+```
+
+> Without calling `setPermissionsAccepted` method, the SDK will remain stuck waiting in preview or join.
+ It doesn't matter if the user denies some permissions, in that case the associated devices will not work.
+  Whether the permissions have been accepted or denied, if you want the join/preview to continue, call this.
+
+## What permissions may be requested
+
+1. `android.permission.RECORD_AUDIO`: For roles with an audio broadcasting permission.
+    - Without it the user's microphone will remain disabled throughout the call.
+
+2. `android.permission.CAMERA`: For roles with camera publish permissions.
+    - Without it the user's camera will remain disabled throughout the call.
