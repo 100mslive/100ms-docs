@@ -1,12 +1,13 @@
 ---
 title: Permissions (Android Only)
-nav: 4.11
+nav: 13
 ---
 
 With `HMSRoles` it's important to only request the appropriate permissions for user comfort.
 Some roles may require camera permissions, some may require the microphones and there are complex
- rules around whether bluetooth permission or bluetooth_connect permissions are required.
+rules around whether bluetooth permission or bluetooth_connect permissions are required.
 
+On iOS, the SDK automatically handles this & requests only the permissions that are required.
 On Android, `HMSSDK` can simplify this by emitting an `ON_PERMISSIONS_REQUESTED` event during `join` and `preview` that
  contains the appropriate permissions to request from user. Perform following actions inside event handler:
 1. Request the permissions
@@ -19,7 +20,7 @@ On Android, `HMSSDK` can simplify this by emitting an `ON_PERMISSIONS_REQUESTED`
 ```js{3}
 const hmsInstance = await HMSSDK.build({
   ...
-  haltPreviewJoinForPermissionsRequest: true,
+  haltPreviewJoinForPermissionsRequestOnAndroid: true,
   ...
 });
 ```
@@ -32,12 +33,15 @@ import { PermissionsAndroid } from 'react-native';
 ...
 
 useEffect(() => {
+  if (Platform.OS !== 'android') {
+    return;
+  }
   const onPermissionsRequested = async (data: { permissions: Array<string>; }) => {
     // STEP 1: Request permissions
     await PermissionsAndroid.requestMultiple(data.permissions as Permission[]);
 
     // STEP 2: Tell the SDK when they've been granted.
-    await hmsInstance.setPermissionsAccepted();
+    await hmsInstance.setPermissionsAcceptedOnAndroid();
   };
 
   hmsInstance.addEventListener(
@@ -58,10 +62,10 @@ useEffect(() => {
 When the permissions are granted call:
 
 ```js
-hmsInstance.setPermissionsAccepted()
+hmsInstance.setPermissionsAcceptedOnAndroid()
 ```
 
-> Without calling `setPermissionsAccepted` method, the SDK will remain stuck waiting in preview or join.
+> Without calling `setPermissionsAcceptedOnAndroid` method, the SDK will remain stuck waiting in preview or join.
  It doesn't matter if the user denies some permissions, in that case the associated devices will not work.
   Whether the permissions have been accepted or denied, if you want the join/preview to continue, call this.
 
