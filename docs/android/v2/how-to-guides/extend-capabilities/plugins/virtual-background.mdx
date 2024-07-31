@@ -72,7 +72,8 @@ Enable it from the dashboard, go to Customize Prebuilt -> Screens and Components
 <Tab id='instanstiate-VirtualBackgroundPlugin-0'>
 
 <Note title="💡On instantiating Virtual Background Plugin">
-Always call `addPlugin()` after `onJoin()` from `hmsSDK.join()` or `onPreview()` from `hmsSDK.preview()`
+Always call `addPlugin()` after `onJoin()` from `hmsSDK.join()` or `onPreview()` from `hmsSDK.preview()`.  
+The loading takes a while and if this is unacceptable, you can call addPlugin before join but no `onSuccess` or `onError` callbacks will be fired until after join succeds so don't wait for them.
 </Note>
 
 ```kotlin
