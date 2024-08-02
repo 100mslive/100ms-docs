@@ -1,0 +1,34 @@
+---
+title: Proxy
+nav: 4.91
+---
+
+You may want to connect to the video conferencing room via a proxy, or your own ICE servers. These can be provideed in the [HMSConfig] object that is passed to `join` and `preview`.
+
+The `HMSConfig` takes an parameter named `proxy` which is an istance of `HmsProxyConfig`.  
+This is the class:
+```kotlin
+data class HmsProxyConfig(
+    val type : HmsProxyType,
+    val host : String,
+    val port : Int
+)
+```
+Where `type` can be one of `SOCKS5` or `HTTP`.
+
+## Custom ICE servers.
+To provide custom ICE servers, provide the optional iceServers parameter to `HMSConfig` that will be sent into `join`.
+```kotlin
+HMSConfig(
+    // username, authtoken, metadata
+
+    iceServers = listOf(
+        HmsIceServer(listOf(
+            "turn:turn-example.com",
+            "turn:turn-example.com?transport=tcp",
+            "turns:turn-example.com:443?transport=tcp"),
+            userName = "some-username",
+            password = "your-password")
+    )
+)
+```
