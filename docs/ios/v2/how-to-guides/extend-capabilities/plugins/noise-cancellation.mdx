@@ -1,5 +1,5 @@
 ---
-title: Noise Cancellation (Beta)
+title: Noise Cancellation
 nav: 12.4
 ---
 
@@ -18,6 +18,12 @@ import HMSNoiseCancellationModels
 
 let pathForNCModel = HMSNoiseCancellationModels.path(for: .smallFullBand)
 ```
+
+
+> Note: Prebuilt also supports noise cancellation, to enable it add the import as above and ensure it's enabled from your prebuilt dashboard. From the [dashboard](https://dashboard.100ms.live/), select the template, go to "Customize Prebuilt" -> "Screens and Components" -> "Noise Cancellation State".
+> You will also need to toggle it in the [dashboard's](https://dashboard.100ms.live/)"Template" -> "Advanced Settings" -> "Noise Cancellation"
+
+
 
 <Tabs
   id="sample-code"
@@ -110,8 +116,7 @@ let isnoiseCancellationEnabled = noiseCancellationPlugin.isEnabled()
 
 ## How to check if noise cancellation is enabled in the room
 
-To make noise cancellation work your room needs to have noise cancellation feature enabled. You can check if noise cancellation is enabled using isNoiseCancellationAvailable property on noiseCancellationPlugin. To enable noise canellation in your rooms, reach out to support@100ms.live or 100ms discord.
-
+To make noise cancellation work your room needs to have noise cancellation feature enabled. You can check if noise cancellation is enabled using isNoiseCancellationAvailable property on noiseCancellationPlugin. 
 ```swift
 let isNoiseCancellationAvailableInTheRoom = noiseCancellationPlugin.isNoiseCancellationAvailable
 ```
@@ -148,8 +153,7 @@ roomModel.isNoiseCancellationEnabled
 
 ## How to check if noise cancellation is enabled in the room
 
-To make noise cancellation work your room needs to have noise cancellation feature enabled. You can check if noise cancellation is enabled using roomModel.isNoiseCancellationAvailable. To enable noise canellation in your rooms, reach out to support@100ms.live or 100ms discord.
-
+To make noise cancellation work your room needs to have noise cancellation feature enabled. You can check if noise cancellation is enabled using roomModel.isNoiseCancellationAvailable.
 ```swift
 roomModel.isNoiseCancellationAvailable
 ```
