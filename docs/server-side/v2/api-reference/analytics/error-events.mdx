@@ -1,0 +1,456 @@
+---
+title: Error Events
+nav: 3.66
+---
+
+Error events are crucial for diagnosing issues that users may encounter when joining or participating in calls. These events provide insights into specific problems faced by users and are invaluable for troubleshooting.
+
+Following are the client error events which are currently supported by this API:-
+
+- **client.publish.failed**: This error is triggered when a peer is unable to successfully publish audio or video streams.
+- **client.subscribe.failed**: This error arises when a peer fails to subscribe to the audio or video streams of other participants.
+- **client.join.failed**: This error occurs when a peer is unable to join a room.
+- **client.disconnected**: This event indicates that a peer is disconnected from a room - either temporarily or permanently due to a network issue.
+- **client.connect.failed**: This error occurs when a peer fails to connect to our service.
+
+<GetRequest title="https://api.100ms.live/v2/analytics/events" />
+<Request id="req-0">
+
+```bash
+curl --location --request GET \
+    'https://api.100ms.live/v2/analytics/events?type=client.publish.failed&room_id=<room_id>' \
+    --header 'Authorization: Bearer <management_token>'
+```
+
+</Request>
+
+
+## Allowed Filters
+
+Refer [Overview](/server-side/v2/api-reference/analytics/overview#allowed-filters) for all the allowed filters.
+
+## Error Event Objects
+
+### client.publish.failed
+
+| Attribute         | Type      | Description                                                                                                        |
+| ----------------- | --------- | ------------------------------------------------------------------------------------------------------------------ |
+| user_id           | `string`  | The unique identifier for the user within your system.                                                                                      |
+| user_name         | `string`  | The name of the user.                                                                                              |
+| peer_id           | `string`  | The unique identifier for the peer or participant.                                                                |
+| account_id        | `string`  | The unique identifier associated with your 100ms account.                                                         |
+| room_id           | `string`  | The unique identifier of the room (e.g., `5f9edc6bd238215aec7700df`).                                               |
+| session_id        | `string`  | The unique identifier for the session (e.g., `5f9edc6bd238215aec7700df`). Note that the session ID may not always be present in the response. |
+| room_name         | `string`  | The name assigned to the room during its creation.                                                                 |
+| template_id       | `string`  | The unique identifier of the template associated with the room.                                                    |
+| role              | `string`  | The role assigned to the peer.                                                                                     |
+| error_code        | `int`     | The error code as defined by 100ms (refer to the example in the sample response below).                            |
+| error_name        | `string`  | The name of the error.                                                                                             |
+| error_message     | `string`  | A brief description of the error encountered.                                                                      |
+| error_description | `string`  | Detailed information about the error.                                                                              |
+| domain            | `string`  | Identifies the origin of the event, whether it was from a 100ms sample app or a custom application.                |
+| is_terminal       | `bool`    | Indicates whether the error was terminal. A `false` value implies that the 100ms SDK attempted retries, and this error event was not the final error. A `true` value means no further retries were made, and this error is considered final. |
+| action            | `string`  | Specifies the action during which the error occurred (e.g., `PUBLISH` for client.publish.failed).                  |
+| audio             | `object`  | Contains information about the audio configuration (see sample response below).                                    |
+| video             | `object`  | Contains information about the video configuration (see sample response below).                                    |
+| devices           | `object`  | Contains information about the user's devices (see sample response below).                                         |
+| agent             | `object`  | Contains user agent information.                                                                                   |
+
+<br />
+<ResponseBox id="res-0" status="200 OK">
+
+```json
+{
+  "limit": 2,
+  "total": 3,
+  "next": "8188be60-c167-4bd0-b185-8b81a05b2c76:XwAcfeI:0~x7HTVrLsQRN0ugJh_AxiC4dxVzxR-0vGNYb9igkdWk06u7UkM81EflINgHiZFPlWYRFaXkn3yPpHvvwimDdZLA==",
+  "events": [
+    {
+      "version": "2.0",
+      "id": "00bbcf98-c52d-4346-8433-bf96371a7986",
+      "timestamp": "2024-07-17T11:05:59.736511342Z",
+      "type": "client.publish.failed",
+      "data": {
+        "user_id": "fd67bd8c-9925-4b83-8ade-e17f291b08ee",
+        "user_name": "User 1",
+        "peer_id": "27021c12-8635-4c13-b819-b3ecb736769a",
+        "account_id": "51acb398a53602f378eaada1",
+        "room_id": "92c2cb6676f8697398a6f694",
+        "session_id": "5697a3eccbf384c702b76815",
+        "room_name": "8584bd04-a259-4278-ac2d-73b055ee7447",
+        "template_id": "62d2cb66088b0e92876a9149",
+        "role": "host",
+        "domain": "HMS",
+        "is_terminal": false,
+        "action": "PUBLISH",
+        "error_code": 4006,
+        "error_description": "local candidate - candidate:1267094175 1 udp 41886207 35.207.224.32 52563 typ relay raddr 91.73.195.6 rport 53039 generation 0 ufrag IC9l network-id 1 network-cost 10; remote candidate - candidate:2560537185 1 udp 2130706431 redacted-ip.invalid 26058 typ prflx generation 0 ufrag QuAbLBRCmuICEpDc",
+        "error_message": "[PUBLISH]: Ice connection state DISCONNECTED",
+        "error_name": "ICEDisconnected",
+        "audio": {
+          "maxBitrate": 0,
+          "deviceId": "",
+          "volume": 0,
+          "codec": ""
+        },
+        "devices": {
+          "videoInput": [],
+          "audioInput": [],
+          "audioOutput": []
+        },
+        "video": {
+          "deviceId": "",
+          "maxFramerate": 0,
+          "maxBitrate": 0,
+          "codec": "",
+          "height": 0,
+          "width": 0
+        },
+        "agent": {
+          "sdk": "web",
+          "device_model": "Chrome_125.0.0.0",
+          "os_version": "10.15.7",
+          "is_prebuilt": true,
+          "framework_version": "18.2.0",
+          "os": "web_Mac_OS",
+          "framework_sdk_version": "0.10.15",
+          "string": "os:web_Mac_OS,os_version:10.15.7,sdk:web,sdk_version:0.12.15,device_model:Chrome_125.0.0.0,env:prod,domain:HMS,is_prebuilt:true,framework:react-web,framework_version:18.2.0,framework_sdk_version:0.10.15",
+          "framework": "react-web",
+          "domain": "HMS",
+          "sdk_version": "0.12.15"
+        }
+      }
+    },
+    {
+      "version": "2.0",
+      "id": "0c8f81c2-801d-4579-9767-98ac9934d4d4",
+      "timestamp": "2024-07-17T11:05:59.841952201Z",
+      "type": "client.subscribe.failed",
+      "data": {
+        "user_id": "fd67bd8c-9925-4b83-8ade-e17f291b08ee",
+        "user_name": "User 2",
+        "peer_id": "27021c12-8635-4c13-b819-b3ecb736769a",
+        "account_id": "51acb398a53602f378eaada1",
+        "room_id": "92c2cb6676f8697398a6f694",
+        "session_id": "6697a3eccbf388b702b76815",
+        "room_name": "8584bd04-a259-4278-ac2d-73b055ee7447",
+        "template_id": "62c2cb66048b0e92876a9148",
+        "role": "host",
+        "error_code": 4006,
+        "error_description": "local candidate - candidate:1568058436 1 udp 1686052607 91.73.195.6 55107 typ srflx raddr 10.140.12.51 rport 55107 generation 0 ufrag 5DOb network-id 1 network-cost 10; remote candidate - candidate:3724683490 1 udp 1694498815 35.207.211.107 35939 typ srflx raddr 0.0.0.0 rport 35939 generation 0 ufrag nZynmpgObuRNyUXX",
+        "error_message": "[SUBSCRIBE]: Ice connection state DISCONNECTED",
+        "error_name": "ICEDisconnected",
+        "is_terminal": false,
+        "action": "SUBSCRIBE",
+        "agent": {
+          "sdk": "web",
+          "device_model": "Chrome_125.0.0.0",
+          "os_version": "10.15.7",
+          "is_prebuilt": true,
+          "framework_version": "18.2.0",
+          "os": "web_Mac_OS",
+          "framework_sdk_version": "0.10.15",
+          "string": "os:web_Mac_OS,os_version:10.15.7,sdk:web,sdk_version:0.12.15,device_model:Chrome_125.0.0.0,env:prod,domain:HMS,is_prebuilt:true,framework:react-web,framework_version:18.2.0,framework_sdk_version:0.10.15",
+          "framework": "react-web",
+          "domain": "HMS",
+          "sdk_version": "0.12.15"
+        }
+      }
+    }
+  ]
+}
+```
+</ResponseBox>
+
+### client.subscribe.failed
+
+| Attribute      | Type  | Description                                                                                                   |
+|--------------------|-----------|-------------------------------------------------------------------------------------------------------------------|
+| user_id          | `string`  | Internal identifier for the user.                                                                                 |
+| user_name        | `string`  | The name of the user.                                                                                             |
+| peer_id          | `string`  | Unique identifier for the peer or participant.                                                                    |
+| account_id       | `string`  | Unique identifier for your 100ms account.                                                                         |
+| room_id          | `string`  | Unique identifier for the room (e.g., `5f9edc6bd238215aec7700df`).                                                |
+| session_id       | `string`  | Unique identifier for the session (e.g., `5f9edc6bd238215aec7700df`). The session ID may or may not be present in the response. |
+| room_name        | `string`  | Name of the room provided during its creation.                                                                    |
+| template_id      | `string`  | Unique identifier for the template associated with the room.                                                      |
+| role             | `string`  | The role of the peer within the room.                                                                             |
+| error_code       | `int`     | Error code defined by 100ms (refer to the sample response for an example).                                        |
+| error_name       | `string`  | The name of the error.                                                                                            |
+| error_message    | `string`  | The message describing the error.                                                                                 |
+| error_description| `string`  | Detailed information about the error.                                                                             |
+| is_terminal      | `bool`    | Indicates whether this error is terminal: `false` if the 100ms SDK retried and this error event is not the final error, suggesting that the action might have succeeded in subsequent retries; `true` if no further retries were made, making this the final error. |
+| action           | `string`  | The action during which the error occurred (e.g., SUBSCRIBE in the case of `client.subscribe.failed`).            |
+| agent            | `object`  | Information about the user agent.                                                                                 |
+<br />
+<ResponseBox id="res-0" status="200 OK">
+
+```json
+{
+  "limit": 1,
+  "total": 1,
+  "next": "",
+  "events": [
+    {
+      "version": "2.0",
+      "id": "0c8f81c2-801d-4579-9767-98ac9934d4d4",
+      "timestamp": "2024-07-17T11:05:59.841952201Z",
+      "type": "client.subscribe.failed",
+      "data": {
+        "user_id": "fd67bd8c-9925-4b83-8ade-e17f291b08ee",
+        "user_name": "User 1",
+        "peer_id": "27021c12-8635-4c13-b819-b3ecb736769a",
+        "account_id": "51acb398a53602f378eaada1",
+        "room_id": "92c2cb6676f8697398a6f694",
+        "session_id": "6697a3eccbf384b702b76415",
+        "room_name": "8584bd04-a259-4278-ac2d-73b055ee7447",
+        "template_id": "62c2cb66048b0e92876a9148",
+        "role": "host",
+        "error_code": 4006,
+        "error_description": "local candidate - candidate:1568058436 1 udp 1686052607 91.73.195.6 55107 typ srflx raddr 10.140.12.51 rport 55107 generation 0 ufrag 5DOb network-id 1 network-cost 10; remote candidate - candidate:3724683490 1 udp 1694498815 35.207.211.107 35939 typ srflx raddr 0.0.0.0 rport 35939 generation 0 ufrag nZynmpgObuRNyUXX",
+        "error_message": "[SUBSCRIBE]: Ice connection state DISCONNECTED",
+        "error_name": "ICEDisconnected",
+        "is_terminal": false,
+        "action": "SUBSCRIBE",
+        "agent": {
+          "sdk": "web",
+          "device_model": "Chrome_125.0.0.0",
+          "os_version": "10.15.7",
+          "is_prebuilt": true,
+          "framework_version": "18.2.0",
+          "os": "web_Mac_OS",
+          "framework_sdk_version": "0.10.15",
+          "string": "os:web_Mac_OS,os_version:10.15.7,sdk:web,sdk_version:0.12.15,device_model:Chrome_125.0.0.0,env:prod,domain:HMS,is_prebuilt:true,framework:react-web,framework_version:18.2.0,framework_sdk_version:0.10.15",
+          "framework": "react-web",
+          "domain": "HMS",
+          "sdk_version": "0.12.15"
+        }
+      }
+    }
+  ]
+}
+```
+</ResponseBox>
+
+### client.join.failed
+
+| Attribute      | Type  | Description                                                                                                   |
+|--------------------|-----------|-------------------------------------------------------------------------------------------------------------------|
+| user_id          | `string`  | Internal identifier for the user.                                                                                 |
+| user_name        | `string`  | The name of the user.                                                                                             |
+| peer_id          | `string`  | Unique identifier for the peer or participant.                                                                    |
+| account_id       | `string`  | Unique identifier for your 100ms account.                                                                         |
+| room_id          | `string`  | Unique identifier for the room (e.g., `5f9edc6bd238215aec7700df`).                                                |
+| session_id       | `string`  | Unique identifier for the session (e.g., `5f9edc6bd238215aec7700df`). The session ID may or may not be present in the response. |
+| room_name        | `string`  | Name of the room provided during its creation.                                                                    |
+| template_id      | `string`  | Unique identifier for the template associated with the room.                                                      |
+| role             | `string`  | The role of the peer within the room.                                                                             |
+| error_code       | `int`     | Error code defined by 100ms (refer to the sample response for an example).                                        |
+| error_name       | `string`  | The name of the error.                                                                                            |
+| error_message    | `string`  | Message providing details about the error.                                                                        |
+| error_description| `string`  | Detailed description of the error.                                                                                |
+| is_terminal      | `bool`    | Indicates whether this error is terminal: `false` if the 100ms SDK retried and this error event is not the final error, suggesting that the action might have succeeded in subsequent retries; `true` if no further retries were made, making this the final error. |
+| domain           | `string`  | Indicates whether the event originated from a 100ms sample app or a custom app.                                   |
+| action           | `string`  | The action during which the error occurred (e.g., JOIN in the case of `client.join.failed`).                      |
+| agent            | `object`  | Information about the user agent.                                                                                 |
+
+<br />
+<ResponseBox id="res-0" status="200 OK">
+
+```json
+{
+  "limit": 1,
+  "total": 2,
+  "next": "2da31f7e-3c21-4a0f-bdb3-6dd42f571ac5:SXsy87s:0~Cxn9G9I9AhU-Jl6RiYr-_XEmSYnnk-QL8CN5zeSsUognMk7lzk0yhtg-fKOvcQMjnNsqUbYnBoREUfXKQbtbqPvNCa_iwM9lr5jhmCepLzY=",
+  "events": [
+    {
+      "version": "2.0",
+      "id": "55f109ae-8374-437e-86a9-695456a4836d",
+      "timestamp": "2024-08-02T04:20:40.530450442Z",
+      "type": "client.join.failed",
+      "data": {
+        "user_id": "84067887-d4a2-48d3-892a-2e16929f03d4",
+        "user_name": "g2",
+        "peer_id": "58ddb219-e3de-41f6-9511-a0bdf06823ef",
+        "account_id": "61a4b18df0fd8f05f19aef53",
+        "room_id": "65af97002889d74ef8d1e18f",
+        "session_id": "66ac5e989b41849dde50f549",
+        "room_name": "fa6f9811-ab92-4faa-b343-d6d078575cfd",
+        "template_id": "649299b38fa2aaa45e69b777",
+        "role": "host",
+        "error_message": "sfu join failed",
+        "error_code": 500,
+        "error_description": "sfu join failed",
+        "error_name": "ServerErrors",
+        "action": "JOIN",
+        "is_terminal": false,
+        "domain": "HMS",
+        "retries_join": 0,
+        "agent": {
+          "sdk": "web",
+          "device_model": "Chrome_126.0.0.0",
+          "os_version": "10.15.7",
+          "is_prebuilt": true,
+          "framework_version": "18.2.0",
+          "os": "web_Mac_OS",
+          "framework_sdk_version": "0.10.17-alpha.6",
+          "string": "os:web_Mac_OS,os_version:10.15.7,sdk:web,sdk_version:0.12.17-alpha.6,device_model:Chrome_126.0.0.0,env:debug,domain:HMS,is_prebuilt:true,framework:react-web,framework_version:18.2.0,framework_sdk_version:0.10.17-alpha.6",
+          "framework": "react-web",
+          "domain": "HMS",
+          "sdk_version": "0.12.17-alpha.6"
+        }
+      }
+    }
+  ]
+}
+```
+</ResponseBox>
+
+### client.disconnected
+
+| Attribute       | Type  | Description                                                                                                   |
+|---------------------|-----------|-------------------------------------------------------------------------------------------------------------------|
+| user_id           | `string`  | Internal identifier for the user.                                                                                 |
+| user_name         | `string`  | Name of the user.                                                                                                 |
+| peer_id           | `string`  | Unique identifier for the peer or participant.                                                                    |
+| account_id        | `string`  | Unique identifier for your 100ms account.                                                                         |
+| room_id           | `string`  | Unique identifier for the room (e.g., `5f9edc6bd238215aec7700df`).                                                |
+| session_id        | `string`  | Unique identifier for the session (e.g., `5f9edc6bd238215aec7700df`). The session ID may or may not be present in the response. |
+| room_name         | `string`  | Name of the room provided during its creation.                                                                    |
+| template_id       | `string`  | Unique identifier for the template associated with the room.                                                      |
+| role              | `string`  | Role of the peer within the room.                                                                                 |
+| error_code        | `int`     | Error code as defined by 100ms (refer to the sample response for an example).                                      |
+| error_name        | `string`  | Name of the error.                                                                                                |
+| error_message     | `string`  | Message detailing the error.                                                                                      |
+| error_description | `string`  | Detailed description of the error.                                                                                |
+| is_terminal       | `bool`    | Indicates whether this error is terminal: `false` means the 100ms SDK retried, and this error event is not final, suggesting that the action might have succeeded in subsequent retries; `true` means no further retries were made, making this the final error. |
+| action            | `string`  | The action during which the error occurred (e.g., RECONNECT_SIGNAL in the case of `client.disconnected`).               |
+| agent             | `object`  | Information about the user agent.                                                                                 |
+
+<br />
+<ResponseBox id="res-0" status="200 OK">
+
+```json
+{
+  "limit": 1,
+  "total": 3,
+  "next": "f336b3a1-bbe9-4257-9c3c-1c2c1901d20c:YEDOgVr:0~Cxn9G9I9AhU-Jl6RiYr-_XEmSYnnk-QLaATlXi0vy7OLhvS5cUMgjYSsXc5G4amqz925Lt-ABTT0h5Bbqt-UDrR4E24OYcbyr5jhmCepLzY=",
+  "events": [
+    {
+      "version": "2.0",
+      "id": "fde7710d-75fd-48f3-8450-d2ddca12ccaf",
+      "timestamp": "2024-04-18T08:00:02.044848646Z",
+      "type": "client.disconnected",
+      "data": {
+        "user_id": "6433e0b1-ff1f-4e43-b29e-15949a044c17",
+        "user_name": "admin",
+        "peer_id": "f706256e-6fda-4543-96c4-3b48f03d1a92",
+        "account_id": "61a4b18df0fd8f05f19aef53",
+        "room_id": "65af97002889d74ef8d1e18f",
+        "room_name": "fa6f9811-ab92-4faa-b343-d6d078575cfd",
+        "template_id": "649299b38fa2aaa45e69b777",
+        "role": "host",
+        "transport_state": "Preview",
+        "error_message": "Network connection lost ",
+        "error_code": 1003,
+        "error_description": "ping pong failure",
+        "error_name": "WebSocketConnectionLost",
+        "action": "RECONNECT_SIGNAL",
+        "is_terminal": false,
+        "agent": {
+          "sdk": "web",
+          "device_model": "Chrome_123.0.0.0",
+          "os_version": "10.15.7",
+          "is_prebuilt": true,
+          "framework_version": "18.2.0",
+          "os": "web_Mac_OS",
+          "framework_sdk_version": "0.10.5-alpha.0",
+          "string": "os:web_Mac_OS,os_version:10.15.7,sdk:web,sdk_version:0.12.5-alpha.0,device_model:Chrome_123.0.0.0,env:debug,domain:CUSTOM,is_prebuilt:true,framework:react-web,framework_version:18.2.0,framework_sdk_version:0.10.5-alpha.0",
+          "framework": "react-web",
+          "domain": "CUSTOM",
+          "sdk_version": "0.12.5-alpha.0"
+        }
+      }
+    }
+  ]
+}
+```
+</ResponseBox>
+
+### client.connect.failed
+
+| Attribute       | Type  | Description                                                                                                   |
+|---------------------|-----------|-------------------------------------------------------------------------------------------------------------------|
+| user_id           | `string`  | Internal identifier for the user.                                                                                 |
+| user_name         | `string`  | Name of the user.                                                                                                 |
+| peer_id           | `string`  | Unique identifier for the peer or participant.                                                                    |
+| account_id        | `string`  | Unique identifier for your 100ms account.                                                                         |
+| room_id           | `string`  | Unique identifier for the room (e.g., `5f9edc6bd238215aec7700df`).                                                |
+| session_id        | `string`  | Unique identifier for the session (e.g., `5f9edc6bd238215aec7700df`). The session ID may or may not be present in the response. |
+| room_name         | `string`  | Name of the room provided during its creation.                                                                    |
+| template_id       | `string`  | Unique identifier for the template associated with the room.                                                      |
+| role              | `string`  | Role of the peer within the room.                                                                                 |
+| error_code        | `int`     | Error code as defined by 100ms (refer to the sample response for an example).                                      |
+| error_name        | `string`  | Name of the error.                                                                                                |
+| error_message     | `string`  | Message detailing the error.                                                                                      |
+| error_description | `string`  | Detailed description of the error.                                                                                |
+| is_terminal       | `bool`    | Indicates whether this error is terminal: `false` means the 100ms SDK retried, and this error event is not final, suggesting that the action might have succeeded in subsequent retries; `true` means no further retries were made, making this the final error. |
+| action            | `string`  | The action during which the error occurred (e.g., INIT in the case of `client.connect.failed`).                |
+| agent             | `object`  | Information about the user agent.                                                                                 |
+<br />
+<ResponseBox id="res-0" status="200 OK">
+
+```json
+{
+  "limit": 1,
+  "total": 10,
+  "next": "2f43b281-1d0b-4157-85f6-d05216d1301a:Jo0OBSY:0~Cxn9G9I9AhU-Jl6RiYr-_XEmSYnnk-QL_ozSXoDWOFQJP10f14MVPK6_dIi94hDGgiF5XMBckmug1hpeKCjD-Un6E822DxvYr5jhmCepLzY=",
+  "events": [
+    {
+      "version": "2.0",
+      "id": "d043b29f-39e0-46b8-9c1e-4f38cbf3195d",
+      "timestamp": "2024-07-04T12:36:48.073652876Z",
+      "type": "client.connect.failed",
+      "data": {
+        "user_id": "832fb7d6-c5a4-43b1-8f1d-354a26ad9fa3",
+        "user_name": "shubham",
+        "peer_id": "b3f3c6bc-d942-4446-96dd-b7e141189e7a",
+        "account_id": "61a4b18df0fd8f05f19aef53",
+        "room_id": "65af97002889d74ef8d1e18f",
+        "error_message": "Endpoint is not reachable - Failed to fetch",
+        "endpoint": "",
+        "transport_state": "Connecting",
+        "action": "INIT",
+        "error_name": "EndpointUnreachable",
+        "error_code": 2003,
+        "error_description": "Failed to fetch",
+        "is_terminal": false,
+        "agent": {
+          "sdk": "web",
+          "device_model": "Chrome_125.0.0.0",
+          "os_version": "10.15.7",
+          "is_prebuilt": true,
+          "framework_version": "18.2.0",
+          "os": "web_Mac_OS",
+          "framework_sdk_version": "0.10.15-alpha.3",
+          "string": "os:web_Mac_OS,os_version:10.15.7,sdk:web,sdk_version:0.12.15-alpha.3,device_model:Chrome_125.0.0.0,env:debug,domain:HMS,is_prebuilt:true,framework:react-web,framework_version:18.2.0,framework_sdk_version:0.10.15-alpha.3",
+          "framework": "react-web",
+          "domain": "HMS",
+          "sdk_version": "0.12.15-alpha.3"
+        }
+      }
+    }
+  ]
+}
+```
+</ResponseBox>
+
+
+
+## Postman collection
+
+You can use our Postman collection to start exploring 100ms APIs.
+
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://god.gw.postman.com/run-collection/22726679-47dcd974-29d5-4965-a35b-bf9b74a8b25a?action=collection%2Ffork&collection-url=entityId%3D22726679-47dcd974-29d5-4965-a35b-bf9b74a8b25a%26entityType%3Dcollection%26workspaceId%3Dd9145dd6-337b-4761-81d6-21a30b4147a2)
+
+Refer to the [Postman guide](/server-side/v2/introduction/postman-guide) to get started with 100ms API collection.
