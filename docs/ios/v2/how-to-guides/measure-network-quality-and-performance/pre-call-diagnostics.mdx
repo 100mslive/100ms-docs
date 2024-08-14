@@ -1,19 +1,19 @@
 ---
-title: Pre Call Diagnostics
+title: Pre-Call Diagnostics
 nav: 11.4
 ---
 
-## Pre Call Diagnostic APIs
+## Pre-Call Diagnostic APIs
 
-The Pre Call Diagnostic APIs provide two type of functionalities :
+The Pre-Call Diagnostic APIs provide two type of functionalities :
 1. APIs to test the connected I/O devices like camera, mic and speaker functionality
 2. APIs to test the connectivity to 100ms Servers - This can identify signaling and media connectivity issues and provide a report at the end of the test.
 
 You can use these APIs in your application to detect issues before a Participant joins a video Room or as part of a troubleshooting page while already joined in the room or at a later stage to debug some issues at the end user's device/network
 
-## How to use the Pre Call Diagnostic APIs
+## How to use the Pre-Call Diagnostic APIs
 
-To use the diagnostic apis first you need to get an instance of `HMSDiagnostics` from the `HMSSDK` instance.
+To use the diagnostic APIs first you need to get an instance of `HMSDiagnostics` from the `HMSSDK` instance.
 ```swift
             // get the HMSSDK instance
             var hmsSDK = HMSSDK.build()
@@ -22,9 +22,9 @@ To use the diagnostic apis first you need to get an instance of `HMSDiagnostics`
 ```
 If you are planning to use the connectivity checks while you have already joined a room, create a new instance of `HMSSDK` to get the `HMSDiagnostics` instance
 
-## Test microphone
+## Test Microphone
 
-To test if the microphone is correctly working, call the `startMicCheck` API passing preffered check duration as `timeInMillis` parameter. Diagnostics SDK will record the microphone input into a temporary file.
+To test if the microphone is correctly working, call the `startMicCheck` API passing the preferred check duration as `timeInMillis` parameter. Diagnostics SDK will record the microphone input into a temporary file.
 `completion` callback will be called with the result of the check or error if any.
 `onLevelChange` is called every second with the decibel level detected by the microphone. This can be used on the UI to show an indication that mic is recording user's audio
 
@@ -46,7 +46,7 @@ Ensure app has NSMicrophoneUsageDescription set before running this check.
 
 You can call `stopMicCheck` if you need to interrupt the check before the specified time has passed.
 
-## Test speaker
+## Test Speaker
 To test the device speaker phone, call the `startSpeakerCheck` API. This will playback the file that was recorded while testing mic.
 If there is no recorded file present in the cache, either due to microphone issues or `startMicCheck` not being called, the speaker test API will play a pre-recorded file
 
