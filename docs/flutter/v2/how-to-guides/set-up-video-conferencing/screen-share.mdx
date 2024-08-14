@@ -417,7 +417,7 @@ Also, ensure that there's no typo / spelling mis-matches between the App Group e
 
 If the 100ms values for App Group which is "group.flutterhms" & Preferred Extension which is "FlutterBroadcastUploadExtension" are resued by your apps then you will have an Xcode exception containing `Permission Denied` EXC_BAD_ACCESS error message similar to the one shown below -
 
-```
+```bash
 CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0xbc03, name = 'group.flutterhms.88C5E70E-F40F-4C36-A48C-E65736E85CAC.audio.mach.port'
 See /usr/include/servers/bootstrap_defs.h for the error codes.
 * thread #1, queue = 'com.apple.main-thread', stop reason = EXC_BAD_ACCESS (code=1, address=0x8)
@@ -426,6 +426,13 @@ See /usr/include/servers/bootstrap_defs.h for the error codes.
 ```
 
 To resolve this issue ensure that you create a Unique App Group which is linked to your Apple Developer Account. If you do not have an Active Apple Developer Account or do not have permissions to create a New App Group, then you won't be able to this feature.
+
+### Same Minimum iOS Deployment Version on Extension Target and Main App
+
+Ensure that the Minimum iOS Deployment Target Version is set to `13.0` or above in your Xcode project & the Podfile.
+Ensure that both Targets - Main app & the Screenshare Extension have the same Minimum iOS Deployment version.
+
+![Incorrect Min Deployment Target](/docs/v2/ScreenshareMinIOSTarget.png)
 
 ### Show only my app name when starting iOS Screenshare
 

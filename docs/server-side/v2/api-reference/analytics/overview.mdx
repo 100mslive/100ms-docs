@@ -5,15 +5,57 @@ nav: 3.61
 
 ## Analytics APIs
 
-Analytics APIs can be utilized to retrieve events via an HTTP request. By using these APIs, you can retrieve [track events](/server-side/v2/api-reference/analytics/track-events).
+Analytics APIs can be utilized to retrieve events via an HTTP request. By using these APIs, you can retrieve the following supported events mentioned in the next section.
+
+### Supported Events
+
+-  [Track Events](/server-side/v2/api-reference/analytics/track-events)
+    - `track.add.success`
+    - `track.update.success`
+    - `track.remove.success`
+
+-  [Recording Events](/server-side/v2/api-reference/analytics/recording-events)
+    - `beam.recording.success`
+
+-  [Error Events](/server-side/v2/api-reference/analytics/error-events)
+    - `client.publish.failed`
+    - `client.subscribe.failed`
+    - `client.join.failed`
+    - `client.disconnected`
+    - `client.connect.failed`
 
 Event data can be queried up to **last 30 days**.
 
 ### What can I build?
 
 -   You can use track events to get a better understanding of user activity and build tools around it as explained in [use cases](/server-side/v2/api-reference/analytics/track-events#why-would-you-use-this-api)
+-   You can use error events to dig deeper into the issues which your users are facing.
 
-<EndpointRequest title="https://api.100ms.live/v2/analytics/events"/>
+<GetRequest title="https://api.100ms.live/v2/analytics/events" />
+<Request id="req-0">
+
+```bash
+curl --location --request GET \
+    'https://api.100ms.live/v2/analytics/events?room_id=<room_id>' \
+    --header 'Authorization: Bearer <management_token>'
+```
+
+</Request>
+
+## Allowed Filters
+To be specified as query parameters
+
+| Name       | Type     | Description                                                                                                                                                                                                                                             | Required |
+| ---------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| room_id    | `string` | Unique identifier of the room you wish to fetch events for                                                                                                                                                                                              | yes      |
+| type       | `string` | Any one or more of the [supported event names](#supported-events). <br /><br /> Can be specified multiple times to include more than one event (for example `type=track.add.success&` `type=track.update.success&` `type=client.publish.failed`). (Default: all supported events)               | no       |
+| session_id | `string` | Unique session identifier (Can be found in using [sessions APIs](/server-side/v2/api-reference/Sessions/object))                                                                                                                                        | no       |
+| peer_id    | `string` | Unique identifier of peer/participant                                                                                                                                                                                                                   | no       |
+| user_id    | `string` | Filter events based on your internal user identifier                                                                                                                                                                                                    | no       |
+| beam_id    | `string` | This is relevant only when type=`beam.recording.success`. Specify this only when you want to look at recording events.                                                                                                                                                                                                | no       |
+| error      | `bool`   | Set this to true if you want to receive only the error events. (Default: false)
+| limit      | `int`    | Determines the number of event objects to be included in response (Default:`10`, Min: `1`, Max: `100`)                                                                                                                                                  | no       |
+| start      | `string` | Specify [next](/server-side/v2/api-reference/analytics/overview#response-object) value from the last response to get next set of result.                                                                                                                | no       |
 
 ## Response Object
 
@@ -22,7 +64,7 @@ Event data can be queried up to **last 30 days**.
 | `limit`   | Number of events in current response                                                                                                                                             |
 | `total`   | Total number of events                                                                                                                                                           |
 | `next`    | Used to fetch next set of results, to be specified in the `start` query parameter in subsequent request. Next has non empty value only when there are more events to be queried. |
-| `events`  | List of events, refer individual event page for details (Eg: [Track event object](/server-side/v2/api-reference/analytics/track-events#track-event-object))                     |
+| `events`  | List of events, refer individual event page for detailed structure of each event type.                                                                                                                         |
 
 ## Pagination
 - Results are paginated with default events count `10`, extendable up to `100` by specifying it in `limit` query parameter.
