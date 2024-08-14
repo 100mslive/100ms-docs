@@ -16,9 +16,9 @@
 <li><a href="HMSSessionStore.html">HMSSessionStore</a></li></ul>
 <h1>Class HMSSessionStore</h1></div>
 <section class="tsd-panel tsd-comment">
-<div class="tsd-comment tsd-typography"><p>Session store is a shared realtime key-value store that is accessible by everyone in the room.
+<div class="tsd-comment tsd-typography"><p>Session store is a shared realtime key-value store that is accessible by all Peers in a Room.
 It can be utilized to implement features such as pinned text, spotlight (which brings a particular
-peer to the center stage for everyone in the room) and more.</p>
+peer to the center stage for everyone in the room) and more, enhancing interactive experiences.</p>
 <p>To get an instance of <code>HMSSessionStore</code> class, You can add an event listener for <code>ON_SESSION_STORE_AVAILABLE</code>
 event on the <code>HMSSDK</code> instance</p>
 <p>For example:</p>
@@ -32,7 +32,7 @@ event on the <code>HMSSDK</code> instance</p>
 <ul class="tsd-hierarchy">
 <li><span class="target">HMSSessionStore</span></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSSessionStore.ts#L34">src/classes/HMSSessionStore.ts:34</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSSessionStore.ts#L34">src/classes/HMSSessionStore.ts:34</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -63,8 +63,8 @@ event on the <code>HMSSDK</code> instance</p>
 <ul class="tsd-signatures">
 <li class="tsd-signature tsd-anchor-link" id="addKeyChangeListener.addKeyChangeListener-1"><span class="tsd-kind-call-signature">add<wbr/>Key<wbr/>Change<wbr/>Listener</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">forKeys</span>, <span class="tsd-kind-parameter">callback</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span><br/><span>    </span><span class="tsd-kind-property">remove</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span><a href="#addKeyChangeListener.addKeyChangeListener-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>This method registers a callback function for listening to value changes of a particular key.
-Registered Callback function will be called initially with latest value and whenever the value updates</p>
+<div class="tsd-comment tsd-typography"><p>Registers a callback to listen for changes to specified keys in the session store.
+The callback is called with the initial value and again whenever any value changes.</p>
 </div>
 <section class="tsd-panel">
 <h4>Type Parameters</h4>
@@ -76,9 +76,13 @@ Registered Callback function will be called initially with latest value and when
 <ul class="tsd-parameter-list">
 <li>
 <h5><span class="tsd-kind-parameter">forKeys</span>: <span class="tsd-signature-type tsd-kind-type-parameter">T</span></h5>
+<div class="tsd-comment tsd-typography"><p>An array of keys to listen for changes on.</p>
+</div>
 <div class="tsd-comment tsd-typography"></div></li>
 <li>
 <h5><span class="tsd-kind-parameter">callback</span>: <span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">error</span>, <span class="tsd-kind-parameter">data</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span></h5>
+<div class="tsd-comment tsd-typography"><p>The function to call when a value changes.</p>
+</div>
 <div class="tsd-comment tsd-typography"></div>
 <ul class="tsd-parameters">
 <li class="tsd-parameter-signature">
@@ -93,7 +97,7 @@ Registered Callback function will be called initially with latest value and when
 <li>
 <h5><span class="tsd-kind-parameter">data</span>: <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">{ </span><br/><span>    </span><span class="tsd-kind-property">key</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">value</span><span class="tsd-signature-symbol">: </span><a href="../types/JsonValue.html" class="tsd-signature-type tsd-kind-type-alias">JsonValue</a><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4></li></ul></li></ul></li></ul></div>
-<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">{ </span><br/><span>    </span><span class="tsd-kind-property">remove</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span></h4><p>subscription object</p>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">{ </span><br/><span>    </span><span class="tsd-kind-property">remove</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span></h4><p>An object with a <code>remove</code> method to unregister the listener.</p>
 
 <ul class="tsd-parameters">
 <li class="tsd-parameter">
@@ -106,15 +110,14 @@ Registered Callback function will be called initially with latest value and when
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4></li></ul></li></ul></li></ul>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSSessionStore.ts#L83">src/classes/HMSSessionStore.ts:83</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSSessionStore.ts#L82">src/classes/HMSSessionStore.ts:82</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="get" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get</span><a href="#get" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
 <li class="tsd-signature tsd-anchor-link" id="get.get-1"><span class="tsd-kind-call-signature">get</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">key</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../types/JsonValue.html" class="tsd-signature-type tsd-kind-type-alias">JsonValue</a><span class="tsd-signature-symbol">&gt;</span><a href="#get.get-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>This method returns the value of any specified key on session store.
-Note that you will not get updates for any change in value of the specified key,
-It returns the latest value at the time it was called.</p>
+<div class="tsd-comment tsd-typography"><p>Retrieves the value for a given key from the session store. This method does not subscribe
+to changes; it only returns the current value at the time of the call.</p>
 <p>To listen to value change updates use <code>addKeyChangeListener</code> method instead.</p>
 </div>
 <div class="tsd-parameters">
@@ -122,11 +125,14 @@ It returns the latest value at the time it was called.</p>
 <ul class="tsd-parameter-list">
 <li>
 <h5><span class="tsd-kind-parameter">key</span>: <span class="tsd-signature-type">string</span></h5>
+<div class="tsd-comment tsd-typography"><p>The key whose value is to be retrieved.</p>
+</div>
 <div class="tsd-comment tsd-typography"></div></li></ul></div>
-<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../types/JsonValue.html" class="tsd-signature-type tsd-kind-type-alias">JsonValue</a><span class="tsd-signature-symbol">&gt;</span></h4>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../types/JsonValue.html" class="tsd-signature-type tsd-kind-type-alias">JsonValue</a><span class="tsd-signature-symbol">&gt;</span></h4><p>A promise that resolves with the value of the key.</p>
+
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSSessionStore.ts#L67">src/classes/HMSSessionStore.ts:67</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSSessionStore.ts#L66">src/classes/HMSSessionStore.ts:66</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="set" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>set</span><a href="#set" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -141,14 +147,19 @@ who are listening for changes in value for that specific key.</p>
 <ul class="tsd-parameter-list">
 <li>
 <h5><span class="tsd-kind-parameter">value</span>: <a href="../types/JsonValue.html" class="tsd-signature-type tsd-kind-type-alias">JsonValue</a></h5>
+<div class="tsd-comment tsd-typography"><p>The value to set, which can be any JSON-compatible type.</p>
+</div>
 <div class="tsd-comment tsd-typography"></div></li>
 <li>
 <h5><span class="tsd-kind-parameter">key</span>: <span class="tsd-signature-type">string</span></h5>
+<div class="tsd-comment tsd-typography"><p>The key under which to store the value.</p>
+</div>
 <div class="tsd-comment tsd-typography"></div></li></ul></div>
-<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span><br/><span>    </span><span class="tsd-kind-property">success</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">true</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">&gt;</span></h4>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span><br/><span>    </span><span class="tsd-kind-property">success</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">true</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">&gt;</span></h4><p>A promise that resolves when the operation is complete.</p>
+
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSSessionStore.ts#L48">src/classes/HMSSessionStore.ts:48</a></li></ul></aside></li></ul></section></section></div>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSSessionStore.ts#L48">src/classes/HMSSessionStore.ts:48</a></li></ul></aside></li></ul></section></section></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
