@@ -1,18 +1,18 @@
 ---
-title: Pre Call Diagnostics
+title: Pre-call Diagnostics
 nav: 11.4
 ---
 
-## Pre Call Diagnostic APIs
+## Pre-call Diagnostic APIs
 
-The Pre Call Diagnostic APIs provide two type of functionalities :
+The Pre-call Diagnostic APIs provide two types of functionalities :
 
-1. APIs to test the connected input and output devices like camera, mic and speaker functionality
+1. APIs to test the connected input and output devices like camera, mic, and speaker functionality
 2. APIs to test the connectivity to 100ms Servers - This can identify signaling and media connectivity issues and provide a report at the end of the test.
 
 You can use these APIs in your application to detect issues before a Participant joins a video Room or as part of a troubleshooting page while already joined in the room or at a later stage to debug some issues at the end user's device/network
 
-## How to use the Pre Call Diagnostic APIs
+## How to use the Pre-call Diagnostic APIs
 
 To use the diagnostic APIs first you need to initialize an instance of `HMSDiagnostics` from the `HMSActions` instance.
 
@@ -29,16 +29,16 @@ If you want a list of devices to choose from before testing your devices you'll 
 diagnostics?.requestPermission({ audio: true, video: true }).catch((error) => setError(error));
 ```
 
-## Test microphone
+## Test Microphone
 
-To test if the microphone is correctly working, call the `startMicCheck` API passing preffered check duration as `timeInMillis` parameter. Diagnostics SDK will record the microphone input into a temporary file.
+To test if the microphone is correctly working, call the `startMicCheck` API passing the preferred check duration as the `timeInMillis` parameter. Diagnostics SDK will record the microphone input into a temporary file.
 
 You can use the `selectTrackAudioByID` selector to get the input audio level during recording
 
 ```js
 hmsDiagnostics?.startMicCheck({
     inputDevice,
-    onError:,
+    onError,
     onStop,
     time, // in ms, default 10 seconds
 });
@@ -46,9 +46,9 @@ hmsDiagnostics?.startMicCheck({
 
 You can call `stopMicCheck` if you need to interrupt the check before the specified time has passed.
 
-## Test speaker
+## Test Speaker
 
-You can check if the speaker is working correctly if you are able to properly play audio using the `HTMLAudioElement` by using the pre-recorded audio file from `startMicCheck` using the `getRecordedAudio` API or use the test audio from `https://100ms.live/test-audio.wav` if such pre-recorded audio is not available.
+You can check if the speaker is working correctly if you are able to properly play audio using the `HTMLAudioElement` by using the pre-recorded audio file from `startMicCheck` using the `getRecordedAudio` API or using the test audio from `https://100ms.live/test-audio.wav` if such pre-recorded audio is not available.
 
 ```js
 const element = new HTMLAudioElement();
@@ -63,12 +63,12 @@ element.play();
 
 You can set the audio output device ID using HMSActions like `hmsActions.setAudioOutputDevice(deviceId);`
 
-Refer to this file for a full working example to test microphone and speaker in React: https://github.com/100mslive/web-sdks/blob/main/packages/roomkit-react/src/Diagnostics/AudioTest.tsx
+Refer to this file for a full working example to test the microphone and speaker in React: https://github.com/100mslive/web-sdks/blob/main/packages/roomkit-react/src/Diagnostics/AudioTest.tsx
 
 ## Test Camera
 
-Similar to testing microphone, to check if the camera on the device is working fine, call the `startCameraCheck` API. This API creates a local video track and sets it on the local peer.
-Applications can use the `hmsStore` in conjuction with `selectLocalVideoTrackID` to fetch the video track and use `HTMLVideoElement` to show the video track to users, using the same way any other `HMSVideoTrack` is shown.
+Similar to testing the microphone, to check if the camera on the device is working fine, call the `startCameraCheck` API. This API creates a local video track and sets it on the local peer.
+Applications can use the `hmsStore` in conjunction with `selectLocalVideoTrackID` to fetch the video track and use `HTMLVideoElement` to show the video track to users, using the same way any other `HMSVideoTrack` is shown.
 This API takes the `device` as a parameter, where you can specify either the front or back camera.
 
 ```js
@@ -81,17 +81,17 @@ To stop the camera check and release all the resources, call `stopCameraCheck` A
 
 To try a different camera, you can stop and start the camera check again with a different device ID.
 
-Refer to this file for a full working example to test microphone and speaker in React: https://github.com/100mslive/web-sdks/blob/main/packages/roomkit-react/src/Diagnostics/VideoTest.tsx
+Refer to this file for a full working example to test the microphone and speaker in React: https://github.com/100mslive/web-sdks/blob/main/packages/roomkit-react/src/Diagnostics/VideoTest.tsx
 
 ## Test Connectivity to 100ms Servers
 
 To test if there is proper connectivity to 100ms signalling and media servers, you have to call the `startConnectivityCheck` API. This API establishes connections to both the signalling and media server and publishes audio and video data to determine the network quality and generates a report of the connection.
-This API uses the local device's mic and camera to send audio-video data and receives back the same data to calculate network stats for both upload and download link of user's network.
-Please note that Camera and microphone permissions are needed to be provided by the app before making a call to this API
-This test runs for `20 seconds`. It may finish earlier if connection cannot be established.
+This API uses the local device's mic and camera to send audio-video data and receives back the same data to calculate network stats for both the upload and download bandwidth of the user's network.
+Please note that Camera and microphone permissions need to be provided by the app before making a call to this API
+This test runs for `20 seconds`. It may finish earlier if the connection cannot be established.
 
 While the connectivity test is being performed, regular updates are sent by the SDK via the `progress` callback. The application can listen to these updates and notify the UI to show updates regarding the test.
-When the test is completed, `completed` callback is executed with the complete `ConnectivityCheckResult` that has details about all the reports generated.
+When the test is completed, the `completed` callback is executed with the complete `ConnectivityCheckResult` that has details about all the reports generated.
 
 ```js
 hmsDiagnostics
