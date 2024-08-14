@@ -16,13 +16,19 @@
 <li><a href="HMSUpdateListenerActions.html">HMSUpdateListenerActions</a></li></ul>
 <h1>Enumeration HMSUpdateListenerActions</h1></div>
 <section class="tsd-panel tsd-comment">
-<div class="tsd-comment tsd-typography"><p>These are the available events emitted by the <code>HMSSDK</code></p>
-<p>For more info about these events, checkout Event Listener docs
-<a href="https://www.100ms.live/docs/react-native/v2/how-to-guides/listen-to-room-updates/event-listeners">https://www.100ms.live/docs/react-native/v2/how-to-guides/listen-to-room-updates/event-listeners</a></p>
+<div class="tsd-comment tsd-typography"><p>Enum for HMSUpdateListenerActions.</p>
+<p>This enumeration defines the set of possible events that can be emitted by the HMSSDK during a Session.
+These events cover a wide range of actions, from joining a room to receiving updates about peers and tracks, and more.
+For more info about these events, checkout Event Listener docs</p>
 </div>
-<div class="tsd-comment tsd-typography"></div></section><aside class="tsd-sources">
+<div class="tsd-comment tsd-typography">
+<h4>See</h4><p><a href="https://www.100ms.live/docs/react-native/v2/how-to-guides/listen-to-room-updates/event-listeners">https://www.100ms.live/docs/react-native/v2/how-to-guides/listen-to-room-updates/event-listeners</a></p>
+
+<h4>Example</h4><pre><code class="language-typescript"><span class="hl-9">hmsInstance</span><span class="hl-1">.</span><span class="hl-0">addEventListener</span><span class="hl-1">(</span><span class="hl-9">HMSUpdateListenerActions</span><span class="hl-1">.</span><span class="hl-12">ON_JOIN</span><span class="hl-1">, ({ </span><span class="hl-9">room</span><span class="hl-1">: </span><span class="hl-9">HMSRoom</span><span class="hl-1"> }}) </span><span class="hl-3">=&gt;</span><span class="hl-1"> {</span><br/><span class="hl-1"> </span><span class="hl-9">console</span><span class="hl-1">.</span><span class="hl-0">log</span><span class="hl-1">(</span><span class="hl-2">&#39;Joined room&#39;</span><span class="hl-1">, </span><span class="hl-9">data</span><span class="hl-1">);</span><br/><span class="hl-1"> </span><span class="hl-10">// Handle the event</span><br/><span class="hl-1">});</span>
+</code><button>Copy</button></pre>
+</div></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSUpdateListenerActions.ts#L7">src/classes/HMSUpdateListenerActions.ts:7</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSUpdateListenerActions.ts#L45">src/classes/HMSUpdateListenerActions.ts:45</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -39,6 +45,7 @@
 <a href="HMSUpdateListenerActions.html#ON_MESSAGE" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>ON_<wbr/>MESSAGE</span></a>
 <a href="HMSUpdateListenerActions.html#ON_PEER_LIST_UPDATED" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>ON_<wbr/>PEER_<wbr/>LIST_<wbr/>UPDATED</span></a>
 <a href="HMSUpdateListenerActions.html#ON_PEER_UPDATE" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>ON_<wbr/>PEER_<wbr/>UPDATE</span></a>
+<a href="HMSUpdateListenerActions.html#ON_PERMISSIONS_REQUESTED" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>ON_<wbr/>PERMISSIONS_<wbr/>REQUESTED</span></a>
 <a href="HMSUpdateListenerActions.html#ON_PREVIEW" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>ON_<wbr/>PREVIEW</span></a>
 <a href="HMSUpdateListenerActions.html#ON_REMOTE_AUDIO_STATS" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>ON_<wbr/>REMOTE_<wbr/>AUDIO_<wbr/>STATS</span></a>
 <a href="HMSUpdateListenerActions.html#ON_REMOTE_VIDEO_STATS" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>ON_<wbr/>REMOTE_<wbr/>VIDEO_<wbr/>STATS</span></a>
@@ -58,119 +65,196 @@
 <h2>Enumeration Members</h2>
 <section class="tsd-panel tsd-member"><a id="ON_AUDIO_DEVICE_CHANGED" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>ON_<wbr/>AUDIO_<wbr/>DEVICE_<wbr/>CHANGED</span><a href="#ON_AUDIO_DEVICE_CHANGED" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><g stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" id="icon-anchor"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5"></path><path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5"></path></g></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-enum-member">ON_<wbr/>AUDIO_<wbr/>DEVICE_<wbr/>CHANGED</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;ON_AUDIO_DEVICE_CHANGED&quot;</span></div><aside class="tsd-sources">
+<div class="tsd-signature"><span class="tsd-kind-enum-member">ON_<wbr/>AUDIO_<wbr/>DEVICE_<wbr/>CHANGED</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;ON_AUDIO_DEVICE_CHANGED&quot;</span></div>
+<div class="tsd-comment tsd-typography"><p>Emitted when the audio device has changed.</p>
+</div>
+<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSUpdateListenerActions.ts#L26">src/classes/HMSUpdateListenerActions.ts:26</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSUpdateListenerActions.ts#L291">src/classes/HMSUpdateListenerActions.ts:291</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member"><a id="ON_CHANGE_TRACK_STATE_REQUEST" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>ON_<wbr/>CHANGE_<wbr/>TRACK_<wbr/>STATE_<wbr/>REQUEST</span><a href="#ON_CHANGE_TRACK_STATE_REQUEST" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-enum-member">ON_<wbr/>CHANGE_<wbr/>TRACK_<wbr/>STATE_<wbr/>REQUEST</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;ON_CHANGE_TRACK_STATE_REQUEST&quot;</span></div><aside class="tsd-sources">
+<div class="tsd-signature"><span class="tsd-kind-enum-member">ON_<wbr/>CHANGE_<wbr/>TRACK_<wbr/>STATE_<wbr/>REQUEST</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;ON_CHANGE_TRACK_STATE_REQUEST&quot;</span></div>
+<div class="tsd-comment tsd-typography"><p>Emitted when there is a request to change the state of a track.</p>
+</div>
+<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSUpdateListenerActions.ts#L19">src/classes/HMSUpdateListenerActions.ts:19</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSUpdateListenerActions.ts#L204">src/classes/HMSUpdateListenerActions.ts:204</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member"><a id="ON_ERROR" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>ON_<wbr/>ERROR</span><a href="#ON_ERROR" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-enum-member">ON_<wbr/>ERROR</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;ON_ERROR&quot;</span></div><aside class="tsd-sources">
+<div class="tsd-signature"><span class="tsd-kind-enum-member">ON_<wbr/>ERROR</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;ON_ERROR&quot;</span></div>
+<div class="tsd-comment tsd-typography"><p>Emitted when an error occurs.</p>
+</div>
+<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSUpdateListenerActions.ts#L13">src/classes/HMSUpdateListenerActions.ts:13</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSUpdateListenerActions.ts#L130">src/classes/HMSUpdateListenerActions.ts:130</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member"><a id="ON_JOIN" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>ON_<wbr/>JOIN</span><a href="#ON_JOIN" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-enum-member">ON_<wbr/>JOIN</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;ON_JOIN&quot;</span></div><aside class="tsd-sources">
+<div class="tsd-signature"><span class="tsd-kind-enum-member">ON_<wbr/>JOIN</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;ON_JOIN&quot;</span></div>
+<div class="tsd-comment tsd-typography"><p>Emitted when the local user joins the room.</p>
+</div>
+<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSUpdateListenerActions.ts#L9">src/classes/HMSUpdateListenerActions.ts:9</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSUpdateListenerActions.ts#L69">src/classes/HMSUpdateListenerActions.ts:69</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member"><a id="ON_LOCAL_AUDIO_STATS" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>ON_<wbr/>LOCAL_<wbr/>AUDIO_<wbr/>STATS</span><a href="#ON_LOCAL_AUDIO_STATS" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-enum-member">ON_<wbr/>LOCAL_<wbr/>AUDIO_<wbr/>STATS</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;ON_LOCAL_AUDIO_STATS&quot;</span></div><aside class="tsd-sources">
+<div class="tsd-signature"><span class="tsd-kind-enum-member">ON_<wbr/>LOCAL_<wbr/>AUDIO_<wbr/>STATS</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;ON_LOCAL_AUDIO_STATS&quot;</span></div>
+<div class="tsd-comment tsd-typography"><p>Emitted when stats for the local audio track are available.</p>
+</div>
+<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSUpdateListenerActions.ts#L22">src/classes/HMSUpdateListenerActions.ts:22</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSUpdateListenerActions.ts#L241">src/classes/HMSUpdateListenerActions.ts:241</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member"><a id="ON_LOCAL_VIDEO_STATS" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>ON_<wbr/>LOCAL_<wbr/>VIDEO_<wbr/>STATS</span><a href="#ON_LOCAL_VIDEO_STATS" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-enum-member">ON_<wbr/>LOCAL_<wbr/>VIDEO_<wbr/>STATS</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;ON_LOCAL_VIDEO_STATS&quot;</span></div><aside class="tsd-sources">
+<div class="tsd-signature"><span class="tsd-kind-enum-member">ON_<wbr/>LOCAL_<wbr/>VIDEO_<wbr/>STATS</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;ON_LOCAL_VIDEO_STATS&quot;</span></div>
+<div class="tsd-comment tsd-typography"><p>Emitted when stats for the local video track are available.</p>
+</div>
+<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSUpdateListenerActions.ts#L23">src/classes/HMSUpdateListenerActions.ts:23</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSUpdateListenerActions.ts#L254">src/classes/HMSUpdateListenerActions.ts:254</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member"><a id="ON_MESSAGE" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>ON_<wbr/>MESSAGE</span><a href="#ON_MESSAGE" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-enum-member">ON_<wbr/>MESSAGE</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;ON_MESSAGE&quot;</span></div><aside class="tsd-sources">
+<div class="tsd-signature"><span class="tsd-kind-enum-member">ON_<wbr/>MESSAGE</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;ON_MESSAGE&quot;</span></div>
+<div class="tsd-comment tsd-typography"><p>Emitted when a message is received.</p>
+</div>
+<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSUpdateListenerActions.ts#L14">src/classes/HMSUpdateListenerActions.ts:14</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSUpdateListenerActions.ts#L143">src/classes/HMSUpdateListenerActions.ts:143</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member"><a id="ON_PEER_LIST_UPDATED" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>ON_<wbr/>PEER_<wbr/>LIST_<wbr/>UPDATED</span><a href="#ON_PEER_LIST_UPDATED" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-enum-member">ON_<wbr/>PEER_<wbr/>LIST_<wbr/>UPDATED</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;ON_PEER_LIST_UPDATED&quot;</span></div><aside class="tsd-sources">
+<div class="tsd-signature"><span class="tsd-kind-enum-member">ON_<wbr/>PEER_<wbr/>LIST_<wbr/>UPDATED</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;ON_PEER_LIST_UPDATED&quot;</span></div>
+<div class="tsd-comment tsd-typography"><p>Emitted when the list of peers is updated.</p>
+</div>
+<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSUpdateListenerActions.ts#L29">src/classes/HMSUpdateListenerActions.ts:29</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSUpdateListenerActions.ts#L106">src/classes/HMSUpdateListenerActions.ts:106</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member"><a id="ON_PEER_UPDATE" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>ON_<wbr/>PEER_<wbr/>UPDATE</span><a href="#ON_PEER_UPDATE" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-enum-member">ON_<wbr/>PEER_<wbr/>UPDATE</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;3&quot;</span></div><aside class="tsd-sources">
+<div class="tsd-signature"><span class="tsd-kind-enum-member">ON_<wbr/>PEER_<wbr/>UPDATE</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;3&quot;</span></div>
+<div class="tsd-comment tsd-typography"><p>Emitted when there is an update related to a peer in the room.</p>
+</div>
+<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSUpdateListenerActions.ts#L11">src/classes/HMSUpdateListenerActions.ts:11</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSUpdateListenerActions.ts#L94">src/classes/HMSUpdateListenerActions.ts:94</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member"><a id="ON_PERMISSIONS_REQUESTED" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>ON_<wbr/>PERMISSIONS_<wbr/>REQUESTED</span><a href="#ON_PERMISSIONS_REQUESTED" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<div class="tsd-signature"><span class="tsd-kind-enum-member">ON_<wbr/>PERMISSIONS_<wbr/>REQUESTED</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;ON_PERMISSIONS_REQUESTED&quot;</span></div>
+<div class="tsd-comment tsd-typography"><p>Emitted when permissions are requested.</p>
+</div>
+<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSUpdateListenerActions.ts#L339">src/classes/HMSUpdateListenerActions.ts:339</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member"><a id="ON_PREVIEW" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>ON_<wbr/>PREVIEW</span><a href="#ON_PREVIEW" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-enum-member">ON_<wbr/>PREVIEW</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;ON_PREVIEW&quot;</span></div><aside class="tsd-sources">
+<div class="tsd-signature"><span class="tsd-kind-enum-member">ON_<wbr/>PREVIEW</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;ON_PREVIEW&quot;</span></div>
+<div class="tsd-comment tsd-typography"><p>Emitted when the local preview is available.</p>
+</div>
+<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSUpdateListenerActions.ts#L8">src/classes/HMSUpdateListenerActions.ts:8</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSUpdateListenerActions.ts#L56">src/classes/HMSUpdateListenerActions.ts:56</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member"><a id="ON_REMOTE_AUDIO_STATS" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>ON_<wbr/>REMOTE_<wbr/>AUDIO_<wbr/>STATS</span><a href="#ON_REMOTE_AUDIO_STATS" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-enum-member">ON_<wbr/>REMOTE_<wbr/>AUDIO_<wbr/>STATS</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;ON_REMOTE_AUDIO_STATS&quot;</span></div><aside class="tsd-sources">
+<div class="tsd-signature"><span class="tsd-kind-enum-member">ON_<wbr/>REMOTE_<wbr/>AUDIO_<wbr/>STATS</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;ON_REMOTE_AUDIO_STATS&quot;</span></div>
+<div class="tsd-comment tsd-typography"><p>Emitted when stats for a remote audio track are available.</p>
+</div>
+<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSUpdateListenerActions.ts#L24">src/classes/HMSUpdateListenerActions.ts:24</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSUpdateListenerActions.ts#L267">src/classes/HMSUpdateListenerActions.ts:267</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member"><a id="ON_REMOTE_VIDEO_STATS" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>ON_<wbr/>REMOTE_<wbr/>VIDEO_<wbr/>STATS</span><a href="#ON_REMOTE_VIDEO_STATS" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-enum-member">ON_<wbr/>REMOTE_<wbr/>VIDEO_<wbr/>STATS</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;ON_REMOTE_VIDEO_STATS&quot;</span></div><aside class="tsd-sources">
+<div class="tsd-signature"><span class="tsd-kind-enum-member">ON_<wbr/>REMOTE_<wbr/>VIDEO_<wbr/>STATS</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;ON_REMOTE_VIDEO_STATS&quot;</span></div>
+<div class="tsd-comment tsd-typography"><p>Emitted when stats for a remote video track are available.</p>
+</div>
+<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSUpdateListenerActions.ts#L25">src/classes/HMSUpdateListenerActions.ts:25</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSUpdateListenerActions.ts#L280">src/classes/HMSUpdateListenerActions.ts:280</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member"><a id="ON_REMOVED_FROM_ROOM" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>ON_<wbr/>REMOVED_<wbr/>FROM_<wbr/>ROOM</span><a href="#ON_REMOVED_FROM_ROOM" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-enum-member">ON_<wbr/>REMOVED_<wbr/>FROM_<wbr/>ROOM</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;ON_REMOVED_FROM_ROOM&quot;</span></div><aside class="tsd-sources">
+<div class="tsd-signature"><span class="tsd-kind-enum-member">ON_<wbr/>REMOVED_<wbr/>FROM_<wbr/>ROOM</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;ON_REMOVED_FROM_ROOM&quot;</span></div>
+<div class="tsd-comment tsd-typography"><p>Emitted when the local user is removed from the room.</p>
+</div>
+<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSUpdateListenerActions.ts#L20">src/classes/HMSUpdateListenerActions.ts:20</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSUpdateListenerActions.ts#L214">src/classes/HMSUpdateListenerActions.ts:214</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member"><a id="ON_ROLE_CHANGE_REQUEST" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>ON_<wbr/>ROLE_<wbr/>CHANGE_<wbr/>REQUEST</span><a href="#ON_ROLE_CHANGE_REQUEST" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-enum-member">ON_<wbr/>ROLE_<wbr/>CHANGE_<wbr/>REQUEST</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;ON_ROLE_CHANGE_REQUEST&quot;</span></div><aside class="tsd-sources">
+<div class="tsd-signature"><span class="tsd-kind-enum-member">ON_<wbr/>ROLE_<wbr/>CHANGE_<wbr/>REQUEST</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;ON_ROLE_CHANGE_REQUEST&quot;</span></div>
+<div class="tsd-comment tsd-typography"><p>Emitted when there is a request to change the role of a peer.</p>
+</div>
+<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSUpdateListenerActions.ts#L18">src/classes/HMSUpdateListenerActions.ts:18</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSUpdateListenerActions.ts#L192">src/classes/HMSUpdateListenerActions.ts:192</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member"><a id="ON_ROOM_UPDATE" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>ON_<wbr/>ROOM_<wbr/>UPDATE</span><a href="#ON_ROOM_UPDATE" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-enum-member">ON_<wbr/>ROOM_<wbr/>UPDATE</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;ON_ROOM_UPDATE&quot;</span></div><aside class="tsd-sources">
+<div class="tsd-signature"><span class="tsd-kind-enum-member">ON_<wbr/>ROOM_<wbr/>UPDATE</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;ON_ROOM_UPDATE&quot;</span></div>
+<div class="tsd-comment tsd-typography"><p>Emitted when there is an update related to the room.</p>
+</div>
+<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSUpdateListenerActions.ts#L10">src/classes/HMSUpdateListenerActions.ts:10</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSUpdateListenerActions.ts#L82">src/classes/HMSUpdateListenerActions.ts:82</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member"><a id="ON_RTC_STATS" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>ON_<wbr/>RTC_<wbr/>STATS</span><a href="#ON_RTC_STATS" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-enum-member">ON_<wbr/>RTC_<wbr/>STATS</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;ON_RTC_STATS&quot;</span></div><aside class="tsd-sources">
+<div class="tsd-signature"><span class="tsd-kind-enum-member">ON_<wbr/>RTC_<wbr/>STATS</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;ON_RTC_STATS&quot;</span></div>
+<div class="tsd-comment tsd-typography"><p>Emitted when RTC stats are available.</p>
+</div>
+<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSUpdateListenerActions.ts#L21">src/classes/HMSUpdateListenerActions.ts:21</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSUpdateListenerActions.ts#L228">src/classes/HMSUpdateListenerActions.ts:228</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member"><a id="ON_SESSION_STORE_AVAILABLE" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>ON_<wbr/>SESSION_<wbr/>STORE_<wbr/>AVAILABLE</span><a href="#ON_SESSION_STORE_AVAILABLE" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-enum-member">ON_<wbr/>SESSION_<wbr/>STORE_<wbr/>AVAILABLE</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;ON_SESSION_STORE_AVAILABLE&quot;</span></div><aside class="tsd-sources">
+<div class="tsd-signature"><span class="tsd-kind-enum-member">ON_<wbr/>SESSION_<wbr/>STORE_<wbr/>AVAILABLE</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;ON_SESSION_STORE_AVAILABLE&quot;</span></div>
+<div class="tsd-comment tsd-typography"><p>Emitted when the session store is available.</p>
+</div>
+<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSUpdateListenerActions.ts#L27">src/classes/HMSUpdateListenerActions.ts:27</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSUpdateListenerActions.ts#L303">src/classes/HMSUpdateListenerActions.ts:303</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member"><a id="ON_SESSION_STORE_CHANGED" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>ON_<wbr/>SESSION_<wbr/>STORE_<wbr/>CHANGED</span><a href="#ON_SESSION_STORE_CHANGED" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-enum-member">ON_<wbr/>SESSION_<wbr/>STORE_<wbr/>CHANGED</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;ON_SESSION_STORE_CHANGED&quot;</span></div><aside class="tsd-sources">
+<div class="tsd-signature"><span class="tsd-kind-enum-member">ON_<wbr/>SESSION_<wbr/>STORE_<wbr/>CHANGED</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;ON_SESSION_STORE_CHANGED&quot;</span></div>
+<div class="tsd-comment tsd-typography"><p>Emitted when the session store has changed.</p>
+</div>
+<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSUpdateListenerActions.ts#L28">src/classes/HMSUpdateListenerActions.ts:28</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSUpdateListenerActions.ts#L315">src/classes/HMSUpdateListenerActions.ts:315</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member"><a id="ON_SPEAKER" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>ON_<wbr/>SPEAKER</span><a href="#ON_SPEAKER" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-enum-member">ON_<wbr/>SPEAKER</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;ON_SPEAKER&quot;</span></div><aside class="tsd-sources">
+<div class="tsd-signature"><span class="tsd-kind-enum-member">ON_<wbr/>SPEAKER</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;ON_SPEAKER&quot;</span></div>
+<div class="tsd-comment tsd-typography"><p>Emitted when there is an update on the current speaker.</p>
+</div>
+<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSUpdateListenerActions.ts#L15">src/classes/HMSUpdateListenerActions.ts:15</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSUpdateListenerActions.ts#L154">src/classes/HMSUpdateListenerActions.ts:154</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member"><a id="ON_TRACK_UPDATE" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>ON_<wbr/>TRACK_<wbr/>UPDATE</span><a href="#ON_TRACK_UPDATE" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-enum-member">ON_<wbr/>TRACK_<wbr/>UPDATE</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;ON_TRACK_UPDATE&quot;</span></div><aside class="tsd-sources">
+<div class="tsd-signature"><span class="tsd-kind-enum-member">ON_<wbr/>TRACK_<wbr/>UPDATE</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;ON_TRACK_UPDATE&quot;</span></div>
+<div class="tsd-comment tsd-typography"><p>Emitted when there is an update related to a track in the room.</p>
+</div>
+<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSUpdateListenerActions.ts#L12">src/classes/HMSUpdateListenerActions.ts:12</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSUpdateListenerActions.ts#L118">src/classes/HMSUpdateListenerActions.ts:118</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member"><a id="ON_TRANSCRIPTS" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>ON_<wbr/>TRANSCRIPTS</span><a href="#ON_TRANSCRIPTS" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-enum-member">ON_<wbr/>TRANSCRIPTS</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;ON_TRANSCRIPTS&quot;</span></div><aside class="tsd-sources">
+<div class="tsd-signature"><span class="tsd-kind-enum-member">ON_<wbr/>TRANSCRIPTS</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;ON_TRANSCRIPTS&quot;</span></div>
+<div class="tsd-comment tsd-typography"><p>Emitted when transcripts are available.</p>
+</div>
+<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSUpdateListenerActions.ts#L30">src/classes/HMSUpdateListenerActions.ts:30</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSUpdateListenerActions.ts#L328">src/classes/HMSUpdateListenerActions.ts:328</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member"><a id="RECONNECTED" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>RECONNECTED</span><a href="#RECONNECTED" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-enum-member">RECONNECTED</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;RECONNECTED&quot;</span></div><aside class="tsd-sources">
+<div class="tsd-signature"><span class="tsd-kind-enum-member">RECONNECTED</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;RECONNECTED&quot;</span></div>
+<div class="tsd-comment tsd-typography"><p>Emitted when the SDK has successfully reconnected to the room.</p>
+</div>
+<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSUpdateListenerActions.ts#L17">src/classes/HMSUpdateListenerActions.ts:17</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSUpdateListenerActions.ts#L180">src/classes/HMSUpdateListenerActions.ts:180</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member"><a id="RECONNECTING" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>RECONNECTING</span><a href="#RECONNECTING" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-enum-member">RECONNECTING</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;RECONNECTING&quot;</span></div><aside class="tsd-sources">
+<div class="tsd-signature"><span class="tsd-kind-enum-member">RECONNECTING</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;RECONNECTING&quot;</span></div>
+<div class="tsd-comment tsd-typography"><p>Emitted when the SDK is attempting to reconnect to the room.</p>
+</div>
+<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSUpdateListenerActions.ts#L16">src/classes/HMSUpdateListenerActions.ts:16</a></li></ul></aside></section></section></div>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSUpdateListenerActions.ts#L167">src/classes/HMSUpdateListenerActions.ts:167</a></li></ul></aside></section></section></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
@@ -197,6 +281,7 @@
 <li><a href="#ON_MESSAGE" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>ON_<wbr/>MESSAGE</span></a></li>
 <li><a href="#ON_PEER_LIST_UPDATED" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>ON_<wbr/>PEER_<wbr/>LIST_<wbr/>UPDATED</span></a></li>
 <li><a href="#ON_PEER_UPDATE" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>ON_<wbr/>PEER_<wbr/>UPDATE</span></a></li>
+<li><a href="#ON_PERMISSIONS_REQUESTED" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>ON_<wbr/>PERMISSIONS_<wbr/>REQUESTED</span></a></li>
 <li><a href="#ON_PREVIEW" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>ON_<wbr/>PREVIEW</span></a></li>
 <li><a href="#ON_REMOTE_AUDIO_STATS" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>ON_<wbr/>REMOTE_<wbr/>AUDIO_<wbr/>STATS</span></a></li>
 <li><a href="#ON_REMOTE_VIDEO_STATS" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>ON_<wbr/>REMOTE_<wbr/>VIDEO_<wbr/>STATS</span></a></li>
