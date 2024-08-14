@@ -15,6 +15,12 @@
 <li><a href="../modules.html">@100mslive/react-native-hms</a></li>
 <li><a href="HMSLocalPeer.html">HMSLocalPeer</a></li></ul>
 <h1>Class HMSLocalPeer</h1></div>
+<section class="tsd-panel tsd-comment">
+<div class="tsd-comment tsd-typography"><p>Represents a peer in the HMS ecosystem.</p>
+<p>This class encapsulates the properties and state of a peer within a session, including their ID, name, role, and various status flags.</p>
+</div>
+<div class="tsd-comment tsd-typography">
+<h4>Export</h4></div></section>
 <section class="tsd-panel tsd-hierarchy">
 <h4>Hierarchy</h4>
 <ul class="tsd-hierarchy">
@@ -22,7 +28,7 @@
 <ul class="tsd-hierarchy">
 <li><span class="target">HMSLocalPeer</span></li></ul></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSLocalPeer.ts#L9">src/classes/HMSLocalPeer.ts:9</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSLocalPeer.ts#L9">src/classes/HMSLocalPeer.ts:9</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -109,15 +115,18 @@
 <h4 class="tsd-returns-title">Returns <a href="HMSLocalPeer.html" class="tsd-signature-type tsd-kind-class">HMSLocalPeer</a></h4><aside class="tsd-sources">
 <p>Overrides <a href="HMSPeer.html">HMSPeer</a>.<a href="HMSPeer.html#constructor">constructor</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSLocalPeer.ts#L20">src/classes/HMSLocalPeer.ts:20</a></li></ul></aside></li></ul></section></section>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSLocalPeer.ts#L20">src/classes/HMSLocalPeer.ts:20</a></li></ul></aside></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Properties</h2>
 <section class="tsd-panel tsd-member tsd-is-inherited"><a id="peerID" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>peerID</span><a href="#peerID" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-property">peerID</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div><aside class="tsd-sources">
+<div class="tsd-signature"><span class="tsd-kind-property">peerID</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+<div class="tsd-comment tsd-typography"><p>The unique identifier for the peer.</p>
+</div>
+<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Inherited from <a href="HMSPeer.html">HMSPeer</a>.<a href="HMSPeer.html#peerID">peerID</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSPeer.ts#L11">src/classes/HMSPeer.ts:11</a></li></ul></aside></section></section>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSPeer.ts#L27">src/classes/HMSPeer.ts:27</a></li></ul></aside></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Accessors</h2>
 <section class="tsd-panel tsd-member tsd-is-inherited"><a id="audioTrack" class="tsd-anchor"></a>
@@ -125,100 +134,200 @@
 <ul class="tsd-signatures tsd-is-inherited">
 <li class="tsd-signature" id="audioTrack.audioTrack-1"><span class="tsd-signature-symbol">get</span> audioTrack<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="HMSAudioTrack.html" class="tsd-signature-type tsd-kind-class">HMSAudioTrack</a></li>
 <li class="tsd-description">
-<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="HMSAudioTrack.html" class="tsd-signature-type tsd-kind-class">HMSAudioTrack</a></h4><aside class="tsd-sources">
+<div class="tsd-comment tsd-typography"><p>Retrieves the audio track associated with the peer.</p>
+<p>This getter method attempts to obtain the audio track of the peer. It first tries to get this information from the HMS peers cache.
+If the audio track information is not available in the cache, it falls back to fetching the audio track directly from the native layer using the peer&#39;s ID.
+This allows for real-time access to the peer&#39;s audio track, which can be used for various audio-related functionalities within the application.</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="HMSAudioTrack.html" class="tsd-signature-type tsd-kind-class">HMSAudioTrack</a></h4><p>The audio track of the peer if available, otherwise <code>undefined</code>.</p>
+
+<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Inherited from HMSPeer.audioTrack</p>
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSPeer.ts#L193">src/classes/HMSPeer.ts:193</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSPeer.ts#L295">src/classes/HMSPeer.ts:295</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-inherited"><a id="auxiliaryTracks" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>auxiliary<wbr/>Tracks</span><a href="#auxiliaryTracks" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-inherited">
 <li class="tsd-signature" id="auxiliaryTracks.auxiliaryTracks-1"><span class="tsd-signature-symbol">get</span> auxiliaryTracks<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="HMSTrack.html" class="tsd-signature-type tsd-kind-class">HMSTrack</a><span class="tsd-signature-symbol">[]</span></li>
 <li class="tsd-description">
-<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="HMSTrack.html" class="tsd-signature-type tsd-kind-class">HMSTrack</a><span class="tsd-signature-symbol">[]</span></h4><aside class="tsd-sources">
+<div class="tsd-comment tsd-typography"><p>Retrieves the auxiliary tracks associated with the peer.</p>
+<p>This getter method attempts to obtain the auxiliary tracks of the peer, which can include tracks like screen shares or additional media streams.
+It first tries to get this information from the HMS peers cache. If the auxiliary track information is not available in the cache,
+it falls back to fetching the auxiliary tracks directly from the native layer using the peer&#39;s ID.
+This allows for real-time access to the peer&#39;s auxiliary tracks, which can be used for various functionalities within the application,
+such as displaying a screen share or additional video feeds.</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="HMSTrack.html" class="tsd-signature-type tsd-kind-class">HMSTrack</a><span class="tsd-signature-symbol">[]</span></h4><p>The auxiliary tracks of the peer if available, otherwise <code>undefined</code>.</p>
+
+<div class="tsd-comment tsd-typography">
+<h4>See</h4><p><a href="https://www.100ms.live/docs/react-native/v2/how-to-guides/set-up-video-conferencing/screenshare">https://www.100ms.live/docs/react-native/v2/how-to-guides/set-up-video-conferencing/screenshare</a></p>
+</div><aside class="tsd-sources">
 <p>Inherited from HMSPeer.auxiliaryTracks</p>
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSPeer.ts#L221">src/classes/HMSPeer.ts:221</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSPeer.ts#L345">src/classes/HMSPeer.ts:345</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-inherited"><a id="customerUserID" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>customer<wbr/>UserID</span><a href="#customerUserID" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-inherited">
 <li class="tsd-signature" id="customerUserID.customerUserID-1"><span class="tsd-signature-symbol">get</span> customerUserID<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></li>
 <li class="tsd-description">
-<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h4><aside class="tsd-sources">
+<div class="tsd-comment tsd-typography"><p>Retrieves the custom user ID of the peer.</p>
+<p>This getter method attempts to obtain the custom user ID of the peer, which is an optional identifier that can be set by the application.
+It first tries to get this information from the HMS peers cache. If the information is not available in the cache,
+it falls back to fetching the custom user ID directly from the native layer using the peer&#39;s ID.
+Once a value is retrieved, it updates the local <code>_customerUserID</code> property to ensure the value is current and consistent.</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h4><p>The custom user ID of the peer if available, otherwise <code>undefined</code>.</p>
+
+<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Inherited from HMSPeer.customerUserID</p>
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSPeer.ts#L142">src/classes/HMSPeer.ts:142</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSPeer.ts#L211">src/classes/HMSPeer.ts:211</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-inherited"><a id="isHandRaised" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>is<wbr/>Hand<wbr/>Raised</span><a href="#isHandRaised" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-inherited">
 <li class="tsd-signature" id="isHandRaised.isHandRaised-1"><span class="tsd-signature-symbol">get</span> isHandRaised<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
 <li class="tsd-description">
-<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4><aside class="tsd-sources">
+<div class="tsd-comment tsd-typography"><p>Checks if the peer has raised their hand.</p>
+<p>This getter method determines whether the peer has their hand raised in the session. It first attempts to retrieve the &#39;isHandRaised&#39; property value
+from the HMS peers cache. If the value is not found in the cache, it falls back to fetching the property directly from the native layer using the peer&#39;s ID.
+Once a value is retrieved, it updates the local <code>_isHandRaised</code> property to ensure the value is current and consistent.</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4><p>True if the peer has their hand raised, false otherwise. Defaults to false if the information is not available.</p>
+
+<div class="tsd-comment tsd-typography">
+<h4>See</h4><p><a href="https://www.100ms.live/docs/react-native/v2/how-to-guides/interact-with-room/peer/large-room">https://www.100ms.live/docs/react-native/v2/how-to-guides/interact-with-room/peer/large-room</a></p>
+</div><aside class="tsd-sources">
 <p>Inherited from HMSPeer.isHandRaised</p>
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSPeer.ts#L111">src/classes/HMSPeer.ts:111</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSPeer.ts#L158">src/classes/HMSPeer.ts:158</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-inherited"><a id="isLocal" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>is<wbr/>Local</span><a href="#isLocal" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-inherited">
 <li class="tsd-signature" id="isLocal.isLocal-1"><span class="tsd-signature-symbol">get</span> isLocal<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">boolean</span></li>
 <li class="tsd-description">
-<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">boolean</span></h4><aside class="tsd-sources">
+<div class="tsd-comment tsd-typography"><p>Determines if the peer is the local user.</p>
+<p>This getter method checks if the peer is the local user by first attempting to retrieve the &#39;isLocal&#39; property value from the HMS peers cache.
+If the value is not found in the cache, it falls back to fetching the property directly from the native layer using the peer&#39;s ID.
+Once a value is retrieved, it updates the local <code>_isLocal</code> property to ensure the value is current.</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">boolean</span></h4><p>True if the peer is the local user, false otherwise. Returns <code>undefined</code> if the information is not available.</p>
+
+<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Inherited from HMSPeer.isLocal</p>
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSPeer.ts#L94">src/classes/HMSPeer.ts:94</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSPeer.ts#L129">src/classes/HMSPeer.ts:129</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-inherited"><a id="metadata" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>metadata</span><a href="#metadata" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-inherited">
 <li class="tsd-signature" id="metadata.metadata-1"><span class="tsd-signature-symbol">get</span> metadata<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></li>
 <li class="tsd-description">
-<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h4><aside class="tsd-sources">
+<div class="tsd-comment tsd-typography"><p>Retrieves the metadata associated with the peer.</p>
+<p>This getter method attempts to obtain the metadata of the peer, which can include any additional information set by the application.
+It first tries to get this information from the HMS peers cache. If the information is not available in the cache,
+it falls back to fetching the metadata directly from the native layer using the peer&#39;s ID.
+Once a value is retrieved, it updates the local <code>_metadata</code> property to ensure the value is current and consistent.</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h4><p>The metadata of the peer if available, otherwise <code>undefined</code>.</p>
+
+<div class="tsd-comment tsd-typography">
+<h4>See</h4><p><a href="https://www.100ms.live/docs/react-native/v2/how-to-guides/interact-with-room/peer/change-metadata">https://www.100ms.live/docs/react-native/v2/how-to-guides/interact-with-room/peer/change-metadata</a></p>
+</div><aside class="tsd-sources">
 <p>Inherited from HMSPeer.metadata</p>
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSPeer.ts#L159">src/classes/HMSPeer.ts:159</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSPeer.ts#L240">src/classes/HMSPeer.ts:240</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-inherited"><a id="name" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>name</span><a href="#name" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-inherited">
 <li class="tsd-signature" id="name.name-1"><span class="tsd-signature-symbol">get</span> name<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></li>
 <li class="tsd-description">
-<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h4><aside class="tsd-sources">
+<div class="tsd-comment tsd-typography"><p>Gets the name of the peer.</p>
+<p>This getter method retrieves the name of the peer. If the name has already been set locally, it returns that value.
+Otherwise, it attempts to retrieve the name from the HMS peers cache. If the cache does not contain the name,
+it falls back to fetching the name directly from the native layer using the peer&#39;s ID.
+Once a value is retrieved, it updates the local <code>_name</code> property to ensure consistency.</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h4><p>The name of the peer if available, otherwise <code>undefined</code>.</p>
+
+<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Inherited from HMSPeer.name</p>
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSPeer.ts#L74">src/classes/HMSPeer.ts:74</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSPeer.ts#L100">src/classes/HMSPeer.ts:100</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-inherited"><a id="networkQuality" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>network<wbr/>Quality</span><a href="#networkQuality" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-inherited">
 <li class="tsd-signature" id="networkQuality.networkQuality-1"><span class="tsd-signature-symbol">get</span> networkQuality<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="HMSNetworkQuality.html" class="tsd-signature-type tsd-kind-class">HMSNetworkQuality</a></li>
 <li class="tsd-description">
-<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="HMSNetworkQuality.html" class="tsd-signature-type tsd-kind-class">HMSNetworkQuality</a></h4><aside class="tsd-sources">
+<div class="tsd-comment tsd-typography"><p>Retrieves the network quality of the peer.</p>
+<p>This getter method attempts to obtain the network quality of the peer, which is an indicator of the current network conditions affecting the peer&#39;s connection.
+It first tries to get this information from the HMS peers cache. If the information is not available in the cache,
+it falls back to fetching the network quality directly from the native layer using the peer&#39;s ID.
+The network quality is represented by the <code>HMSNetworkQuality</code> type, which may include values such as &#39;good&#39;, &#39;poor&#39;, etc., depending on the implementation.</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="HMSNetworkQuality.html" class="tsd-signature-type tsd-kind-class">HMSNetworkQuality</a></h4><p>The network quality of the peer if available, otherwise <code>undefined</code>.</p>
+
+<div class="tsd-comment tsd-typography">
+<h4>See</h4><p><a href="https://www.100ms.live/docs/react-native/v2/how-to-guides/measure-network-quality-and-performance/network-quality">https://www.100ms.live/docs/react-native/v2/how-to-guides/measure-network-quality-and-performance/network-quality</a></p>
+</div><aside class="tsd-sources">
 <p>Inherited from HMSPeer.networkQuality</p>
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSPeer.ts#L128">src/classes/HMSPeer.ts:128</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSPeer.ts#L187">src/classes/HMSPeer.ts:187</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-inherited"><a id="role" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>role</span><a href="#role" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-inherited">
 <li class="tsd-signature" id="role.role-1"><span class="tsd-signature-symbol">get</span> role<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="HMSRole.html" class="tsd-signature-type tsd-kind-class">HMSRole</a></li>
 <li class="tsd-description">
-<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="HMSRole.html" class="tsd-signature-type tsd-kind-class">HMSRole</a></h4><aside class="tsd-sources">
+<div class="tsd-comment tsd-typography"><p>Retrieves the role of the peer.</p>
+<p>This getter method attempts to obtain the role assigned to the peer within the session. The role can define permissions and capabilities
+within the session context. It first tries to get this information from the HMS peers cache. If the role information is not available in the cache,
+it falls back to fetching the role directly from the native layer using the peer&#39;s ID. Once a value is retrieved, it updates the local <code>_role</code>
+property to ensure the value is current and consistent.</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="HMSRole.html" class="tsd-signature-type tsd-kind-class">HMSRole</a></h4><p>The role of the peer if available, otherwise <code>undefined</code>.</p>
+
+<div class="tsd-comment tsd-typography">
+<h4>See</h4><p><a href="https://www.100ms.live/docs/get-started/v2/get-started/concepts/templates-and-roles">https://www.100ms.live/docs/get-started/v2/get-started/concepts/templates-and-roles</a></p>
+</div><aside class="tsd-sources">
 <p>Inherited from HMSPeer.role</p>
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSPeer.ts#L176">src/classes/HMSPeer.ts:176</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSPeer.ts#L269">src/classes/HMSPeer.ts:269</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-inherited"><a id="type" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>type</span><a href="#type" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-inherited">
 <li class="tsd-signature" id="type.type-1"><span class="tsd-signature-symbol">get</span> type<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../enums/HMSPeerType.html" class="tsd-signature-type tsd-kind-enum">HMSPeerType</a></li>
 <li class="tsd-description">
-<h4 class="tsd-returns-title">Returns <a href="../enums/HMSPeerType.html" class="tsd-signature-type tsd-kind-enum">HMSPeerType</a></h4><aside class="tsd-sources">
+<div class="tsd-comment tsd-typography"><p>Retrieves the type of the peer.</p>
+<p>This getter method attempts to obtain the type of the peer, which can indicate whether the peer is a regular participant,
+a screen share, or another type defined within the <code>HMSPeerType</code> enum. It first tries to get this information from the HMS peers cache.
+If the type information is not available in the cache, it falls back to fetching the type directly from the native layer using the peer&#39;s ID.
+This ensures that the application has real-time access to the peer&#39;s type, which can be crucial for handling different peer types differently,
+such as displaying a screen share in a distinct manner. Once a value is retrieved, it updates the local <code>_type</code> property to ensure the value is current.</p>
+</div>
+<h4 class="tsd-returns-title">Returns <a href="../enums/HMSPeerType.html" class="tsd-signature-type tsd-kind-enum">HMSPeerType</a></h4><p>The type of the peer, defaulting to the value stored in <code>_type</code> if the information is not available.</p>
+
+<div class="tsd-comment tsd-typography">
+<h4>See</h4><p><a href="https://www.100ms.live/docs/server-side/v2/how-to-guides/Session%20Initiation%20Protocol%20(SIP)/SIP-Interconnect">https://www.100ms.live/docs/server-side/v2/how-to-guides/Session%20Initiation%20Protocol%20(SIP)/SIP-Interconnect</a></p>
+</div><aside class="tsd-sources">
 <p>Inherited from HMSPeer.type</p>
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSPeer.ts#L235">src/classes/HMSPeer.ts:235</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSPeer.ts#L372">src/classes/HMSPeer.ts:372</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-inherited"><a id="videoTrack" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>video<wbr/>Track</span><a href="#videoTrack" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-inherited">
 <li class="tsd-signature" id="videoTrack.videoTrack-1"><span class="tsd-signature-symbol">get</span> videoTrack<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="HMSVideoTrack.html" class="tsd-signature-type tsd-kind-class">HMSVideoTrack</a></li>
 <li class="tsd-description">
-<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="HMSVideoTrack.html" class="tsd-signature-type tsd-kind-class">HMSVideoTrack</a></h4><aside class="tsd-sources">
+<div class="tsd-comment tsd-typography"><p>Retrieves the video track associated with the peer.</p>
+<p>This getter method attempts to obtain the video track of the peer. It first tries to get this information from the HMS peers cache.
+If the video track information is not available in the cache, it falls back to fetching the video track directly from the native layer using the peer&#39;s ID.
+This allows for real-time access to the peer&#39;s video track, which can be used for various video-related functionalities within the application.</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="HMSVideoTrack.html" class="tsd-signature-type tsd-kind-class">HMSVideoTrack</a></h4><p>The video track of the peer if available, otherwise <code>undefined</code>.</p>
+
+<div class="tsd-comment tsd-typography">
+<h4>See</h4><p><a href="https://www.100ms.live/docs/react-native/v2/how-to-guides/set-up-video-conferencing/render-video/overview">https://www.100ms.live/docs/react-native/v2/how-to-guides/set-up-video-conferencing/render-video/overview</a></p>
+</div><aside class="tsd-sources">
 <p>Inherited from HMSPeer.videoTrack</p>
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSPeer.ts#L207">src/classes/HMSPeer.ts:207</a></li></ul></aside></li></ul></section></section>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSPeer.ts#L319">src/classes/HMSPeer.ts:319</a></li></ul></aside></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Methods</h2>
 <section class="tsd-panel tsd-member"><a id="localAudioTrack" class="tsd-anchor"></a>
@@ -228,7 +337,7 @@
 <li class="tsd-description">
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="HMSLocalAudioTrack.html" class="tsd-signature-type tsd-kind-class">HMSLocalAudioTrack</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSLocalPeer.ts#L13">src/classes/HMSLocalPeer.ts:13</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSLocalPeer.ts#L13">src/classes/HMSLocalPeer.ts:13</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="localVideoTrack" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>local<wbr/>Video<wbr/>Track</span><a href="#localVideoTrack" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -236,7 +345,7 @@
 <li class="tsd-description">
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="HMSLocalVideoTrack.html" class="tsd-signature-type tsd-kind-class">HMSLocalVideoTrack</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/025704bf/packages/react-native-hms/src/classes/HMSLocalPeer.ts#L16">src/classes/HMSLocalPeer.ts:16</a></li></ul></aside></li></ul></section></section></div>
+<li>Defined in <a href="https://github.com/100mslive/react-native-hms/blob/7e1b27a0/packages/react-native-hms/src/classes/HMSLocalPeer.ts#L16">src/classes/HMSLocalPeer.ts:16</a></li></ul></aside></li></ul></section></section></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
