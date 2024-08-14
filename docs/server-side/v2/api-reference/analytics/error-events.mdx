@@ -3,15 +3,15 @@ title: Error Events
 nav: 3.66
 ---
 
-Error Events can be used to understand the issues faced by the user when joining the call, or while being in the call. These events are useful for diagnosing user specific issues.
+Error events are crucial for diagnosing issues that users may encounter when joining or participating in calls. These events provide insights into specific problems faced by users and are invaluable for troubleshooting.
 
 Following are the client error events which are currently supported by this API:-
 
-- **client.publish.failed** 
-- **client.subscribe.failed**
-- **client.join.failed**
-- **client.disconnected**
-- **client.connect.failed**
+- **client.publish.failed**: This error is triggered when a peer is unable to successfully publish audio or video streams.
+- **client.subscribe.failed**: This error arises when a peer fails to subscribe to the audio or video streams of other participants.
+- **client.join.failed**: This error occurs when a peer is unable to join a room.
+- **client.disconnected**: This event indicates that a peer is disconnected from a room - either temporarily or permanently due to a network issue.
+- **client.connect.failed**: This error occurs when a peer fails to connect to our service.
 
 <GetRequest title="https://api.100ms.live/v2/analytics/events" />
 <Request id="req-0">
@@ -35,26 +35,26 @@ Refer [Overview](/server-side/v2/api-reference/analytics/overview#allowed-filter
 
 | Attribute         | Type      | Description                                                                                                        |
 | ----------------- | --------- | ------------------------------------------------------------------------------------------------------------------ |
-| user_id           | `string`  | Your internal user identifier                                                                                      |
-| user_name         | `string`  | User name of the user                                                                                              |
-| peer_id           | `string`  | Unique identifier of the peer/participant                                                                          |
-| account_id        | `string`  | Unique identifier for your 100ms account                                                                           |
-| room_id           | `string`  | Unique identifier of the room  (Example: `5f9edc6bd238215aec7700df`)                                               |
-| session_id        | `string`  | Unique identifier of the session (Example: `5f9edc6bd238215aec7700df`). Session ID may or may not be present in the response. |
-| room_name         | `string`  | Room name provided when creating the room.                                                                         |
-| template_id       | `string`  | Unique identifier of the template associated with the room.                                                        |
-| role              | `string`  | Peer role                                                                                                          |
-| error_code        | `int`     | [TO FILL] (How will user make sense of error code? Do we have a list of error codes for reference?)                |
-| error_name        | `string`  | Name of the error.                                                                                                  |
-| error_message     | `string`  | The error message.
-| error_description | `string`  | Details about the error.
-| domain            | `string`  | [TO FILL]                                                                                                          |
-| is_terminal       | `bool`    | [TO FILL]                     |
-| action            | `string`  | [TO FILL]                     |
-| audio             | `object`  | Information about audio (see response example below)                      |
-| video             | `object`  | Information about video (see response example below)                    |
-| devices           | `object`  | Information about user's devices (see response example below)                      |
-| agent             | `object`  | User agent information
+| user_id           | `string`  | The unique identifier for the user within your system.                                                                                      |
+| user_name         | `string`  | The name of the user.                                                                                              |
+| peer_id           | `string`  | The unique identifier for the peer or participant.                                                                |
+| account_id        | `string`  | The unique identifier associated with your 100ms account.                                                         |
+| room_id           | `string`  | The unique identifier of the room (e.g., `5f9edc6bd238215aec7700df`).                                               |
+| session_id        | `string`  | The unique identifier for the session (e.g., `5f9edc6bd238215aec7700df`). Note that the session ID may not always be present in the response. |
+| room_name         | `string`  | The name assigned to the room during its creation.                                                                 |
+| template_id       | `string`  | The unique identifier of the template associated with the room.                                                    |
+| role              | `string`  | The role assigned to the peer.                                                                                     |
+| error_code        | `int`     | The error code as defined by 100ms (refer to the example in the sample response below).                            |
+| error_name        | `string`  | The name of the error.                                                                                             |
+| error_message     | `string`  | A brief description of the error encountered.                                                                      |
+| error_description | `string`  | Detailed information about the error.                                                                              |
+| domain            | `string`  | Identifies the origin of the event, whether it was from a 100ms sample app or a custom application.                |
+| is_terminal       | `bool`    | Indicates whether the error was terminal. A `false` value implies that the 100ms SDK attempted retries, and this error event was not the final error. A `true` value means no further retries were made, and this error is considered final. |
+| action            | `string`  | Specifies the action during which the error occurred (e.g., `PUBLISH` for client.publish.failed).                  |
+| audio             | `object`  | Contains information about the audio configuration (see sample response below).                                    |
+| video             | `object`  | Contains information about the video configuration (see sample response below).                                    |
+| devices           | `object`  | Contains information about the user's devices (see sample response below).                                         |
+| agent             | `object`  | Contains user agent information.                                                                                   |
 
 <br />
 <ResponseBox id="res-0" status="200 OK">
@@ -164,25 +164,24 @@ Refer [Overview](/server-side/v2/api-reference/analytics/overview#allowed-filter
 
 ### client.subscribe.failed
 
-| Attribute         | Type      | Description                                                                                                        |
-| ----------------- | --------- | ------------------------------------------------------------------------------------------------------------------ |
-| user_id           | `string`  | Your internal user identifier                                                                                      |
-| user_name         | `string`  | User name of the user                                                                                              |
-| peer_id           | `string`  | Unique identifier of the peer/participant                                                                          |
-| account_id        | `string`  | Unique identifier for your 100ms account                                                                           |
-| room_id           | `string`  | Unique identifier of the room  (Example: `5f9edc6bd238215aec7700df`)                                               |
-| session_id        | `string`  | Unique identifier of the session (Example: `5f9edc6bd238215aec7700df`). Session ID may or may not be present in the response. |
-| room_name         | `string`  | Room name provided when creating the room.                                                                         |
-| template_id       | `string`  | Unique identifier of the template associated with the room.                                                        |
-| role              | `string`  | Peer role                                                                                                          |
-| error_code        | `int`     | [TO FILL] (How will user make sense of error code? Do we have a list of error codes for reference?)                |
-| error_name        | `string`  | Name of the error.                                                                                                  |
-| error_message     | `string`  | The error message.
-| error_description | `string`  | Details about the error.
-| is_terminal       | `bool`    | [TO FILL]                     |
-| action            | `string`  | [TO FILL]                     |
-| agent             | `object`  | User agent information
-
+| Attribute      | Type  | Description                                                                                                   |
+|--------------------|-----------|-------------------------------------------------------------------------------------------------------------------|
+| user_id          | `string`  | Internal identifier for the user.                                                                                 |
+| user_name        | `string`  | The name of the user.                                                                                             |
+| peer_id          | `string`  | Unique identifier for the peer or participant.                                                                    |
+| account_id       | `string`  | Unique identifier for your 100ms account.                                                                         |
+| room_id          | `string`  | Unique identifier for the room (e.g., `5f9edc6bd238215aec7700df`).                                                |
+| session_id       | `string`  | Unique identifier for the session (e.g., `5f9edc6bd238215aec7700df`). The session ID may or may not be present in the response. |
+| room_name        | `string`  | Name of the room provided during its creation.                                                                    |
+| template_id      | `string`  | Unique identifier for the template associated with the room.                                                      |
+| role             | `string`  | The role of the peer within the room.                                                                             |
+| error_code       | `int`     | Error code defined by 100ms (refer to the sample response for an example).                                        |
+| error_name       | `string`  | The name of the error.                                                                                            |
+| error_message    | `string`  | The message describing the error.                                                                                 |
+| error_description| `string`  | Detailed information about the error.                                                                             |
+| is_terminal      | `bool`    | Indicates whether this error is terminal: `false` if the 100ms SDK retried and this error event is not the final error, suggesting that the action might have succeeded in subsequent retries; `true` if no further retries were made, making this the final error. |
+| action           | `string`  | The action during which the error occurred (e.g., SUBSCRIBE in the case of `client.subscribe.failed`).            |
+| agent            | `object`  | Information about the user agent.                                                                                 |
 <br />
 <ResponseBox id="res-0" status="200 OK">
 
@@ -235,27 +234,25 @@ Refer [Overview](/server-side/v2/api-reference/analytics/overview#allowed-filter
 
 ### client.join.failed
 
-| Attribute         | Type      | Description                                                                                                        |
-| ----------------- | --------- | ------------------------------------------------------------------------------------------------------------------ |
-| user_id           | `string`  | Your internal user identifier                                                                                      |
-| user_name         | `string`  | User name of the user                                                                                              |
-| peer_id           | `string`  | Unique identifier of the peer/participant                                                                          |
-| account_id        | `string`  | Unique identifier for your 100ms account                                                                           |
-| room_id           | `string`  | Unique identifier of the room  (Example: `5f9edc6bd238215aec7700df`)                                               |
-| session_id        | `string`  | Unique identifier of the session (Example: `5f9edc6bd238215aec7700df`). Session ID may or may not be present in the response. |
-| room_name         | `string`  | Room name provided when creating the room.                                                                         |
-| template_id       | `string`  | Unique identifier of the template associated with the room.                                                        |
-| role              | `string`  | Peer role                                                                                                          |
-| error_code        | `int`     | [TO FILL] (How will user make sense of error code? Do we have a list of error codes for reference?)                |
-| error_name        | `string`  | Name of the error.                                                                                                  |
-| error_message     | `string`  | The error message.
-| error_description | `string`  | Details about the error.
-| is_terminal       | `bool`    | [TO FILL]                     |
-| domain            | `string`  | [TO FILL]                                                                                                          |
-| retries_join      | `string`  | [TO FILL]                                                                                                          |
-| action            | `string`  | [TO FILL]                     |
-| agent             | `object`  | User agent information
-
+| Attribute      | Type  | Description                                                                                                   |
+|--------------------|-----------|-------------------------------------------------------------------------------------------------------------------|
+| user_id          | `string`  | Internal identifier for the user.                                                                                 |
+| user_name        | `string`  | The name of the user.                                                                                             |
+| peer_id          | `string`  | Unique identifier for the peer or participant.                                                                    |
+| account_id       | `string`  | Unique identifier for your 100ms account.                                                                         |
+| room_id          | `string`  | Unique identifier for the room (e.g., `5f9edc6bd238215aec7700df`).                                                |
+| session_id       | `string`  | Unique identifier for the session (e.g., `5f9edc6bd238215aec7700df`). The session ID may or may not be present in the response. |
+| room_name        | `string`  | Name of the room provided during its creation.                                                                    |
+| template_id      | `string`  | Unique identifier for the template associated with the room.                                                      |
+| role             | `string`  | The role of the peer within the room.                                                                             |
+| error_code       | `int`     | Error code defined by 100ms (refer to the sample response for an example).                                        |
+| error_name       | `string`  | The name of the error.                                                                                            |
+| error_message    | `string`  | Message providing details about the error.                                                                        |
+| error_description| `string`  | Detailed description of the error.                                                                                |
+| is_terminal      | `bool`    | Indicates whether this error is terminal: `false` if the 100ms SDK retried and this error event is not the final error, suggesting that the action might have succeeded in subsequent retries; `true` if no further retries were made, making this the final error. |
+| domain           | `string`  | Indicates whether the event originated from a 100ms sample app or a custom app.                                   |
+| action           | `string`  | The action during which the error occurred (e.g., JOIN in the case of `client.join.failed`).                      |
+| agent            | `object`  | Information about the user agent.                                                                                 |
 
 <br />
 <ResponseBox id="res-0" status="200 OK">
@@ -311,25 +308,24 @@ Refer [Overview](/server-side/v2/api-reference/analytics/overview#allowed-filter
 
 ### client.disconnected
 
-| Attribute         | Type      | Description                                                                                                        |
-| ----------------- | --------- | ------------------------------------------------------------------------------------------------------------------ |
-| user_id           | `string`  | Your internal user identifier                                                                                      |
-| user_name         | `string`  | User name of the user                                                                                              |
-| peer_id           | `string`  | Unique identifier of the peer/participant                                                                          |
-| account_id        | `string`  | Unique identifier for your 100ms account                                                                           |
-| room_id           | `string`  | Unique identifier of the room  (Example: `5f9edc6bd238215aec7700df`)                                               |
-| session_id        | `string`  | Unique identifier of the session (Example: `5f9edc6bd238215aec7700df`). Session ID may or may not be present in the response. |
-| room_name         | `string`  | Room name provided when creating the room.                                                                         |
-| template_id       | `string`  | Unique identifier of the template associated with the room.                                                        |
-| role              | `string`  | Peer role                                                                                                          |
-| error_code        | `int`     | [TO FILL] (How will user make sense of error code? Do we have a list of error codes for reference?)                |
-| error_name        | `string`  | Name of the error.                                                                                                  |
-| error_message     | `string`  | The error message.
-| error_description | `string`  | Details about the error.
-| is_terminal       | `bool`    | [TO FILL]                     |
-| transport_state   | `string`  | [TO FILL]                     |
-| action            | `string`  | [TO FILL]                     |
-| agent             | `object`  | User agent information
+| Attribute       | Type  | Description                                                                                                   |
+|---------------------|-----------|-------------------------------------------------------------------------------------------------------------------|
+| user_id           | `string`  | Internal identifier for the user.                                                                                 |
+| user_name         | `string`  | Name of the user.                                                                                                 |
+| peer_id           | `string`  | Unique identifier for the peer or participant.                                                                    |
+| account_id        | `string`  | Unique identifier for your 100ms account.                                                                         |
+| room_id           | `string`  | Unique identifier for the room (e.g., `5f9edc6bd238215aec7700df`).                                                |
+| session_id        | `string`  | Unique identifier for the session (e.g., `5f9edc6bd238215aec7700df`). The session ID may or may not be present in the response. |
+| room_name         | `string`  | Name of the room provided during its creation.                                                                    |
+| template_id       | `string`  | Unique identifier for the template associated with the room.                                                      |
+| role              | `string`  | Role of the peer within the room.                                                                                 |
+| error_code        | `int`     | Error code as defined by 100ms (refer to the sample response for an example).                                      |
+| error_name        | `string`  | Name of the error.                                                                                                |
+| error_message     | `string`  | Message detailing the error.                                                                                      |
+| error_description | `string`  | Detailed description of the error.                                                                                |
+| is_terminal       | `bool`    | Indicates whether this error is terminal: `false` means the 100ms SDK retried, and this error event is not final, suggesting that the action might have succeeded in subsequent retries; `true` means no further retries were made, making this the final error. |
+| action            | `string`  | The action during which the error occurred (e.g., RECONNECT_SIGNAL in the case of `client.disconnected`).               |
+| agent             | `object`  | Information about the user agent.                                                                                 |
 
 <br />
 <ResponseBox id="res-0" status="200 OK">
@@ -383,27 +379,24 @@ Refer [Overview](/server-side/v2/api-reference/analytics/overview#allowed-filter
 
 ### client.connect.failed
 
-| Attribute         | Type      | Description                                                                                                        |
-| ----------------- | --------- | ------------------------------------------------------------------------------------------------------------------ |
-| user_id           | `string`  | Your internal user identifier                                                                                      |
-| user_name         | `string`  | User name of the user                                                                                              |
-| peer_id           | `string`  | Unique identifier of the peer/participant                                                                          |
-| account_id        | `string`  | Unique identifier for your 100ms account                                                                           |
-| room_id           | `string`  | Unique identifier of the room  (Example: `5f9edc6bd238215aec7700df`)                                               |
-| session_id        | `string`  | Unique identifier of the session (Example: `5f9edc6bd238215aec7700df`). Session ID may or may not be present in the response. |
-| room_name         | `string`  | Room name provided when creating the room.                                                                         |
-| template_id       | `string`  | Unique identifier of the template associated with the room.                                                        |
-| role              | `string`  | Peer role                                                                                                          |
-| error_code        | `int`     | [TO FILL] (How will user make sense of error code? Do we have a list of error codes for reference?)                |
-| error_name        | `string`  | Name of the error.                                                                                                  |
-| error_message     | `string`  | The error message.
-| error_description | `string`  | Details about the error.
-| is_terminal       | `bool`    | [TO FILL]                     |
-| transport_state   | `string`  | [TO FILL]                     |
-| endpoint          | `string`  | [TO FILL]                     |
-| action            | `string`  | [TO FILL]                     |
-| agent             | `object`  | User agent information
-
+| Attribute       | Type  | Description                                                                                                   |
+|---------------------|-----------|-------------------------------------------------------------------------------------------------------------------|
+| user_id           | `string`  | Internal identifier for the user.                                                                                 |
+| user_name         | `string`  | Name of the user.                                                                                                 |
+| peer_id           | `string`  | Unique identifier for the peer or participant.                                                                    |
+| account_id        | `string`  | Unique identifier for your 100ms account.                                                                         |
+| room_id           | `string`  | Unique identifier for the room (e.g., `5f9edc6bd238215aec7700df`).                                                |
+| session_id        | `string`  | Unique identifier for the session (e.g., `5f9edc6bd238215aec7700df`). The session ID may or may not be present in the response. |
+| room_name         | `string`  | Name of the room provided during its creation.                                                                    |
+| template_id       | `string`  | Unique identifier for the template associated with the room.                                                      |
+| role              | `string`  | Role of the peer within the room.                                                                                 |
+| error_code        | `int`     | Error code as defined by 100ms (refer to the sample response for an example).                                      |
+| error_name        | `string`  | Name of the error.                                                                                                |
+| error_message     | `string`  | Message detailing the error.                                                                                      |
+| error_description | `string`  | Detailed description of the error.                                                                                |
+| is_terminal       | `bool`    | Indicates whether this error is terminal: `false` means the 100ms SDK retried, and this error event is not final, suggesting that the action might have succeeded in subsequent retries; `true` means no further retries were made, making this the final error. |
+| action            | `string`  | The action during which the error occurred (e.g., INIT in the case of `client.connect.failed`).                |
+| agent             | `object`  | Information about the user agent.                                                                                 |
 <br />
 <ResponseBox id="res-0" status="200 OK">
 
