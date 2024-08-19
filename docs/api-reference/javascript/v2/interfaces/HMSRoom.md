@@ -53,6 +53,12 @@ nav: '4.68'
 
 ---
 
+### isVBEnabled
+
+• `Optional` **isVBEnabled**: `boolean`
+
+---
+
 ### joinedAt
 
 • `Optional` **joinedAt**: `Date`

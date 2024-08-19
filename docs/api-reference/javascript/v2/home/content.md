@@ -1279,6 +1279,22 @@ Select a boolean denoting whether someone is sharing screen in the room.
 
 ---
 
+### selectIsVBEnabled
+
+▸ **selectIsVBEnabled**(`state`): `boolean`
+
+#### Parameters
+
+| Name    | Type                                                                                                            |
+| :------ | :-------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+
+#### Returns
+
+`boolean`
+
+---
+
 ### selectLocalAudioTrackID
 
 ▸ **selectLocalAudioTrackID**(`state`): `undefined` \| `string`
