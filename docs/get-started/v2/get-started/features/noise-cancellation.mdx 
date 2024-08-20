@@ -1,0 +1,128 @@
+---
+title: Whiteboard
+nav: 3.7
+---
+
+The Whiteboard feature in 100ms is designed to enhance collaborative and interactive experiences across various setups, particularly in educational environments where student-teacher interactions are crucial. 
+
+The Whiteboard is invaluable in a range of setups, including:
+- Education: Facilitates interactive learning sessions between students and teachers.
+- Corporate Training: Enhances training programs with real-time annotations and visual aids.
+- Remote Team Collaboration: Supports brainstorming and planning sessions with a shared visual space.
+- Creative Workshops: Enables collaborative drawing and design tasks.
+
+This is a guide to enabling, configuring and using the Whiteboard on 100ms.
+
+<StepsToc
+    parentId="whiteboard"
+    descriptions={[
+        "General information on 100ms Whiteboard.",
+        "Enabling the Whiteboard for your room(s).",
+        "Exploring platforms and methods of integration.",
+        "Launching, interacting, and stopping the Whiteboard and its default behaviour."
+    ]}
+/>
+
+<StepsContainer id="whiteboard">
+
+### Getting Started
+
+100ms has developed a collaborative whiteboard using [tldraw 2.0](https://tldraw.dev/), powered entirely by 100ms' signaling backend.
+
+<Note type='warning'>
+**IMPORTANT** <br/>
+This feature is currently in Beta and access is limited to selected users. To be a part of the early access cohort, request to enable this using the support widget on 100ms dashboard.
+</Note>
+
+### Enabling and Configuring the Whiteboard
+
+Whiteboard can be configured from the 100ms dashboard.
+
+#### Enabling the Whiteboard
+
+1. Navigate to a specific Template where you wish to enable the Whiteboard.
+2. Click on **‘Advanced Settings’** tab in the Template configuration.
+3. Enable ‘**Whiteboard**’.
+
+<video loop="true" autoplay="autoPlay" controls="false" id="vid" muted>
+    <source src="/docs/docs/v2/whiteboard/enable-whiteboard-config.mp4" type="video/mp4" />
+</video>
+
+#### Recording and live streaming the Whiteboard
+
+To record or live stream whiteboard activities, this permission toggle must be enabled. If disabled, the whiteboard will not appear in room composite recordings or live streams. Ensure recording or live streaming is activated in the template settings to enable this feature.
+
+#### Configuring the permissions
+
+There are three permission levels for managing the whiteboard:
+
+1. **Launch, Close, and View Whiteboard**  
+   Assign to roles (at least one) that should have the ability to launch or close the whiteboard. Users in these roles can view the whiteboard but cannot write or collaborate unless additional permissions are granted.
+
+2. **Collaborate and View Whiteboard**  
+   Assign to roles (at least one) that should have the ability to draw and collaborate on the whiteboard. Users in these roles can write, collaborate, and view the whiteboard. The whiteboard will automatically launch for them whenever it is initiated by someone with launch permissions.
+
+3. **Only View Whiteboard**  
+   Assign to roles that should only have the ability to view the whiteboard. These users cannot launch, close, or draw on the whiteboard unless further permissions are assigned. The whiteboard will automatically launch for them when initiated by someone with launch permissions. Participants with this permission will not be able to see the different collaboration toolbars.
+
+![whiteboard-permissions](/docs/v2/whiteboard/whiteboard-config-permissions.png)
+
+> **Note on Multiple Permissions**
+>
+> A role can be assigned multiple permission levels. For example, a **‘teacher’** role can have both the 'Launch, Close, and View Whiteboard' and 'Collaborate and View Whiteboard' permissions, allowing them to launch and write on the whiteboard. But a 'student
+>
+
+### Integrating the Whiteboard
+The Whiteboard is part of [100ms' Prebuilt SDKs](/prebuilt/v2/prebuilt/quickstart#embed-as-component) and is available across all platforms (iOS, Android, Flutter, React Native and Web). In case a more custom integration is desired within the SDK, refer to the following platform SDK specific guides:
+- [iOS](/ios/v2/how-to-guides/set-up-video-conferencing/whiteboard)
+- [Android](/android/v2/how-to-guides/extend-capabilities/whiteboard)
+- [React Native](/react-native/v2/how-to-guides/extend-capabilities/whiteboard)
+- [Flutter](/flutter/v2/how-to-guides/extend-capabilities/whiteboard)
+- [Web](/javascript/v2/how-to-guides/extend-capabilities/whiteboard)
+
+### Using the Whiteboard
+Once you’ve enabled and saved the configuration, the Whiteboard can be launched by the peers with launch permissions on any supported device.
+
+<video loop="true" autoplay="autoPlay" controls="false" id="vid" muted>
+    <source src="/docs/docs/v2/whiteboard/launch-whiteboard.mp4" type="video/mp4" />
+</video>
+
+#### Default behaviour
+1. **Session Persistence** - The whiteboard does not retain any information after a session ends. However, during a session, it maintains all drawn shapes and information even if it is closed and reopened multiple times.
+2. **No Follow-along** - The current version of the whiteboard does not support a true follow-along feature. This means participants cannot follow the presenter’s cursor movements across different parts of the canvas or see the exact zoom level that the presenter is using. This has been solved in Prebuilt by limiting the canvas and disabling the zoom on web.
+3. **Canvas Limitations** - Although the whiteboard inherently supports an infinite canvas, its movement is restricted to fit the device’s viewport in Prebuilt Web to avoid canvas scrolling beyond the visible area.
+4. **Zoom Capabilities** - Zoom-in and zoom-out functionality have been disabled on the whiteboard in Prebuilt Web. Although, it is available on Prebuilt Mweb, Android, iOS, React Native and Flutter.
+5. **Unified Page View** - When one participant changes the whiteboard page, it synchronizes across all participants’ views. Current implementation does not support independent page navigation by different users, but future updates will include this capability.
+6. **Launch and Closure Control** - Only the participant who launches the whiteboard can close it. If this participant disconnects, the whiteboard will automatically close. Other participants with the required role permissions can relaunch the whiteboard if needed.
+7. **Screenshare Priority** - Screenshare takes precedence over the whiteboard. If screenshare is initiated, the whiteboard will automatically close. Additionally, the option to launch the whiteboard is disabled in the Prebuilt UI during an active screenshare session. To access the whiteboard, the screenshare must be stopped first.
+
+#### Features
+The following features are supported within the Whiteboard:
+1. Bottom Toolbar - Select, Hand, Pen, Eraser, Arrows, Text, Note, Image Upload, Shapes (Cloud, Star, Square, Circle etc.)
+2. Colour selection, masking, font control
+3. Insert embed 
+4. Support for multiple pages
+5. Export individual pages as PNGs
+6. Image upload and annotation - Images can be upload by either drag-and-drop method or by clicking the ‘Assets’ icon in the bottom toolbar. This is only supported on web as of now.
+7. Dark mode - This can be set locally for a user with collaborate permissions.
+
+There are additional minor options and features available that can be used or adjusted.
+
+#### Whiteboard on Mobile
+Whiteboard is supported across Mweb, Android, iOS, React Native and Flutter.
+
+#### Errors
+- Timeout error will occur for the whiteboard in case the tab is left inactive for sometime.
+
+</StepsContainer>
+
+
+### Frequently Asked Questions (FAQ)
+
+1. **Is whiteboard a chargeable feature?**
+    
+    Yes, 100ms Whiteboard is charged based on per peer usage minutes. This means that for every peer that is either collaborating on or viewing the whiteboard, their individual usage minutes will be aggregated. Reach out to us for the pricing.
+
+2. **How many participants can the whiteboard support?**
+    
+    We have tested the whiteboard with up to 1500 participants. In case the requirement is higher than this, please reach out to us.
