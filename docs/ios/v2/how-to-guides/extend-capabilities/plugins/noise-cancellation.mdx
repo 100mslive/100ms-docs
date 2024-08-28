@@ -29,6 +29,11 @@ let pathForNCModel = HMSNoiseCancellationModels.path(for: .smallFullBand)
 ## Minimum Requirements
 -   Minimum 100ms SDK version required is `1.7.0`
 
+<Note type='warning'>
+**IMPORTANT** <br/>
+Enable Noise cancellation in the template configuration. Learn more on enabling this feature from [here](/get-started/v2/get-started/features/noise-cancellation#enabling-the-noise-cancellation)
+</Note>
+
 ## How to enable noise cancellation in your app
 
 To enable noise cancellation, you need HMSNoiseCancellationPlugin. Initialise HMSNoiseCancellationPlugin using this path to the AI model. You also pass the initial state of noise cancellation plugin as well.
@@ -148,8 +153,7 @@ roomModel.isNoiseCancellationEnabled
 
 ## How to check if noise cancellation is enabled in the room
 
-To make noise cancellation work your room needs to have noise cancellation feature enabled. You can check if noise cancellation is enabled using roomModel.isNoiseCancellationAvailable. To enable noise canellation in your rooms, reach out to support@100ms.live or 100ms discord.
-
+To make noise cancellation work your room needs to have noise cancellation feature enabled. You can check if noise cancellation is enabled using roomModel.isNoiseCancellationAvailable. 
 ```swift
 roomModel.isNoiseCancellationAvailable
 ```
