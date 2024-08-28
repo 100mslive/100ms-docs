@@ -171,8 +171,9 @@ The following snippet illustrates how to add the plugin to the video and manage 
 
 ```jsx
 import {
-  selectLocalVideoTrackID,
   selectEffectsKey,
+  selectIsLocalVideoPluginPresent
+  selectLocalVideoTrackID,
   useHMSStore,
 } from '@100mslive/react-sdk';
 import { 
@@ -186,6 +187,7 @@ export const VirtualBackgroundPicker = () => {
   // Get the effects SDK key here
   const effectsKey = useHMSStore(selectEffectsKey);
   const trackId = useHMSStore(selectLocalVideoTrackID);
+  const isPluginAdded = useHMSStore(selectIsLocalVideoPluginPresent(VBHandler?.getName() || ''));
   
   // State can be used to show active selection
   const [background, setBackground] = useState<string | HMSVirtualBackgroundTypes>(
