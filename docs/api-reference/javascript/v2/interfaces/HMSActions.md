@@ -1,6 +1,6 @@
 ---
 title: HMSActions<T>
-nav: '4.5'
+nav: '4.8'
 ---
 
 The below interface defines our SDK API Surface for taking room related actions.
@@ -512,6 +512,16 @@ Notifications for the ignored messages will still be sent, it'll only not be put
 #### Returns
 
 `void`
+
+---
+
+### initDiagnostics
+
+▸ **initDiagnostics**(): [`HMSDiagnosticsInterface`](/api-reference/javascript/v2/interfaces/HMSDiagnosticsInterface)
+
+#### Returns
+
+[`HMSDiagnosticsInterface`](/api-reference/javascript/v2/interfaces/HMSDiagnosticsInterface)
 
 ---
 

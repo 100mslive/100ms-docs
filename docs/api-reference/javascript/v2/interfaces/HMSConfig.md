@@ -1,6 +1,6 @@
 ---
 title: HMSConfig
-nav: '4.14'
+nav: '4.17'
 ---
 
 the config object tells the SDK options you want to join with

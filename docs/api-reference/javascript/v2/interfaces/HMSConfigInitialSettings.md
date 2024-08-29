@@ -1,6 +1,6 @@
 ---
 title: HMSConfigInitialSettings
-nav: '4.15'
+nav: '4.18'
 ---
 
 ## Properties
@@ -8,6 +8,12 @@ nav: '4.15'
 ### audioInputDeviceId
 
 • `Optional` **audioInputDeviceId**: `string`
+
+---
+
+### audioMode
+
+• `Optional` **audioMode**: [`HMSAudioMode`](/api-reference/javascript/v2/enums/HMSAudioMode)
 
 ---
 

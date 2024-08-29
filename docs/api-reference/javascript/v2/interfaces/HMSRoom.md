@@ -1,6 +1,6 @@
 ---
 title: HMSRoom
-nav: '4.63'
+nav: '4.68'
 ---
 
 ## Properties
@@ -50,6 +50,12 @@ nav: '4.63'
 ### isNoiseCancellationEnabled
 
 • `Optional` **isNoiseCancellationEnabled**: `boolean`
+
+---
+
+### isVBEnabled
+
+• `Optional` **isVBEnabled**: `boolean`
 
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: HLSPlaylistType
-nav: '2.3'
+nav: '2.4'
 ---
 
 ## Enumeration Members
