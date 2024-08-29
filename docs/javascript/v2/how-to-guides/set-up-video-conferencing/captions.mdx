@@ -61,6 +61,9 @@ Closed captions can be dynamically enabled or disabled at runtime within a given
         mode: HMSTranscriptionMode;
     }
 
+    // admin/host role need to startTranscription if he had the access, here is how you will check if you had access to start transcription
+    const isTranscriptionAllowed = useHMSStore(selectIsTranscriptionAllowedByMode(HMSTranscriptionMode.CAPTION));
+
 ```
 
 Use `hmsActions.startTranscription()` method to start the closed captions.
