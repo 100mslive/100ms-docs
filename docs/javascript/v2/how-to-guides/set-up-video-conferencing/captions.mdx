@@ -3,8 +3,7 @@ title: Live Transcription for Conferencing (Closed Captions - Beta)
 nav: 1.24
 ---
 
-100ms real-time transcription engine generates a live transcript (closed captions) during a conferencing session. 
-The SDK provides a callback with transcript for each peer when they speak.
+100ms real-time transcription engine delivers live transcriptions (closed captions) during conferencing sessions. The SDK includes a callback function that provides a transcript for each participant when they speak. The generated captions are speaker-labelled.
 
 ## Minimum Requirements
 
@@ -12,7 +11,7 @@ The SDK provides a callback with transcript for each peer when they speak.
 
 ## How to implement closed captioning?
 
-You implement `useTranscript` hook with `onTranscript` callback like below:
+The `useTranscript` hook is implemented with the `onTranscript` callback as shown below:
 
 ```ts
     export interface HMSTranscript {
@@ -22,9 +21,9 @@ You implement `useTranscript` hook with `onTranscript` callback like below:
         end: number;
         // peer_id of the speaker
         peer_id: string;
-        // transcription will continue update the transcript until you receive final keyword
+        // transcription will continue to update the transcript until you receive final keyword
         final: boolean;
-        // transcripted caption
+        // closed caption
         transcript: string;
     }
 
@@ -37,7 +36,7 @@ You implement `useTranscript` hook with `onTranscript` callback like below:
 
 ```
 
-## How to know if transcript is enabled in a room
+## How can you check if closed captions are enabled in a room?
 
 ```ts
 
@@ -47,13 +46,13 @@ You implement `useTranscript` hook with `onTranscript` callback like below:
 
 ```
 
-## How to toggle Live Transcriptions on/off
+## How to toggle closed captions on or off?
 
-You can toggle live transcriptions on/off at runtime that can help save costs.
+Closed captions can be dynamically enabled or disabled at runtime within a given room, depending on user requirements. This capability helps minimize unnecessary usage costs by ensuring that captions are enabled only when explicitly needed by the user(s).
 
 ```ts
 
-    // Currently we support closed caption type mode
+    // Currently 100ms supports closed captions type mode
     export declare enum HMSTranscriptionMode {
         CAPTION = "caption"
     }
@@ -64,7 +63,7 @@ You can toggle live transcriptions on/off at runtime that can help save costs.
 
 ```
 
-Use `hmsActions.startTranscription()` method to start the transcription
+Use `hmsActions.startTranscription()` method to start the closed captions.
 
 
 ```ts
@@ -80,7 +79,7 @@ Use `hmsActions.startTranscription()` method to start the transcription
 
 ```
 
-Use `hmsActions.stopTranscription()` method to stop transcription:
+Use `hmsActions.stopTranscription()` method to stop closed captions.
 
 ```ts
     async stopCaption() {
