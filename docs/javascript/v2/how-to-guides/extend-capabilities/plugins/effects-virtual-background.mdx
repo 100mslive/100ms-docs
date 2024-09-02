@@ -247,14 +247,16 @@ Effects virtual background is supported on Safari (v16.5.1+), Firefox and Chromi
 ## Known issues
 
 Effects is not supported in Safari versions older than v17. It is recommended to use the HMSVBPlugin instead. This conditional usage can be implemented by importing the effects plugin after checking the browser and version through the useragent string.
-Importing plugins individually:
+Importing plugins individually throws an eslint warning due to an [open issue](https://github.com/import-js/eslint-plugin-import/issues/1810) on `eslint-plugin-import` :
 
 ```
 // Importing just HMSVB initially as fallback
+// eslint-disable-next-line
 import { HMSVBPlugin } from '@100mslive/hms-virtual-background/hmsvbplugin';
 ...
 
 // Later if the browser and version are supported, the effects plugin can be separately imported
+// eslint-disable-next-line
 const { HMSEffectsPlugin } = await import('@100mslive/hms-virtual-background/hmseffectsplugin');
 ```
 The chunk size is around 700 bytes and should not affect the load times to a noticeable extent.
