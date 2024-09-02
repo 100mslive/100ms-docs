@@ -242,4 +242,30 @@ The full implementation can be viewed in the [roomkit-react package](https://git
 
 ## Supported Browsers
 
-Effects virtual background is supported on Safari, Firefox and Chromium based browsers.<br/>
+Effects virtual background is supported on Safari (v16.5.1+), Firefox and Chromium based browsers.<br/>
+
+## Known issues
+
+Effects is not supported in Safari versions older than v17. It is recommended to use the HMSVBPlugin instead. This conditional usage can be implemented by importing the effects plugin after checking the browser and version through the useragent string.
+Importing plugins individually:
+
+```
+// Importing just HMSVB initially as fallback
+import { HMSVBPlugin } from '@100mslive/hms-virtual-background/hmsvbplugin';
+...
+
+// Later if the browser and version are supported, the effects plugin can be separately imported
+const { HMSEffectsPlugin } = await import('@100mslive/hms-virtual-background/hmseffectsplugin');
+```
+The chunk size is around 700 bytes and should not affect the load times to a noticeable extent.
+
+For Next.js, the component importing the effects plugin needs to be dynamically imported:
+
+```
+  const VirtualBackgroundPicker = dynamic(
+    () => import("./virtual-background-picker"),
+    {
+      ssr: false
+    }
+  );
+```
