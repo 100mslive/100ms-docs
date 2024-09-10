@@ -9,6 +9,24 @@ nav: '4.21'
 
   ↳ **`HMSDiagnosticsConnectivityListener`**
 
+## Properties
+
+### onSFUMigration
+
+• `Optional` **onSFUMigration**: () => `void`
+
+#### Type declaration
+
+▸ (): `void`
+
+##### Returns
+
+`void`
+
+#### Inherited from
+
+HMSUpdateListener.onSFUMigration
+
 ## Methods
 
 ### onChangeMultiTrackStateRequest
