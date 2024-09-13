@@ -83,6 +83,12 @@ nav: '3.2'
 
 ---
 
+### localVideoUnmutedNatively
+
+• `Readonly` **localVideoUnmutedNatively**: `HMSInternalEvent`<`unknown`\>
+
+---
+
 ### policyChange
 
 • `Readonly` **policyChange**: `HMSInternalEvent`<`PolicyParams`\>
