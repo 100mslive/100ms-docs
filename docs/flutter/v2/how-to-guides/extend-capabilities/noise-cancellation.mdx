@@ -3,6 +3,8 @@ title: Noise Cancellation
 nav: 13.1
 ---
 
+import AndroidSdkVersionShield from '@/common/android-sdk-version-shield.md';
+
 The Noise Cancellation feature is an invaluable tool designed to enhance the audio quality in scenarios such as conferences, live streams, and recordings where unwanted background noise can degrade the listening experience. By leveraging advanced Artificial Intelligence (AI) algorithms, this feature intelligently identifies and suppresses extraneous sounds, ensuring clear and crisp audio output.
 
 ## Key Benefits
@@ -31,7 +33,25 @@ HMSSDK provides `HMSNoiseCancellationController` to control Noise Cancellation i
 
 <div className="steps-container">
 
-### Step 1: Set the enableNoiseCancellation property in HMSAudioTrackSetting as true
+### Step 1: Add Noise Cancellation library dependency (Android only)
+
+Add the following dependency to your app's `build.gradle` file to integrate the Noise Cancellation feature into your Flutter application:
+```
+dependencies {
+    ...
+    implementation "live.100ms:hms-noise-cancellation-android:2.9.67"
+}
+```
+
+Ensure that you add the above dependency in the `dependencies` block of the `my_app_name/android/app/build.gradle` file.
+
+Check the reference [here](https://github.com/100mslive/100ms-flutter/blob/53466d8b225125bdfc0916ada15f6ba009a79afd/packages/hmssdk_flutter/example/android/app/build.gradle#L86) to see it in action in the sample app.
+
+Replace `2.9.67` with the latest version of the Noise Cancellation library available on the Maven Repository. <AndroidSdkVersionShield />
+
+This step is required only for the Android app. On iOS, the Noise Cancellation library is already integrated into the HMSSDK.
+
+### Step 2: Set the enableNoiseCancellation property in HMSAudioTrackSetting as true
 
 ```dart{6}
 /// To enable noise cancellation set the `enableNoiseCancellation` property to true
@@ -42,7 +62,7 @@ var audioTrackSetting = HMSAudioTrackSetting(
             enableNoiseCancellation: true);
 ```
 
-### Step 2: Pass the Track Settings to the HMSSDK constructor
+### Step 3: Pass the Track Settings to the HMSSDK constructor
 
 ```dart{4}
 /// Create Instance of `HMSTrackSetting`
@@ -60,7 +80,7 @@ var hmsSDK = HMSSDK(
         hmsTrackSetting: trackSettings);
 ```
 
-### Step 3: Check for Noise Cancellation availability
+### Step 4: Check for Noise Cancellation availability
 
 > 🔑 Note: You can call this API to check the state of Noise Cancellation only after successfully joining the Room.
 
@@ -76,7 +96,7 @@ class Meeting implements HMSUpdateListener, HMSActionResultListener{
 }
 ```
 
-### Step 4: If Noise Cancellation is available, enable it
+### Step 5: If Noise Cancellation is available, enable it
 
 ```dart{13}
 class Meeting implements HMSUpdateListener, HMSActionResultListener{
@@ -97,7 +117,7 @@ class Meeting implements HMSUpdateListener, HMSActionResultListener{
 }
 ```
 
-### Step 5: To disable Noise Cancellation use HMSNoiseCancellationController's disable method
+### Step 6: To disable Noise Cancellation use HMSNoiseCancellationController's disable method
 
 ```dart{12}
 class Meeting implements HMSUpdateListener, HMSActionResultListener{
