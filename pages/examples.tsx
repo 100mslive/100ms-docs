@@ -10,6 +10,7 @@ import Sidebar from '@/components/Sidebar';
 import TechnologySelect, { TECHNOLOGIES, Technologies } from '@/components/TechnologySelect';
 import { getAllDocs, getNavfromDocs } from '@/lib/mdxUtils';
 import { Box, Button, Flex, Text } from '@100mslive/react-ui';
+import { AppAnalytics } from '@/lib/publishEvents';
 
 export default function Examples({ allNav }) {
     const [menu, setMenu] = useState(false);
@@ -33,7 +34,7 @@ export default function Examples({ allNav }) {
     }, [category, technology]);
 
     useEffect(() => {
-        window.analytics.track('examples.technology.clicked', {
+        AppAnalytics.track('examples.technology.clicked', {
             category,
             technology
         });
@@ -41,7 +42,7 @@ export default function Examples({ allNav }) {
 
     useEffect(() => {
         if (filteredExamples.length < 1)
-            window.analytics.track('examples.no.results', {
+            AppAnalytics.track('examples.no.results', {
                 category,
                 technology
             });
@@ -189,7 +190,7 @@ export default function Examples({ allNav }) {
                                                     }}
                                                     onClick={() => {
                                                         setCategory(text);
-                                                        window.analytics.track(
+                                                        AppAnalytics.track(
                                                             'examples.category.clicked',
                                                             {
                                                                 category: text,
@@ -237,7 +238,7 @@ export default function Examples({ allNav }) {
                                                 description={description}
                                                 title={title}
                                                 onClick={() =>
-                                                    window.analytics.track('example.clicked', {
+                                                    AppAnalytics.track('example.clicked', {
                                                         title,
                                                         exampleRepo: url,
                                                         page: window?.location?.pathname
