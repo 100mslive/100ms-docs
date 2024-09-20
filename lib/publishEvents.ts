@@ -78,7 +78,7 @@ const analyticsTrack = (title, options) => {
     }
 };
 
-const analyticsPage = (title, options) => {
+const analyticsPage = () => {
     const user = currentUser();
     if (!user) {
         try {
@@ -86,26 +86,7 @@ const analyticsPage = (title, options) => {
         } catch (e) {
             console.error(e);
         }
-        try {
-            window.analytics.page(title, {
-                ...getCommonOptions(),
-                ...options
-            });
-        } catch (e) {
-            console.error(e);
-        }
     } else if (user && !user.is_admin) {
-        try {
-            window.analytics.page(title, {
-                email: user.email,
-                customer_id: user.customer_id,
-                api_version: user.api_version,
-                ...getCommonOptions(),
-                ...options
-            });
-        } catch (e) {
-            console.error(e);
-        }
         try {
             hubspotPageView();
         } catch (e) {
