@@ -25,7 +25,7 @@ import {
 import { Listbox } from '@headlessui/react';
 import { Flex, Box, Text, CSS } from '@100mslive/react-ui';
 import { getUpdatedPlatformName } from '@/lib/utils';
-import { AppAnalytics} from "../publishEvents"
+import { AppAnalytics } from '../lib/publishEvents';
 import SidebarSection from './SidebarSection';
 import ReleaseNotes from './ReleaseNotes';
 import PlatformAccordion from './PlatformAccordion';
