@@ -39,7 +39,7 @@ const Application = ({ Component, pageProps }) => {
             }
         });
         if (!!userDetails && Object.keys(userDetails).length !== 0 && count === 0) {
-            AppAnalytics.identify(userDetails.customer_id);
+            AppAnalytics.identify(userDetails.customer_id, { ...userDetails });
             setCount(count + 1);
         }
     }, [userDetails]);

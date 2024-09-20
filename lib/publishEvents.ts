@@ -125,7 +125,7 @@ const amplitudeIdentify = (userId, properties = {}) => {
     amplitude.identify(identifyEvent);
 };
 
-const analyticsIdentify = (id, options) => {
+const analyticsIdentify = (id, options = {}) => {
     const user = currentUser();
     if (!user || (user && !user.is_admin)) {
         const finalOptions = {
