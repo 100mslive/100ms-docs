@@ -1,5 +1,6 @@
 import React, { PropsWithChildren } from 'react';
 import { Box } from '@100mslive/react-ui';
+import { AppAnalytics } from '../lib/publishEvents';
 
 export const CopyIcon = () => (
     <svg
@@ -30,99 +31,100 @@ export const CheckIcon = () => (
         <polyline points="20 6 9 17 4 12" />
     </svg>
 );
-const Code: React.FC<PropsWithChildren<{ section?: string; sectionIndex?: number; tab?: string }>> =
-    ({ children, section, sectionIndex, tab }) => {
-        const textRef = React.useRef(null);
+const Code: React.FC<
+    PropsWithChildren<{ section?: string; sectionIndex?: number; tab?: string }>
+> = ({ children, section, sectionIndex, tab }) => {
+    const textRef = React.useRef(null);
 
-        const copyFunction = () => {
-            setCopy(true);
-            // @ts-ignore
-            navigator.clipboard.writeText(textRef.current.textContent);
-            setTimeout(() => {
-                setCopy(false);
-            }, 2000);
+    const copyFunction = () => {
+        setCopy(true);
+        // @ts-ignore
+        navigator.clipboard.writeText(textRef.current.textContent);
+        setTimeout(() => {
+            setCopy(false);
+        }, 2000);
 
-            window.analytics.track('copy.to.clipboard', {
-                title: document.title,
-                referrer: document.referrer,
-                path: window.location.hostname,
-                pathname: window.location.pathname,
-                href: window.location.href,
-                section,
-                sectionIndex,
-                tab
-            });
-        };
-        const [copy, setCopy] = React.useState(false);
-
-        return (
-            <pre>
-                <Box css={{ position: 'relative', minWidth: 'min-content' }}>
-                    <Box
-                        css={{
-                            position: 'absolute',
-                            width: '100%',
-                            top: '6px',
-                            pointerEvents: 'none'
-                        }}
-                        className="code-block">
-                        {!copy ? (
-                            <button
-                                aria-label="Copy to Clipboard"
-                                onClick={() => copyFunction()}
-                                type="button"
-                                style={{
-                                    zIndex: '45',
-                                    background: 'var(--docs_bg_card)',
-                                    outline: 'none',
-                                    height: '40px',
-                                    width: '40px',
-                                    padding: '9px',
-                                    float: 'right',
-                                    position: 'sticky',
-                                    cursor: 'pointer',
-                                    right: '12px',
-                                    pointerEvents: 'auto',
-                                    borderRadius: '20px',
-                                    border: '1px solid var(--docs_border_strong)'
-                                }}>
-                                <CopyIcon />
-                            </button>
-                        ) : (
-                            <button
-                                aria-label="Copy to Clipboard"
-                                onClick={() => copyFunction()}
-                                type="button"
-                                style={{
-                                    zIndex: '45',
-                                    background: 'var(--docs_bg_card)',
-                                    outline: 'none',
-                                    height: '40px',
-                                    width: '40px',
-                                    padding: '9px',
-                                    float: 'right',
-                                    position: 'sticky',
-                                    cursor: 'pointer',
-                                    right: '12px',
-                                    pointerEvents: 'auto',
-                                    borderRadius: '20px',
-                                    border: '1px solid var(--docs_border_strong)'
-                                }}>
-                                <CheckIcon />
-                            </button>
-                        )}
-                    </Box>
-                    <Box ref={textRef} css={{ padding: '1rem 0', paddingRight: '1rem' }}>
-                        {children}
-                    </Box>
-                    <style jsx>{`
-                        button:hover {
-                            opacity: 0.8;
-                        }
-                    `}</style>
-                </Box>
-            </pre>
-        );
+        AppAnalytics.track('copy.to.clipboard', {
+            title: document.title,
+            referrer: document.referrer,
+            path: window.location.hostname,
+            pathname: window.location.pathname,
+            href: window.location.href,
+            section,
+            sectionIndex,
+            tab
+        });
     };
+    const [copy, setCopy] = React.useState(false);
+
+    return (
+        <pre>
+            <Box css={{ position: 'relative', minWidth: 'min-content' }}>
+                <Box
+                    css={{
+                        position: 'absolute',
+                        width: '100%',
+                        top: '6px',
+                        pointerEvents: 'none'
+                    }}
+                    className="code-block">
+                    {!copy ? (
+                        <button
+                            aria-label="Copy to Clipboard"
+                            onClick={() => copyFunction()}
+                            type="button"
+                            style={{
+                                zIndex: '45',
+                                background: 'var(--docs_bg_card)',
+                                outline: 'none',
+                                height: '40px',
+                                width: '40px',
+                                padding: '9px',
+                                float: 'right',
+                                position: 'sticky',
+                                cursor: 'pointer',
+                                right: '12px',
+                                pointerEvents: 'auto',
+                                borderRadius: '20px',
+                                border: '1px solid var(--docs_border_strong)'
+                            }}>
+                            <CopyIcon />
+                        </button>
+                    ) : (
+                        <button
+                            aria-label="Copy to Clipboard"
+                            onClick={() => copyFunction()}
+                            type="button"
+                            style={{
+                                zIndex: '45',
+                                background: 'var(--docs_bg_card)',
+                                outline: 'none',
+                                height: '40px',
+                                width: '40px',
+                                padding: '9px',
+                                float: 'right',
+                                position: 'sticky',
+                                cursor: 'pointer',
+                                right: '12px',
+                                pointerEvents: 'auto',
+                                borderRadius: '20px',
+                                border: '1px solid var(--docs_border_strong)'
+                            }}>
+                            <CheckIcon />
+                        </button>
+                    )}
+                </Box>
+                <Box ref={textRef} css={{ padding: '1rem 0', paddingRight: '1rem' }}>
+                    {children}
+                </Box>
+                <style jsx>{`
+                    button:hover {
+                        opacity: 0.8;
+                    }
+                `}</style>
+            </Box>
+        </pre>
+    );
+};
 
 export default Code;

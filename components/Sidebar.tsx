@@ -1,7 +1,6 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/router';
-import UtmLinkWrapper from './UtmLinkWrapper';
 import FlutterIcon from '@/assets/FlutterIcon';
 import AndroidIcon from '@/assets/icons/AndroidIcon';
 import IosIcon from '@/assets/icons/IosIcon';
@@ -26,9 +25,11 @@ import {
 import { Listbox } from '@headlessui/react';
 import { Flex, Box, Text, CSS } from '@100mslive/react-ui';
 import { getUpdatedPlatformName } from '@/lib/utils';
+import { AppAnalytics} from "../publishEvents"
 import SidebarSection from './SidebarSection';
 import ReleaseNotes from './ReleaseNotes';
 import PlatformAccordion from './PlatformAccordion';
+import UtmLinkWrapper from './UtmLinkWrapper';
 
 const accordionIconStyle = { height: '24px', width: '24px', color: 'inherit' };
 
@@ -141,7 +142,7 @@ const Sidebar: React.FC<Props> = ({
 
     const changeTech = (s) => {
         setTech((prevSelection) => {
-            window.analytics.track('link.clicked', {
+            AppAnalytics.track('link.clicked', {
                 btnId: 'platform.switched',
                 switchedTo: s.name,
                 switchedFrom: prevSelection.name,
@@ -334,7 +335,7 @@ const Sidebar: React.FC<Props> = ({
                                 }}
                                 onClick={() => {
                                     setShowBaseView(true);
-                                    window.analytics.track('btn.clicked', {
+                                    AppAnalytics.track('btn.clicked', {
                                         btnId: 'content.overview.clicked',
                                         currentPage: window.location.href
                                     });

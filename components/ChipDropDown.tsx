@@ -6,6 +6,7 @@ import useClickOutside from '@/lib/useClickOutside';
 import { getUpdatedPlatformName } from '@/lib/utils';
 import Chip from './Chip';
 import { menuItem } from './Sidebar';
+import { AppAnalytics } from '../lib/publishEvents';
 
 const ChipDropDown = ({
     openFilter,
@@ -35,7 +36,7 @@ const ChipDropDown = ({
             <Listbox
                 value={platformFilter}
                 onChange={(selection) => {
-                    window.analytics.track('platform.changed', {
+                    AppAnalytics.track('platform.changed', {
                         title: document.title,
                         referrer: document.referrer,
                         path: window.location.hostname,
