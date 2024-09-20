@@ -22,13 +22,33 @@ By default, components are enabled based on the role associated with the use cas
 </video>
 
 ### Preview Screen
+The Prebuilt preview screen offers a set of components designed to enhance the initial set-up before joining a room. Choose a role to kickstart your customization journey.
 
-#### Header
+##### Header
 Set up a custom header for each roles using Title and Subtitle fields.
-#### Join
+##### Join
 Choose how peers join the room
-	- **Join Now** - Peers from this role will see "Join Now" and would be able join after entering their name.
-	- **Join and Start Streaming** - Peers from this role will see "Go Live" and would be able to join and start streaming when they join the room. Ensure that this role has the permission to "Start/Stop HLS streaming" as `enabled` under Role permissions on its template configuration.
+	- **Join Now** - Peers from this role will see 'Join Now' and would be able join after entering their name.
+	- **Join and Start Streaming** - Peers from this role will see 'Go Live' and would be able to join and start streaming when they join the room. Ensure that this role has the permission to 'Start/Stop HLS streaming' as `enabled` under Role permissions on its template configuration.
+
+##### Skip Preview
+	- Turn the toggle to enable or disable skipping the preview screen.
+	  - **Enabled**: When this option is enabled, the preview screen is skipped, and the user is taken directly to the room screen.
+	  <Note> 
+	  When skip preview is enabled, ensure that the username is passed in the prebuilt links or in the options in the prebuilt component. If not provided, the system will generate a random UUID as the peer's name.
+	  </Note>
+
+##### Noise Cancellation State
+	- Turn the toggle to define the initial state for Noise Cancellation.
+	  - **Enabled**: When this option is enabled, Noise Cancellation will be turned on by default in preview screen for all the peers of this role.
+	  <Note> 
+	  Noise Cancellation should be enabled from 'Advanced Settings' under the Template to enable this setting. Learn more about enabling this feature from [here](/get-started/v2/get-started/features/noise-cancellation#enabling-the-noise-cancellation)
+	  </Note>
+
+##### Virtual Background
+	- Turn the toggle to enable virtual background for this role. Click on 'Upload Image' to add your own image as backgrounds.
+	Head over [Virtual Background](/prebuilt/v2/prebuilt/virtual-background) for more details.
+
 
 ### Room Screen
 The Prebuilt room screen offers a set of components designed to enhance interactivity within a room. Choose a role to kickstart your customization journey.
@@ -36,68 +56,104 @@ The Prebuilt room screen offers a set of components designed to enhance interact
 #### Chat
 Toggle the chat functionality on or off for a specific role. When chat is disabled for a role, that role won't have access to the chat component within the room. If enabled, you can further fine-tune and customize the functionalities of the Prebuilt UI for chat.
 
-##### Initial State
-This setting determines whether the chat component is initially open or closed when a participant joins a session. Keeping the initial state as open can be particularly useful when using the chat overlay view on mobile devices.
+##### Chat UI
+Customize the prebuilt chat UI 
 
-##### Enable Overlay View
-In an overlay view, the chat component overlays on top of video tiles, delivering an immersive chat experience for mobile livestreaming scenarios. Please note that this chat view is exclusively available on mobile devices and is not supported on large-screen applications.
+-	###### Chat Panel Name and Message Placeholder
+	This setting lets you rename the chat panel name and message placeholder as per your design
 
-##### Allow Pinning messages
-Enabling this feature allows the selected role to pin important chat messages on the chat component, making them visible to everyone.
+-	###### Initial State
+	This setting determines whether the chat component is initially open or closed when a participant joins a session. Keeping the initial state as open can be particularly useful when using the chat overlay view on mobile devices.
+
+-	###### Enable Overlay View
+	In an overlay view, the chat component overlays on top of video tiles, delivering an immersive chat experience for mobile livestreaming scenarios. Please note that this chat view is exclusively available on mobile devices and is not supported on large-screen applications.
+
+##### Chat Controls
+Customize the prebuilt chat controls
+
+-	###### Allow Pinning messages
+	Enabling this feature allows the selected role to pin important chat messages on the chat component, making them visible to everyone.
+
+-	###### Allow hiding messages
+	Enabling this feature allows the selected role to hide the unwanted chat messages, making it invisible to everyone.
+
+-	###### Allow blocking peers in chat
+	Enabling this feature allows the selected role to block the peer from sending any messages in the chat.
+
+-	###### Allow pausing chat
+	Enabling this feature allows the selected role to pause the chat messages during the session, once paused no peer can send any messages in the chat until it is resumed.
+
+-	###### Public chat
+	Enabling this feature allows the selected role to send the chat messages as public and everyone in the room can view these messages.
+
+-	###### Private chat
+	Enabling this feature allows the selected role to send the chat messages as private to everyone in the room which has the permission to send pricate messages.
+
+-	###### Role-specific chat
+	Enabling this feature allows the selected role to send the chat messages to another selected roles
 
 
-#### Participant List
+##### Participant List
 Ensure participant list accessibility for roles that require visibility. In certain scenarios, such as large room viewers, there may be no need for them to view other participants, but Hosts or Broadcasters might find it essential to maintain oversight of the participant list. By default, the participant list is enabled for all roles across all templates.
 
-#### Video Tile Layout
+##### Video Tile Layout
 100ms Prebuilt UI allows tweaks on its default grid layout and supports multiple video layouts.
 
-##### Enable local tile inset
-Enabling this makes the local peer's *(for the selected role)* tile in a smaller inset window as default, alternatively if it's disabled, the local tile will be part of the grid view. Join with at least two peers to preview this configuration in action.
+-	###### Enable local tile inset
+	Enabling this makes the local peer's *(for the selected role)* tile in a smaller inset window as default, alternatively if it's disabled, the local tile will be part of the grid view. Join with at least two peers to preview this configuration in action.
 
-##### Prominent roles
-Defining one or more roles as prominent gives them higher tile view prominence for the selected role. For example:
-- For a 1:1 call, define Host as prominent tile for Guest and vice-versa. 
-- For a webinar, set Host as the prominent tile for all other roles. Every role would see Host as the primary tile in the room
-- For a mobile-first livestreaming view, set Broadcaster as prominent tile for every other role, including Broadcaster themselves.
+-	###### Prominent roles
+	Defining one or more roles as prominent gives them higher tile view prominence for the selected role. For example:
+	- For a 1:1 call, define Host as prominent tile for Guest and vice-versa. 
+	- For a webinar, set Host as the prominent tile for all other roles. Every role would see Host as the primary tile in the room
+	- For a mobile-first livestreaming view, set Broadcaster as prominent tile for every other role, including Broadcaster themselves.
 
-##### Can spotlight peer
-Allow this config for roles who can spotlight others or themselves in the room. Spotlighting a tile reflects for everyone in the room.
+-	###### Can spotlight peer
+	Allow this config for roles who can spotlight others or themselves in the room. Spotlighting a tile reflects for everyone in the room.
 
-<Note title ="Different in Prominence and Spotlight">
-Assigning a role as "prominent" for either themselves or other roles establishes a fixed layout that remains unchanged for the entire session. This is particularly well-suited for scenarios where a specific role needs to maintain a constant presence, as seen in webinars and livestreaming. Conversely, spotlighting either their own tile or the tiles of others permits specific participant tiles to temporarily take center stage within the session, allowing for more adaptable layout adjustments as needed.
-</Note>
+	<Note title ="Difference in Prominence and Spotlight">
+	Assigning a role as 'prominent' for either themselves or other roles establishes a fixed layout that remains unchanged for the entire session. This is particularly well-suited for scenarios where a specific role needs to maintain a constant presence, as seen in webinars and livestreaming. Conversely, spotlighting either their own tile or the tiles of others permits specific participant tiles to temporarily take center stage within the session, allowing for more adaptable layout adjustments as needed
+	</Note>
 
-#### Be Right Back (BRB)
+- 	###### Tiles in view
+	Select the default number of video tiles that a peer will view in a room. For optimal performance it is recommended to keep it at 9. 
+	<Note>
+	This setting is currently only supported on web. 
+	</Note>
+
+##### Be Right Back (BRB)
 Depending on your use case, allow roles to set themselves on BRB mode. If disabled, this component will not be visible to the selected role.
 
 
-#### Emoji Reactions
+##### Emoji Reactions
 Enabling this for a role allows its peers to send emoji reactions in the room. 
 
-#### Bring others on Stage
+##### Hand Raise
+Allows participants with this role to virtually raise their hand during a session, indicating their intention to: request attention or assistance, signal a question or comment, or request to join the stage (if 'Bring others on stage' is enabled). If 'Bring others on stage' is enabled, raising a hand will prompt the session host or moderator to consider changing the participant's role, allowing them to join the stage and actively participate. If 'Bring others on stage' is disabled, the hand raise will serve as a visual cue without any automatic role change. The session host or moderator can acknowledge the raised hand and address the participant's need accordingly.
+
+##### Bring others on Stage
 Stage is a virtual space within a room that enables participants to actively engage with their audio and video, and publish it with a much larger audience. With the 'Bring on Stage' feature enabled, viewers who are not on stage can easily interact with the participants on stage, once they have been granted access to the stage.
 Enable Bring on stage for roles that require the ability to allow or deny stage requests from off-stage participants. By default, this feature is enabled for Hosts, Broadcasters and Co-broadcasters, while viewers with non-publishing roles can use the hand-raise option to request stage access. This component can extend its support to conferencing, webinars and livestreaming scenarios. However, if your use case does not require this feature, you can simply disable it to ensure a seamless experience for all users. 
 
-##### Bring on Stage Label
+-	###### Bring on Stage Label
 
-Customize text label that Hosts and Broadcasters will see when they receive on stage requests. The default text is "Bring to stage".
+	Customize text label that Hosts and Broadcasters will see when they receive on stage requests. The default text is "Bring to stage".
 
-##### Remove from Stage Label
+-	###### Remove from Stage Label
 
-Customize text label that Hosts and Broadcasters will see when they receive on stage requests. The default text is "Remove from stage".
+	Customize text label that Hosts and Broadcasters will see when they receive on stage requests. The default text is "Remove from stage".
 
-##### On Stage and Off Stage Role
-An off stage participant becomes an on stage participant once their stage access has been accepted. For instance, an off stage role, say Viewer requests a Broadcaster to go on stage. Once their request is accepted, the Viewer can transition to an on stage role, which could be a Viewer-on-stage, a Guest, or a Co-broadcaster. 
+-	###### On Stage and Off Stage Role
+	An off stage participant becomes an on stage participant once their stage access has been accepted. For instance, an off stage role, say Viewer requests a Broadcaster to go on stage. Once their request is accepted, the Viewer can transition to an on stage role, which could be a Viewer-on-stage, a Guest, or a Co-broadcaster. 
 
-Let's take a quick example to understand this better. 
+	Let's take a quick example to understand this better. 
 
-Assume a livestreaming scenario with Bring on stage enabled for Broadcasters and Co-Broadcasters, where 
-- Off-stage participants have been assigned role: Viewer a role with no audio/video publish permissions
-- On-stage participants have been assigned role : Guest, a role with audio/video publish permissions
+	Assume a livestreaming scenario with Bring on stage enabled for Broadcasters and Co-Broadcasters, where 
+	- Off-stage participants have been assigned role: Viewer a role with no audio/video publish permissions
+	- On-stage participants have been assigned role : Guest, a role with audio/video publish permissions
 
-Once the configuration is set under Bring on stage, join Prebuilt links or apps as these roles: Broadcaster, Co-Broadcaster and Viewer to try bring on stage feature like below:
-1. Participants from Viewer role can choose to raise their hand during a session to request to go on stage and interact with Broadcaster(s) and Co-Broadcaster(s)
-2. Broadcaster(s) and Co-Broadcaster(s) will receive stage access notification from these off-stage partcipants; where they can choose to accept or deny the stage request. Meanwhile, a Viewer can choose to lower their hand untill their request has been accepted or denied. Broadcaster(s) can also track all such requests under "Hand Raise" section under participant list.
-3. When a Broadcaster accepts a stage request from a Viewer(an off-stage participant), the Viewer becomes a Guest (an on-stage participant) as per the configuration set
-4. Broadcaster(s) can choose to mute/unmute audio/video for Guest or simply remove them from stage.
+	Once the configuration is set under Bring on stage, join Prebuilt links or apps as these roles: Broadcaster, Co-Broadcaster and Viewer to try bring on stage feature like below:
+	1. Participants from Viewer role can choose to raise their hand during a session to request to go on stage and interact with Broadcaster(s) and Co-Broadcaster(s)
+	2. Broadcaster(s) and Co-Broadcaster(s) will receive stage access notification from these off-stage partcipants; where they can choose to accept or deny the stage request. Meanwhile, a Viewer can choose to lower their hand untill their request has been accepted or denied. Broadcaster(s) can also track all such requests under "Hand Raise" section under participant list.
+	3. When a Broadcaster accepts a stage request from a Viewer(an off-stage participant), the Viewer becomes a Guest (an on-stage participant) as per the configuration set
+	4. Broadcaster(s) can choose to mute/unmute audio/video for Guest or simply remove them from stage.
