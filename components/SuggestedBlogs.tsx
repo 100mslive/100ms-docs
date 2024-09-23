@@ -1,6 +1,8 @@
 import React from 'react';
 import { Box, Text } from '@100mslive/react-ui';
 import { ExternalLinkIcon } from '@100mslive/react-icons';
+import { AppAnalytics } from '../lib/publishEvents';
+
 interface Props {
     suggestedBlogs: Array<{
         title: string;
@@ -54,7 +56,7 @@ const SuggestedBlogs: React.FC<Props> = ({ suggestedBlogs }) => {
                                 }
                             }}
                             onClick={() => {
-                                window.analytics.track('docs.blog.redirect', {
+                                AppAnalytics.track('docs.blog.redirect', {
                                     type: 'blog_redirect',
                                     blog_title: blog.title,
                                     path: window.location.pathname,

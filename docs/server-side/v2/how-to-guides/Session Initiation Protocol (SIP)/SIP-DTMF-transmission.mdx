@@ -39,7 +39,7 @@ The DTMF API provided by 100ms enables the transmission of DTMF tones directly t
 
 | Parameter | Type  | Description                                                                                                                 |
 |-----------|-------|-----------------------------------------------------------------------------------------------------------------------------|
-| digits    | array | An array of strings, where each string is a character representing a DTMF tone. Valid characters are 0-9, *, #, a, b, c, d. |
+| digits    | array | An array of strings, where each string is a character representing a DTMF tone. Valid characters are 0-9, *, #, a, b, c, d |
 
 - **Target Recipients:** The DTMF tones will only be sent to all SIP participants present in the call. WebRTC participants will not receive these tones.
 - **Transmission Order:** Requests are queued and processed sequentially; subsequent requests will not be processed until all previous tones have been sent.
@@ -54,16 +54,23 @@ The DTMF API provided by 100ms enables the transmission of DTMF tones directly t
 
 ```
 
-**400 Bad Request** - When the request is invalid.
+**400 Bad Request** - When the request is invalid due to non-acceptable digit.
 
 ```json
 {
-  "code": 400,
-  "message": "no sip participants in the call",
-  "details": [""]
+    "code": 400,
+    "message": "invalid digit"
 }
 
 ```
 
+**400 Bad Request** - When the request is invalid due to missing digits
+
+```json
+{
+    "code": 400,
+    "message": "digits are mandatory"
+}
+```
 
 This documentation provides a clear pathway for integrating DTMF transmission capabilities within your applications, ensuring effective interaction with systems requiring numerical input during SIP calls.
