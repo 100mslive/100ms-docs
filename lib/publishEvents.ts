@@ -50,7 +50,7 @@ export const analyticsStore: {
 const analyticsTrack = (title, options) => {
     try {
         const user = currentUser();
-        if (!user) {
+        if (Object.keys(user).length === 0) {
             amplitude.track({
                 event_type: title,
                 event_properties: {
@@ -58,14 +58,12 @@ const analyticsTrack = (title, options) => {
                     ...options
                 }
             });
-        } else if (user && !user.is_admin) {
-            amplitude.setUserId(user?.customer_id);
+        } else if (Object.keys(user).length > 0 && !user.is_admin && user !== null) {
             amplitude.track({
                 event_type: title,
                 event_properties: {
                     email: user.email,
                     customer_id: user.customer_id,
-
                     workspaceOwnerEmail: (analyticsStore.get() as { workspaceOwnerEmail: string })
                         ?.workspaceOwnerEmail,
                     api_version: user.api_version,
@@ -81,13 +79,7 @@ const analyticsTrack = (title, options) => {
 
 const analyticsPage = () => {
     const user = currentUser();
-    if (!user) {
-        try {
-            hubspotPageView();
-        } catch (e) {
-            console.error(e);
-        }
-    } else if (user && !user.is_admin) {
+    if (!user.is_admin) {
         try {
             hubspotPageView();
         } catch (e) {
@@ -104,7 +96,8 @@ const amplitudeIdentify = (userId, properties = {}) => {
             if (
                 Object.prototype.hasOwnProperty.call(properties, key) &&
                 properties?.[key] !== null &&
-                properties?.[key] !== undefined
+                properties?.[key] !== undefined &&
+                key !== 'user_id'
             ) {
                 identifyEvent.set(key, properties?.[key]);
             }
@@ -115,23 +108,21 @@ const amplitudeIdentify = (userId, properties = {}) => {
 
 const analyticsIdentify = (id, options = {}) => {
     const user = currentUser();
-    if (!user || (user && !user.is_admin)) {
-        const finalOptions = {
-            ...getCommonOptions(),
-            ...options
-        };
-        try {
-            hubspotIdentify({
-                properties: { ...finalOptions, refId: id, email: user.email, ...user }
-            });
-        } catch (e) {
-            console.error(e);
-        }
-        try {
-            amplitudeIdentify(id, finalOptions);
-        } catch (e) {
-            console.error(e);
-        }
+    const finalOptions = {
+        ...getCommonOptions(),
+        ...options
+    };
+    try {
+        hubspotIdentify({
+            properties: { ...finalOptions, refId: id, email: user.email, ...user }
+        });
+    } catch (e) {
+        console.error(e);
+    }
+    try {
+        amplitudeIdentify(id, finalOptions);
+    } catch (e) {
+        console.error(e);
     }
 };
 
