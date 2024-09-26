@@ -78,16 +78,12 @@ const analyticsTrack = (title, options) => {
 };
 
 const analyticsPage = () => {
-    const user = currentUser();
-    if (!user.is_admin) {
-        try {
-            hubspotPageView();
-        } catch (e) {
-            console.error(e);
-        }
+    try {
+        hubspotPageView();
+    } catch (e) {
+        console.error(e);
     }
 };
-
 const amplitudeIdentify = (userId, properties = {}) => {
     const identifyEvent = new amplitude.Identify();
     amplitude.setUserId(userId);
