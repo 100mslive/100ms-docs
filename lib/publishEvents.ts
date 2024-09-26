@@ -79,7 +79,7 @@ const analyticsTrack = (title, options) => {
     }
 };
 
-const analyticsPage = (title, options) => {
+const analyticsPage = () => {
     const user = currentUser();
     if (!user) {
         try {
