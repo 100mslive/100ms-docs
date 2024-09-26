@@ -96,7 +96,6 @@ const analyticsPage = (title, options) => {
 };
 
 const amplitudeIdentify = (userId, properties = {}) => {
-    amplitude.setUserId(userId);
     let identifyEventProperties = {};
     if (Object.keys(properties).length > 0 && properties !== null && properties !== undefined) {
         for (const key in properties) {
@@ -108,6 +107,7 @@ const amplitudeIdentify = (userId, properties = {}) => {
             }
         }
     }
+    amplitude.identify(userId, identifyEventProperties);
 };
 
 const analyticsIdentify = (id, options = {}) => {
