@@ -1,7 +1,7 @@
 import React from 'react';
 import { AppAnalytics } from '../lib/publishEvents';
 
-const SegmentAnalytics = ({ options }) => {
+const SegmentAnalytics = ({ title, options }) => {
     React.useEffect(() => {
         if (typeof window !== 'undefined') {
             const params = window.location.search
@@ -17,7 +17,7 @@ const SegmentAnalytics = ({ options }) => {
             AppAnalytics.track('page.viewed', {
                 ...params,
                 ...options,
-                title: document.title,
+                title: document.title || title,
                 referrer: document.referrer,
                 path: window.location.hostname,
                 pathname: window.location.pathname,
