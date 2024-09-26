@@ -1,6 +1,7 @@
 import React from 'react';
 import { AppAnalytics } from '../lib/publishEvents';
-const SegmentAnalytics = ({ title, options }) => {
+
+const SegmentAnalytics = ({ options }) => {
     React.useEffect(() => {
         if (typeof window !== 'undefined') {
             const params = window.location.search
