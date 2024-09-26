@@ -59,6 +59,7 @@ const analyticsTrack = (title, options) => {
                 }
             });
         } else if (user && !user.is_admin) {
+            amplitude.setUserId(user?.customer_id);
             amplitude.track({
                 event_type: title,
                 event_properties: {
@@ -96,18 +97,20 @@ const analyticsPage = (title, options) => {
 };
 
 const amplitudeIdentify = (userId, properties = {}) => {
-    let identifyEventProperties = {};
-    if (Object.keys(properties).length > 0 && properties !== null && properties !== undefined) {
+    const identifyEvent = new amplitude.Identify();
+    amplitude.setUserId(userId);
+    if (Object.keys(properties).length !== 0 && properties !== null && properties !== undefined) {
         for (const key in properties) {
-            if (Object.prototype.hasOwnProperty.call(properties, key)) {
-                identifyEventProperties = {
-                    ...identifyEventProperties,
-                    key: properties?.[key]
-                };
+            if (
+                Object.prototype.hasOwnProperty.call(properties, key) &&
+                properties?.[key] !== null &&
+                properties?.[key] !== undefined
+            ) {
+                identifyEvent.set(key, properties?.[key]);
             }
         }
     }
-    amplitude.identify(userId, identifyEventProperties);
+    amplitude.identify(identifyEvent);
 };
 
 const analyticsIdentify = (id, options = {}) => {
