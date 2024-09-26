@@ -97,13 +97,17 @@ const analyticsPage = (title, options) => {
 
 const amplitudeIdentify = (userId, properties = {}) => {
     amplitude.setUserId(userId);
-    const identifyEvent = new amplitude.Identify();
-    for (const key in properties) {
-        if (Object.prototype.hasOwnProperty.call(properties, key)) {
-            identifyEvent.set(key, properties[key]);
+    let identifyEventProperties = {};
+    if (Object.keys(properties).length > 0 && properties !== null && properties !== undefined) {
+        for (const key in properties) {
+            if (Object.prototype.hasOwnProperty.call(properties, key)) {
+                identifyEventProperties = {
+                    ...identifyEventProperties,
+                    key: properties?.[key]
+                };
+            }
         }
     }
-    amplitude.identify(identifyEvent);
 };
 
 const analyticsIdentify = (id, options = {}) => {
