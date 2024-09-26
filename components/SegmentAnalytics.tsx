@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { AppAnalytics } from '../lib/publishEvents';
 const SegmentAnalytics = ({ title, options }) => {
     React.useEffect(() => {
         if (typeof window !== 'undefined') {
@@ -12,7 +12,7 @@ const SegmentAnalytics = ({ title, options }) => {
                 }, {});
             // @ts-ignore
             const url = new URL(window.location.href);
-            window.analytics.page(title, {
+            AppAnalytics.page(title, {
                 ...params,
                 ...options,
                 title,
@@ -26,7 +26,7 @@ const SegmentAnalytics = ({ title, options }) => {
                 utm_keyword: url.searchParams.get('utm_keyword'),
                 utm_term: url.searchParams.get('utm_term')
             });
-            window.analytics.track('page.viewed', {
+            AppAnalytics.track('page.viewed', {
                 ...params,
                 ...options,
                 title: document.title,

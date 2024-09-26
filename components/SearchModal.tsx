@@ -1,15 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import UtmLinkWrapper from './UtmLinkWrapper';
 import { SearchIcon, ArrowRightIcon } from '@100mslive/react-icons';
 import { Flex, Box, Text } from '@100mslive/react-ui';
 import useClickOutside from '@/lib/useClickOutside';
 import algoliasearch from 'algoliasearch/lite';
 import { InstantSearch, connectHits, connectSearchBox, Configure } from 'react-instantsearch-dom';
+import { titleCasing } from '@/lib/utils';
 import Tag from './Tag';
+import UtmLinkWrapper from './UtmLinkWrapper';
 import Chip from './Chip';
 import ChipDropDown from './ChipDropDown';
-import { titleCasing } from '@/lib/utils';
+import { AppAnalytics } from '../lib/publishEvents';
 
 const searchClient = algoliasearch(
     process.env.NEXT_PUBLIC_ALGOLIA_APP_ID || '',
@@ -25,14 +26,25 @@ const searchInfoItems = [
     {
         title: 'to navigate',
         content: [
-            <ArrowRightIcon height={16} width={16} style={{ transform: 'rotate(-90deg)' }} />,
-            <ArrowRightIcon height={16} width={16} style={{ transform: 'rotate(90deg)' }} />
+            <ArrowRightIcon
+                key="arrowUpSearchIcon"
+                height={16}
+                width={16}
+                style={{ transform: 'rotate(-90deg)' }}
+            />,
+            <ArrowRightIcon
+                key="arrowDownSearchIcon"
+                height={16}
+                width={16}
+                style={{ transform: 'rotate(90deg)' }}
+            />
         ]
     },
     {
         title: 'to select',
         content: [
             <span
+                key="select"
                 style={{
                     fontSize: '14px',
                     height: '16px',
@@ -130,7 +142,7 @@ const ResultBox = ({
     activeResult.current = -1;
     useEffect(() => {
         if (hits.length === 0) {
-            window.analytics.track('no.results', {
+            AppAnalytics.track('no.results', {
                 title: document.title,
                 referrer: document.referrer,
                 path: window.location.hostname,
@@ -204,7 +216,7 @@ const ResultBox = ({
                                             borderRadius: '$0'
                                         }}
                                         onClick={() => {
-                                            window.analytics.track('docs.search.result.clicked', {
+                                            AppAnalytics.track('docs.search.result.clicked', {
                                                 totalNumberOfResults: hits?.length,
                                                 textInSearch: searchTerm || '',
                                                 rankOfSearchResult: i + 1,
@@ -412,7 +424,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ setModal }) => {
     }, [hitsCount, searchTerm]);
 
     useClickOutside(ref, () => {
-        window.analytics.track('docs.search.dismissed', {
+        AppAnalytics.track('docs.search.dismissed', {
             textInSearch: searchTerm || '',
             totalNumberOfResults: hitsCount,
             referrer: document.referrer,
@@ -515,7 +527,7 @@ const FilterBar = ({
                     onClick={() => {
                         if (typeFilter === type) setTypeFilter(ALL_TYPES);
                         else {
-                            window.analytics.track('type.changed', {
+                            AppAnalytics.track('type.changed', {
                                 title: document.title,
                                 referrer: document.referrer,
                                 path: window.location.hostname,
@@ -540,8 +552,7 @@ const FilterBar = ({
     </Flex>
 );
 
-const getFilterQuery = (platformFilter, typeFilter) => {
-    return `${platformFilter === ALL_PLATFORMS ? 'NOT ' : ''}platformName:"${platformFilter}" AND ${
+const getFilterQuery = (platformFilter, typeFilter) =>
+    `${platformFilter === ALL_PLATFORMS ? 'NOT ' : ''}platformName:"${platformFilter}" AND ${
         typeFilter === ALL_TYPES ? 'NOT ' : ''
     }type:"${typeFilter}"`;
-};

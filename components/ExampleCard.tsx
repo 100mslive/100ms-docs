@@ -1,6 +1,8 @@
+import React from 'react';
 import * as reactIcons from '@100mslive/react-icons';
 import { Box, Flex, HorizontalDivider, Text } from '@100mslive/react-ui';
 import { Technologies, technologyIconMap } from './TechnologySelect';
+import { AppAnalytics } from '../lib/publishEvents';
 
 interface Props extends React.ComponentPropsWithoutRef<typeof Box> {
     title: string;
@@ -115,34 +117,33 @@ function IconList({ technologies, showIcon }: IconListProps) {
                 <Text>{technology}</Text>
             </Flex>
         );
-    } else {
-        return (
-            <Flex as="ul" gap="2" css={{ listStyle: 'none', padding: 0, margin: 0 }}>
-                {technologies.map((technology) => {
-                    let Icon;
-                    const iconNameOrPath = technologyIconMap[technology].icon;
-                    if (
-                        typeof iconNameOrPath === 'string' &&
-                        reactIcons[iconNameOrPath] !== undefined
-                    ) {
-                        Icon = reactIcons[iconNameOrPath];
-                    } else {
-                        Icon = iconNameOrPath;
-                    }
-                    return (
-                        <Flex
-                            as="li"
-                            key={technology}
-                            css={{
-                                marginBottom: 0
-                            }}>
-                            <Icon />
-                        </Flex>
-                    );
-                })}
-            </Flex>
-        );
     }
+    return (
+        <Flex as="ul" gap="2" css={{ listStyle: 'none', padding: 0, margin: 0 }}>
+            {technologies.map((technology) => {
+                let Icon;
+                const iconNameOrPath = technologyIconMap[technology].icon;
+                if (
+                    typeof iconNameOrPath === 'string' &&
+                    reactIcons[iconNameOrPath] !== undefined
+                ) {
+                    Icon = reactIcons[iconNameOrPath];
+                } else {
+                    Icon = iconNameOrPath;
+                }
+                return (
+                    <Flex
+                        as="li"
+                        key={technology}
+                        css={{
+                            marginBottom: 0
+                        }}>
+                        <Icon />
+                    </Flex>
+                );
+            })}
+        </Flex>
+    );
 }
 
 type TagListProps = {
@@ -156,7 +157,7 @@ function TagList({ tags, title }: TagListProps) {
             {tags.map((tag) => (
                 <Box
                     onClick={() => {
-                        window.analytics.track('examples.tag.clicked', {
+                        AppAnalytics.track('examples.tag.clicked', {
                             tag,
                             title
                         });

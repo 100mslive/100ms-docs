@@ -2,6 +2,7 @@ import React from 'react';
 import { Flex, Box, Button, Text } from '@100mslive/react-ui';
 import useClickOutside from '@/lib/useClickOutside';
 import { currentUser } from '../lib/currentUser';
+import { AppAnalytics } from '../lib/publishEvents';
 
 const emojis = [{ score: 1 }, { score: 2 }, { score: 3 }, { score: 4 }];
 
@@ -47,11 +48,11 @@ const Feedback = () => {
                         title={getPlaceholder[`title-${id + 1}`]}
                         style={{ position: 'relative', width: '24px', height: '24px' }}
                         key={emoji.score}
-                        role='button'
+                        role="button"
                         onClick={() => {
                             const userDetails = currentUser();
                             if (showTextBox === false) {
-                                window.analytics.track('docs.feedback.rating', {
+                                AppAnalytics.track('docs.feedback.rating', {
                                     title: document.title,
                                     referrer: document.referrer,
                                     path: window.location.pathname,
@@ -59,7 +60,7 @@ const Feedback = () => {
                                     timeStamp: new Date().toLocaleString(),
                                     customer_id: userDetails?.customer_id,
                                     user_id: userDetails?.user_id,
-                                    email: userDetails?.email,
+                                    email: userDetails?.email
                                 });
                                 setFirstSelection(emoji.score);
                             }
@@ -121,7 +122,7 @@ const Feedback = () => {
                             }}
                             onClick={() => {
                                 const userDetails = currentUser();
-                                window.analytics.track('docs.feedback.message', {
+                                AppAnalytics.track('docs.feedback.message', {
                                     title: document.title,
                                     message: message || '',
                                     rating: firstSelection,

@@ -27,6 +27,7 @@ import { PortraitImage } from './PortraitImage';
 import { CollapsibleRoot, CollapsiblePreview, CollapsibleContent } from './CollapsibleSection';
 import { CollapsibleStep } from './CollapsibleStep';
 import SuggestedBlogs from './SuggestedBlogs';
+import { AppAnalytics } from '@/lib/publishEvents';
 
 const CodeCustom = (props: any) => <Code {...props}>{props.children}</Code>;
 
@@ -71,7 +72,7 @@ const LinkCustom = (props) => {
             rel="noopener noreferrer"
             href={href}
             onClick={() =>
-                window.analytics.track('link.clicked', {
+                AppAnalytics.track('link.clicked', {
                     btnId,
                     componentId: window?.location?.pathname.split('/')?.[2], // splitArr = ['', 'docs', 'sdk']
                     page: window?.location?.pathname

@@ -1,9 +1,9 @@
 ---
-title: Enable Transcription and Summarisation
+title: Post Call Transcription and Summarization
 nav: 6
 ---
 
-This is a guide to enable 100ms **post call transcription** with **speaker labels** and **AI-generated summary**. The feature is currently in `Beta`.
+This is a guide to enable 100ms **post call transcription** with **speaker labels** and **AI-generated summary**.
 In case you're looking to enable **live transcription**, refer to this [documentation](/server-side/v2/how-to-guides/live-transcription-hls).
 
 <StepsToc
@@ -25,7 +25,7 @@ Since recording is a pre-requisite to having the transcript, you will need to st
 ![Flow](/docs/v2/transcription-flow.png)
 The above flowchart shows the entire workflow of transcript and summary generation and their consumption. 
 
-### Enabling Transcription and Summarisation
+### Enabling Post Call Transcription and Summarization
 
 <Tabs id="implementation" items={['Dashboard Implementation', 'Recording API', 'Live Stream API', 'Policy API']} />
 <Tab id='implementation-0'>
@@ -35,7 +35,7 @@ The above flowchart shows the entire workflow of transcript and summary generati
 You can enable transcription for all the rooms under a particular template.
 
 1. Access an existing template via the sidebar.
-2. Navigate to the `Transcription (Beta)` tab in the template configuration.
+2. Navigate to the `Transcription` tab in the template configuration.
 3. In the second card which says `Post Call Transcription`, enable the `Transcribe Recordings` toggle.
 4. Enabling `Post Call Transcription` will expose an extra configuration called `Output Modes` just below the toggle. File format of the transcript output can be set using this. Following file formats are offered:
     - Text (.txt)
@@ -43,7 +43,7 @@ You can enable transcription for all the rooms under a particular template.
     - Structured (.json)
   The example output for the above can be seen [here](#example-output-files).
 
-5. In the same card, enable the `Summarise Transcripts` toggle. This will take the default settings for summary.
+5. In the same card, enable the `Summarize Transcripts` toggle. This will take the default settings for summary.
 6. Save the configuration.
 7. Join a room to initiate a session. Start recording (or live stream with recording enabled) using the SDK or API. If it's your first time joining a 100ms room, you'll find the option to `Start Recording` in the created room. For more information on creating room templates, refer to [this documentation](/server-side/v2/api-reference/policy/create-template-via-dashboard).
 
@@ -309,7 +309,11 @@ You can always use 100ms’ Recording Assets API to access the transcripts and s
 
   This is not possible at this point of time. But we intend to bring the functionality of re-running transcription and summarization functions to enable users to test and build their own summaries.
 
-4. **What can be done if the speaker label is not working?**
+4. Is this a chargeable feature?
+
+  Yes, these are chargeable features. To know more, check our [pricing page](http://100ms.live/pricing).
+
+5. **What can be done if the speaker label is not working?**
     
   There are two possible options here:
   1. If you are using an older webSDK version, please update to the latest. Refer to our web documentation [here](/javascript/v2/release-notes/release-notes).

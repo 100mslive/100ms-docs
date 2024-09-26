@@ -1352,6 +1352,25 @@ If you want to stop transcriptions(Closed Caption).
 
 ---
 
+### submitSessionFeedback
+
+▸ **submitSessionFeedback**(`feedback`, `eventEndpoint?`): `Promise`<`void`\>
+
+After leave send feedback to backend for call quality purpose.
+
+#### Parameters
+
+| Name             | Type                 |
+| :--------------- | :------------------- |
+| `feedback`       | `HMSSessionFeedback` |
+| `eventEndpoint?` | `string`             |
+
+#### Returns
+
+`Promise`<`void`\>
+
+---
+
 ### switchCamera
 
 ▸ **switchCamera**(): `Promise`<`void`\>

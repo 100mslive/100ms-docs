@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import UtmLinkWrapper from './UtmLinkWrapper';
 import { useRouter } from 'next/router';
 import {
     CrossIcon,
@@ -10,11 +9,13 @@ import {
     SearchIcon
 } from '@100mslive/react-icons';
 import { Flex, Text, useTheme } from '@100mslive/react-ui';
-import ActiveLink, { ActiveLinkProps } from './ActiveLink';
-import SearchModal from './SearchModal';
 import { WebsiteLink, DashboardLink, GitHubLink, DiscordLink, ContactLink } from '@/lib/utils';
 import { references } from 'api-references';
 import { exposedPlatformNames } from 'common';
+import SearchModal from './SearchModal';
+import ActiveLink, { ActiveLinkProps } from './ActiveLink';
+import UtmLinkWrapper from './UtmLinkWrapper';
+import { AppAnalytics } from '../lib/publishEvents';
 import { NavAPIReference } from './NavAPIReference';
 
 interface Props {
@@ -112,7 +113,7 @@ const Header: React.FC<Props> = ({
                     target="_blank"
                     rel="noreferrer"
                     onClick={() =>
-                        window.analytics.track('link.clicked', {
+                        AppAnalytics.track('link.clicked', {
                             btnId: 'logo.clicked',
                             currentPage: window.location.href
                         })
@@ -124,7 +125,7 @@ const Header: React.FC<Props> = ({
                 <Flex css={{ gap: '$12', '@md': { display: 'none' } }}>
                     <HeaderLink
                         onClick={() =>
-                            window.analytics.track('link.clicked', {
+                            AppAnalytics.track('link.clicked', {
                                 btnId: 'docs.clicked',
                                 currentPage: window.location.href
                             })
@@ -136,7 +137,7 @@ const Header: React.FC<Props> = ({
                     </HeaderLink>
                     <HeaderLink
                         onClick={() =>
-                            window.analytics.track('link.clicked', {
+                            AppAnalytics.track('link.clicked', {
                                 btnId: 'examples.clicked',
                                 currentPage: window.location.href
                             })
@@ -171,7 +172,7 @@ const Header: React.FC<Props> = ({
                         noHighlight
                         target="_blank"
                         onClick={() =>
-                            window.analytics.track('link.clicked', {
+                            AppAnalytics.track('link.clicked', {
                                 btnId: '100ms.live.clicked',
                                 currentPage: window.location.href
                             })
@@ -185,7 +186,7 @@ const Header: React.FC<Props> = ({
                         noHighlight
                         target="_blank"
                         onClick={() =>
-                            window.analytics.track('link.clicked', {
+                            AppAnalytics.track('link.clicked', {
                                 btnId: 'sales.clicked',
                                 currentPage: window.location.href
                             })
@@ -198,7 +199,7 @@ const Header: React.FC<Props> = ({
                         noHighlight
                         target="_blank"
                         onClick={() =>
-                            window.analytics.track('link.clicked', {
+                            AppAnalytics.track('link.clicked', {
                                 btnId: 'dashboard.clicked',
                                 currentPage: window.location.href
                             })
@@ -212,7 +213,7 @@ const Header: React.FC<Props> = ({
                             target="_blank"
                             rel="noreferrer"
                             onClick={() =>
-                                window.analytics.track('link.clicked', {
+                                AppAnalytics.track('link.clicked', {
                                     btnId: 'discord.clicked',
                                     currentPage: window.location.href
                                 })
@@ -231,7 +232,7 @@ const Header: React.FC<Props> = ({
                             target="_blank"
                             rel="noreferrer"
                             onClick={() =>
-                                window.analytics.track('link.clicked', {
+                                AppAnalytics.track('link.clicked', {
                                     btnId: 'github.clicked',
                                     currentPage: window.location.href
                                 })
@@ -279,43 +280,41 @@ const HeaderLink = ({
     children,
     noHighlight,
     ...rest
-}: React.PropsWithChildren<Omit<ActiveLinkProps, 'activeClassName'>>) => {
-    return (
-        <ActiveLink activeClassName={noHighlight ? '' : 'docs-link-active'} passHref {...rest}>
-            {(className) => (
-                <Text
-                    as="a"
-                    variant="sm"
-                    className={className}
-                    css={{
-                        boxSizing: 'border-box',
-                        fontWeight: 400,
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '$2',
-                        color: '$textMedEmp',
-                        '&:hover': {
-                            opacity: 'initial'
-                        },
-                        '&:not(.docs-link-active):hover': {
-                            color: '$textHighEmp',
-                            backgroundColor: '$surfaceLight',
-                            padding: '$2 $4',
-                            margin: '-$2 -$4',
-                            borderRadius: '$0'
-                        },
-                        '&.docs-link-active': {
-                            color: '$textHighEmp',
-                            fontWeight: '600',
-                            textDecoration: 'underline',
-                            textUnderlineOffset: '6px',
-                            textDecorationThickness: '2px',
-                            textDecorationColor: '$primaryLight'
-                        }
-                    }}>
-                    {children}
-                </Text>
-            )}
-        </ActiveLink>
-    );
-};
+}: React.PropsWithChildren<Omit<ActiveLinkProps, 'activeClassName'>>) => (
+    <ActiveLink activeClassName={noHighlight ? '' : 'docs-link-active'} passHref {...rest}>
+        {(className) => (
+            <Text
+                as="a"
+                variant="sm"
+                className={className}
+                css={{
+                    boxSizing: 'border-box',
+                    fontWeight: 400,
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '$2',
+                    color: '$textMedEmp',
+                    '&:hover': {
+                        opacity: 'initial'
+                    },
+                    '&:not(.docs-link-active):hover': {
+                        color: '$textHighEmp',
+                        backgroundColor: '$surfaceLight',
+                        padding: '$2 $4',
+                        margin: '-$2 -$4',
+                        borderRadius: '$0'
+                    },
+                    '&.docs-link-active': {
+                        color: '$textHighEmp',
+                        fontWeight: '600',
+                        textDecoration: 'underline',
+                        textUnderlineOffset: '6px',
+                        textDecorationThickness: '2px',
+                        textDecorationColor: '$primaryLight'
+                    }
+                }}>
+                {children}
+            </Text>
+        )}
+    </ActiveLink>
+);
