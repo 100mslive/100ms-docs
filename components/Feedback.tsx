@@ -59,7 +59,7 @@ const Feedback = () => {
                                     rating: emoji.score,
                                     timeStamp: new Date().toLocaleString(),
                                     customer_id: userDetails?.customer_id,
-                                    user_id: userDetails?.user_id,
+                                    internal_user_id: userDetails?.user_id,
                                     email: userDetails?.email
                                 });
                                 setFirstSelection(emoji.score);
@@ -130,7 +130,7 @@ const Feedback = () => {
                                     path: window.location.pathname,
                                     timeStamp: new Date().toLocaleString(),
                                     customer_id: userDetails?.customer_id,
-                                    user_id: userDetails?.user_id,
+                                    internal_user_id: userDetails?.user_id,
                                     email: userDetails?.email
                                 });
                                 setSubmitSuccessful(true);
