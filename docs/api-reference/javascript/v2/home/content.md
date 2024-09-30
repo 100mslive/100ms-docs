@@ -394,6 +394,22 @@ selfBrowser - the current browser tab is being shared
 
 ---
 
+### getAudioDeviceCategory
+
+▸ **getAudioDeviceCategory**(`deviceLabel`): `"bluetooth"` \| `"speakerhone"` \| `"wired"` \| `"earpiece"` \| `"speakerphone"`
+
+#### Parameters
+
+| Name          | Type     |
+| :------------ | :------- |
+| `deviceLabel` | `string` |
+
+#### Returns
+
+`"bluetooth"` \| `"speakerhone"` \| `"wired"` \| `"earpiece"` \| `"speakerphone"`
+
+---
+
 ### selectAppData
 
 ▸ **selectAppData**(`id?`): `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `any`\>
