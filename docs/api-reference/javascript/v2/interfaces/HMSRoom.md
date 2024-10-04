@@ -5,6 +5,12 @@ nav: '4.68'
 
 ## Properties
 
+### disableNoneLayerRequest
+
+• `Optional` **disableNoneLayerRequest**: `boolean`
+
+---
+
 ### effectsKey
 
 • `Optional` **effectsKey**: `string`
