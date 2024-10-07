@@ -64,3 +64,47 @@ HMSCameraControls.toggleFlash();
 ```
 
 > 🔑 Note: If camera is toggled while flash is ON, then flash turns OFF.
+
+## Zoom Controls
+
+### Check if zoom feature is available
+
+To check if the current facing camera supports zoom feature.
+
+```dart
+var isZoomSupported = await HMSCameraControls.isZoomSupported();
+```
+
+### Set Zoom Level
+
+To set zoom for camera, we can use `setZoom` method. For android `zoomValue` should be between 1 and max zoom level. For iOS `zoomValue` must be in the range supported by camera.
+
+```dart
+// To zoom in the camera by 2x
+HMSCameraControls.setZoom(zoomValue: 2);
+```
+
+### Reset Zoom Level
+
+To reset the zoom level to 1x, we can use `resetZoom` method:
+
+```dart
+// To reset the zoom level back to 1x
+HMSCameraControls.resetZoom();
+```
+
+### Get max zoom level (Android Only)
+
+To get the maximum zoom level supported by the camera, we can use `getMaxZoom` method:
+
+```dart
+var maxZoom = await HMSCameraControls.getMaxZoom();
+```
+
+### Get min zoom level (Android Only)
+
+To get the minimum zoom level supported by the camera, we can use `getMinZoom` method:
+
+```dart
+var minZoom = await HMSCameraControls.getMinZoom();
+```

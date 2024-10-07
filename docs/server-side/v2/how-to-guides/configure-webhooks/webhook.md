@@ -138,19 +138,20 @@ This event will be sent when any peer joins the room successfully
 
 #### Attributes
 
-| Name               | Type                 | Description                                                                                             |
-| :----------------- | :------------------- | :------------------------------------------------------------------------------------------------------ |
-| room_id            | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312df                                     |
-| room_name          | `string`             | Room name provided when creating the room <br/><br/> Example: Test Room                                 |
-| session_id         | `string`             | 100ms assigned id to identify the session <br/><br/> Example: 5f9edc6bd238215aec7700df                  |
-| peer_id            | `string`             | 100ms assigned id to identify the joining user <br/><br/> Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
-| user_id            | `string`             | User id assigned by the customer <br/><br/> Example: user.001                                           |
-| template_id        | `string`             | Template ID of the room <br/><br/> Example: 66112497abcd52312556c4gg                                    |
-| user_name          | `string`             | User name of the joining user <br/><br/> Example: Test user                                             |
-| user_data          | `string`             | User data of the joining user <br/><br/> Example: `{"isHandRaised":true}`                               |
-| role               | `string`             | Role of the joining user <br/><br/> Example: host                                                       |
-| joined_at          | `timestamp (in UTC)` | Timestamp when user joined <br/><br/> Example: 2020-11-11T16:32:17Z                                     |
-| session_started_at | `timestamp (in UTC)` | Timestamp when session started <br/><br/> Example: 2020-11-11T16:32:17Z                                 |
+| Name               | Type                 | Description                                                                                                                   |
+|:-------------------|:---------------------|:------------------------------------------------------------------------------------------------------------------------------|
+| room_id            | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312df                                                           |
+| room_name          | `string`             | Room name provided when creating the room <br/><br/> Example: Test Room                                                       |
+| session_id         | `string`             | 100ms assigned id to identify the session <br/><br/> Example: 5f9edc6bd238215aec7700df                                        |
+| peer_id            | `string`             | 100ms assigned id to identify the joining user <br/><br/> Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4                       |
+| user_id            | `string`             | User id assigned by the customer <br/><br/> Example: user.001                                                                 |
+| template_id        | `string`             | Template ID of the room <br/><br/> Example: 66112497abcd52312556c4gg                                                          |
+| user_name          | `string`             | User name of the joining user <br/><br/> Example: Test user                                                                   |
+| user_data          | `string`             | User data of the joining user <br/><br/> Example: `{"isHandRaised":true}`                                                     |
+| role               | `string`             | Role of the joining user <br/><br/> Example: host                                                                             |
+| joined_at          | `timestamp (in UTC)` | Timestamp when user joined <br/><br/> Example: 2020-11-11T16:32:17Z                                                           |
+| session_started_at | `timestamp (in UTC)` | Timestamp when session started <br/><br/> Example: 2020-11-11T16:32:17Z                                                       |
+| type               | `string`             | Defines the type of peer to join the room. It is 'sip' for peers joining through SIP and 'regular' for peers joining directly |
 
 #### Sample `peer.join.success` event
 
@@ -169,6 +170,7 @@ This event will be sent when any peer joins the room successfully
         "room_name": "**********",
         "session_id": "************************",
         "template_id": "************************",
+        "type": "regular",
         "user_id": "************************",
         "user_name": "********",
         "user_data": "",
@@ -200,6 +202,7 @@ This event will be sent when peer leaves the room
 | message            | `string`             | Reason specified while kicking peer out of room, see more details below <br/><br/> Example: removed due to misconduct |
 | joined_at          | `timestamp (in UTC)` | Timestamp when user joined <br/><br/> Example: 2020-11-11T16:32:17Z                                                   |
 | session_started_at | `timestamp (in UTC)` | Timestamp when session started <br/><br/> Example: 2020-11-11T16:32:17Z                                               |
+| type               | `string`             | Defines the type of peer to join the room. It is 'sip' for peers joining through SIP and 'regular' for peers joining directly |
 
 #### Peer Leave Reason
 
@@ -246,6 +249,7 @@ This event will be sent when peer leaves the room
         "room_name": "**********",
         "session_id": "************************",
         "template_id": "************************",
+        "type": "regular",
         "user_id": "************************",
         "user_name": "********",
         "user_data": "",
@@ -263,18 +267,19 @@ This event will be sent when a peer fails to join a room. This can occur when,
 
 #### Attributes
 
-| Name          | Type                 | Description                                                                                             |
-| :------------ | :------------------- | :------------------------------------------------------------------------------------------------------ |
-| room_id       | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312df                                     |
-| room_name     | `string`             | Room name provided when creating the room <br/><br/> Example: Test Room                                 |
-| peer_id       | `string`             | 100ms assigned id to identify the joining user <br/><br/> Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
-| user_id       | `string`             | User id assigned by the customer <br/><br/> Example: user.001                                           |
-| template_id   | `string`             | Template ID of the room <br/><br/> Example: 66112497abcd52312556c4gg                                    |
-| user_name     | `string`             | User name of the user <br/><br/> Example: Test user                                                     |
-| user_data     | `string`             | User data of the user <br/><br/> Example: `{"isHandRaised":true}`                                       |
-| role          | `string`             | Role of the user <br/><br/> Example: host                                                               |
-| joined_at     | `timestamp (in UTC)` | Timestamp when user joined <br/><br/> Example: 2020-11-11T16:32:17Z                                     |
-| error_message | `string`             | Reason for failure <br/><br/> Example: Peer not joined                                                  |
+| Name          | Type                 | Description                                                                                                                   |
+|:--------------|:---------------------|:------------------------------------------------------------------------------------------------------------------------------|
+| room_id       | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312df                                                           |
+| room_name     | `string`             | Room name provided when creating the room <br/><br/> Example: Test Room                                                       |
+| peer_id       | `string`             | 100ms assigned id to identify the joining user <br/><br/> Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4                       |
+| user_id       | `string`             | User id assigned by the customer <br/><br/> Example: user.001                                                                 |
+| template_id   | `string`             | Template ID of the room <br/><br/> Example: 66112497abcd52312556c4gg                                                          |
+| user_name     | `string`             | User name of the user <br/><br/> Example: Test user                                                                           |
+| user_data     | `string`             | User data of the user <br/><br/> Example: `{"isHandRaised":true}`                                                             |
+| role          | `string`             | Role of the user <br/><br/> Example: host                                                                                     |
+| joined_at     | `timestamp (in UTC)` | Timestamp when user joined <br/><br/> Example: 2020-11-11T16:32:17Z                                                           |
+| error_message | `string`             | Reason for failure <br/><br/> Example: Peer not joined                                                                        |
+| type          | `string`             | Defines the type of peer to join the room. It is 'sip' for peers joining through SIP and 'regular' for peers joining directly |
 
 #### Peer join failure Reason
 
@@ -299,6 +304,7 @@ This event will be sent when a peer fails to join a room. This can occur when,
         "room_name": "**********",
         "user_id": "************************",
         "template_id": "************************",
+        "type": "regular",
         "user_name": "********",
         "user_data": "",
         "error_message": "role not allowed"
@@ -316,20 +322,21 @@ This event will be sent when the peer leave fails. This can occur when,
 
 #### Attributes
 
-| Name          | Type                 | Description                                                                                             |
-| :------------ | :------------------- | :------------------------------------------------------------------------------------------------------ |
-| room_id       | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312df                                     |
-| room_name     | `string`             | Room name provided when creating the room <br/><br/> Example: Test Room                                 |
-| peer_id       | `string`             | 100ms assigned id to identify the joining user <br/><br/> Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
-| user_id       | `string`             | User id assigned by the customer <br/><br/> Example: user.001                                           |
-| template_id   | `string`             | Template ID of the room <br/><br/> Example: 66112497abcd52312556c4gg                                    |
-| user_name     | `string`             | User name of the user <br/><br/> Example: Test user                                                     |
-| user_data     | `string`             | User data of the user <br/><br/> Example: `{"isHandRaised":true}`                                       |
-| role          | `string`             | Role of the user <br/><br/> Example: host                                                               |
-| left_at       | `timestamp (in UTC)` | Timestamp when user left <br/><br/> Example: 2020-11-11T17:32:17Z                                       |
-| duration      | `int`                | Duration the user spent in the room in seconds <br/><br/> Example: 36000                                |
-| error_message | `string`             | Reason for failure <br/><br/> Example: Peer not joined                                                  |
-| joined_at     | `timestamp (in UTC)` | Timestamp when user joined <br/><br/> Example: 2020-11-11T16:32:17Z                                     |
+| Name          | Type                 | Description                                                                                                                   |
+|:--------------|:---------------------|:------------------------------------------------------------------------------------------------------------------------------|
+| room_id       | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312df                                                           |
+| room_name     | `string`             | Room name provided when creating the room <br/><br/> Example: Test Room                                                       |
+| peer_id       | `string`             | 100ms assigned id to identify the joining user <br/><br/> Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4                       |
+| user_id       | `string`             | User id assigned by the customer <br/><br/> Example: user.001                                                                 |
+| template_id   | `string`             | Template ID of the room <br/><br/> Example: 66112497abcd52312556c4gg                                                          |
+| user_name     | `string`             | User name of the user <br/><br/> Example: Test user                                                                           |
+| user_data     | `string`             | User data of the user <br/><br/> Example: `{"isHandRaised":true}`                                                             |
+| role          | `string`             | Role of the user <br/><br/> Example: host                                                                                     |
+| left_at       | `timestamp (in UTC)` | Timestamp when user left <br/><br/> Example: 2020-11-11T17:32:17Z                                                             |
+| duration      | `int`                | Duration the user spent in the room in seconds <br/><br/> Example: 36000                                                      |
+| error_message | `string`             | Reason for failure <br/><br/> Example: Peer not joined                                                                        |
+| joined_at     | `timestamp (in UTC)` | Timestamp when user joined <br/><br/> Example: 2020-11-11T16:32:17Z                                                           |
+| type          | `string`             | Defines the type of peer to join the room. It is 'sip' for peers joining through SIP and 'regular' for peers joining directly |
 
 #### Peer leave failure Reason
 
@@ -354,6 +361,7 @@ This event will be sent when the peer leave fails. This can occur when,
         "room_name": "**********",
         "user_id": "************************",
         "template_id": "************************",
+        "type": "regular",
         "user_name": "********",
         "user_data": "",
         "error_message": "Peer not joined"

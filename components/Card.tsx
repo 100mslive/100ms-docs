@@ -1,5 +1,6 @@
 import { ArrowRightIcon } from '@100mslive/react-icons';
 import { Flex, Box, Text } from '@100mslive/react-ui';
+import { AppAnalytics } from '../lib/publishEvents';
 
 interface CardProps {
     icon: any;
@@ -17,7 +18,7 @@ const Card: React.FC<CardProps> = ({ icon, title, link, subText, id, cta = 'Read
             justify="between"
             onClick={() => {
                 if (link) {
-                    window.analytics.track('card.clicked', {
+                    AppAnalytics.track('card.clicked', {
                         title,
                         link,
                         currentPage: window.location.href

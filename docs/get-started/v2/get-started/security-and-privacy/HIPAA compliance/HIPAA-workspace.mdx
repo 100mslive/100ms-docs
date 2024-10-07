@@ -31,7 +31,7 @@ This section outlines 100ms' security framework and technical implementation, co
 
 - 100ms does not store your video, audio or screensharing data.
 - All of 100ms’ video and audio calls are encrypted to and from 100ms’ SFU servers. Encrypted media in transit is decrypted only in the server memory, ensuring that the exposure of the decrypted stream is as minimal as possible. At the application layer, we never have access to unencrypted media.
-- All audio, video, and screen sharing media are transmitted encrypted using the Secure Real-time Transport Protocol (SRTP) which are encrypted over Datagram Transport Layer Security (DTLS) with AES 256-bit encryption.
+- All audio, video, and screen sharing media are transmitted and encrypted using the Secure Real-time Transport Protocol (SRTP) which is encrypted over Datagram Transport Layer Security (DTLS) with AES 256-bit encryption.
 - TURN servers are media relay servers only so there is no processing or storage of media. TURN servers do not and cannot decrypt the media that they relay.
 - Disk encryption is enabled on the servers.
 
@@ -41,6 +41,40 @@ This section outlines 100ms' security framework and technical implementation, co
 - Recordings, when stored with 100ms, are stored on encrypted disk servers and deleted after 15 days.
 - **Only for HIPAA Workspaces** - Recording with the customer’s cloud storage bucket configured on 100ms is the only method allowed by 100ms. As soon as the recording for a particular session is complete, it is uploaded to the customers’ storage and immediately deleted from ours.
 - **Only for HIPAA Workspaces** - Access to customers’ buckets cannot be obtained by 100ms because write-only access is enforced when configuring the customer’s storage bucket.
+- In case of a failure of processing or upload of recordings, the failed recordings are stored with 100ms' secure file storage for up to 7 days and reupload is attempted during this period. After 7 days, these files are automatically deleted.
+
+#### Post call transcription
+
+- Post call transcription is an opt-in feature, which requires call recording to be enabled by the customer.
+- A speaker-labeled transcript is generated upon completion of the call recording.
+- Transcripts are generated and processed on 100ms’ servers. No data from the transcription process is used for training any AI models.
+- Transcripts are not stored by 100ms once generated.
+- The audio file of the recording is securely stored within 100ms’ temporary file storage for up to 14 days in the same region as the customer’s workspace if post call transcription is enabled. This is to ensure that in case of a failure of processing or upload of the recording, transcript or summary, the data is not lost for the customer. After 14 days, the files are automatically deleted.
+- The transcript itself is not stored by 100ms. In case of a failure of processing or upload, the transcript is regenerated, and a reupload is attempted. If the reupload is successful, all stored files are promptly deleted.
+
+#### AI-generated summary
+
+- AI-generated summary is an opt-in feature, which requires call recording as well as post call transcription to be enabled.
+- 100ms uses an external service for generating summaries. A HIPAA Business Associate Agreement (BAA) has been signed between 100ms and the service provider.
+- No data is stored by 100ms or the sub-processor providing the service.
+- The data is not used for training any AI models.
+- Summaries are not stored by 100ms once generated.
+- The audio file of the recording is securely stored within 100ms’ temporary file storage for up to 14 days in the same region as the customer’s workspace if post call transcription is enabled. This is to ensure that in case of a failure of processing or upload of the recording, transcript or summary, the data is not lost for the customer. After 14 days, the files are automatically deleted.
+- The summary itself is not stored by 100ms. In case of a failure, the transcript and the summary are regenerated, and a reupload is attempted. If the reupload is successful, all stored files are promptly deleted.
+
+#### Closed captions
+
+- 100ms uses an external service for speaker-labeled closed captions.
+- A HIPAA Business Associate Agreement (BAA) has been signed between 100ms and the service provider.
+- No data is stored by 100ms or the sub-processor providing the service.
+- The data is not used for training any AI models.
+
+#### Session Initiation Protocol (SIP) - Audio and Video
+
+- Media encryption is performed using the **AES_CM_128_HMAC_SHA1_80** cryptographic suite.
+- Media is not stored at any point; all transmissions are transient.
+- Phone numbers, when used, are masked and securely stored in call logs only.
+
 
 #### Secure webhooks
 
@@ -129,9 +163,13 @@ Following services and features can be **enabled** and used:
 2. Composite Recording with user’s cloud storage bucket configured
     1. Recording with the [customer’s cloud storage bucket configured](/get-started/v2/get-started/features/recordings/recording-assets/storage-configuration) on 100ms is the only method allowed by 100ms. As soon as the recording for a particular session is complete, it is uploaded to the customers’ storage and immediately deleted from ours.
     2. Access to customers’ buckets cannot be obtained by 100ms because write-only access is enforced when configuring the customer’s storage bucket.
-3. Whiteboard
-4. Session Initiation Protocol (SIP) (Limited Preview Access)
-5. Chat
+3. Closed Captions
+4. Post Call Transcription
+5. AI-Generated Summaries
+6. Noise Cancellation
+7. Whiteboard
+8. Session Initiation Protocol (SIP) - Audio and Video
+9. Chat
 
 Following services within the template have been **disabled** and locked for the HIPAA Workspace:
 
@@ -140,16 +178,12 @@ Following services within the template have been **disabled** and locked for the
 3. Track Recording
 4. Stream Recording
 5. Live Transcription for HLS
-6. Post Call Transcription
-7. AI-Generated Summaries
 
 Following services are in the process of being HIPAA compliant:
 
-1. Live Transcription (Video Conferencing and HLS) - Diarized and Non-diarized
-2. Post Call Transcription - Speaker Labelled (Diarized)
-3. AI-Generated Summaries
-4. Track Recording
-5. Stream Recording
+1. Track Recording
+2. Stream Recording
+3. Custom Composite Recording
 
 #### Server Side
 
@@ -291,6 +325,10 @@ Creating and using a HIPAA workspace doesn’t guarantee HIPAA compliance until 
    
     We have signed BAAs with critical services and features which will have temporary access to the customers’ ePHI.
     
+5. Is there any data stored and retained by 100ms or its sub-professors for the purpose of training any AI models?
+
+    Recordings can be stored with 100ms for upto 7 days, in case of a failure of processing or upload to the customer's configured storage bucket. Transcripts or summaries aren't stored with 100ms and aren't used for training any AI models. 
+
 5. **Can a workspace be deleted?**
     
     A workspace cannot be deleted at this point of time. If you do require this, please reach out to us through the support widget on 100ms dashboard.
