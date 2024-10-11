@@ -1,7 +1,6 @@
 import React from 'react';
 import {
     ChatIcon,
-    DiscordIcon,
     FacebookIcon,
     LinkedInIcon,
     Svg100MsLogo,
@@ -63,18 +62,7 @@ const Footer: React.FC<Props> = ({ css = {} }) => (
                                     />
                                 </Box>
                             </a>
-                            <a href="https://discord.com/invite/kGdmszyzq2">
-                                <Box css={{ color: '$textMedEmp' }}>
-                                    <DiscordIcon
-                                        style={{
-                                            width: '27px',
-                                            height: '27px',
-                                            padding: '4.5px',
-                                            color: 'inherit'
-                                        }}
-                                    />
-                                </Box>
-                            </a>
+                           
                         </Box>
                     </Box>
                     <Box className="details">

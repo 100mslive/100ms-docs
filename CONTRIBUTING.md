@@ -1,6 +1,6 @@
 # Contributing
 
-Thank you for investing your time in contributing to our project! Any contribution you make will be reflected on [100ms Docs](https://docs.100ms.live/) If you don't know where to start contributing, ask us on our [Discord channel](http://100ms.live/discord).
+Thank you for investing your time in contributing to our project! Any contribution you make will be reflected on [100ms Docs](https://docs.100ms.live/)
 
 In this guide you will get an overview of the contribution workflow from opening an issue, creating a PR, reviewing, and merging the PR.
 
