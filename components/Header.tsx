@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import {
     CrossIcon,
     HamburgerMenuIcon,
-    DiscordIcon,
     GithubIcon,
     ExternalLinkIcon,
     SearchIcon
