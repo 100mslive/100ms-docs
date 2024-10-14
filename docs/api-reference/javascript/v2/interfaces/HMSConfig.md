@@ -21,14 +21,6 @@ https://docs.100ms.live/javascript/v2/features/join
 
 ## Properties
 
-### alwaysRequestPermissions
-
-• `Optional` **alwaysRequestPermissions**: `boolean`
-
-Request Camera/Mic permissions irrespective of role to avoid delay in getting device list
-
----
-
 ### audioSinkElementId
 
 • `Optional` **audioSinkElementId**: `string`

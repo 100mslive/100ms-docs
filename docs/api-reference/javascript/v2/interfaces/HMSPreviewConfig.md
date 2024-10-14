@@ -19,18 +19,6 @@ https://docs.100ms.live/javascript/v2/features/preview
 
 ## Properties
 
-### alwaysRequestPermissions
-
-• `Optional` **alwaysRequestPermissions**: `boolean`
-
-Request Camera/Mic permissions irrespective of role to avoid delay in getting device list
-
-#### Inherited from
-
-[HMSConfig](/api-reference/javascript/v2/interfaces/HMSConfig).[alwaysRequestPermissions](/api-reference/javascript/v2/interfaces/HMSConfig#alwaysrequestpermissions)
-
----
-
 ### asRole
 
 • `Optional` **asRole**: `string`

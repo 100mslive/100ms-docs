@@ -1,6 +1,6 @@
 ---
 title: HMSPollQuestionType
-nav: '2.14'
+nav: '2.15'
 ---
 
 ## Enumeration Members

@@ -10,6 +10,7 @@ nav: '1.1'
 - [DomainCategory](/api-reference/javascript/v2/enums/DomainCategory)
 - [HLSPlaylistType](/api-reference/javascript/v2/enums/HLSPlaylistType)
 - [HLSStreamType](/api-reference/javascript/v2/enums/HLSStreamType)
+- [HMSAudioDeviceCategory](/api-reference/javascript/v2/enums/HMSAudioDeviceCategory)
 - [HMSAudioMode](/api-reference/javascript/v2/enums/HMSAudioMode)
 - [HMSAudioPluginType](/api-reference/javascript/v2/enums/HMSAudioPluginType)
 - [HMSLogLevel](/api-reference/javascript/v2/enums/HMSLogLevel)
@@ -396,17 +397,17 @@ selfBrowser - the current browser tab is being shared
 
 ### getAudioDeviceCategory
 
-▸ **getAudioDeviceCategory**(`deviceLabel`): `"bluetooth"` \| `"speakerhone"` \| `"wired"` \| `"earpiece"` \| `"speakerphone"`
+▸ **getAudioDeviceCategory**(`deviceLabel?`): `HMSAudioDeviceCategory`
 
 #### Parameters
 
-| Name          | Type     |
-| :------------ | :------- |
-| `deviceLabel` | `string` |
+| Name           | Type     |
+| :------------- | :------- |
+| `deviceLabel?` | `string` |
 
 #### Returns
 
-`"bluetooth"` \| `"speakerhone"` \| `"wired"` \| `"earpiece"` \| `"speakerphone"`
+`HMSAudioDeviceCategory`
 
 ---
 
