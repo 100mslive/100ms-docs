@@ -71,6 +71,12 @@ nav: '3.2'
 
 ---
 
+### localAudioUnmutedNatively
+
+• `Readonly` **localAudioUnmutedNatively**: `HMSInternalEvent`<`unknown`\>
+
+---
+
 ### localRoleUpdate
 
 • `Readonly` **localRoleUpdate**: `HMSInternalEvent`<{ `newRole`: [`HMSRole`](/api-reference/javascript/v2/interfaces/HMSRole) ; `oldRole`: [`HMSRole`](/api-reference/javascript/v2/interfaces/HMSRole) }\>
