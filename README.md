@@ -3,8 +3,6 @@
     <img src="public/logo.svg" alt="Logo" width="200" >
 </p>
 
-[![Discord](https://img.shields.io/discord/843749923060711464?label=Join%20on%20Discord)](https://100ms.live/discord)
-
 <br />
 
 > If you're here to contribute do check out our [Contributing Guidelines](CONTRIBUTING.md) & our [Code of Conduct](CODE_OF_CONDUCT.md)
@@ -19,7 +17,7 @@ To run locally
 -   `yarn` or `npm install`
 -   `yarn dev` or `npm run dev`
 
-All docs are written in `MDX` this helps use to use React Components along with the flavor of Markdown Syntax.
+All docs are written in `MDX`. This allows usage of React components along with the flavor of Markdown Syntax.
 
 All docs reside in the [/docs](https://github.com/100mslive/100ms-docs/tree/main/docs) folder.
 
@@ -52,7 +50,7 @@ nav: 14 // Ranking of Item in the Sidebar
 
 By default Nav is given the value of `Infinity` it's important to add `nav` value to order the Sidebar.
 
-But suppose you wanna update the order of 1 doc , then you don't need to change nav value of all them simply make the nav value in between the preceding and next doc it can be in decimal value too.
+But suppose you want to update the order of a doc , then you don't need to change the nav values for all of them. Simply make the nav value in between the preceding and next doc. It can be a decimal value too.
 
 ### 2. To a new Docs (for v3 and soo on)
 

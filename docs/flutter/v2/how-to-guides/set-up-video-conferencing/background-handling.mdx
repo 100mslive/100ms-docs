@@ -150,7 +150,7 @@ Add `flutter_foreground_task` as a dependency in your `pubspec.yaml` file.
 
 ```
 dependencies:
-  flutter_foreground_task: "3.10.0"
+  flutter_foreground_task:
 ```
 
 ### Adding Service in `AndroidManifest.xml`
@@ -175,7 +175,8 @@ Add service inside `<application>` tag as follows:
         // Set Service Type to capture Audio or Video as per your use-case. In most cases, only `microphone` access would be required. Then do not pass the `camera`. If stopWithTask set to true then it will stop the notification if app is force killed.
         <service android:name="com.pravera.flutter_foreground_task.service.ForegroundService"
           android:foregroundServiceType="camera|microphone"
-          android:stopWithTask="true" />
+          android:stopWithTask="true"
+          android:exported="false" />
 
 </application>
 ```

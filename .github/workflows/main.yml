@@ -17,11 +17,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - run: |
+          venv="$HOME/.local/share/venv"
+          python3 -m venv "$venv"
+          echo "$venv/bin" >> $GITHUB_PATH
       - uses: errata-ai/vale-action@reviewdog
         env:
           # Required, set by GitHub actions automatically:
           # https://docs.github.com/en/actions/security-guides/automatic-token-authentication#about-the-github_token-secret
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          GITHUB_TOKEN: ${{secrets.DOCKER_GIT_TOKEN}}
         with:
           # Reporter of reviewdog command [github-pr-check,github-pr-review,github-check].
           reporter: github-pr-check # optional, default is github-pr-check
