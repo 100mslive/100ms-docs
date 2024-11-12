@@ -1,6 +1,6 @@
 ---
 title: HMSAudioTrackSettings
-nav: '4.11'
+nav: '4.12'
 ---
 
 ## Properties

@@ -1,6 +1,6 @@
 ---
 title: HMSDeviceChangeEvent
-nav: '4.19'
+nav: '4.20'
 ---
 
 Test fails when adding InputDeviceInfo[error TS2304: Cannot find name 'InputDeviceInfo'.]

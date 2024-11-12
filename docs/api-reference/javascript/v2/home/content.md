@@ -10,6 +10,7 @@ nav: '1.1'
 - [DomainCategory](/api-reference/javascript/v2/enums/DomainCategory)
 - [HLSPlaylistType](/api-reference/javascript/v2/enums/HLSPlaylistType)
 - [HLSStreamType](/api-reference/javascript/v2/enums/HLSStreamType)
+- [HMSAudioDeviceCategory](/api-reference/javascript/v2/enums/HMSAudioDeviceCategory)
 - [HMSAudioMode](/api-reference/javascript/v2/enums/HMSAudioMode)
 - [HMSAudioPluginType](/api-reference/javascript/v2/enums/HMSAudioPluginType)
 - [HMSLogLevel](/api-reference/javascript/v2/enums/HMSLogLevel)
@@ -23,6 +24,7 @@ nav: '1.1'
 - [HMSRecordingState](/api-reference/javascript/v2/enums/HMSRecordingState)
 - [HMSRoomState](/api-reference/javascript/v2/enums/HMSRoomState)
 - [HMSSimulcastLayer](/api-reference/javascript/v2/enums/HMSSimulcastLayer)
+- [HMSTrackExceptionTrackType](/api-reference/javascript/v2/enums/HMSTrackExceptionTrackType)
 - [HMSTranscriptionMode](/api-reference/javascript/v2/enums/HMSTranscriptionMode)
 - [HMSTranscriptionState](/api-reference/javascript/v2/enums/HMSTranscriptionState)
 - [HMSVideoPluginCanvasContextType](/api-reference/javascript/v2/enums/HMSVideoPluginCanvasContextType)
@@ -43,6 +45,7 @@ nav: '1.1'
 ## Other Interfaces
 
 - [ConnectivityCheckResult](/api-reference/javascript/v2/interfaces/ConnectivityCheckResult)
+- [DebugInfo](/api-reference/javascript/v2/interfaces/DebugInfo)
 - [DeviceMap](/api-reference/javascript/v2/interfaces/DeviceMap)
 - [DiagnosticsRTCStats](/api-reference/javascript/v2/interfaces/DiagnosticsRTCStats)
 - [DiagnosticsRTCStatsReport](/api-reference/javascript/v2/interfaces/DiagnosticsRTCStatsReport)
@@ -116,6 +119,7 @@ nav: '1.1'
 - [HMSStatsStore](/api-reference/javascript/v2/interfaces/HMSStatsStore)
 - [HMSStatsStoreWrapper](/api-reference/javascript/v2/interfaces/HMSStatsStoreWrapper)
 - [HMSStore](/api-reference/javascript/v2/interfaces/HMSStore)
+- [HMSTrackException](/api-reference/javascript/v2/interfaces/HMSTrackException)
 - [HMSTrackNotification](/api-reference/javascript/v2/interfaces/HMSTrackNotification)
 - [HMSTrackStats](/api-reference/javascript/v2/interfaces/HMSTrackStats)
 - [HMSTranscriptionInfo](/api-reference/javascript/v2/interfaces/HMSTranscriptionInfo)
@@ -396,17 +400,17 @@ selfBrowser - the current browser tab is being shared
 
 ### getAudioDeviceCategory
 
-▸ **getAudioDeviceCategory**(`deviceLabel`): `"bluetooth"` \| `"speakerhone"` \| `"wired"` \| `"earpiece"` \| `"speakerphone"`
+▸ **getAudioDeviceCategory**(`deviceLabel?`): `HMSAudioDeviceCategory`
 
 #### Parameters
 
-| Name          | Type     |
-| :------------ | :------- |
-| `deviceLabel` | `string` |
+| Name           | Type     |
+| :------------- | :------- |
+| `deviceLabel?` | `string` |
 
 #### Returns
 
-`"bluetooth"` \| `"speakerhone"` \| `"wired"` \| `"earpiece"` \| `"speakerphone"`
+`HMSAudioDeviceCategory`
 
 ---
 
