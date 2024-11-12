@@ -1,6 +1,6 @@
 ---
 title: HMSAudioPluginType
-nav: '2.7'
+nav: '2.8'
 ---
 
 Specifies the type of the plugin a transforming plugin will get an output audio node to give the resulting
