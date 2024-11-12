@@ -1,6 +1,6 @@
 ---
 title: HMSSimulcastLayerDefinition
-nav: '4.72'
+nav: '4.73'
 ---
 
 ## Properties

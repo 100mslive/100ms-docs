@@ -1,6 +1,6 @@
 ---
 title: DiagnosticsRTCStatsReport
-nav: '4.4'
+nav: '4.5'
 ---
 
 ## Properties
