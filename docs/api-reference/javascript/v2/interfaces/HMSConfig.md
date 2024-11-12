@@ -1,6 +1,6 @@
 ---
 title: HMSConfig
-nav: '4.17'
+nav: '4.18'
 ---
 
 the config object tells the SDK options you want to join with
@@ -20,14 +20,6 @@ https://docs.100ms.live/javascript/v2/features/join
   ↳ [`HMSPreviewConfig`](/api-reference/javascript/v2/interfaces/HMSPreviewConfig)
 
 ## Properties
-
-### alwaysRequestPermissions
-
-• `Optional` **alwaysRequestPermissions**: `boolean`
-
-Request Camera/Mic permissions irrespective of role to avoid delay in getting device list
-
----
 
 ### audioSinkElementId
 

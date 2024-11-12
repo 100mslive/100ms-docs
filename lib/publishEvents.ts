@@ -50,7 +50,7 @@ export const analyticsStore: {
 const analyticsTrack = (title, options) => {
     try {
         const user = currentUser();
-        if (!user) {
+        if (Object.keys(user).length === 0) {
             amplitude.track({
                 event_type: title,
                 event_properties: {
@@ -58,13 +58,12 @@ const analyticsTrack = (title, options) => {
                     ...options
                 }
             });
-        } else if (user && !user.is_admin) {
+        } else if (Object.keys(user).length > 0 && !user.is_admin && user !== null) {
             amplitude.track({
                 event_type: title,
                 event_properties: {
                     email: user.email,
                     customer_id: user.customer_id,
-
                     workspaceOwnerEmail: (analyticsStore.get() as { workspaceOwnerEmail: string })
                         ?.workspaceOwnerEmail,
                     api_version: user.api_version,
@@ -78,48 +77,26 @@ const analyticsTrack = (title, options) => {
     }
 };
 
-const analyticsPage = (title, options) => {
-    const user = currentUser();
-    if (!user) {
-        try {
-            hubspotPageView();
-        } catch (e) {
-            console.error(e);
-        }
-        try {
-            window.analytics.page(title, {
-                ...getCommonOptions(),
-                ...options
-            });
-        } catch (e) {
-            console.error(e);
-        }
-    } else if (user && !user.is_admin) {
-        try {
-            window.analytics.page(title, {
-                email: user.email,
-                customer_id: user.customer_id,
-                api_version: user.api_version,
-                ...getCommonOptions(),
-                ...options
-            });
-        } catch (e) {
-            console.error(e);
-        }
-        try {
-            hubspotPageView();
-        } catch (e) {
-            console.error(e);
-        }
+const analyticsPage = () => {
+    try {
+        hubspotPageView();
+    } catch (e) {
+        console.error(e);
     }
 };
-
 const amplitudeIdentify = (userId, properties = {}) => {
-    amplitude.setUserId(userId);
     const identifyEvent = new amplitude.Identify();
-    for (const key in properties) {
-        if (Object.prototype.hasOwnProperty.call(properties, key)) {
-            identifyEvent.set(key, properties[key]);
+    amplitude.setUserId(userId);
+    if (Object.keys(properties).length !== 0 && properties !== null && properties !== undefined) {
+        for (const key in properties) {
+            if (
+                Object.prototype.hasOwnProperty.call(properties, key) &&
+                properties?.[key] !== null &&
+                properties?.[key] !== undefined &&
+                key !== 'user_id'
+            ) {
+                identifyEvent.set(key, properties?.[key]);
+            }
         }
     }
     amplitude.identify(identifyEvent);
@@ -127,23 +104,21 @@ const amplitudeIdentify = (userId, properties = {}) => {
 
 const analyticsIdentify = (id, options = {}) => {
     const user = currentUser();
-    if (!user || (user && !user.is_admin)) {
-        const finalOptions = {
-            ...getCommonOptions(),
-            ...options
-        };
-        try {
-            hubspotIdentify({
-                properties: { ...finalOptions, refId: id, email: user.email, ...user }
-            });
-        } catch (e) {
-            console.error(e);
-        }
-        try {
-            amplitudeIdentify(id, finalOptions);
-        } catch (e) {
-            console.error(e);
-        }
+    const finalOptions = {
+        ...getCommonOptions(),
+        ...options
+    };
+    try {
+        hubspotIdentify({
+            properties: { ...finalOptions, refId: id, email: user.email, ...user }
+        });
+    } catch (e) {
+        console.error(e);
+    }
+    try {
+        amplitudeIdentify(id, finalOptions);
+    } catch (e) {
+        console.error(e);
     }
 };
 

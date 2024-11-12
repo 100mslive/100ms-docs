@@ -1,9 +1,15 @@
 ---
 title: HMSRoom
-nav: '4.68'
+nav: '4.69'
 ---
 
 ## Properties
+
+### disableNoneLayerRequest
+
+• `Optional` **disableNoneLayerRequest**: `boolean`
+
+---
 
 ### effectsKey
 
