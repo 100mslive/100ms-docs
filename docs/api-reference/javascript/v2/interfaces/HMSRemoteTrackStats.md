@@ -1,6 +1,6 @@
 ---
 title: HMSRemoteTrackStats
-nav: '4.64'
+nav: '4.65'
 ---
 
 Extends RTCInboundRtpStreamStats
