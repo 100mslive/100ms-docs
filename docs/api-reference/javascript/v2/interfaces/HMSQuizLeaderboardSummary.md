@@ -1,6 +1,6 @@
 ---
 title: HMSQuizLeaderboardSummary
-nav: '4.60'
+nav: '4.61'
 ---
 
 ## Properties

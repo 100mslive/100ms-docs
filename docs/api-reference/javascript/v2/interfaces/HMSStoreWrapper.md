@@ -1,6 +1,6 @@
 ---
 title: HMSStoreWrapper<T>
-nav: '4.77'
+nav: '4.78'
 ---
 
 HMS store can be used to:

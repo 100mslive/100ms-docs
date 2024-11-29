@@ -1,6 +1,6 @@
 ---
 title: HMSTranscriptionInfo
-nav: '4.80'
+nav: '4.82'
 ---
 
 ## Properties

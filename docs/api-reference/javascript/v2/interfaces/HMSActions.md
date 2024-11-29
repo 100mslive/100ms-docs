@@ -1,6 +1,6 @@
 ---
 title: HMSActions<T>
-nav: '4.8'
+nav: '4.9'
 ---
 
 The below interface defines our SDK API Surface for taking room related actions.

@@ -1,6 +1,6 @@
 ---
 title: HLSConfig
-nav: '4.5'
+nav: '4.6'
 ---
 
 ## Properties

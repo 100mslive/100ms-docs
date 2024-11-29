@@ -1,7 +1,7 @@
 ---
- title: Release Notes
- nav: 4
- description: Release Notes for 100ms Android
+title: Release Notes
+nav: 4
+description: Release Notes for 100ms Android
 ---
 import AndroidSdkVersionShield from '@/common/android-sdk-version-shield.md';
 import AndroidPrebuiltVersionShield from '@/common/android-prebuilt-version-shield.md';
@@ -19,13 +19,26 @@ import AndroidPrebuiltVersionShield from '@/common/android-prebuilt-version-shie
 | live.100ms:virtual-background: |<AndroidSdkVersionShield />|
 | live.100ms:hms-noise-cancellation-android: | <AndroidSdkVersionShield /> |
 
+## v2.9.69 - 2024-10-25
+### Fixed
+- SDK cleanup was not done fully on getting a join error leading to media dispose crash when joining the next time with same sdk instance and trying to leave
+### Changed
+- libkrisp-audio-sdk SO files are now part of noise cancellation module and not the core library. This reduces the size of core lib
+
+
+## v2.9.68 - 2024-09-24
+### Fixed
+- NullPointerException crash fix in RetryScheduler
+- Crash fix in emulator while applying VB
+- Fix retry continuing even after leaving some times
+
 ## v2.9.67 - 2024-09-10
 ### Fixed
-* VB memory leaks
-* Native crashes and memory issues on multiple fast join-leave
-* If leave was called when retry is ongoing, then next join would be queued if called on the same instance sometimes
+- VB memory leaks
+- Native crashes and memory issues on multiple fast join-leave
+- If leave was called when retry is ongoing, then next join would be queued if called on the same instance sometimes
 
-## v2.9.66 - 2024-08-2024
+## v2.9.66 - 2024-08-29
 ### Fixed
 * Java, native and graphic memory leaks
 * Getting "Failed to set offer/answer" error after leaving sometimes

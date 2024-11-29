@@ -1,6 +1,6 @@
 ---
 title: HMSVideoTrackSettings
-nav: '4.84'
+nav: '4.86'
 ---
 
 ## Properties

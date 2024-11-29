@@ -1,6 +1,6 @@
 ---
 title: HMSPreviewConfig
-nav: '4.57'
+nav: '4.58'
 ---
 
 the config object tells the SDK options you want to preview with(use if you want preview and join with different roles)
@@ -18,18 +18,6 @@ https://docs.100ms.live/javascript/v2/features/preview
   ↳ **`HMSPreviewConfig`**
 
 ## Properties
-
-### alwaysRequestPermissions
-
-• `Optional` **alwaysRequestPermissions**: `boolean`
-
-Request Camera/Mic permissions irrespective of role to avoid delay in getting device list
-
-#### Inherited from
-
-[HMSConfig](/api-reference/javascript/v2/interfaces/HMSConfig).[alwaysRequestPermissions](/api-reference/javascript/v2/interfaces/HMSConfig#alwaysrequestpermissions)
-
----
 
 ### asRole
 

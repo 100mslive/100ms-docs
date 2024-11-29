@@ -1,6 +1,6 @@
 ---
 title: HMSMediaSettings
-nav: '4.31'
+nav: '4.32'
 ---
 
 ## Properties

@@ -1,6 +1,6 @@
 ---
 title: HMSPollQuestion
-nav: '4.52'
+nav: '4.53'
 ---
 
 ## Properties

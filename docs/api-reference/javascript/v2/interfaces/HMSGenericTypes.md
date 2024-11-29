@@ -1,6 +1,6 @@
 ---
 title: HMSGenericTypes
-nav: '4.26'
+nav: '4.27'
 ---
 
 ## Properties

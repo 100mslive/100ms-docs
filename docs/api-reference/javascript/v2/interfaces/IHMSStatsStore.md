@@ -1,6 +1,6 @@
 ---
 title: IHMSStatsStore
-nav: '4.87'
+nav: '4.89'
 ---
 
 ## Hierarchy

@@ -1,6 +1,6 @@
 ---
 title: HMSAudioPlugin
-nav: '4.9'
+nav: '4.10'
 ---
 
 A plugin implementing this interface can be registered with HMSLocalAudioTrack to transform, process or

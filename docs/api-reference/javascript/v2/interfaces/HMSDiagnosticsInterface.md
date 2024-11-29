@@ -1,6 +1,6 @@
 ---
 title: HMSDiagnosticsInterface
-nav: '4.22'
+nav: '4.23'
 ---
 
 ## Implemented by

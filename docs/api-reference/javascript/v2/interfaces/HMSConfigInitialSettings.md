@@ -1,6 +1,6 @@
 ---
 title: HMSConfigInitialSettings
-nav: '4.18'
+nav: '4.19'
 ---
 
 ## Properties

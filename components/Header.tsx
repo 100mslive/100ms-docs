@@ -3,13 +3,12 @@ import { useRouter } from 'next/router';
 import {
     CrossIcon,
     HamburgerMenuIcon,
-    DiscordIcon,
     GithubIcon,
     ExternalLinkIcon,
     SearchIcon
 } from '@100mslive/react-icons';
 import { Flex, Text, useTheme } from '@100mslive/react-ui';
-import { WebsiteLink, DashboardLink, GitHubLink, DiscordLink, ContactLink } from '@/lib/utils';
+import { WebsiteLink, DashboardLink, GitHubLink, ContactLink } from '@/lib/utils';
 import { references } from 'api-references';
 import { exposedPlatformNames } from 'common';
 import SearchModal from './SearchModal';
@@ -208,25 +207,6 @@ const Header: React.FC<Props> = ({
                         Dashboard
                     </HeaderLink>
 
-                    <UtmLinkWrapper href={DiscordLink}>
-                        <a
-                            target="_blank"
-                            rel="noreferrer"
-                            onClick={() =>
-                                AppAnalytics.track('link.clicked', {
-                                    btnId: 'discord.clicked',
-                                    currentPage: window.location.href
-                                })
-                            }>
-                            <Text css={linkCSS}>
-                                <DiscordIcon
-                                    height={18}
-                                    width={18}
-                                    style={{ marginRight: '-14px' }}
-                                />
-                            </Text>
-                        </a>
-                    </UtmLinkWrapper>
                     <UtmLinkWrapper href={GitHubLink}>
                         <a
                             target="_blank"

@@ -1,6 +1,6 @@
 ---
 title: HMSSimulcastLayer
-nav: '2.18'
+nav: '2.19'
 ---
 
 ## Enumeration Members

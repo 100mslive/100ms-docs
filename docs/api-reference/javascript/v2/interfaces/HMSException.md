@@ -1,9 +1,15 @@
 ---
 title: HMSException
-nav: '4.23'
+nav: '4.24'
 ---
 
 any mid call error notification will be in this format
+
+## Hierarchy
+
+- **`HMSException`**
+
+  ↳ [`HMSTrackException`](/api-reference/javascript/v2/interfaces/HMSTrackException)
 
 ## Properties
 

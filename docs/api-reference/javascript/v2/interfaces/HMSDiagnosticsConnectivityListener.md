@@ -1,6 +1,6 @@
 ---
 title: HMSDiagnosticsConnectivityListener
-nav: '4.21'
+nav: '4.22'
 ---
 
 ## Hierarchy
