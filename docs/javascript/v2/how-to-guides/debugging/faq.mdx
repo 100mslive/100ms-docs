@@ -236,3 +236,15 @@ const { HMSReactiveStore} = require('@100mslive/hms-video-store');
 
 By implementing one of these workarounds, you should be able to resolve the TypeScript errors and continue using the libraries.
 
+#### How to Address Video and Audio Issues with Capture Devices
+
+1. Check for Conflicting Applications: Ensure that no other applications are currently using your audio and video devices. If you find any, close them and restart your 100ms session.
+
+2. Manage getUserMedia Calls: If you're using the getUserMedia function, be sure to stop it before invoking the 100ms join method.
+
+```
+
+const mediaStream = await navigator.mediaDevices.getUserMedia(constraints);
+mediaStream.getTracks().forEach(track => track.stop());
+
+```
