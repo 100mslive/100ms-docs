@@ -66,7 +66,7 @@ There is a lot that goes on in a typical video call. For the best user experienc
 Now that we’ve gone through what we do and what all happens in a typical video call let’s dive further into the Web SDK. Despite the underlying complexity and flexibility, the API surface of the SDK is pretty simple and intuitive. We’ll build a mental model for the core concepts which will help across any use case.
 
 <Note>
-    Note that the API design is different from conventional SDKs in both the live SDK world and beyond. It’s opinionated to some degree and simplifies the app layer code eliminating a whole class of errors. The general design will look familiar If you have used either Redux or Zustand. These libraries as well as our SDK are based on the [Flux architecture](https://facebook.github.io/flux/docs/in-depth-overview/).
+    Note that the API design is different from conventional SDKs in both the live SDK world and beyond. It’s opinionated to some degree and simplifies the app layer code eliminating a whole class of errors. The general design will look familiar if you have used either Redux or Zustand. These libraries as well as our SDK are based on the [Flux architecture](https://facebook.github.io/flux/docs/in-depth-overview/).
 </Note>
 
 Let’s zoom in further into the previous categorization of action and state with the example of a mute button. There are two states the button can take, mute or unmute. You can choose to render the current button in a different way depending on this state. You can also toggle between the states by clicking on the button(”action”). The below image shows the two different UI states for mute and arrows showing a toggle between them.
@@ -144,7 +144,7 @@ Note that there is no local state anymore, and the handling of the button click 
 
 While the SDK can be used as-is in a vanilla JS web app, it's more likely that you plan to use it in a project built with a UI framework. Since all major JS frameworks use some kind of reactive model, wrapping the SDK's store with the corresponding framework's approach to reactivity can make the codebase consistent and even more elegant.
 
-For example we give a React wrapper over the vanilla SDK([npm](https://www.npmjs.com/package/@100mslive/react-sdk)) to expose both the constructs from easy-to-use hooks `useHMSStore` and `useHMSActions`. Here is a code sample based on the [mute/unmute doc page](https://www.100ms.live/docs/javascript/v2/how--to-guides/set-up-video-conferencing/mute) for creating a toggle mute button -
+For example, we give a React wrapper over the vanilla SDK([npm](https://www.npmjs.com/package/@100mslive/react-sdk)) to expose both the constructs from easy-to-use hooks `useHMSStore` and `useHMSActions`. Here is a code sample based on the [mute/unmute doc page](https://www.100ms.live/docs/javascript/v2/how--to-guides/set-up-video-conferencing/mute) for creating a toggle mute button -
 
 ```jsx
 import {
