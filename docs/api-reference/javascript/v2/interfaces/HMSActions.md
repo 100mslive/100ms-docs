@@ -7,9 +7,9 @@ The below interface defines our SDK API Surface for taking room related actions.
 It talks to our 100ms backend and handles error reconnections, state managements
 and lots of other things so you don't have to. You can use this gateway with any
 sort of UI to make connecting to our backend easier.
-In case you use react, we also provide a HMSProvider class with very powerful hooks
-and out of box components which you can use to setup your website in minutes. Our
-components have in built integration with this interface and you won't have to worry
+In case you use React, we also provide a HMSProvider class with very powerful hooks
+and out of box components which you can use to set up your website in minutes. Our
+components have in built integration with this interface, and you won't have to worry
 about passing props if you use them.
 
 **`Remarks`**
@@ -47,20 +47,25 @@ If lock is passed as true, the room cannot be used further.
 
 ##### Parameters
 
-| Name     | Type      |
-| :------- | :-------- |
-| `lock`   | `boolean` |
-| `reason` | `string`  |
+| Name     | Type      | Description                         |
+| :------- | :-------- | :---------------------------------- |
+| `lock`   | `boolean` | boolean - true to lock the room     |
+| `reason` | `string`  | string - reason for ending the room |
 
 ##### Returns
 
 `Promise`<`void`\>
+
+Promise<void> - resolves when the room is ended
 
 ---
 
 ### interactivityCenter
 
 • **interactivityCenter**: `HMSInteractivityCenter`
+
+interactivityCenter contains all actions that can be performed on the interactivity center
+This will be available after joining the room
 
 ---
 
@@ -92,6 +97,8 @@ to resolve the autoplay error
 
 `Promise`<`void`\>
 
+Promise<void> - resolves when the autoplay error is resolved
+
 ---
 
 ### videoPlaylist
@@ -118,6 +125,8 @@ Accept the role change request received
 #### Returns
 
 `Promise`<`void`\>
+
+Promise<void> - resolves when the role is accepted
 
 ---
 
@@ -210,6 +219,8 @@ This method adds the track to the local peer's list of auxiliary tracks and publ
 
 `Promise`<`void`\>
 
+Promise<void> - resolves when the track is added
+
 ---
 
 ### attachVideo
@@ -232,6 +243,8 @@ the stream coming from server saving significant bandwidth for the user.
 
 `Promise`<`void`\>
 
+Promise<void> - resolves when the video is attached
+
 ---
 
 ### cancelMidCallPreview
@@ -243,6 +256,8 @@ stop tracks fetched during midcall preview and general cleanup
 #### Returns
 
 `Promise`<`void`\>
+
+Promise<void> - resolves when the tracks are stopped
 
 ---
 
@@ -325,6 +340,8 @@ Request for a role change of a remote peer. Can be forced.
 
 `Promise`<`void`\>
 
+Promise<void> - resolves when the role is changed
+
 ---
 
 ### changeRoleOfPeersWithRoles
@@ -343,6 +360,8 @@ Request for a role change of a remote peer. Can be forced.
 #### Returns
 
 `Promise`<`void`\>
+
+Promise<void> - resolves when the role is changed
 
 ---
 
@@ -377,6 +396,8 @@ enable sending audio speaker data to beam
 
 `Promise`<`void`\>
 
+Promise<void> - resolves when the speaker data is enabled
+
 ---
 
 ### findPeerByName
@@ -399,12 +420,14 @@ enable sending audio speaker data to beam
 
 ▸ **getAuthTokenByRoomCode**(`tokenRequest`, `tokenRequestOptions?`): `Promise`<`string`\>
 
+Get the auth token for the room code. This is useful when you want to join a room using a room code.
+
 #### Parameters
 
-| Name                   | Type                                                                                 |
-| :--------------------- | :----------------------------------------------------------------------------------- |
-| `tokenRequest`         | [`TokenRequest`](/api-reference/javascript/v2/interfaces/TokenRequest)               |
-| `tokenRequestOptions?` | [`TokenRequestOptions`](/api-reference/javascript/v2/interfaces/TokenRequestOptions) |
+| Name                   | Type                                                                                 | Description           |
+| :--------------------- | :----------------------------------------------------------------------------------- | :-------------------- |
+| `tokenRequest`         | [`TokenRequest`](/api-reference/javascript/v2/interfaces/TokenRequest)               | token request object  |
+| `tokenRequestOptions?` | [`TokenRequestOptions`](/api-reference/javascript/v2/interfaces/TokenRequestOptions) | token request options |
 
 #### Returns
 
@@ -432,15 +455,19 @@ enable sending audio speaker data to beam
 
 ▸ **getPeer**(`peerId`): `Promise`<`undefined` \| [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)\>
 
+get the peer object by peerId
+
 #### Parameters
 
-| Name     | Type     |
-| :------- | :------- |
-| `peerId` | `string` |
+| Name     | Type     | Description             |
+| :------- | :------- | :---------------------- |
+| `peerId` | `string` | string - ID of the peer |
 
 #### Returns
 
 `Promise`<`undefined` \| [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)\>
+
+Promise<HMSPeer | undefined> - resolves with the peer object
 
 ---
 
@@ -448,15 +475,23 @@ enable sending audio speaker data to beam
 
 ▸ **getPeerListIterator**(`options?`): [`HMSPeerListIterator`](/api-reference/javascript/v2/interfaces/HMSPeerListIterator)
 
+get the list of peers in the room
+
 #### Parameters
 
-| Name       | Type                                                                                               |
-| :--------- | :------------------------------------------------------------------------------------------------- |
-| `options?` | [`HMSPeerListIteratorOptions`](/api-reference/javascript/v2/interfaces/HMSPeerListIteratorOptions) |
+| Name       | Type                                                                                               | Description                                                     |
+| :--------- | :------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------- |
+| `options?` | [`HMSPeerListIteratorOptions`](/api-reference/javascript/v2/interfaces/HMSPeerListIteratorOptions) | HMSPeerListIteratorOptions - options for the peer list iterator |
 
 #### Returns
 
 [`HMSPeerListIterator`](/api-reference/javascript/v2/interfaces/HMSPeerListIterator)
+
+HMSPeerListIterator - iterator for the peer list
+
+**`See`**
+
+https://www.100ms.live/docs/react-native/v2/how-to-guides/interact-with-room/peer/large-room
 
 ---
 
@@ -464,15 +499,19 @@ enable sending audio speaker data to beam
 
 ▸ **getTrackById**(`trackId`): `undefined` \| `HMSTrack`
 
+Get the track object by trackId
+
 #### Parameters
 
-| Name      | Type     |
-| :-------- | :------- |
-| `trackId` | `string` |
+| Name      | Type     | Description              |
+| :-------- | :------- | :----------------------- |
+| `trackId` | `string` | string - ID of the track |
 
 #### Returns
 
 `undefined` \| `HMSTrack`
+
+HMSTrack | undefined - track object
 
 ---
 
@@ -519,6 +558,8 @@ Notifications for the ignored messages will still be sent, it'll only not be put
 
 ▸ **initDiagnostics**(): [`HMSDiagnosticsInterface`](/api-reference/javascript/v2/interfaces/HMSDiagnosticsInterface)
 
+Method to initialize diagnostics. Should only be called after joining.
+
 #### Returns
 
 [`HMSDiagnosticsInterface`](/api-reference/javascript/v2/interfaces/HMSDiagnosticsInterface)
@@ -542,6 +583,8 @@ current details of participants and track details are populated in the store.
 
 `Promise`<`void`\>
 
+Promise<void> - resolves when the room is joined
+
 **`Remarks`**
 
 If join is called while an earlier join is in progress for the room id, it
@@ -554,10 +597,13 @@ is ignored
 ▸ **leave**(): `Promise`<`void`\>
 
 This function can be used to leave the room, if the call is repeated it's ignored.
+This function also cleans up the store and removes all the tracks and participants.
 
 #### Returns
 
 `Promise`<`void`\>
+
+Promise<void> - resolves when the room is left
 
 ---
 
@@ -565,9 +611,13 @@ This function can be used to leave the room, if the call is repeated it's ignore
 
 ▸ **lowerLocalPeerHand**(): `Promise`<`void`\>
 
+lower hand for local peer
+
 #### Returns
 
 `Promise`<`void`\>
+
+Promise<void> - resolves when the hand is lowered
 
 ---
 
@@ -575,15 +625,19 @@ This function can be used to leave the room, if the call is repeated it's ignore
 
 ▸ **lowerRemotePeerHand**(`peerId`): `Promise`<`void`\>
 
+lower hand for remote peer
+
 #### Parameters
 
-| Name     | Type     |
-| :------- | :------- |
-| `peerId` | `string` |
+| Name     | Type     | Description             |
+| :------- | :------- | :---------------------- |
+| `peerId` | `string` | string - ID of the peer |
 
 #### Returns
 
 `Promise`<`void`\>
+
+Promise<void> - resolves when the hand is lowered
 
 ---
 
@@ -607,15 +661,20 @@ use `actions.sessionStore.observe` instead
 
 ▸ **preview**(`config`): `Promise`<`void`\>
 
+Preview function can be used to preview the camera and microphone before joining the room.
+This function is useful when you want to check and/or modify the camera and microphone settings before joining the Room.
+
 #### Parameters
 
-| Name     | Type                                                                                                        |
-| :------- | :---------------------------------------------------------------------------------------------------------- |
-| `config` | `HMSMidCallPreviewConfig` \| [`HMSPreviewConfig`](/api-reference/javascript/v2/interfaces/HMSPreviewConfig) |
+| Name     | Type                                                                                                        | Description                                       |
+| :------- | :---------------------------------------------------------------------------------------------------------- | :------------------------------------------------ |
+| `config` | `HMSMidCallPreviewConfig` \| [`HMSPreviewConfig`](/api-reference/javascript/v2/interfaces/HMSPreviewConfig) | preview config with camera and microphone devices |
 
 #### Returns
 
 `Promise`<`void`\>
+
+Promise<void> - resolves when the preview is successful
 
 ---
 
@@ -623,9 +682,13 @@ use `actions.sessionStore.observe` instead
 
 ▸ **raiseLocalPeerHand**(): `Promise`<`void`\>
 
+raise hand for local peer
+
 #### Returns
 
 `Promise`<`void`\>
+
+Promise<void> - resolves when the hand is raised
 
 ---
 
@@ -633,15 +696,19 @@ use `actions.sessionStore.observe` instead
 
 ▸ **raiseRemotePeerHand**(`peerId`): `Promise`<`void`\>
 
+raise hand for remote peer
+
 #### Parameters
 
-| Name     | Type     |
-| :------- | :------- |
-| `peerId` | `string` |
+| Name     | Type     | Description             |
+| :------- | :------- | :---------------------- |
+| `peerId` | `string` | string - ID of the peer |
 
 #### Returns
 
 `Promise`<`void`\>
+
+Promise<void> - resolves when the hand is raised
 
 ---
 
@@ -689,6 +756,8 @@ If you have **removeOthers** permission, you can remove a peer from the room.
 #### Returns
 
 `Promise`<`void`\>
+
+Promise<void> - resolves when the peer is removed
 
 ---
 
@@ -772,6 +841,8 @@ This method removes the track from the local peer's list of auxiliary tracks and
 
 `Promise`<`void`\>
 
+Promise<void> - resolves when the track is removed
+
 ---
 
 ### sendBroadcastMessage
@@ -791,6 +862,8 @@ Send a plain text message to all the other participants in the room.
 
 `Promise`<`void`\>
 
+Promise<void> - resolves when the message is sent
+
 ---
 
 ### sendDirectMessage
@@ -808,6 +881,8 @@ Send a plain text message to all the other participants in the room.
 #### Returns
 
 `Promise`<`void`\>
+
+Promise<void> - resolves when the message is sent
 
 ---
 
@@ -827,6 +902,8 @@ Send a plain text message to all the other participants in the room.
 
 `Promise`<`void`\>
 
+Promise<void> - resolves when the message is sent
+
 ---
 
 ### sendHLSTimedMetadata
@@ -837,16 +914,18 @@ Used to define date range metadata in a media playlist.
 This api adds EXT-X-DATERANGE tags to the media playlist.
 It is useful for defining timed metadata for interstitial regions such as advertisements,
 but can be used to define any timed metadata needed by your stream.
-usage (e.g)
+
+```js
 const metadataList = `[{
- payload: "some string 1",
- duration: 2
-},
-{
- payload: "some string 2",
- duration: 3
-}]`
+   payload: "some string 1",
+   duration: 2
+  },
+  {
+   payload: "some string 2",
+   duration: 3
+}]`;
 sendHLSTimedMetadata(metadataList);
+```
 
 #### Parameters
 
@@ -965,6 +1044,8 @@ Set the audio output(speaker) device
 
 `Promise`<`void`\>
 
+Promise<void> - resolves when the audio output device is set
+
 ---
 
 ### setAudioSettings
@@ -1000,6 +1081,8 @@ Change settings of the local peer's audio track
 
 `Promise`<`void`\>
 
+Promise<void> - resolves when the track is enabled
+
 ---
 
 ### setLocalAudioEnabled
@@ -1018,6 +1101,8 @@ This function can be used to enable/disable(unmute/mute) local audio track
 
 `Promise`<`void`\>
 
+Promise<void> - resolves when the audio is enabled
+
 ---
 
 ### setLocalVideoEnabled
@@ -1035,6 +1120,8 @@ This function can be used to enable/disable(unmute/mute) local video track
 #### Returns
 
 `Promise`<`void`\>
+
+Promise<void> - resolves when the video is enabled
 
 ---
 
@@ -1116,14 +1203,16 @@ set the quality of the selected videoTrack for simulcast.
 
 #### Parameters
 
-| Name      | Type                                                                                                 |
-| :-------- | :--------------------------------------------------------------------------------------------------- |
-| `trackId` | `string`                                                                                             |
-| `layer`   | [`HMSPreferredSimulcastLayer`](/api-reference/javascript/v2/home/content#hmspreferredsimulcastlayer) |
+| Name      | Type                                                                                                 | Description                             |
+| :-------- | :--------------------------------------------------------------------------------------------------- | :-------------------------------------- |
+| `trackId` | `string`                                                                                             | HMSTrackID - trackId of the video track |
+| `layer`   | [`HMSPreferredSimulcastLayer`](/api-reference/javascript/v2/home/content#hmspreferredsimulcastlayer) | HMSSimulcastLayer - layer to be set     |
 
 #### Returns
 
 `Promise`<`void`\>
+
+Promise<void> - resolves when the layer is set
 
 ---
 
@@ -1145,6 +1234,8 @@ This can be used to mute/unmute a remote peer's track
 
 `Promise`<`void`\>
 
+Promise<void> - resolves when the track state is changed
+
 ---
 
 ### setRemoteTracksEnabled
@@ -1163,6 +1254,8 @@ Use this to mute/unmute multiple tracks by source, role or type
 
 `Promise`<`void`\>
 
+Promise<void> - resolves when the track state is changed
+
 ---
 
 ### setScreenShareEnabled
@@ -1175,14 +1268,16 @@ react component if our hook is used) will be notified/rerendered
 
 #### Parameters
 
-| Name      | Type                                                                                   | Description                                          |
-| :-------- | :------------------------------------------------------------------------------------- | :--------------------------------------------------- |
-| `enabled` | `boolean`                                                                              | boolean                                              |
-| `config?` | [`HMSScreenShareConfig`](/api-reference/javascript/v2/interfaces/HMSScreenShareConfig) | check the config object for details about the fields |
+| Name      | Type                                                                                   | Description                                            |
+| :-------- | :------------------------------------------------------------------------------------- | :----------------------------------------------------- |
+| `enabled` | `boolean`                                                                              | boolean - true to enable screenshare, false to disable |
+| `config?` | [`HMSScreenShareConfig`](/api-reference/javascript/v2/interfaces/HMSScreenShareConfig) | check the config object for details about the fields   |
 
 #### Returns
 
 `Promise`<`void`\>
+
+Promise<void> - resolves when the screenshare is enabled
 
 ---
 
@@ -1247,6 +1342,8 @@ Set the output volume of audio tracks(overall/particular audio track)
 
 `Promise`<`void`\>
 
+Promise<void> - resolves when the volume is set
+
 ---
 
 ### startHLSStreaming
@@ -1258,13 +1355,15 @@ otherwise
 
 #### Parameters
 
-| Name      | Type                                                             |
-| :-------- | :--------------------------------------------------------------- |
-| `params?` | [`HLSConfig`](/api-reference/javascript/v2/interfaces/HLSConfig) |
+| Name      | Type                                                             | Description                                           |
+| :-------- | :--------------------------------------------------------------- | :---------------------------------------------------- |
+| `params?` | [`HLSConfig`](/api-reference/javascript/v2/interfaces/HLSConfig) | HLSConfig - HLSConfig object with the required fields |
 
 #### Returns
 
 `Promise`<`void`\>
+
+Promise<void> - resolves when the HLS streaming is started
 
 ---
 
@@ -1283,6 +1382,8 @@ If you want to start RTMP streaming or recording.
 #### Returns
 
 `Promise`<`void`\>
+
+Promise<void> - resolves when the RTMP streaming and recording is started
 
 ---
 
@@ -1312,13 +1413,15 @@ If you want to stop HLS streaming. The passed in arguments is not considered at 
 
 #### Parameters
 
-| Name      | Type                                                             |
-| :-------- | :--------------------------------------------------------------- |
-| `params?` | [`HLSConfig`](/api-reference/javascript/v2/interfaces/HLSConfig) |
+| Name      | Type                                                             | Description                                           |
+| :-------- | :--------------------------------------------------------------- | :---------------------------------------------------- |
+| `params?` | [`HLSConfig`](/api-reference/javascript/v2/interfaces/HLSConfig) | HLSConfig - HLSConfig object with the required fields |
 
 #### Returns
 
 `Promise`<`void`\>
+
+Promise<void> - resolves when the HLS streaming is stopped
 
 ---
 
@@ -1331,6 +1434,8 @@ If you want to stop both RTMP streaming and recording.
 #### Returns
 
 `Promise`<`void`\>
+
+Promise<void> - resolves when the RTMP streaming and recording is stopped
 
 ---
 
@@ -1360,14 +1465,16 @@ After leave send feedback to backend for call quality purpose.
 
 #### Parameters
 
-| Name             | Type                 |
-| :--------------- | :------------------- |
-| `feedback`       | `HMSSessionFeedback` |
-| `eventEndpoint?` | `string`             |
+| Name             | Type                 | Description                          |
+| :--------------- | :------------------- | :----------------------------------- |
+| `feedback`       | `HMSSessionFeedback` | HMSSessionFeedback - feedback object |
+| `eventEndpoint?` | `string`             | string - endpoint to send feedback   |
 
 #### Returns
 
 `Promise`<`void`\>
+
+Promise<void> - resolves when the feedback is submitted
 
 ---
 
@@ -1380,6 +1487,8 @@ Toggle the camera between front and back if the both the camera's exist
 #### Returns
 
 `Promise`<`void`\>
+
+Promise<void> - resolves when the camera is toggled
 
 ---
 
