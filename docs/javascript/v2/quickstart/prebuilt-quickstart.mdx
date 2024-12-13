@@ -154,12 +154,11 @@ HMSPrebuilt accepts the following props:
 
     - `userId` (optional): The user ID to be assigned to the peer.
 
-    
 ## Accessing events, states and more
 
 HMSPrebuilt accepts a ref which is assigned the following:
-```
- {
+```js
+{
   hmsActions,
   hmsStats,
   hmsStore,
@@ -169,7 +168,7 @@ HMSPrebuilt accepts a ref which is assigned the following:
 
 You can then listen to events, subscribe to states as required in the parent code.
 
-```
+```jsx
 import { selectRoomState } from '@100mslive/hms-video-store';
 import { HMSPrebuilt } from '@100mslive/roomkit-react';
 import { useEffect, useRef } from 'react';
