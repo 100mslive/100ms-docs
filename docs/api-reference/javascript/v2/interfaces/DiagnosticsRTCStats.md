@@ -29,6 +29,12 @@ nav: '4.4'
 
 ---
 
+### jitter
+
+• **jitter**: `number`
+
+---
+
 ### packetsLost
 
 • **packetsLost**: `number`
