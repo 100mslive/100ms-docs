@@ -53,6 +53,12 @@ nav: '3.2'
 
 ---
 
+### error
+
+• `Readonly` **error**: `HMSInternalEvent`<`HMSException`\>
+
+---
+
 ### leave
 
 • `Readonly` **leave**: `HMSInternalEvent`<`undefined` \| `HMSException`\>
