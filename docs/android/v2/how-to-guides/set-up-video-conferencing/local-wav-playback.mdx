@@ -1,14 +1,18 @@
-title: Local WAV Audio Playback nav: 4.9
+---
+title: Local WAV Audio Playback 
+nav: 4.8
+---
+
 This feature enables your application to play audio from a WAV file stored in your app's raw resources. It is a strict requirement that the WAV file is 48kHz, mono channel with 16-bit audio depth for the audio to be played correctly.
 
-How Does WAV Audio Playback Work
+## How Does WAV Audio Playback Work
 The provided API offers two simple methods:
 
 Play Audio: Streams and plays a WAV audio file.
 Stop Audio: Stops the currently playing audio.
 Make sure that your WAV file complies with the required specifications (48kHz, mono, 16-bit). Placing a non-compliant file may result in playback issues.
 
-How to Stream and Play a WAV File
+## How to Stream and Play a WAV File
 To start playing a WAV file, add your compliant WAV file to the res/raw folder of your project. Then, use the following API method:
 
 kotlin
@@ -37,7 +41,7 @@ hmsSDK.streamAndPlayAudioFromRawFile(R.raw.your_wav_file, object : HMSActionResu
     }
 })
 </Tab>
-How to Stop the Audio Playback
+## How to Stop the Audio Playback
 To stop the audio playback at any time, simply call the following method:
 
 kotlin
