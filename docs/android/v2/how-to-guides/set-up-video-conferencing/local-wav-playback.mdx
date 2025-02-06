@@ -8,14 +8,15 @@ This feature enables your application to play audio from a WAV file stored in yo
 ## How Does WAV Audio Playback Work
 The provided API offers two simple methods:
 
-Play Audio: Streams and plays a WAV audio file.
-Stop Audio: Stops the currently playing audio.
+- Play Audio: Streams and plays a WAV audio file.
+- Stop Audio: Stops the currently playing audio.
+
 Make sure that your WAV file complies with the required specifications (48kHz, mono, 16-bit). Placing a non-compliant file may result in playback issues.
 
 ## How to Stream and Play a WAV File
 To start playing a WAV file, add your compliant WAV file to the res/raw folder of your project. Then, use the following API method:
 
-kotlin
+```kotlin
 Copy
 fun streamAndPlayAudioFromRawFile(
     @androidx.annotation.RawRes audioResourceId: Int,
@@ -23,12 +24,13 @@ fun streamAndPlayAudioFromRawFile(
 ) {
     transportLayer.streamAndPlayAudioFromRawFile(audioResourceId, hmsActionResultListener)
 }
+```
 Below is an example snippet that demonstrates how to call this API:
 
 <Tabs id="playaudiotab" items={['Kotlin']} />
 
 <Tab id='playaudiotab-0'>
-kotlin
+```kotlin
 Copy
 // Replace R.raw.your_wav_file with the actual WAV file placed in res/raw
 hmsSDK.streamAndPlayAudioFromRawFile(R.raw.your_wav_file, object : HMSActionResultListener {
@@ -40,21 +42,23 @@ hmsSDK.streamAndPlayAudioFromRawFile(R.raw.your_wav_file, object : HMSActionResu
         // Handle the error
     }
 })
+```
 </Tab>
 ## How to Stop the Audio Playback
 To stop the audio playback at any time, simply call the following method:
 
-kotlin
+```kotlin
 Copy
 fun stopAudioFromRawFile(hmsActionResultListener: HMSActionResultListener) {
     transportLayer.stopAudioFromRawFile(hmsActionResultListener)
 }
+```
 Below is a sample snippet demonstrating how to stop the audio playback:
 
 <Tabs id="stopaudiotab" items={['Kotlin']} />
 
 <Tab id='stopaudiotab-0'>
-kotlin
+```kotlin
 Copy
 hmsSDK.stopAudioFromRawFile(object : HMSActionResultListener {
     override fun onSuccess() {
@@ -65,5 +69,6 @@ hmsSDK.stopAudioFromRawFile(object : HMSActionResultListener {
         // Handle the error
     }
 })
+```
 </Tab>
 Note: Ensure your WAV file adheres to the strict format of 48kHz, mono channel, 16-bit audio depth. Using files with different specifications might result in unexpected behavior or failure in audio playback.
