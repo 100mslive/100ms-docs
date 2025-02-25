@@ -2,7 +2,7 @@
 
 <!-- vale off -->
 
-Thank you for investing your time in contributing to our project & Any contribution you make will be reflected on [100ms Docs](https://docs.100ms.live/)
+Thank you for investing your time in contributing to our project & Any contribution you make will be reflected on [100ms.live Docs](https://docs.100ms.live/)
 
 <!-- vale on-->
 
@@ -39,4 +39,4 @@ When you're done making the changes, open a pull request, often referred to as a
 
 ### Your PR is merged!
 
-Congratulations 🎉 100ms team thanks you 🥳
+Congratulations 🎉 100ms.live team thanks you 🥳
