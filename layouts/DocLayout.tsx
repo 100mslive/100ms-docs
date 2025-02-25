@@ -16,10 +16,10 @@ export default function DocLayout({ children }: Props) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const router = useRouter() as any;
     const SEO = {
-        title: `${frontMatter.title || '100ms Docs'} | 100ms`,
+        title: `${frontMatter.title || '100ms.live Docs'}`,
         description: frontMatter?.description || SEOText,
         openGraph: {
-            title: `${frontMatter.title || '100ms Docs'} | 100ms`,
+            title: `${frontMatter.title || '100ms.live Docs'}`,
             description: frontMatter?.description || SEOText
         },
         canonical: `${process.env.NEXT_PUBLIC_CANONICAL_BASE_URL}${
