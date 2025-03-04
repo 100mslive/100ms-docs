@@ -19,6 +19,20 @@ import AndroidPrebuiltVersionShield from '@/common/android-prebuilt-version-shie
 | live.100ms:virtual-background: |<AndroidSdkVersionShield />|
 | live.100ms:hms-noise-cancellation-android: | <AndroidSdkVersionShield /> |
 
+## v2.9.74 - 2025-03-3
+### Added
+* Renamed the namespace of all WebRTC-related files to prevent conflicts with files from other WebRTC vendors when integrated into an application.
+### Breaking 
+* Due to the namespace changes, imports for WebRTC files must be updated from org.webrtc to hms.webrtc throughout the application, if present
+
+## v2.9.73 - 2025-02-12
+### Added
+* Added success and failure callbacks on playing wav file
+
+## v2.9.72 - 2025-02-02
+### Added
+* Added new method to stream any wav file into hms Room
+
 ## v2.9.71 - 2025-01-10
 ### Changed
 * The remote track is muted while Pre Call Diagnostic checks are performed, so there would not be any echo issue
