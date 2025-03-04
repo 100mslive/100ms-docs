@@ -19,7 +19,7 @@ const cards = [
     {
         icon: <LayersIcon width={20} />,
         title: 'Concepts',
-        subText: 'Learn concepts to help you build your use-case with 100ms',
+        subText: 'Learn concepts to help you build your use-case with 100ms.live',
         link: '/get-started/v2/get-started/concepts/basics',
         cta: "View Concepts"
     },
@@ -90,7 +90,7 @@ const Homepage = ({ allNav }) => {
                                     }
                                 }}>
                                 <Text variant="h4" css={{ color: '$textHighEmp' }}>
-                                    100ms Documentation
+                                    100ms.live Documentation
                                 </Text>
 
                                 <Text
@@ -99,7 +99,7 @@ const Homepage = ({ allNav }) => {
                                         mt: '$2',
                                         maxWidth: '600px'
                                     }}>
-                                    The 100ms SDK gives you everything you need to build scalable,
+                                    The 100ms.live SDK gives you everything you need to build scalable,
                                     high-quality live video and audio experiences. Explore our docs
                                     to learn how.
                                 </Text>
