@@ -21,9 +21,9 @@ import AndroidPrebuiltVersionShield from '@/common/android-prebuilt-version-shie
 
 ## v2.9.74 - 2025-03-3
 ### Added
-* Name space changes added 
+* Renamed the namespace of all WebRTC-related files to prevent conflicts with files from other WebRTC vendors when integrated into an application.
 ### Breaking 
-* Build might break, please migrate imports from `org.webrtc` to `hms.webrtc`
+* Due to the namespace changes, imports for WebRTC files must be updated from org.webrtc to hms.webrtc throughout the application, if present
 
 ## v2.9.73 - 2025-02-12
 ### Added
@@ -31,7 +31,7 @@ import AndroidPrebuiltVersionShield from '@/common/android-prebuilt-version-shie
 
 ## v2.9.72 - 2025-02-02
 ### Added
-* Added option to play wav file 
+* Added new method to stream any wav file into hms Room
 
 ## v2.9.71 - 2025-01-10
 ### Changed
