@@ -63,15 +63,16 @@ nav: '4.23'
 
 ### startConnectivityCheck
 
-▸ **startConnectivityCheck**(`progress`, `completed`, `region?`): `Promise`<`void`\>
+▸ **startConnectivityCheck**(`progress`, `completed`, `region?`, `duration?`): `Promise`<`void`\>
 
 #### Parameters
 
-| Name        | Type                                                                                                               |
-| :---------- | :----------------------------------------------------------------------------------------------------------------- |
-| `progress`  | (`state`: [`ConnectivityState`](/api-reference/javascript/v2/enums/ConnectivityState)) => `void`                   |
-| `completed` | (`result`: [`ConnectivityCheckResult`](/api-reference/javascript/v2/interfaces/ConnectivityCheckResult)) => `void` |
-| `region?`   | `string`                                                                                                           |
+| Name        | Type                                                                                                               | Description                                           |
+| :---------- | :----------------------------------------------------------------------------------------------------------------- | :---------------------------------------------------- |
+| `progress`  | (`state`: [`ConnectivityState`](/api-reference/javascript/v2/enums/ConnectivityState)) => `void`                   | -                                                     |
+| `completed` | (`result`: [`ConnectivityCheckResult`](/api-reference/javascript/v2/interfaces/ConnectivityCheckResult)) => `void` | -                                                     |
+| `region?`   | `string`                                                                                                           | -                                                     |
+| `duration?` | `number`                                                                                                           | Number in milliseconds to stop the connectivity check |
 
 #### Returns
 
