@@ -4,67 +4,91 @@ nav: 1.52
 description: Release Notes for 100ms.live JavaScript SDK
 ---
 
+| Package                           | Version                                                                                                                                              |
+| --------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| @100mslive/hms-video-store        | [![npm version](https://badge.fury.io/js/%40100mslive%2Fhms-video-store.svg)](https://badge.fury.io/js/%40100mslive%2Fhms-video-store)               |
+| @100mslive/react-sdk              | [![npm version](https://badge.fury.io/js/%40100mslive%2Freact-sdk.svg)](https://badge.fury.io/js/%40100mslive%2Freact-sdk)                           |
+| @100mslive/roomkit-react          | [![npm version](https://badge.fury.io/js/%40100mslive%2Froomkit-react.svg)](https://badge.fury.io/js/%40100mslive%2Froomkit-react)                   |
+| @100mslive/hms-whiteboard         | [![npm version](https://badge.fury.io/js/%40100mslive%2Fhms-whiteboard.svg)](https://badge.fury.io/js/%40100mslive%2hms-whiteboard)                  |
+| @100mslive/hls-player             | [![npm version](https://badge.fury.io/js/%40100mslive%2Fhls-player.svg)](https://badge.fury.io/js/%40100mslive%2Fhls-player)                         |
+| @100mslive/hms-noise-cancellation | [![npm version](https://badge.fury.io/js/%40100mslive%2Fhms-noise-cancellation.svg)](https://badge.fury.io/js/%40100mslive%2Fhms-noise-cancellation) |
+| @100mslive/hms-virtual-background | [![npm version](https://badge.fury.io/js/%40100mslive%2Fhms-virtual-background.svg)](https://badge.fury.io/js/%40100mslive%2Fhms-virtual-background) |
 
-| Package                                | Version                                                                                                                                |
-| -------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| @100mslive/hms-video-store             | [![npm version](https://badge.fury.io/js/%40100mslive%2Fhms-video-store.svg)](https://badge.fury.io/js/%40100mslive%2Fhms-video-store) |
-| @100mslive/react-sdk                   | [![npm version](https://badge.fury.io/js/%40100mslive%2Freact-sdk.svg)](https://badge.fury.io/js/%40100mslive%2Freact-sdk)             |
-| @100mslive/roomkit-react               | [![npm version](https://badge.fury.io/js/%40100mslive%2Froomkit-react.svg)](https://badge.fury.io/js/%40100mslive%2Froomkit-react)     |
-| @100mslive/hms-whiteboard              | [![npm version](https://badge.fury.io/js/%40100mslive%2Fhms-whiteboard.svg)](https://badge.fury.io/js/%40100mslive%2hms-whiteboard)    |
-| @100mslive/hls-player                  | [![npm version](https://badge.fury.io/js/%40100mslive%2Fhls-player.svg)](https://badge.fury.io/js/%40100mslive%2Fhls-player)           |
-| @100mslive/hms-noise-cancellation      | [![npm version](https://badge.fury.io/js/%40100mslive%2Fhms-noise-cancellation.svg)](https://badge.fury.io/js/%40100mslive%2Fhms-noise-cancellation)           |
-| @100mslive/hms-virtual-background      | [![npm version](https://badge.fury.io/js/%40100mslive%2Fhms-virtual-background.svg)](https://badge.fury.io/js/%40100mslive%2Fhms-virtual-background)           |
+## 2024-05-15
 
+Released: `@100mslive/hms-video-store@0.12.34`, `@100mslive/react-sdk@0.10.34`, `@100mslive/hls-player@0.3.34`, `@100mslive/roomkit-react@0.3.34`, `@100mslive/hms-whiteboard@0.0.24`, `@100mslive/hms-virtual-background@1.13.34`
+
+### Fixed:
+
+-   Improved error handling on permission changes
+-   A [new method](/docs/api-reference/javascript/v2/interfaces/HMSActions#autoselectaudiooutput) is exposed to give more control to the user to select audio output on mobile web. This is already done internally, so most of the times this will not be required to be explicitly used from the application.
+
+## 2024-03-18
+
+Released: `@100mslive/hms-video-store@0.12.33`, `@100mslive/react-sdk@0.10.33`, `@100mslive/hls-player@0.3.33`, `@100mslive/roomkit-react@0.3.33`, `@100mslive/hms-whiteboard@0.0.23`, `@100mslive/hms-virtual-background@1.13.33`
+
+### Fixed:
+
+-   Usage of noise cancellation plugin resulting in low audio on remote side
+-   Roomkit Prebuilt: UI enhancements in light theme
 
 ## 2024-03-05
 
 Released: `@100mslive/hms-video-store@0.12.32`, `@100mslive/react-sdk@0.10.32`, `@100mslive/hls-player@0.3.32`, `@100mslive/roomkit-react@0.3.32`, `@100mslive/hms-whiteboard@0.0.22`, `@100mslive/hms-virtual-background@1.13.32`
 
 ### Added:
-- Duration for [connectivityCheck](/javascript/v2/how-to-guides/debugging/pre-call-diagnostics) can now be customised in pre-call diagnostics
+
+-   Duration for [connectivityCheck](/javascript/v2/how-to-guides/debugging/pre-call-diagnostics) can now be customised in pre-call diagnostics
 
 ### Fixed:
-- Audio output autoselection not working on mweb
+
+-   Audio output autoselection not working on mweb
 
 ## 2024-02-17
 
 Released: `@100mslive/hms-video-store@0.12.31`, `@100mslive/react-sdk@0.10.31`, `@100mslive/hls-player@0.3.31`, `@100mslive/roomkit-react@0.3.31`, `@100mslive/hms-whiteboard@0.0.21`, `@100mslive/hms-virtual-background@1.13.31`
 
 ### Added:
-- Performance enhancements to HMSEffectsPlugin
+
+-   Performance enhancements to HMSEffectsPlugin
 
 ### Fixed:
-- Roomkit Prebuilt: Minor UI enhancements(color fixes) in light theme
-- Added more analytics
+
+-   Roomkit Prebuilt: Minor UI enhancements(color fixes) in light theme
+-   Added more analytics
 
 ## 2024-01-27
 
 Released: `@100mslive/hms-video-store@0.12.30`, `@100mslive/react-sdk@0.10.30`, `@100mslive/hls-player@0.3.30`, `@100mslive/roomkit-react@0.3.30`, `@100mslive/hms-whiteboard@0.0.20`, `@100mslive/hms-virtual-background@1.13.30`
 
 ### Fixed:
-- Removed additional handling of autoplay after join
+
+-   Removed additional handling of autoplay after join
 
 ## 2024-01-22
 
 Released: `@100mslive/hms-video-store@0.12.29`, `@100mslive/react-sdk@0.10.29`, `@100mslive/hls-player@0.3.29`, `@100mslive/roomkit-react@0.3.29`, `@100mslive/hms-whiteboard@0.0.19`, `@100mslive/hms-virtual-background@1.13.29`
 
 ### Fixed:
-- Local Video not getting published on SFU Migration
+
+-   Local Video not getting published on SFU Migration
 
 ## 2024-01-10
 
 Released: `@100mslive/hms-video-store@0.12.28`, `@100mslive/react-sdk@0.10.28`, `@100mslive/hls-player@0.3.28`, `@100mslive/roomkit-react@0.3.28`, `@100mslive/hms-whiteboard@0.0.18`, `@100mslive/hms-virtual-background@1.13.28`
 
 ### Fixed:
-- Handled unhandled errors properly and send notification to the app
+
+-   Handled unhandled errors properly and send notification to the app
 
 ## 2024-01-02
 
 Released: `@100mslive/hms-video-store@0.12.27`, `@100mslive/react-sdk@0.10.27`, `@100mslive/hls-player@0.3.27`, `@100mslive/roomkit-react@0.3.27`, `@100mslive/hms-whiteboard@0.0.17`, `@100mslive/hms-virtual-background@1.13.27`
 
 ### Fixed:
-- No Audio when using `HMSKrispPlugin` in some cases
-- Improved analytics by differentiating leave calls made by SDK and user.
+
+-   No Audio when using `HMSKrispPlugin` in some cases
+-   Improved analytics by differentiating leave calls made by SDK and user.
 
 ## 2024-12-12
 
@@ -72,226 +96,255 @@ Released: `@100mslive/hms-video-store@0.12.26`, `@100mslive/react-sdk@0.10.26`, 
 
 ### Fixed
 
-- Automatic selection of audio output route will be done after the local peer joins the Room
-- Upgraded Effects SDK plugin used for Virtual Backgrounds
-- In Roomkit Prebuilt, updated the import paths for components
-- In Roomkit Prebuilt, users will not be able to vote when there's no internet connection
-- In Example Prebuilt Integration, upgraded the Vite version to 5.4.11
-- On Diagnostics page, now Jitter values will also be available
-- On Diagnostics page, Europe as a region is now removed
-
+-   Automatic selection of audio output route will be done after the local peer joins the Room
+-   Upgraded Effects SDK plugin used for Virtual Backgrounds
+-   In Roomkit Prebuilt, updated the import paths for components
+-   In Roomkit Prebuilt, users will not be able to vote when there's no internet connection
+-   In Example Prebuilt Integration, upgraded the Vite version to 5.4.11
+-   On Diagnostics page, now Jitter values will also be available
+-   On Diagnostics page, Europe as a region is now removed
 
 ## 2024-11-28
 
 Released: `@100mslive/hms-video-store@0.12.25`, `@100mslive/react-sdk@0.10.25`, `@100mslive/hls-player@0.3.25`, `@100mslive/roomkit-react@0.3.25`, `@100mslive/hms-whiteboard@0.0.15`, `@100mslive/hms-virtual-background@1.13.25`
 
 ### Fixed
-- Persisting selection of audio input/output & video input device across local peer's role change
-- Changed Audio track constraints when Noise Cancellation is enabled/disabled
-- Roomkit Prebuilt: Removed autohiding of Top and Bottom Navigation Bar controls for Mobile Browsers
-- Roomkit Prebuilt: On Chrome 131, fixed issue where PIP Chat window's height was not being calculated correctly
 
+-   Persisting selection of audio input/output & video input device across local peer's role change
+-   Changed Audio track constraints when Noise Cancellation is enabled/disabled
+-   Roomkit Prebuilt: Removed autohiding of Top and Bottom Navigation Bar controls for Mobile Browsers
+-   Roomkit Prebuilt: On Chrome 131, fixed issue where PIP Chat window's height was not being calculated correctly
 
 ## 2024-11-11
 
 Released: `@100mslive/hms-video-store@0.12.24`, `@100mslive/react-sdk@0.10.24`, `@100mslive/hls-player@0.3.24`, `@100mslive/roomkit-react@0.3.24`, `@100mslive/hms-whiteboard@0.0.14`, `@100mslive/hms-virtual-background@1.13.24`
 
 ### Breaking
-- Aspect ratio should be passed as string inside css for roomkit-react components
+
+-   Aspect ratio should be passed as string inside css for roomkit-react components
 
 ### Added
 
-- Added a new field - `track_type` - in `HMSException` when there is a Track exception
-- In Roomkit Prebuilt, now on Mobile Browsers, Stats for Nerds is available to be viewed.
+-   Added a new field - `track_type` - in `HMSException` when there is a Track exception
+-   In Roomkit Prebuilt, now on Mobile Browsers, Stats for Nerds is available to be viewed.
 
 ### Fixed
 
-- Newer Typescript versions are now supported
-- Tiles going out of view in recording for 480p resolution when there are more than 3 peers
-- Roomkit Prebuilt: Previous session's device selection not being preserved when Skip Preview was enabled
-- Roomkit Prebuilt: Peer stuck on loading screen after staying in preview for 15 mins instead of being redirected to the leave page
-
+-   Newer Typescript versions are now supported
+-   Tiles going out of view in recording for 480p resolution when there are more than 3 peers
+-   Roomkit Prebuilt: Previous session's device selection not being preserved when Skip Preview was enabled
+-   Roomkit Prebuilt: Peer stuck on loading screen after staying in preview for 15 mins instead of being redirected to the leave page
 
 ## 2024-10-15
+
 Released: `@100mslive/hms-video-store@0.12.23`, `@100mslive/react-sdk@0.10.23`, `@100mslive/hls-player@0.3.23`, `@100mslive/roomkit-react@0.3.23`, `@100mslive/hms-whiteboard@0.0.13`, `@100mslive/hms-virtual-background@1.13.23`
 
 ### Fixed:
-- Handling of audio and video afer incoming call interruption - everything should recover after the call ends
-- Crash on role change from publishing role to non-publishing role and back
+
+-   Handling of audio and video afer incoming call interruption - everything should recover after the call ends
+-   Crash on role change from publishing role to non-publishing role and back
 
 ### Added:
-- Roomkit Prebuilt: Show a modal for `Device in Use` error with possible suggestions
+
+-   Roomkit Prebuilt: Show a modal for `Device in Use` error with possible suggestions
 
 ## 2024-09-30
+
 Released: `@100mslive/hms-video-store@0.12.21`, `@100mslive/react-sdk@0.10.21`, `@100mslive/hls-player@0.3.21`, `@100mslive/roomkit-react@0.3.21`, `@100mslive/hms-whiteboard@0.0.11`, `@100mslive/hms-virtual-background@1.13.21`
 
 ### Fixed:
-- Roomkit Prebuilt: Make HLS Player take more space in fullscreen mode
-- Avatar shown for a split second when vb is enabled in mweb and user returns from background
-- In some cases, video not recovering after degradation
+
+-   Roomkit Prebuilt: Make HLS Player take more space in fullscreen mode
+-   Avatar shown for a split second when vb is enabled in mweb and user returns from background
+-   In some cases, video not recovering after degradation
 
 ## 2024-09-18
+
 Released: `@100mslive/hms-video-store@0.12.20`, `@100mslive/react-sdk@0.10.20`, `@100mslive/hls-player@0.3.20`, `@100mslive/roomkit-react@0.3.20`, `@100mslive/hms-whiteboard@0.0.10`, `@100mslive/hms-virtual-background@1.13.20`
 
 ### Added:
-- Policy settings applied to tracks on addTrack
+
+-   Policy settings applied to tracks on addTrack
 
 ## 2024-09-09
 
 Released: `@100mslive/hms-video-store@0.12.19`, `@100mslive/react-sdk@0.10.19`, `@100mslive/hls-player@0.3.19`, `@100mslive/roomkit-react@0.3.19`, `@100mslive/hms-whiteboard@0.0.9`, `@100mslive/hms-virtual-background@1.13.19`
 
 ### Added:
-- You can import `HMSVBPlugin` or `HMSEffectsPlugin` from `@100mslive/hms-virtual-background` whichever is needed with subpath import
+
+-   You can import `HMSVBPlugin` or `HMSEffectsPlugin` from `@100mslive/hms-virtual-background` whichever is needed with subpath import
 
 ### Fixed:
-- Microphone not getting released on Android browsers on leave due to a race condition
-- Improve interruption handling
-- Fix video flickering when opened from two tabs in iOS
-- Play/Pause icon showing on video elements in low power mode on iOS/MacOS Safari
-- Roomkit Prebuilt: Crashing in MacOS Safari 14
+
+-   Microphone not getting released on Android browsers on leave due to a race condition
+-   Improve interruption handling
+-   Fix video flickering when opened from two tabs in iOS
+-   Play/Pause icon showing on video elements in low power mode on iOS/MacOS Safari
+-   Roomkit Prebuilt: Crashing in MacOS Safari 14
 
 ## 2024-08-16
 
 Released: `@100mslive/hms-video-store@0.12.18`, `@100mslive/react-sdk@0.10.18`, `@100mslive/hls-player@0.3.18`, `@100mslive/roomkit-react@0.3.18`, `@100mslive/hms-whiteboard@0.0.8`, `@100mslive/hms-virtual-background@1.13.18`
 
 ### Added:
-- Support for long running sessions
-- More Analytics Events
+
+-   Support for long running sessions
+-   More Analytics Events
 
 ### Fixed:
-- Device selection resulting in a `getUserMedia` error, which results in no audio or no video
-- Select bluetooth device if it is present on mweb
-- Roomkit Prebuilt: Show error toast for screenshare
-- Roomkit Prebuilt: Update toast messages for reconnection flow
-- Roomkit Prebuilt: Join button going below the fold when header is present
-- Roomkit Prebuilt: Default number of tiles can be customised from the customiser
+
+-   Device selection resulting in a `getUserMedia` error, which results in no audio or no video
+-   Select bluetooth device if it is present on mweb
+-   Roomkit Prebuilt: Show error toast for screenshare
+-   Roomkit Prebuilt: Update toast messages for reconnection flow
+-   Roomkit Prebuilt: Join button going below the fold when header is present
+-   Roomkit Prebuilt: Default number of tiles can be customised from the customiser
 
 ## 2024-07-22
 
 Released: `@100mslive/hms-video-store@0.12.16`, `@100mslive/react-sdk@0.10.16`, `@100mslive/hls-player@0.3.16`, `@100mslive/roomkit-react@0.3.16`, `@100mslive/hms-whiteboard@0.0.6`
 
 ### Added:
-- Roomkit Prebuilt: PIP chat 
-- Roomkit Prebuilt: Switch role option for local peer if permission is present
-- Roomkit Prebuilt: Sort handraise in participant list - first one to raise hand will be shown first
-- Roomkit Prebuilt: Hand raise notification when the call tab is inactive
+
+-   Roomkit Prebuilt: PIP chat
+-   Roomkit Prebuilt: Switch role option for local peer if permission is present
+-   Roomkit Prebuilt: Sort handraise in participant list - first one to raise hand will be shown first
+-   Roomkit Prebuilt: Hand raise notification when the call tab is inactive
 
 ### Fixed:
-- Roomkit Prebuilt: Flip camera shown for Firefox on desktop
+
+-   Roomkit Prebuilt: Flip camera shown for Firefox on desktop
 
 ## 2024-07-10
 
 Released: `@100mslive/hms-video-store@0.12.15`, `@100mslive/react-sdk@0.10.15`, `@100mslive/hls-player@0.3.15`, `@100mslive/roomkit-react@0.3.15`, `@100mslive/hms-whiteboard@0.0.5`
 
 ### Added:
-- `useAudioMode` custom hook to manage audio mode. Can be selected from the store using `selectLocalMediaSettings` 
+
+-   `useAudioMode` custom hook to manage audio mode. Can be selected from the store using `selectLocalMediaSettings`
 
 ### Fixed:
-- Roomkit Prebuilt: Rejoining after role change persists the last layout instead of honoring the roomcode
-- Roomkit Prebuilt: Mweb inset tile hidden during screenshare
+
+-   Roomkit Prebuilt: Rejoining after role change persists the last layout instead of honoring the roomcode
+-   Roomkit Prebuilt: Mweb inset tile hidden during screenshare
 
 ## 2024-06-25
 
 Released: `@100mslive/hms-video-store@0.12.14`, `@100mslive/react-sdk@0.10.14`, `@100mslive/hls-player@0.3.14`, `@100mslive/roomkit-react@0.3.14`, `@100mslive/hms-whiteboard@0.0.4`
 
 ### Added:
-- Pre call diagnostics support
-- Roomkit Prebuilt: Pre call diagnostics
-- Music mode
+
+-   Pre call diagnostics support
+-   Roomkit Prebuilt: Pre call diagnostics
+-   Music mode
 
 ### Fixed:
-- Roomkit Prebuilt: Limited chat message length to prevent abuse
+
+-   Roomkit Prebuilt: Limited chat message length to prevent abuse
 
 ## 2024-06-14
+
 Released: `@100mslive/hms-video-store@0.12.13`, `@100mslive/react-sdk@0.10.13`, `@100mslive/hls-player@0.3.13`, `@100mslive/roomkit-react@0.3.13`, `@100mslive/hms-whiteboard@0.0.3`
 
 ### Added:
-- `onResolutionChangeCallback` in HMSEffectsPlugin
-- Roomkit Prebuilt: Noise cancellation is controlled by layout and template settings
+
+-   `onResolutionChangeCallback` in HMSEffectsPlugin
+-   Roomkit Prebuilt: Noise cancellation is controlled by layout and template settings
 
 ### Fixed:
-- Roomkit Prebuilt: Closed Captions are draggable
-- Roomkit Prebuilt: Minimised inset AV toggle buttons for mweb
 
+-   Roomkit Prebuilt: Closed Captions are draggable
+-   Roomkit Prebuilt: Minimised inset AV toggle buttons for mweb
 
 ## 2024-06-05
+
 Released: `@100mslive/hms-video-store@0.12.12`, `@100mslive/react-sdk@0.10.12`, `@100mslive/hls-player@0.3.12`, `@100mslive/roomkit-react@0.3.12`, `@100mslive/hms-whiteboard@0.0.2`
 
 ### Added:
-- Roomkit Prebuilt: Closed captions
-- `findPeerByName` API for large rooms
+
+-   Roomkit Prebuilt: Closed captions
+-   `findPeerByName` API for large rooms
 
 ### Fixed:
-- Average jitter buffer delay calculation
-- Roomkit Prebuilt: peers able to submit quiz attempts multiple times by rejoining
+
+-   Average jitter buffer delay calculation
+-   Roomkit Prebuilt: peers able to submit quiz attempts multiple times by rejoining
 
 ## 2024-05-24
+
 Released: `@100mslive/hms-video-store@0.12.11`, `@100mslive/react-sdk@0.10.11`, `@100mslive/hls-player@0.3.11`, `@100mslive/roomkit-react@0.3.11`, `@100mslive/hms-whiteboard@0.0.1`
 
 ### Added:
-- Roomkit Prebuilt: Updated empty state for viewers
-- Roomkit Prebuilt: Resizable input in chat
+
+-   Roomkit Prebuilt: Updated empty state for viewers
+-   Roomkit Prebuilt: Resizable input in chat
 
 ### Fixed:
-- Audio/video getting paused on incoming call interruption
-- Black tile in Chrome 124+ on using the virtual background
-- Virtual background disappears after returning from background on mweb
-- Roomkit Prebuilt: Mweb UI scroll fix for quiz/poll leaderboard
-- Roomkit Prebuilt: Mweb UI for disabled and blocked chat states hides other elements like hand raise
 
+-   Audio/video getting paused on incoming call interruption
+-   Black tile in Chrome 124+ on using the virtual background
+-   Virtual background disappears after returning from background on mweb
+-   Roomkit Prebuilt: Mweb UI scroll fix for quiz/poll leaderboard
+-   Roomkit Prebuilt: Mweb UI for disabled and blocked chat states hides other elements like hand raise
 
 ## 2024-05-17
 
 Released: `@100mslive/hms-video-store@0.12.10`, `@100mslive/react-sdk@0.10.10`, `@100mslive/hls-player@0.3.10`, `@100mslive/roomkit-react@0.3.10`, `@100mslive/hms-noise-cancellation@0.0.1`, `@100mslive/hms-whiteboard@0.0.0`
 
 ### Added:
-- @100mslive/hms-whiteboard package
-- Roomkit Prebuilt: Added role change UI
-- Join config now accepts custom ICE servers for media connection (advanced)
-- `getPeer` method for getting the peer info in large rooms 
+
+-   @100mslive/hms-whiteboard package
+-   Roomkit Prebuilt: Added role change UI
+-   Join config now accepts custom ICE servers for media connection (advanced)
+-   `getPeer` method for getting the peer info in large rooms
 
 ### Fixed:
-- Roomkit-Prebuilt: clear PDF sharing state after session ends
-- Roomkit-Prebuilt: Polls freezing under high load (300+ peers)
-- Roomkit-Prebuilt: Missing or duplicate tiles in PIP
+
+-   Roomkit-Prebuilt: clear PDF sharing state after session ends
+-   Roomkit-Prebuilt: Polls freezing under high load (300+ peers)
+-   Roomkit-Prebuilt: Missing or duplicate tiles in PIP
 
 ## 2024-04-26
 
 Released: `@100mslive/hms-video-store@0.12.9`, `@100mslive/react-sdk@0.10.9`, `@100mslive/hls-player@0.3.9`, `@100mslive/roomkit-react@0.3.9`
 
 ### Added:
-- Quality of experience(QoE) score in stats
 
-### Fixed: 
-- Camera, Microphone selection updated from site settings not getting reflected in device selection
-- Roomkit Prebuilt: Emoji reactions not showing peer name in large rooms
+-   Quality of experience(QoE) score in stats
+
+### Fixed:
+
+-   Camera, Microphone selection updated from site settings not getting reflected in device selection
+-   Roomkit Prebuilt: Emoji reactions not showing peer name in large rooms
 
 ## 2024-04-19
 
 Released: `@100mslive/hms-video-store@0.12.8`, `@100mslive/react-sdk@0.10.8`, `@100mslive/hls-player@0.3.8`, `@100mslive/roomkit-react@0.3.8`
 
-### Added: 
-- Captions support for webRTC calls
-- Expected frame dimensions from simulcast layer in subscriber stats
+### Added:
+
+-   Captions support for webRTC calls
+-   Expected frame dimensions from simulcast layer in subscriber stats
 
 ### Fixed:
-- Roomkit Prebuilt: Getting peer joined notifications for existing peers in the room on joining
 
+-   Roomkit Prebuilt: Getting peer joined notifications for existing peers in the room on joining
 
 ## 2024-04-12
 
 Released: `@100mslive/hms-video-store@0.12.7`, `@100mslive/react-sdk@0.10.7`, `@100mslive/hls-player@0.3.7`, `@100mslive/roomkit-react@0.3.7`
 
 ### Added:
-- Support for multiple HLS variants
-- Roomkit Prebuilt: Virtual background for mweb
+
+-   Support for multiple HLS variants
+-   Roomkit Prebuilt: Virtual background for mweb
 
 ### Fixed:
-- Roomkit Prebuilt: Screenshare toggle button being hidden for smaller screens
-- Roomkit Prebuilt: Config for Emoji Reactions is now honored by prebuilt
-- Leaderboard summary will now be visible for peers with just `pollWrite` permissions as well
-- Reduced CPU usage when using virtual background
 
+-   Roomkit Prebuilt: Screenshare toggle button being hidden for smaller screens
+-   Roomkit Prebuilt: Config for Emoji Reactions is now honored by prebuilt
+-   Leaderboard summary will now be visible for peers with just `pollWrite` permissions as well
+-   Reduced CPU usage when using virtual background
 
 ## 2024-04-06
 
@@ -299,21 +352,20 @@ Released: `@100mslive/hms-video-store@0.12.6`, `@100mslive/react-sdk@0.10.6`, `@
 
 ### Added:
 
-- Support for SIP dial-in
-- Roomkit Prebuilt: Hand raise config set via the customiser is honored
-- Roomkit Prebuilt: Pause/freeze duration to the tile in Stats For Nerds
+-   Support for SIP dial-in
+-   Roomkit Prebuilt: Hand raise config set via the customiser is honored
+-   Roomkit Prebuilt: Pause/freeze duration to the tile in Stats For Nerds
 
 ### Fixed :
 
-- Newly connected device not being used in mweb
-- Cumulative stats for packets sent and lost 
-- Roomkit Prebuilt: HLS stream dimensions are not fixed
-- Roomkit Prebuilt: Chat toggle in fullscreen landscape mode in HLS
-- Roomkit Prebuilt: Whiteboard is now disabled during screenshare
-- Roomkit Prebuilt: Whiteboard behaviour based on role permissions
-- Roomkit Prebuilt: Peer has to scroll to see the sent message if overflow is present
-- Roomkit Prebuilt: Close screenshare layout popover after selection
-
+-   Newly connected device not being used in mweb
+-   Cumulative stats for packets sent and lost
+-   Roomkit Prebuilt: HLS stream dimensions are not fixed
+-   Roomkit Prebuilt: Chat toggle in fullscreen landscape mode in HLS
+-   Roomkit Prebuilt: Whiteboard is now disabled during screenshare
+-   Roomkit Prebuilt: Whiteboard behaviour based on role permissions
+-   Roomkit Prebuilt: Peer has to scroll to see the sent message if overflow is present
+-   Roomkit Prebuilt: Close screenshare layout popover after selection
 
 ## 2024-03-22
 
@@ -321,11 +373,11 @@ Released: `@100mslive/hms-video-store@0.12.3`, `@100mslive/react-sdk@0.10.3`, `@
 
 ### Fixed:
 
-- Analytics improvements
-- Subscriber stats calculations
-- Roomkit Prebuilt: Save draft answers for quizzes
-- Roomkit Prebuilt: Enhanced whiteboard layout
-- Roomkit Prebuilt: Fullscreen UI enhancements for HLS Player
+-   Analytics improvements
+-   Subscriber stats calculations
+-   Roomkit Prebuilt: Save draft answers for quizzes
+-   Roomkit Prebuilt: Enhanced whiteboard layout
+-   Roomkit Prebuilt: Fullscreen UI enhancements for HLS Player
 
 ## 2024-03-15
 
@@ -333,40 +385,45 @@ Released: `@100mslive/hms-video-store@0.12.2`, `@100mslive/react-sdk@0.10.2`, `@
 
 ### Added:
 
-- Roomkit Prebuilt: Sidebar layout for screenshare
-- Roomkit Prebuilt: Peers can seek in stream using arrow keys
-- Roomkit Prebuilt: Option to lower hands and bring to stage in peer list for peers with raised hands
+-   Roomkit Prebuilt: Sidebar layout for screenshare
+-   Roomkit Prebuilt: Peers can seek in stream using arrow keys
+-   Roomkit Prebuilt: Option to lower hands and bring to stage in peer list for peers with raised hands
 
 ### Fixed:
-- Roomkit Prebuilt: Toggle play/pause on click
-- Frozen stats in Stats For Nerds 
+
+-   Roomkit Prebuilt: Toggle play/pause on click
+-   Frozen stats in Stats For Nerds
 
 ## 2024-03-07
 
 Released: `@100mslive/hms-video-store@0.12.1`, `@100mslive/react-sdk@0.10.1`, `@100mslive/hls-player@0.3.1`, `@100mslive/roomkit-react@0.3.1`
 
 ### Added:
-- Roomkit Prebuilt: Revamped HLS Streaming layout for mweb - Portrait and Landscape
-- Roomkit Prebuilt: Mute all added for participants with relevant permissions
-- On mweb, when in background, the video track will now be muted instead of degraded
+
+-   Roomkit Prebuilt: Revamped HLS Streaming layout for mweb - Portrait and Landscape
+-   Roomkit Prebuilt: Mute all added for participants with relevant permissions
+-   On mweb, when in background, the video track will now be muted instead of degraded
 
 ### Fixed:
-- Reuse of worker threads created for HMSVBPlugin
-- Roomkit Prebuilt: Role Prominence tile count now supports the tile count set in settings
-- Roomkit Prebuilt: ActiveSpeaker sorting in Role Prominence Layout
-- Connection quality getting reset in Preview
-- Improved Analytics for publisher/subscriber stats
+
+-   Reuse of worker threads created for HMSVBPlugin
+-   Roomkit Prebuilt: Role Prominence tile count now supports the tile count set in settings
+-   Roomkit Prebuilt: ActiveSpeaker sorting in Role Prominence Layout
+-   Connection quality getting reset in Preview
+-   Improved Analytics for publisher/subscriber stats
 
 ## 2024-02-23
 
 Released: `@100mslive/hms-video-store@0.11.7`, `@100mslive/react-sdk@0.9.7`, `@100mslive/hls-player@0.2.7`, `@100mslive/roomkit-react@0.2.7`
 
 ### Added:
+
 -   Roomkit Prebuilt: Integrated Krisp for noise cancellation
 -   Roomkit Prebuilt: Support for room title and description which can be set from the dashboard customiser
 -   Roomkit Prebuilt: Browser notification will be displayed for chat while screensharing when the tab is inactive
 
 ### Fixed:
+
 -   Timestamps for publisher.stats by creating all tracks/layers samples at once
 -   Roomkit Prebuilt: Hide handraise notifications when disabled from settings
 
@@ -375,218 +432,270 @@ Released: `@100mslive/hms-video-store@0.11.7`, `@100mslive/react-sdk@0.9.7`, `@1
 Released: `@100mslive/hms-video-store@0.11.6`, `@100mslive/react-sdk@0.9.6`, `@100mslive/hls-player@0.2.6`, `@100mslive/roomkit-react@0.2.6`
 
 ### Added:
+
 -   Roomkit Prebuilt: Add support to default VB selected from Prebuilt Customiser in Prebuilt
 
 ### Fixed:
+
 -   Roomkit Prebuilt: When a link is pinned in Chat, the url redirected to is missing characters.
 -   Roomkit Prebuilt: Preserve attempted Polls
 
 ## 2024-02-12
+
 Released: `@100mslive/hms-video-store@0.11.5`, `@100mslive/react-sdk@0.9.5`, `@100mslive/hls-player@0.2.5`, `@100mslive/roomkit-react@0.2.5`
 
 ### Added:
-- Roomkit Prebuilt: Different layouts for screenshare(Gallery, Sidebar and Spotlight)
-- Roomkit Prebuilt: Persist draft Polls/Quizzes
-- Roomkit Prebuilt: Enabled Effects Plugin for Safari
+
+-   Roomkit Prebuilt: Different layouts for screenshare(Gallery, Sidebar and Spotlight)
+-   Roomkit Prebuilt: Persist draft Polls/Quizzes
+-   Roomkit Prebuilt: Enabled Effects Plugin for Safari
 
 ### Fixed:
-- Improved analytics for the new HMSMediaStreamPlugins
-- Roomkit Prebuilt: Connection indicator not showing the right colors
-- Roomkit Prebuilt: Improved Chat UX on smaller resolutions
-- Roomkit Prebuilt: Some tiles shown as smaller on auto degradation when screenshare is on
-- Roomkit Prebuilt: Fullscreen from more options making the fullpage fullscreen instead of the Prebuilt component
+
+-   Improved analytics for the new HMSMediaStreamPlugins
+-   Roomkit Prebuilt: Connection indicator not showing the right colors
+-   Roomkit Prebuilt: Improved Chat UX on smaller resolutions
+-   Roomkit Prebuilt: Some tiles shown as smaller on auto degradation when screenshare is on
+-   Roomkit Prebuilt: Fullscreen from more options making the fullpage fullscreen instead of the Prebuilt component
 
 ## 2024-02-01
+
 Released: `@100mslive/hms-video-store@0.11.3`, `@100mslive/react-sdk@0.9.3`, `@100mslive/hls-player@0.2.3`, `@100mslive/roomkit-react@0.2.3`
 
 ### Added:
-- Roomkit Prebuilt: Added support for skip preview from prebuilt customiser to prebuilt
+
+-   Roomkit Prebuilt: Added support for skip preview from prebuilt customiser to prebuilt
 
 ### Fixed:
-- Improved analytics for device change
-- Inset tile showing wrong aspect ratio in iOS
-- Roomkit Prebuilt: Updated error copy when room is disabled
 
+-   Improved analytics for device change
+-   Inset tile showing wrong aspect ratio in iOS
+-   Roomkit Prebuilt: Updated error copy when room is disabled
 
 ## 2024-01-25
+
 Released: `@100mslive/hms-video-store@0.11.2`, `@100mslive/react-sdk@0.9.2`, `@100mslive/hls-player@0.2.2`, `@100mslive/roomkit-react@0.2.2`
 
 ### Added:
-- Roomkit Prebuilt: Slider for blur effect for virtual background
-- Auto select Speakerphone or external devices on mweb
-- Roomkit Prebuilt: Duration metric to leaderboard
+
+-   Roomkit Prebuilt: Slider for blur effect for virtual background
+-   Auto select Speakerphone or external devices on mweb
+-   Roomkit Prebuilt: Duration metric to leaderboard
 
 ### Fixed:
-- Roomkit Prebuilt: Remote peer volume slider showing 100 when volume is set to 0
-- Roomkit Prebuilt: Remove scroll for smaller resolutions
-- Roomkit Prebuilt: Show End Quiz based on poll write permissions
-- Roomkit Prebuilt: Quiz flow when some questions are answered and quiz panel is reopened
-- MediaStreamPlugins not getting applied on device change
+
+-   Roomkit Prebuilt: Remote peer volume slider showing 100 when volume is set to 0
+-   Roomkit Prebuilt: Remove scroll for smaller resolutions
+-   Roomkit Prebuilt: Show End Quiz based on poll write permissions
+-   Roomkit Prebuilt: Quiz flow when some questions are answered and quiz panel is reopened
+-   MediaStreamPlugins not getting applied on device change
 
 ## 2024-01-19
+
 Released: `@100mslive/hms-video-store@0.11.1`, `@100mslive/react-sdk@0.9.1`, `@100mslive/hls-player@0.2.1`, `@100mslive/roomkit-react@0.2.1`
 
 ### Fixed:
-- Roomkit Prebuilt: Zoom for whiteboard on mweb
-- Roomkit Prebuilt: Participation summary view for voters
-- Roomkit Prebuilt: Missing CSS reset on some components
-- Echo in Firefox versions above 116
+
+-   Roomkit Prebuilt: Zoom for whiteboard on mweb
+-   Roomkit Prebuilt: Participation summary view for voters
+-   Roomkit Prebuilt: Missing CSS reset on some components
+-   Echo in Firefox versions above 116
 
 #### Added:
-- Added new method `getNativeTrackById` to fetch native media stream track.
+
+-   Added new method `getNativeTrackById` to fetch native media stream track.
 
 ## 2024-01-12
+
 Released: `@100mslive/hms-video-store@0.11.0`, `@100mslive/react-sdk@0.9.0`, `@100mslive/hls-player@0.2.0`, `@100mslive/roomkit-react@0.2.0`
 
 ### Added:
-- Roomkit Prebuilt: Chat supports reply to peer and reply to group for group messages
-- Roomkit Prebuilt: Pinned messages display the name of the peer who pinned the message
-- 100ms prebuilt links now accept `userId` param in the URL to set the userId of a peer
+
+-   Roomkit Prebuilt: Chat supports reply to peer and reply to group for group messages
+-   Roomkit Prebuilt: Pinned messages display the name of the peer who pinned the message
+-   100ms prebuilt links now accept `userId` param in the URL to set the userId of a peer
 
 ### Fixed:
-- Audio not audible to remote peers when you join as muted and then unmute on mweb
-- Roomkit Prebuilt: Pinning, spacing issues with inset mode
-- Roomkit Prebuilt: Virtual background not working after toggling video
+
+-   Audio not audible to remote peers when you join as muted and then unmute on mweb
+-   Roomkit Prebuilt: Pinning, spacing issues with inset mode
+-   Roomkit Prebuilt: Virtual background not working after toggling video
 
 ## 2024-01-05
+
 Released: `@100mslive/hms-video-store@0.10.28`, `@100mslive/react-sdk@0.8.28`, `@100mslive/hls-player@0.1.28`, `@100mslive/roomkit-react@0.1.19`
 
 ### Fixed:
-- Fixed name being set to "Beam" instead of the value being passed via the name URL param when skip_preview is set to true
-- Roomkit Prebuilt: Long chat messages being overlapped
-- Roomkit Prebuilt: CSS leak - Prebuilt CSS was overriding global CSS
-- Roomkit Prebuilt: The block option is now hidden if the peer has already been blocked
+
+-   Fixed name being set to "Beam" instead of the value being passed via the name URL param when skip_preview is set to true
+-   Roomkit Prebuilt: Long chat messages being overlapped
+-   Roomkit Prebuilt: CSS leak - Prebuilt CSS was overriding global CSS
+-   Roomkit Prebuilt: The block option is now hidden if the peer has already been blocked
 
 ### Added:
-- Roomkit Prebuilt: Quiz leaderboard also shows the summary - average score, participation percentage, total correct responses
-- Roomkit Prebuilt: All peers should be able to view the results of a quiz on completion if it is not anonymous
-- `HMSEffectsPlugin` class to integrate effects SDK for virtual background in custom implementation
-- Selectors for getting the effects SDK key for virtual background and checking if it is enabled: `selectIsEffectsEnabled` and `selectEffectsKey`
-- Batching for chat messages to improve performance under heavy loads (20+ messages/second)
+
+-   Roomkit Prebuilt: Quiz leaderboard also shows the summary - average score, participation percentage, total correct responses
+-   Roomkit Prebuilt: All peers should be able to view the results of a quiz on completion if it is not anonymous
+-   `HMSEffectsPlugin` class to integrate effects SDK for virtual background in custom implementation
+-   Selectors for getting the effects SDK key for virtual background and checking if it is enabled: `selectIsEffectsEnabled` and `selectEffectsKey`
+-   Batching for chat messages to improve performance under heavy loads (20+ messages/second)
 
 ### Breaking:
-- The type for quiz leaderboard response has been renamed from `HMSPollLeaderboardResponse` to `HMSQuizLeaderboardResponse`
+
+-   The type for quiz leaderboard response has been renamed from `HMSPollLeaderboardResponse` to `HMSQuizLeaderboardResponse`
 
 ## 2023-12-28
+
 Released: `@100mslive/hms-video-store@0.10.27`, `@100mslive/react-sdk@0.8.27`, `@100mslive/hls-player@0.1.27`, `@100mslive/roomkit-react@0.1.18`
 
 ### Fixed:
-- Roomkit Prebuilt: Not able to Chat/Polls when Participant list is disabled
-- Roomkit Prebuilt: UI Performance improvements when there are frequent chat messages
-- Roomkit Prebuilt: Error notification while stopping live stream
-- Roomkit Prebuilt: PDF sharing in iframe will behave as normal screenshare instead of throwing an error
+
+-   Roomkit Prebuilt: Not able to Chat/Polls when Participant list is disabled
+-   Roomkit Prebuilt: UI Performance improvements when there are frequent chat messages
+-   Roomkit Prebuilt: Error notification while stopping live stream
+-   Roomkit Prebuilt: PDF sharing in iframe will behave as normal screenshare instead of throwing an error
 
 ## 2023-12-18
+
 Released: `@100mslive/hms-video-store@0.10.26`, `@100mslive/react-sdk@0.8.26`, `@100mslive/hls-player@0.1.26`, `@100mslive/roomkit-react@0.1.17`
 
 ### Added:
-- Roomkit Prebuilt: Reply back support in large room
-- Roomkit Prebuilt: Force role change
-- Roomkit Prebuilt: Add Remove Participant option from Chat message
+
+-   Roomkit Prebuilt: Reply back support in large room
+-   Roomkit Prebuilt: Force role change
+-   Roomkit Prebuilt: Add Remove Participant option from Chat message
 
 ### Fixed:
-- Roomkit Prebuilt: Chat UI to show all messages but be able to send DM's or group messages
-- Roomkit Prebuilt: Show handraised notification to only people with bring on stage permissions
-- Roomkit Prebuilt: Incorrect Participant summary for multiple choice Quiz
+
+-   Roomkit Prebuilt: Chat UI to show all messages but be able to send DM's or group messages
+-   Roomkit Prebuilt: Show handraised notification to only people with bring on stage permissions
+-   Roomkit Prebuilt: Incorrect Participant summary for multiple choice Quiz
 
 ## 2023-12-08
+
 Released: `@100mslive/hms-video-store@0.10.24`, `@100mslive/react-sdk@0.8.24`, `@100mslive/hls-player@0.1.24`, `@100mslive/roomkit-react@0.1.15`
 
 ### Added:
-- Added `fetchLeaderboard` function to fetch the leaderboard once the quiz has ended. Read more about it [here](/javascript/v2/how-to-guides/build-interactive-features/polls#fetching-the-quiz-leaderboard)
-- Roomkit Prebuilt: Peers with poll write permissions can view the peer leaderboard after the quiz has ended
-- Roomkit Prebuilt: HLS Viewers can view closed captions in the stream after enabling it in the dashboard
-- Roomkit Prebuilt: HLS Viewers will get poll and quiz notifications via timed metadata
+
+-   Added `fetchLeaderboard` function to fetch the leaderboard once the quiz has ended. Read more about it [here](/javascript/v2/how-to-guides/build-interactive-features/polls#fetching-the-quiz-leaderboard)
+-   Roomkit Prebuilt: Peers with poll write permissions can view the peer leaderboard after the quiz has ended
+-   Roomkit Prebuilt: HLS Viewers can view closed captions in the stream after enabling it in the dashboard
+-   Roomkit Prebuilt: HLS Viewers will get poll and quiz notifications via timed metadata
 
 ### Fixed:
-- Fixed low call volume due to media volume being picked up in mweb
+
+-   Fixed low call volume due to media volume being picked up in mweb
 
 ## 2023-12-01
+
 Released: `@100mslive/hms-video-store@0.10.23`, `@100mslive/react-sdk@0.8.23`, `@100mslive/hls-player@0.1.23`, `@100mslive/roomkit-react@0.1.14`
 
 ### Added:
-- Roomkit Prebuilt now supports more chat based controls like pausing, hiding messages, blocking peers, and private/public messaging which can be configured from the dashboard
-- Roomkit Prebuilt: Name input in the preview is now disabled if the `userName` prop is provided to the Roomkit Prebuilt component. The `Change Name` option is also disabled from the local peer tile menu
+
+-   Roomkit Prebuilt now supports more chat based controls like pausing, hiding messages, blocking peers, and private/public messaging which can be configured from the dashboard
+-   Roomkit Prebuilt: Name input in the preview is now disabled if the `userName` prop is provided to the Roomkit Prebuilt component. The `Change Name` option is also disabled from the local peer tile menu
 
 ## 2023-11-28
+
 Released: `@100mslive/hms-video-store@0.10.22`, `@100mslive/react-sdk@0.8.22`, `@100mslive/hls-player@0.1.22`, `@100mslive/roomkit-react@0.1.13`
 
 ### Added:
-- Roomkit Prebuilt: Upto 3 messages can now be pinned in the chat
+
+-   Roomkit Prebuilt: Upto 3 messages can now be pinned in the chat
 
 ### Fixed:
-- Fixed poll votes being lost on page reload
+
+-   Fixed poll votes being lost on page reload
 
 ### Deprecated:
-- The Prebuilt component no longer supports room id and role props
+
+-   The Prebuilt component no longer supports room id and role props
 
 ## 2023-11-17
+
 Released: `@100mslive/hms-video-store@0.10.21`, `@100mslive/react-sdk@0.8.21`, `@100mslive/hls-player@0.1.21`, `@100mslive/roomkit-react@0.1.12`
 
 ### Fixed:
-- Video not turning on when it is turned off and on when VirtualBackground is enabled
+
+-   Video not turning on when it is turned off and on when VirtualBackground is enabled
 
 ## 2023-11-16
+
 Released: `@100mslive/hms-video-store@0.10.20`, `@100mslive/react-sdk@0.8.20`, `@100mslive/hls-player@0.1.20`, `@100mslive/roomkit-react@0.1.11`
 
 ### Added:
-- Pause/Resume state of hls recording updates are added.
+
+-   Pause/Resume state of hls recording updates are added.
 
 ### Fixed:
-- Improved device handling when multiple devices are connected
-- Not able to use 100ms sdk when local storage permissions are denied
-- FPS of video with virtual background enabled and the tab in background
+
+-   Improved device handling when multiple devices are connected
+-   Not able to use 100ms sdk when local storage permissions are denied
+-   FPS of video with virtual background enabled and the tab in background
 
 Note: Pause/Resume can be done only using API for now.
 
 ## 2023-11-06
+
 Released: `@100mslive/hms-video-store@0.10.19`, `@100mslive/react-sdk@0.8.19`, `@100mslive/hls-player@0.1.19`, `@100mslive/roomkit-react@0.1.10`
 
 ### Added:
-- Roomkit Prebuilt: 
-    - Peers can now select virtual backgrounds to apply instead of getting a random background each time.
-    - Mweb header now indicates the type of audio device selected.
+
+-   Roomkit Prebuilt:
+    -   Peers can now select virtual backgrounds to apply instead of getting a random background each time.
+    -   Mweb header now indicates the type of audio device selected.
 
 ### Fixed:
-- Network indicator tooltip in the participant list getting cropped/hidden.
-- Roomkit Prebuilt: Preview would show go live CTA even when browser recording was running, resulting in failure to go live.
+
+-   Network indicator tooltip in the participant list getting cropped/hidden.
+-   Roomkit Prebuilt: Preview would show go live CTA even when browser recording was running, resulting in failure to go live.
 
 ## 2023-10-25
+
 Released: `@100mslive/hms-video-store@0.10.18`, `@100mslive/react-sdk@0.8.18`, `@100mslive/hls-player@0.1.18`, `@100mslive/roomkit-react@0.1.9`
 
 ### Added:
-- Roomkit Prebuilt:  Polls and Quizzes
-- `hasNext` is now part of in [`usePaginatedParticipants`](/api-reference/javascript/v2/react-hooks/interfaces/usePaginatedParticipantsResult)
+
+-   Roomkit Prebuilt: Polls and Quizzes
+-   `hasNext` is now part of in [`usePaginatedParticipants`](/api-reference/javascript/v2/react-hooks/interfaces/usePaginatedParticipantsResult)
 
 ### Fixed:
-- Roomkit Prebuilt: Internal React Router is now removed. This will make it easy to use in next.js and remix
-- Roomkit Prebuilt: PDF share showing blank screen instead of the content
-- Type error when using `HMSNotificationTypes.HAND_RAISE_CHANGED`
+
+-   Roomkit Prebuilt: Internal React Router is now removed. This will make it easy to use in next.js and remix
+-   Roomkit Prebuilt: PDF share showing blank screen instead of the content
+-   Type error when using `HMSNotificationTypes.HAND_RAISE_CHANGED`
 
 ## 2023-10-04
+
 Released: `@100mslive/hms-video-store@0.10.17`, `@100mslive/react-sdk@0.8.17`, `@100mslive/hls-player@0.1.17`, `@100mslive/roomkit-react@0.1.8`
 
 ### Added:
-- [New API](/javascript/v2/how-to-guides/set-up-video-conferencing/peerlist-optimizations) for handling peer list in large rooms
-- Reduced time taken for updating the hls live status
-- Roomkit Prebuilt:  Prebuilt now shows a warning to users trying to use the prebuilt in mweb landscape mode. Warning requests users to use Portrait mode. We plan to fix Landscape UI in the coming releases. 
+
+-   [New API](/javascript/v2/how-to-guides/set-up-video-conferencing/peerlist-optimizations) for handling peer list in large rooms
+-   Reduced time taken for updating the hls live status
+-   Roomkit Prebuilt: Prebuilt now shows a warning to users trying to use the prebuilt in mweb landscape mode. Warning requests users to use Portrait mode. We plan to fix Landscape UI in the coming releases.
 
 ### Fixed:
-- Events not getting logged to analytics when audio/video permissions are denied
-- Error codes not getting added in some exceptions.
-- Autoplay handling for hls in Prebuilt
+
+-   Events not getting logged to analytics when audio/video permissions are denied
+-   Error codes not getting added in some exceptions.
+-   Autoplay handling for hls in Prebuilt
 
 ## 2023-09-22
+
 Released: `@100mslive/hms-video-store@0.10.16`, `@100mslive/react-sdk@0.8.16`, `@100mslive/hls-player@0.1.16`, `@100mslive/roomkit-react@0.1.7`
 
 ### Added:
-- [New API](/javascript/v2/how-to-guides/build-interactive-features/handraise) for managing handraise
+
+-   [New API](/javascript/v2/how-to-guides/build-interactive-features/handraise) for managing handraise
 
 ### Fixed:
-- Role change resulting in a black tile
-- Wrong bitrate getting set for simulcast first layer
+
+-   Role change resulting in a black tile
+-   Wrong bitrate getting set for simulcast first layer
 
 ## 2023-09-13
+
 Released: `@100mslive/hms-video-store@0.10.15`, `@100mslive/react-sdk@0.8.15`, `@100mslive/hls-player@0.1.15`, `@100mslive/roomkit-react@0.1.6`
 
 ### Important
@@ -594,49 +703,60 @@ Released: `@100mslive/hms-video-store@0.10.15`, `@100mslive/react-sdk@0.8.15`, `
 Prebuilt is now updated. Now supports changing themes and behaviour using dashboard.
 Details [here](https://www.100ms.live/docs/javascript/v2/quickstart/prebuilt-quickstart)
 
-### Fixed: 
-- Capture video at correct aspect ratio for mobile web
-- Screenshare track was showing presenter video track on role change
+### Fixed:
 
+-   Capture video at correct aspect ratio for mobile web
+-   Screenshare track was showing presenter video track on role change
 
 ## 2023-08-25
+
 Released: `@100mslive/hms-video-store@0.10.14`, `@100mslive/react-sdk@0.8.14`, `@100mslive/hls-player@0.1.14`, `@100mslive/roomkit-react@0.1.5`
 
-Fixed: 
-- Audio of some remote peers not audible after role change from a subscribing role to a non-subscribed role and coming back to a subscribing role
+Fixed:
+
+-   Audio of some remote peers not audible after role change from a subscribing role to a non-subscribed role and coming back to a subscribing role
 
 ## 2023-08-24
+
 Released: `@100mslive/hms-video-store@0.10.13`, `@100mslive/react-sdk@0.8.13`, `@100mslive/hls-player@0.1.13`, `@100mslive/roomkit-react@0.1.4`
 
-Fixed: 
-- Reduced bundle size for @100mslive/roomkit-react and @100mslive/react-icons
-- New design changes and bug fixes in `HMSPrebuilt` Component of `roomkit-react` package
+Fixed:
 
+-   Reduced bundle size for @100mslive/roomkit-react and @100mslive/react-icons
+-   New design changes and bug fixes in `HMSPrebuilt` Component of `roomkit-react` package
 
 ## 2023-08-11
+
 Released: `@100mslive/hms-video-store@0.10.12`, `@100mslive/react-sdk@0.8.12`, `@100mslive/hls-player@0.1.12`
 
-## Important 
+## Important
 
 Starting from version `0.10.12` of `@100mslive/hms-video-store` and version `0.8.12` of `@100mslive/react-sdk`: <br/>
-When using [room-composite browser recording](/javascript/v2/how-to-guides/record-and-live-stream/rtmp-recording) (formerly *beam recording*), [RTMP stream](/javascript/v2/how-to-guides/record-and-live-stream/rtmp-recording) or [HLS stream](/javascript/v2/how-to-guides/record-and-live-stream/hls/hls) with `meetingURL` using the specified or a newer SDK version:
-- `beam` (bot peer) won't appear in the peers' list on all platforms (Web, Android, and iOS)
-- [Peer webhook events](/server-side/v2/how-to-guides/configure-webhooks/webhook#peer-events) like `peer.join.success` and `peer.leave.success` won't be sent for the `beam` peer.
-- [Beam webhook events](/server-side/v2/how-to-guides/configure-webhooks/webhook#rtmp-streaming-browser-recording-events) like `beam.started.success` will still be sent.
-- No need to explain the presence of an extra peer (`beam`).
-<br/> We highly recommend you to update any business logic dependent on beam's *peer webhook events* and instead use *[beam webhook events](/server-side/v2/how-to-guides/configure-webhooks/webhook#rtmp-streaming-browser-recording-events)*.
+When using [room-composite browser recording](/javascript/v2/how-to-guides/record-and-live-stream/rtmp-recording) (formerly _beam recording_), [RTMP stream](/javascript/v2/how-to-guides/record-and-live-stream/rtmp-recording) or [HLS stream](/javascript/v2/how-to-guides/record-and-live-stream/hls/hls) with `meetingURL` using the specified or a newer SDK version:
+
+-   `beam` (bot peer) won't appear in the peers' list on all platforms (Web, Android, and iOS)
+-   [Peer webhook events](/server-side/v2/how-to-guides/configure-webhooks/webhook#peer-events) like `peer.join.success` and `peer.leave.success` won't be sent for the `beam` peer.
+-   [Beam webhook events](/server-side/v2/how-to-guides/configure-webhooks/webhook#rtmp-streaming-browser-recording-events) like `beam.started.success` will still be sent.
+-   No need to explain the presence of an extra peer (`beam`).
+    <br /> We highly recommend you to update any business logic dependent on beam's *peer webhook
+    events* and instead use *[beam webhook
+    events](/server-side/v2/how-to-guides/configure-webhooks/webhook#rtmp-streaming-browser-recording-events)*.
 
 ### Fixed:
-- Poll vote count getting reset after reconnection
+
+-   Poll vote count getting reset after reconnection
 
 ## 2023-08-09
+
 Released: `@100mslive/hms-video-store@0.10.11`, `@100mslive/react-sdk@0.8.11`, `@100mslive/hls-player@0.1.11`
 
 ### Fixed:
-- `selectIsLocalVideoEnabled` returning true when permissions denied
-- `hmsActions.setVolume` not working when a value between 0 and 100 is set
+
+-   `selectIsLocalVideoEnabled` returning true when permissions denied
+-   `hmsActions.setVolume` not working when a value between 0 and 100 is set
 
 ## 2023-07-25
+
 Released: `@100mslive/hms-video-store@0.10.10`, `@100mslive/react-sdk@0.8.10`, `@100mslive/hls-player@0.1.10`
 
 ## Important
@@ -644,265 +764,302 @@ Released: `@100mslive/hms-video-store@0.10.10`, `@100mslive/react-sdk@0.8.10`, `
 Starting from this release, `@100mslive/react-ui` package is deprecated. Please use `@100mslive/roomkit-react` instead.
 
 ### Added:
-- Poll/Quizzes
-- Prebuilt component in `@100mslive/roomkit-react` 
+
+-   Poll/Quizzes
+-   Prebuilt component in `@100mslive/roomkit-react`
 
 ### Fixed:
-- Video getting stuck on switching resolution layers in HLS player
+
+-   Video getting stuck on switching resolution layers in HLS player
 
 ## 2023-07-14
+
 Released: `@100mslive/hms-video-store@0.10.9`, `@100mslive/react-sdk@0.8.9`, `@100mslive/hls-player@0.1.9`
 
 ### Added:
-- [PDF Annotation](/javascript/v2/how-to-guides/enable-content-sharing/pdf) and related hooks for sharing PDF(`usePdfShare`) and iframe embeds(`useEmbedShare`)
+
+-   [PDF Annotation](/javascript/v2/how-to-guides/enable-content-sharing/pdf) and related hooks for sharing PDF(`usePdfShare`) and iframe embeds(`useEmbedShare`)
 
 ### Fixed:
-- Device list on role change
+
+-   Device list on role change
 
 ## 2023-06-21
+
 Released: `@100mslive/hms-video-store@0.10.8`, `@100mslive/react-sdk@0.8.8`, `@100mslive/hls-player@0.1.8`
 
 ### Fixed:
-- Video getting stretched in some iOS versions
-- Fix terminal server errors not being marked as terminal in [`HMSException`](/api-reference/javascript/v2/interfaces/HMSException)
+
+-   Video getting stretched in some iOS versions
+-   Fix terminal server errors not being marked as terminal in [`HMSException`](/api-reference/javascript/v2/interfaces/HMSException)
 
 ## 2023-06-01
 
 Released: `@100mslive/hms-video-store@0.10.6`, `@100mslive/react-sdk@0.8.6`, `@100mslive/hls-player@0.1.6`
 
 ### Added
-- WebRTC publish stats collection [`alpha`]
+
+-   WebRTC publish stats collection [`alpha`]
 
 ## 2023-05-30
 
 Released: `@100mslive/hms-video-store@0.10.5`, `@100mslive/react-sdk@0.8.5`, `@100mslive/hls-player@0.1.5`
 
 ### Fixed:
-- High memory footprint issue
-- Black tile when reusing the same video element frequently. For example ActiveSpeaker
-- Video not getting published when you turn on the camera just before join
+
+-   High memory footprint issue
+-   Black tile when reusing the same video element frequently. For example ActiveSpeaker
+-   Video not getting published when you turn on the camera just before join
 
 ## 2023-05-19
 
 Released: `@100mslive/hms-video-store@0.10.4`, `@100mslive/react-sdk@0.8.4`, `@100mslive/hls-player@0.1.4`
 
 ### Added:
-- Introduced unique `id` for [HMSMessage](/api-reference/javascript/v2/interfaces/HMSMessage)
+
+-   Introduced unique `id` for [HMSMessage](/api-reference/javascript/v2/interfaces/HMSMessage)
 
 ## 2023-05-11
 
 Released: `@100mslive/hms-video-store@0.10.3`, `@100mslive/react-sdk@0.8.3`, `@100mslive/hls-player@0.1.3`
 
 #### Fixed:
-- Made ping pong strategy less aggressive. Increased ping/pong interval to 3 sec.
-- Meeting URL made optional for [RTMP Streaming / Recording APIs](/javascript/v2/how-to-guides/record-and-live-stream/rtmp-recording)
-- [HLS Player](/javascript/v2/how-to-guides/record-and-live-stream/hls/hls-player) switching to higher quality layer made more aggressive to ensure high quality live stream.
-- Updated UI for audio level border on tile
 
+-   Made ping pong strategy less aggressive. Increased ping/pong interval to 3 sec.
+-   Meeting URL made optional for [RTMP Streaming / Recording APIs](/javascript/v2/how-to-guides/record-and-live-stream/rtmp-recording)
+-   [HLS Player](/javascript/v2/how-to-guides/record-and-live-stream/hls/hls-player) switching to higher quality layer made more aggressive to ensure high quality live stream.
+-   Updated UI for audio level border on tile
 
 ## 2023-05-02
 
 Released: `@100mslive/hms-video-store@0.10.2`, `@100mslive/react-sdk@0.8.2`
 
 #### Added:
-- Keep screen awake using `autoManageWakeLock` config option - enabled by default
+
+-   Keep screen awake using `autoManageWakeLock` config option - enabled by default
 
 #### Fixed:
-- Use device pixel ratio for auto layer selection
-- Observing session store keys from multiple components
-- Audio of some peer not audible after bluetooth reconnect
-- Limit for event emitter leak
-- Fix correct video not getting rendered when reusing video elements
-- Multiple timed metadata events not working
 
+-   Use device pixel ratio for auto layer selection
+-   Observing session store keys from multiple components
+-   Audio of some peer not audible after bluetooth reconnect
+-   Limit for event emitter leak
+-   Fix correct video not getting rendered when reusing video elements
+-   Multiple timed metadata events not working
 
 ## 2023-04-18
 
 Released: `@100mslive/hms-video-store@0.10.1`, `@100mslive/react-sdk@0.8.1`
 
 #### Added
-- Session store - a realtime shared database between all peers in a session. Refer documentation [here](https://www.100ms.live/docs/javascript/v2/how--to-guides/build-interactive-features/session-store)
-- Switch camera action
+
+-   Session store - a realtime shared database between all peers in a session. Refer documentation [here](https://www.100ms.live/docs/javascript/v2/how--to-guides/build-interactive-features/session-store)
+-   Switch camera action
 
 #### Fixed:
-- Bulk role change resulting in black tile or no audio
-- Role change with simulcast
-- Audio of some peers not audible on device change
-- Device change resulting in `Capture Device in use by another application(3003 error code)`.
+
+-   Bulk role change resulting in black tile or no audio
+-   Role change with simulcast
+-   Audio of some peers not audible on device change
+-   Device change resulting in `Capture Device in use by another application(3003 error code)`.
 
 #### Deprecated:
-- Alpha version of Session Metadata is deprecated and is now replaced with Session Store
 
+-   Alpha version of Session Metadata is deprecated and is now replaced with Session Store
 
 ## 2023-03-31
 
 Released: `@100mslive/hms-video-store@0.10.0`, `@100mslive/react-sdk@0.8.0`
 
 #### Added
-- alpha release of `@100mslive/hls-player` is done.
- `@100mslive/hls-player` is currently a wrapper on hls.js with easy to use interface and few add-ons for [100ms's interactive live streaming feature](../how--to-guides/record-and-live-stream/hls/hls).
+
+-   alpha release of `@100mslive/hls-player` is done.
+    `@100mslive/hls-player` is currently a wrapper on hls.js with easy to use interface and few add-ons for [100ms's interactive live streaming feature](../how--to-guides/record-and-live-stream/hls/hls).
 
 #### Fixed:
-- SDK causing memory exception in preview when room state peer list is enabled for 1500+ peers.
-- All servers setting `isTerminal: true` on the `HMSException`. Now only the terminal server errors will set `isTerminal: true`
-- Analytics events
+
+-   SDK causing memory exception in preview when room state peer list is enabled for 1500+ peers.
+-   All servers setting `isTerminal: true` on the `HMSException`. Now only the terminal server errors will set `isTerminal: true`
+-   Analytics events
 
 #### Breaking:
-- [`getAuthTokenByRoomCode`](/api-reference/javascript/v2/interfaces/HMSActions#getauthtokenbyroomcode) in hmsActions now returns the token as a string in response.
+
+-   [`getAuthTokenByRoomCode`](/api-reference/javascript/v2/interfaces/HMSActions#getauthtokenbyroomcode) in hmsActions now returns the token as a string in response.
 
 ## 2023-03-14
 
 Released: `@100mslive/hms-video-store@0.9.0`, `@100mslive/react-sdk@0.7.0`
 
 #### Added:
-- [`getAuthTokenByRoomCode`](/api-reference/javascript/v2/interfaces/HMSActions#getauthtokenbyroomcode) in hmsActions to get token for room short code.
-- The SDK now handles auto subscribing/unsubscribing while [rendering video](../how--to-guides/set-up-video-conferencing/render-video/overview) based on the element's visibility. If Simulcast is enabled, the appropriate resolution based on the video element's dimensions will also be auto-selected. Note that this was already available for react-sdk via the useVideo hook. With this release, we've also added it for the core SDK.
+
+-   [`getAuthTokenByRoomCode`](/api-reference/javascript/v2/interfaces/HMSActions#getauthtokenbyroomcode) in hmsActions to get token for room short code.
+-   The SDK now handles auto subscribing/unsubscribing while [rendering video](../how--to-guides/set-up-video-conferencing/render-video/overview) based on the element's visibility. If Simulcast is enabled, the appropriate resolution based on the video element's dimensions will also be auto-selected. Note that this was already available for react-sdk via the useVideo hook. With this release, we've also added it for the core SDK.
 
 #### Breaking:
-- SDK now handles subscribing and unsubscribing to video based on the element's visibility. If you're using hmsActions.detachVideo function to unsubscribe to video for example when it's not visible, you may have to pass the flag `autoManageVideo: false` in join config. This will avoid any conflict between SDK and your app's code by disabling SDK's functionality. For more details, please check our docs for [rendering video](../how--to-guides/set-up-video-conferencing/render-video/overview).
+
+-   SDK now handles subscribing and unsubscribing to video based on the element's visibility. If you're using hmsActions.detachVideo function to unsubscribe to video for example when it's not visible, you may have to pass the flag `autoManageVideo: false` in join config. This will avoid any conflict between SDK and your app's code by disabling SDK's functionality. For more details, please check our docs for [rendering video](../how--to-guides/set-up-video-conferencing/render-video/overview).
 
 ## 2023-02-22
 
 Released: `@100mslive/hms-video-store@0.8.4`, `@100mslive/react-sdk@0.6.4`
 
 #### Added:
-- Preview field in HMSStore and role related selectors helpful for preview
+
+-   Preview field in HMSStore and role related selectors helpful for preview
 
 #### Fixed:
-- Return type of `selectLocalPeer` which will now return `HMSPeer | undefined`
-- Network interruption during join
-- Video background not always updating in virtual background plugin
-- Camera light not turning off at times
-- In some chrome versions, default devices are not prefixed with default- which is resulting in device not being selected on device change
-- Make error in `setRemoteDescription` terminal
-- Browser tab showing indicator that mic is active even when audio disabled
-- `No sender found` log while stopping playlist
+
+-   Return type of `selectLocalPeer` which will now return `HMSPeer | undefined`
+-   Network interruption during join
+-   Video background not always updating in virtual background plugin
+-   Camera light not turning off at times
+-   In some chrome versions, default devices are not prefixed with default- which is resulting in device not being selected on device change
+-   Make error in `setRemoteDescription` terminal
+-   Browser tab showing indicator that mic is active even when audio disabled
+-   `No sender found` log while stopping playlist
 
 ## 2023-02-03
 
 Released: `@100mslive/hms-video-store@0.8.3`, `@100mslive/react-sdk@0.6.3`
 
 #### Added:
-- Preview and join using different roles. Use `asRole` in preview config to pass the name of the role you want to use
+
+-   Preview and join using different roles. Use `asRole` in preview config to pass the name of the role you want to use
 
 #### Fixed:
-- Screenshare quality degrading after role change
-- Detect slow network/disconnection earlier using ice connection state disconnected
-- Apply frame rate specified in template on tracks
-- Media decode error on certain audio elements
-- Blank video or no audio when there is an error on device change
-- `requested_by` is added to webhook on role change
-- Remote track update coming in before peer list leading to no peer tile
-- Analytics and debug logs improved.
 
+-   Screenshare quality degrading after role change
+-   Detect slow network/disconnection earlier using ice connection state disconnected
+-   Apply frame rate specified in template on tracks
+-   Media decode error on certain audio elements
+-   Blank video or no audio when there is an error on device change
+-   `requested_by` is added to webhook on role change
+-   Remote track update coming in before peer list leading to no peer tile
+-   Analytics and debug logs improved.
 
 ## 2022-12-19
 
 Released: `@100mslive/hms-video-store@0.8.1`, `@100mslive/react-sdk@0.6.1`
 
 #### Added:
-- [Bulk role change API](https://www.100ms.live/docs/javascript/v2/features/change-role#change-bulk-peer-role-api)
+
+-   [Bulk role change API](https://www.100ms.live/docs/javascript/v2/features/change-role#change-bulk-peer-role-api)
 
 #### Fixed:
-- Analytics fixes
-- FPS for the `HMSVBPlugin`
-- Device change not working sometimes with some bluetooth devices
-- Audio track not received on remote end on role change due to no data being sent
-- Reestablishment of audio track after external call interuption
+
+-   Analytics fixes
+-   FPS for the `HMSVBPlugin`
+-   Device change not working sometimes with some bluetooth devices
+-   Audio track not received on remote end on role change due to no data being sent
+-   Reestablishment of audio track after external call interuption
 
 ## 2022-11-25
 
 Released: `@100mslive/hms-video-store@0.8.0`, `@100mslive/react-sdk@0.6.0`
 
 #### Added:
-- Simulcast support
-- New virtual background plugin with improved cpu usage compared to the previous one. Refer [usage](https://github.com/100mslive/100ms-web/blob/main/src/plugins/VirtualBackground/VirtualBackground.jsx)
+
+-   Simulcast support
+-   New virtual background plugin with improved cpu usage compared to the previous one. Refer [usage](https://github.com/100mslive/100ms-web/blob/main/src/plugins/VirtualBackground/VirtualBackground.jsx)
 
 #### Fixed:
-- Black tile when video tile is on screen only for a split second(Example scenario: pagination)
-- Join promise not getting resolved in some rare case
-- leave.failure webhook getting triggered when closing tab from preview 
+
+-   Black tile when video tile is on screen only for a split second(Example scenario: pagination)
+-   Join promise not getting resolved in some rare case
+-   leave.failure webhook getting triggered when closing tab from preview
 
 #### Breaking:
-- `hmsActions.setVolume` is a promise now
-- `HMSStatsStore` interface updated and some of the selectors are removed 
+
+-   `hmsActions.setVolume` is a promise now
+-   `HMSStatsStore` interface updated and some of the selectors are removed
 
 ## 2022-11-10
 
 Released: `@100mslive/hms-video-store@0.7.1`, `@100mslive/react-sdk@0.5.1`
 
 #### Fixed:
-- `@100mslive/react-sdk` failing in nextjs environment
-- Fix dropdown from `@100mslive/react-ui` making the UI unresponsive when closed
-- Screenshare not working in macOS Ventura
-- Improved device change analytics
+
+-   `@100mslive/react-sdk` failing in nextjs environment
+-   Fix dropdown from `@100mslive/react-ui` making the UI unresponsive when closed
+-   Screenshare not working in macOS Ventura
+-   Improved device change analytics
 
 #### Added:
-- Stats for nerds for HLS - @alpha release
+
+-   Stats for nerds for HLS - @alpha release
 
 #### Breaking
-- `customerDescription` on [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer) is now removed. Use `metadata` field instead
-- Screenshare config is updated. Please refer [here](https://www.100ms.live/docs/api-reference/javascript/v2/interfaces/HMSScreenShareConfig)
+
+-   `customerDescription` on [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer) is now removed. Use `metadata` field instead
+-   Screenshare config is updated. Please refer [here](https://www.100ms.live/docs/api-reference/javascript/v2/interfaces/HMSScreenShareConfig)
 
 ## 2022-10-20
 
 Released: `@100mslive/hms-video-store@0.6.4`, `@100mslive/react-sdk@0.4.4`
 
 #### Fixed:
-- [`hmsActions.setAudioOutputDevice`](https://www.100ms.live/docs/api-reference/javascript/v2/interfaces/HMSActions#set-audio-output-device) is now async, the returned promise will resolve once the device change is applied to all the audio tracks in the room
-- Terminal errors, join promise not getting resolved on certain join failures
-- WebRTC stats not working on rejoining a room
-- `new HMSReactiveStore()` doesn't work in server side rendering
-- Handling null in track selectors
-- End room sending both peer.leave.success and peer.leave.failure events for same peer in webhook
 
+-   [`hmsActions.setAudioOutputDevice`](https://www.100ms.live/docs/api-reference/javascript/v2/interfaces/HMSActions#set-audio-output-device) is now async, the returned promise will resolve once the device change is applied to all the audio tracks in the room
+-   Terminal errors, join promise not getting resolved on certain join failures
+-   WebRTC stats not working on rejoining a room
+-   `new HMSReactiveStore()` doesn't work in server side rendering
+-   Handling null in track selectors
+-   End room sending both peer.leave.success and peer.leave.failure events for same peer in webhook
 
 ## 2022-09-30
 
 Released: `@100mslive/hms-video-store@0.6.2`, `@100mslive/react-sdk@0.4.2`
 
 #### Fixed:
-- setSessionMetadata API type
+
+-   setSessionMetadata API type
 
 ## 2022-09-28
 
 Released: `@100mslive/hms-video-store@0.6.1`, `@100mslive/react-sdk@0.4.1`
 
 #### Added:
-- Session Metadata API (alpha release)
-- Strict track types
-    - Added HMSVideoTrack, HMSScreenVideoTrack, HMSAudioTrack, HMSScreenAudioTrack
-- Added HMSReconnectionNotification to notification types 
+
+-   Session Metadata API (alpha release)
+-   Strict track types
+    -   Added HMSVideoTrack, HMSScreenVideoTrack, HMSAudioTrack, HMSScreenAudioTrack
+-   Added HMSReconnectionNotification to notification types
 
 #### Fixed:
-- Type error when subscribing to all notifications.
+
+-   Type error when subscribing to all notifications.
 
 ## 2022-09-13
 
 Released: `@100mslive/hms-video-store@0.6.0`, `@100mslive/react-sdk@0.4.0`
 
 #### Added:
-- `join` is now async
-- An error will be returned if `validateVideoPluginSupport` is called before video track is available
-- [facingMode](https://developer.mozilla.org/en-US/docs/Web/API/MediaTrackSettings/facingMode) property for local videoTrack.(Note: This will be useful on mobile browsers)
+
+-   `join` is now async
+-   An error will be returned if `validateVideoPluginSupport` is called before video track is available
+-   [facingMode](https://developer.mozilla.org/en-US/docs/Web/API/MediaTrackSettings/facingMode) property for local videoTrack.(Note: This will be useful on mobile browsers)
 
 #### Fixed:
-- Cleanup on leave
-- Improved logging for browser recording
+
+-   Cleanup on leave
+-   Improved logging for browser recording
 
 #### Breaking:
-- A `HMSNotificationTypes.PEER_LIST` will be sent after join even if there are no peers already in the room
-- Specific types are added to Notifications
+
+-   A `HMSNotificationTypes.PEER_LIST` will be sent after join even if there are no peers already in the room
+-   Specific types are added to Notifications
 
 ## 2022-08-01
 
 Released: `@100mslive/hms-video-store@0.5.0`, `@100mslive/react-sdk@0.3.0`
 
 #### Added:
+
 -   retry calls for all the websocket messages
 -   params are now optional in `startHLSStreaming`
 
 #### Breaking:
+
 -   react-ui theme colors have been updated
 -   react-ui, styling for components is updated
 
