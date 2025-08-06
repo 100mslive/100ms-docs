@@ -102,7 +102,7 @@ nav: '3.1'
 
 ### startConnectivityCheck
 
-▸ **startConnectivityCheck**(`progress`, `completed`, `region?`): `Promise`<`void`\>
+▸ **startConnectivityCheck**(`progress`, `completed`, `region?`, `duration?`): `Promise`<`void`\>
 
 #### Parameters
 
@@ -111,6 +111,7 @@ nav: '3.1'
 | `progress`  | (`state`: [`ConnectivityState`](/api-reference/javascript/v2/enums/ConnectivityState)) => `void`                   |
 | `completed` | (`result`: [`ConnectivityCheckResult`](/api-reference/javascript/v2/interfaces/ConnectivityCheckResult)) => `void` |
 | `region?`   | `string`                                                                                                           |
+| `duration?` | `number`                                                                                                           |
 
 #### Returns
 

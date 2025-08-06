@@ -2,7 +2,7 @@ export default {
     title: '100ms - Video conferencing and live streaming infrastructure',
     description:
         'Quick to integrate native iOS, Android & Web SDKs to add live video & audio conferencing to your applications.',
-    author: '100ms',
+    author: '100ms.live',
     openGraph: {
         type: 'website',
         locale: 'en_IN',
@@ -11,7 +11,7 @@ export default {
         images: [
             {
                 url: `https://storage.googleapis.com/100ms-cms-prod/cms/Docs_SEO_14a3dcc31c/Docs_SEO_14a3dcc31c.png`,
-                alt: '100ms Banner'
+                alt: '100ms.live Banner'
             }
         ]
     },

@@ -247,6 +247,25 @@ Promise<void> - resolves when the video is attached
 
 ---
 
+### autoSelectAudioOutput
+
+▸ **autoSelectAudioOutput**(`delay?`): `Promise`<`void`\>
+
+An optional delay to add between earpiece and speakerphone selection
+Call this after preview or join is successful
+
+#### Parameters
+
+| Name     | Type     | Description |
+| :------- | :------- | :---------- |
+| `delay?` | `number` | in ms       |
+
+#### Returns
+
+`Promise`<`void`\>
+
+---
+
 ### cancelMidCallPreview
 
 ▸ **cancelMidCallPreview**(): `Promise`<`void`\>
@@ -1413,9 +1432,9 @@ If you want to stop HLS streaming. The passed in arguments is not considered at 
 
 #### Parameters
 
-| Name      | Type                                                             | Description                                           |
-| :-------- | :--------------------------------------------------------------- | :---------------------------------------------------- |
-| `params?` | [`HLSConfig`](/api-reference/javascript/v2/interfaces/HLSConfig) | HLSConfig - HLSConfig object with the required fields |
+| Name      | Type            | Description                                           |
+| :-------- | :-------------- | :---------------------------------------------------- |
+| `params?` | `StopHLSConfig` | HLSConfig - HLSConfig object with the required fields |
 
 #### Returns
 

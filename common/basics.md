@@ -1,14 +1,14 @@
 ## Architecture
 
-100ms is a cloud platform that allows developers to add video and audio conferencing to Web, Android and iOS applications.
+100ms.live is a cloud platform that allows developers to add video and audio conferencing to Web, Android and iOS applications.
 
 The platform provides REST APIs, SDKs, and a dashboard that makes it simple to capture, distribute, record, and render live interactive audio, video.
 
-Any application built using 100ms' SDK has 2 components.
+Any application built using 100ms.live's SDK has 2 components.
 
--   **Client:** Use 100ms android, iOS, Web SDKs to manage connections, room states, render audio/video.
+-   **Client:** Use android, iOS, Web SDKs to manage connections, room states, render audio/video.
 
--   **Server:** Use 100ms' APIs or dashboard to create rooms, setup room templates, trigger recording or RTMP streaming, access events.
+-   **Server:** Use our APIs or dashboard to create rooms, setup room templates, trigger recording or RTMP streaming, access events.
 
 ![Architecture](/docs/v2/arch.png)
 
@@ -24,13 +24,13 @@ Any application built using 100ms' SDK has 2 components.
 -   `Template` A template is a collection of roles, room settings, recording and RTMP settings (if used), that are used by the SDK to decide which geography to connect to, which tracks to return to the client, whether to turn on recording when a room is created, etc. Each room is associated with a template.
 -   `Destinations` Destinations is used to save audio/video calls for offline viewing. 100ms supports 2 kinds of recording - [SFU recording](/javascript/v2/foundation/recordings#sfu-recording-advanced) and [Browser recording](/javascript/v2/foundation/recordings#browser-recording-recommended). Also, `HLS enabled` configuration will allow you to live stream your room over HLS.
 -   `RTMP` RTMP streaming is used to live stream your video conferencing apps to platforms like YouTube, Twitch, Facebook, MUX, etc.
--   `Webhooks` Webhook is an HTTP(S) endpoint used for pushing the notifications to your application. It will be invoked by 100ms servers to notify events of your room.
+-   `Webhooks` Webhook is an HTTP(S) endpoint used for pushing the notifications to your application. It will be invoked by 100ms.live servers to notify events of your room.
 -   `Workspace` A workspace is an isolated environment which contains account data like templates, rooms, room and session history, etc. You can use workspaces to represent environments like “Production” and “Development” and invite team members to a workspace.
 
-## What are the steps to build a live app with 100ms?
-1. Sign up on 100ms using the **Try For Free** button in the top navbar.
+## What are the steps to build a live app with 100ms.live?
+1. Sign up on 100ms.live using the **Try For Free** button in the top navbar.
 
-![Signup for 100ms account](/docs/v2/signup.png)
+![Signup for 100ms.live account](/docs/v2/signup.png)
 
 2. Once you're logged in to the dashboard, click on `Create Room`
 
