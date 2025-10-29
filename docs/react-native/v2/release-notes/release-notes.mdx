@@ -13,90 +13,84 @@ nav: 4.1
 
 ## 1.12.0 - 2025-10-28
 
-# Release Notes - v1.12.0 & v1.3.0
-
 | Package                              | Version |
 | ------------------------------------ | ------- |
 | @100mslive/react-native-room-kit     | 1.3.0   |
 | @100mslive/react-native-hms          | 1.12.0  |
 | @100mslive/react-native-video-plugin | 1.1.0   |
 
-## 🎉 Highlights
+## Highlights
 
 This is a major release bringing **React Native 0.77+ support**, **Android 16KB page size compliance** for Google Play 2025 requirements, and significant modernization of the SDK build system. This release includes breaking changes - please review the migration guide below.
 
 ### Key Improvements
 
-- ⚡ **React Native 0.77.3 Support** - Full compatibility with the latest React Native version with improved performance and stability
-- 📱 **Android 16KB Page Size Compliance** - Ready for Google Play's 2025 requirements for Android 15+ devices
-- 📷 **Modernized QR Code Scanner** - Migrated to react-native-vision-camera 4.7.2 with ML Kit for better performance
-- 🏗️ **Build System Modernization** - Updated to AGP 8.7.2, Gradle 8.11.1, Kotlin 2.0.21, and Java 17
-- 🚀 **Performance Improvements** - Major dependency updates across 20+ packages
+-   ⚡ **React Native 0.77.3 Support** - Full compatibility with the latest React Native version with improved performance and stability
+-   📱 **Android 16KB Page Size Compliance** - Ready for Google Play's 2025 requirements for Android 15+ devices
+-   📷 **Modernized QR Code Scanner** - Migrated to react-native-vision-camera 4.7.2 with ML Kit for better performance
+-   🏗️ **Build System Modernization** - Updated to AGP 8.7.2, Gradle 8.11.1, Kotlin 2.0.21, and Java 17
+-   🚀 **Performance Improvements** - Major dependency updates across 20+ packages
 
----
-
-## 📦 react-native-hms (1.12.0)
+## react-native-hms (1.12.0)
 
 ### React Native 0.77.3 Support
 
 The SDK now fully supports React Native 0.77.3 (upgraded from 0.71.19), bringing 6 major versions of improvements including:
 
-- Enhanced performance and stability
-- Latest React 18.3.1 features
-- Improved developer experience
-- Better TypeScript support
+-   Enhanced performance and stability
+-   Latest React 18.3.1 features
+-   Improved developer experience
+-   Better TypeScript support
 
 ### Android 16KB Page Size Compliance
 
 Full compliance with Google Play's 2025 requirements for Android 15+ devices:
 
-- NDK r27 support with 16KB page size
-- Experimental flags enabled for compatibility
-- Ready for next-generation Android devices
-- Ensures your app won't be blocked on Google Play
+-   NDK r27 support with 16KB page size
+-   Experimental flags enabled for compatibility
+-   Ready for next-generation Android devices
+-   Ensures your app won't be blocked on Google Play
 
 ### Architecture Updates
 
-- **64-bit Only Support**: Dropped 32-bit architectures (armeabi-v7a, x86) to support modern Android requirements
-- **Supported Architectures**: arm64-v8a, x86_64
-- Improved performance on modern devices
+-   **64-bit Only Support**: Dropped 32-bit architectures (armeabi-v7a, x86) to support modern Android requirements
+-   **Supported Architectures**: arm64-v8a, x86_64
+-   Improved performance on modern devices
 
 ### Native SDK Updates
 
-- **Android SDK**: Updated to **2.9.78** (from 2.9.69)
-- **iOS SDK**: Updated to **1.17.0** (from 1.16.5)
-- Includes latest bug fixes, performance improvements, and new features from native SDKs
+-   **Android SDK**: Updated to **2.9.78** (from 2.9.69)
+-   **iOS SDK**: Updated to **1.17.0** (from 1.16.5)
+-   Includes latest bug fixes, performance improvements, and new features from native SDKs
 
 ### Modernized Build System
 
 **Android:**
 
-- Android Gradle Plugin: 8.7.2
-- Gradle: 8.11.1
-- Kotlin: 2.0.21
-- Java: 17 (minimum required)
-- Target SDK: 35
-- Compile SDK: 35
-- Minimum SDK: 24 (Android 7.0)
+-   Android Gradle Plugin: 8.7.2
+-   Gradle: 8.11.1
+-   Kotlin: 2.0.21
+-   Java: 17 (minimum required)
+-   Target SDK: 35
+-   Compile SDK: 35
+-   Minimum SDK: 24 (Android 7.0)
 
 **iOS:**
 
-- Minimum iOS: 16.0 (from 13.0)
-- Updated Podfile for RN 0.77.3 compatibility
-- New Architecture explicitly disabled for stability
+-   Minimum iOS: 16.0 (from 13.0)
+-   Updated Podfile for RN 0.77.3 compatibility
+-   New Architecture explicitly disabled for stability
 
 ### Technical Improvements
 
-- Fixed TypeScript event emitter and session store imports
-- Improved build performance with modern tooling
-- Better type safety and developer experience
-- Removed Flipper support (deprecated)
-- Package namespace updated: com.rnexample → live.hms.rn
-- MainApplication migrated from Java to Kotlin
+-   Fixed TypeScript event emitter and session store imports
+-   Improved build performance with modern tooling
+-   Better type safety and developer experience
+-   Removed Flipper support (deprecated)
+-   Package namespace updated: com.rnexample → live.hms.rn
+-   MainApplication migrated from Java to Kotlin
 
----
-
-## 🎨 react-native-room-kit (1.3.0)
+## react-native-room-kit (1.3.0)
 
 ### Major Dependency Updates
 
@@ -116,15 +110,15 @@ Updated core dependencies for better performance, stability, and RN 0.77.3 compa
 
 ### Technical Improvements
 
-- Fixed TypeScript AnimatedStyleProp type errors
-- Improved keyboard avoiding view type safety
-- Added 5 critical patches for RN 0.77.3 compatibility using patch-package
-- Security fixes from npm audit
-- Better performance with updated dependencies
+-   Fixed TypeScript AnimatedStyleProp type errors
+-   Improved keyboard avoiding view type safety
+-   Added 5 critical patches for RN 0.77.3 compatibility using patch-package
+-   Security fixes from npm audit
+-   Better performance with updated dependencies
 
 ---
 
-## ⚠️ Breaking Changes
+## Breaking Changes
 
 ### Minimum Requirements Updated
 
@@ -138,17 +132,17 @@ Updated core dependencies for better performance, stability, and RN 0.77.3 compa
 
 ### Architecture Changes
 
-- **32-bit Android devices no longer supported**
-    - Dropped: armeabi-v7a, x86
-    - Supported: arm64-v8a, x86_64 only
-    - Reason: Required for 16KB page size compliance and modern Android
+-   **32-bit Android devices no longer supported**
+    -   Dropped: armeabi-v7a, x86
+    -   Supported: arm64-v8a, x86_64 only
+    -   Reason: Required for 16KB page size compliance and modern Android
 
 ### Peer Dependencies
 
-- React Native peer dependency updated to `>=0.77.3`
-- React peer dependency updated to `>=18.2.0`
+-   React Native peer dependency updated to `>=0.77.3`
+-   React peer dependency updated to `>=18.2.0`
 
-## 📊 Version Details
+## Version Details
 
 **Uses Android SDK 2.9.78 & iOS SDK 1.17.0**
 
@@ -163,13 +157,13 @@ Updated core dependencies for better performance, stability, and RN 0.77.3 compa
 
 ### react-native-hms
 
-- Added namespace in Android to support compile target 34 and above
+-   Added namespace in Android to support compile target 34 and above
 
-- Resolved an issue in PIP on Android where screen could be stuck when switching to PIP mode fails
+-   Resolved an issue in PIP on Android where screen could be stuck when switching to PIP mode fails
 
 ### react-native-room-kit
 
-- Disabled capturing of network quality in Preview screen by default
+-   Disabled capturing of network quality in Preview screen by default
 
 Uses Android SDK 2.9.69 & iOS SDK 1.16.5
 
@@ -185,21 +179,21 @@ Uses Android SDK 2.9.69 & iOS SDK 1.16.5
 
 ### react-native-hms
 
-- Added support for runtime permission handling in Android
+-   Added support for runtime permission handling in Android
 
     Users can now request runtime permissions for Camera, Microphone on Android devices. Read more about it [here](https://www.100ms.live/docs/react-native/v2/how-to-guides/set-up-video-conferencing/permissions).
 
-- Added support for running apps on Android 14
+-   Added support for running apps on Android 14
 
-- Corrected return types of APIs to be more consistent
+-   Corrected return types of APIs to be more consistent
 
 ### react-native-room-kit
 
-- Added support for default state of Noise Cancellation when entering a Room
+-   Added support for default state of Noise Cancellation when entering a Room
 
     Users can now set the default state of Noise Cancellation when entering a Room. This can be set in the Prebuilt Customizer.
 
-- Added support for Switching Role of a Peer in Prebuilt UI
+-   Added support for Switching Role of a Peer in Prebuilt UI
 
     Users can now switch the role of a Peer in the Prebuilt UI. This can be done by clicking on the Peer's name in the Participants List or on the Remote Peer Settings icon.
 
@@ -216,13 +210,13 @@ Uses Android SDK 2.9.64 & iOS SDK 1.15.0
 
 ### react-native-hms
 
-- Added support for PIP Mode in iOS
+-   Added support for PIP Mode in iOS
 
     Users can now switch to Picture-in-Picture mode on iOS devices while in a Room. Read more about it [here](https://www.100ms.live/docs/react-native/v2/how-to-guides/set-up-video-conferencing/render-video/pip-mode).
 
 ### react-native-room-kit
 
-- Added support for PIP Mode in Prebuilt UI
+-   Added support for PIP Mode in Prebuilt UI
 
     Users can now switch to Picture-in-Picture mode in the Prebuilt UI.
 
@@ -240,13 +234,13 @@ Uses Android SDK 2.9.62 & iOS SDK 1.13.0
 
 ### react-native-hms
 
-- Live Transcriptions in WebRTC Calls
+-   Live Transcriptions in WebRTC Calls
 
     HMSSDK now provides support for Live Transcriptions in WebRTC calls. Users can now enable/disable Live Transcriptions during a call. The SDK provides a callback with the transcript for each peer when they speak. Read more about it [here](https://www.100ms.live/docs/react-native/v2/how-to-guides/extend-capabilities/live-captions).
 
 ### react-native-room-kit
 
-- Introducing Live Transcriptions options in Prebuilt
+-   Introducing Live Transcriptions options in Prebuilt
 
     Prebuilt now supports live transcription for better accessibility. Users can enable or disable live transcription from the prebuilt interface.
 
@@ -264,27 +258,27 @@ Uses Android SDK 2.9.60 & iOS SDK 1.12.0
 
 ### react-native-hms
 
-- Introducing Virtual Background support in 100ms
+-   Introducing Virtual Background support in 100ms
 
     HMSSDK now provides support for Virtual Background using [`@100mslive/react-native-video-plugin`](https://github.com/100mslive/react-native-video-plugin).
     It allows users to change their background during a call. Users can choose from a variety of backgrounds or upload their own custom background.
     It also provides a feature to blur the background. Read more about it [here](https://www.100ms.live/docs/react-native/v2/how-to-guides/extend-capabilities/virtual-background).
 
-- Resolved warnings on Android & iOS when using HMSSDK in development mode
+-   Resolved warnings on Android & iOS when using HMSSDK in development mode
 
 ### react-native-room-kit
 
-- Added support for Virtual Background in Prebuilt UI
+-   Added support for Virtual Background in Prebuilt UI
 
     By just adding [`@100mslive/react-native-video-plugin`](https://github.com/100mslive/react-native-video-plugin) package, users can now change their background during a call using the Virtual Background feature in the Prebuilt UI.
 
-- Added support for Hyperlinks in Chat Messages on Prebuilt UI
+-   Added support for Hyperlinks in Chat Messages on Prebuilt UI
 
     Users can now click on hyperlinks in chat messages to open them in a browser.
 
 ### react-native-video-plugin
 
-- The first version of the plugin is released. It provides support for Virtual Background in 100ms. Read more about it [here](https://www.100ms.live/docs/react-native/v2/how-to-guides/extend-capabilities/virtual-background).
+-   The first version of the plugin is released. It provides support for Virtual Background in 100ms. Read more about it [here](https://www.100ms.live/docs/react-native/v2/how-to-guides/extend-capabilities/virtual-background).
 
 Uses Android SDK 2.9.59 & iOS SDK 1.11.0
 
@@ -299,21 +293,21 @@ Uses Android SDK 2.9.59 & iOS SDK 1.11.0
 
 ### react-native-hms
 
-- Introducing Whiteboard support in 100ms
+-   Introducing Whiteboard support in 100ms
 
     HMSSDK now provides support for Whiteboard. You can now start/stop a Whiteboard using `startWhiteboard` & `stopWhiteboard` methods on `HMSInteractivityCenter`. HMSSDK provides also provides callbacks for whiteboard start/stop events. Learn more about it [here](https://www.100ms.live/docs/react-native/v2/how-to-guides/extend-capabilities/whiteboard).
 
 ### react-native-room-kit
 
-- Whiteboard
+-   Whiteboard
 
     Whiteboard is now supported in the Prebuilt UI. Users can now start/stop a Whiteboard using the Whiteboard button in the Prebuilt UI.
 
-- Updated PIP Mode support for HLS Player
+-   Updated PIP Mode support for HLS Player
 
     PIP Mode is now supported in the HLS Player UI. Users can now switch to PIP mode while watching a video in the HLS Player.
 
-- Resolved an issue where tile content was clipping from bottom in the Prebuilt UI
+-   Resolved an issue where tile content was clipping from bottom in the Prebuilt UI
 
 Uses Android SDK 2.9.56 & iOS SDK 1.10.0
 
@@ -328,7 +322,7 @@ Uses Android SDK 2.9.56 & iOS SDK 1.10.0
 
 ### react-native-hms
 
-- Support for captions in HLS Player
+-   Support for captions in HLS Player
 
     HMSSDK now provides support for Closed Captions in HLS Player. You can now check the support of captions in the stream, and enable or disable captions in the HLS Player using the methods available on its `ref`
 
@@ -338,15 +332,15 @@ Uses Android SDK 2.9.56 & iOS SDK 1.10.0
 
 ### react-native-room-kit
 
-- Support for captions in HLS Player UI
-  HLS Player now supports captions for better accessibility. This can be enabled or disabled from the player settings.
+-   Support for captions in HLS Player UI
+    HLS Player now supports captions for better accessibility. This can be enabled or disabled from the player settings.
 
-- Updated Chat message design in the new HLS Player UI
+-   Updated Chat message design in the new HLS Player UI
 
-- Added new controls for the HLS video player
-  Added controls are - "Go Live", "Seekbar", "Closed Captions", "Pause", "Resume" and "Seek forward/backwards"
+-   Added new controls for the HLS video player
+    Added controls are - "Go Live", "Seekbar", "Closed Captions", "Pause", "Resume" and "Seek forward/backwards"
 
-- Added support for "Pinch and Zoom" in the HLS Player UI
+-   Added support for "Pinch and Zoom" in the HLS Player UI
 
 Uses Android SDK 2.9.54 & iOS SDK 1.9.0
 
@@ -361,11 +355,11 @@ Uses Android SDK 2.9.54 & iOS SDK 1.9.0
 
 ### react-native-room-kit
 
-- Added revamped HLS Player UI in Prebuilt
+-   Added revamped HLS Player UI in Prebuilt
 
-- Added support for both Portrait & Landscape orientations in HLS Player UI
+-   Added support for both Portrait & Landscape orientations in HLS Player UI
 
-- More enhancements in HLS Player UI will be released soon!
+-   More enhancements in HLS Player UI will be released soon!
 
 Using Android SDK 2.9.53 & iOS SDK 1.8.0
 
@@ -380,19 +374,19 @@ Using Android SDK 2.9.53 & iOS SDK 1.8.0
 
 ### react-native-hms
 
-- Added Active Noise Cancellation support in SDK. This feature can be used to reduce background noise during a call. Read more details [here](https://www.100ms.live/docs/react-native/v2/how-to-guides/extend-capabilities/noise-cancellation).
+-   Added Active Noise Cancellation support in SDK. This feature can be used to reduce background noise during a call. Read more details [here](https://www.100ms.live/docs/react-native/v2/how-to-guides/extend-capabilities/noise-cancellation).
 
-- Added support for showing Session Initiation Protocol(SIP) Peers in Room. Read more about SIP [here](<https://www.100ms.live/docs/server-side/v2/how-to-guides/Session%20Initiation%20Protocol%20(SIP)/SIP-Interconnect>).
+-   Added support for showing Session Initiation Protocol(SIP) Peers in Room. Read more about SIP [here](<https://www.100ms.live/docs/server-side/v2/how-to-guides/Session%20Initiation%20Protocol%20(SIP)/SIP-Interconnect>).
 
-- Added support for passing Hand Raise as a layout config in Prebuilt Customizer.
+-   Added support for passing Hand Raise as a layout config in Prebuilt Customizer.
 
 ### react-native-room-kit
 
-- Added support for showing Noise Cancellation option in Preview & Room screens.
+-   Added support for showing Noise Cancellation option in Preview & Room screens.
 
-- Added support for appropriately indicating [SIP](<https://www.100ms.live/docs/server-side/v2/how-to-guides/Session%20Initiation%20Protocol%20(SIP)/SIP-Interconnect>) Peers in the Room.
+-   Added support for appropriately indicating [SIP](<https://www.100ms.live/docs/server-side/v2/how-to-guides/Session%20Initiation%20Protocol%20(SIP)/SIP-Interconnect>) Peers in the Room.
 
-- Using Hand Raise config to show/hide the Hand Raise button in the Prebuilt UI.
+-   Using Hand Raise config to show/hide the Hand Raise button in the Prebuilt UI.
 
 Updated to Android SDK 2.9.53 & iOS SDK 1.8.0
 
@@ -407,15 +401,15 @@ Updated to Android SDK 2.9.53 & iOS SDK 1.8.0
 
 ### react-native-hms
 
-- Added support for `switchAudioOutput` on iOS. An example usage of this API can be to programmatically route the audio of the Room to Earpiece or Speaker. Read more about it [here](https://www.100ms.live/docs/react-native/v2/how-to-guides/configure-your-device/speaker/audio-output-routing).
+-   Added support for `switchAudioOutput` on iOS. An example usage of this API can be to programmatically route the audio of the Room to Earpiece or Speaker. Read more about it [here](https://www.100ms.live/docs/react-native/v2/how-to-guides/configure-your-device/speaker/audio-output-routing).
 
-- Added API to keep device awake while in Room. This can be used to prevent the device from going to sleep while in a Room. Read more about it [here](https://www.100ms.live/docs/react-native/v2/how-to-guides/set-up-video-conferencing/keep-awake).
+-   Added API to keep device awake while in Room. This can be used to prevent the device from going to sleep while in a Room. Read more about it [here](https://www.100ms.live/docs/react-native/v2/how-to-guides/set-up-video-conferencing/keep-awake).
 
 ### react-native-room-kit
 
-- Added support for joining a Room in Prebuilt using only the Auth Token instead of Room Code.
+-   Added support for joining a Room in Prebuilt using only the Auth Token instead of Room Code.
 
-- Users can now skip the Preview Screen based on a flag in the Prebuilt Customizer to directly enter a Room.
+-   Users can now skip the Preview Screen based on a flag in the Prebuilt Customizer to directly enter a Room.
 
 Updated to Android SDK 2.9.51 & iOS SDK 1.6.0
 
@@ -430,13 +424,13 @@ Updated to Android SDK 2.9.51 & iOS SDK 1.6.0
 
 ### react-native-hms
 
-- Added `fetchLeaderboard` API to fetch Quizzes Leaderboard data. Read more about it [here](https://www.100ms.live/docs/react-native/v2/how-to-guides/interact-with-room/room/polls).
+-   Added `fetchLeaderboard` API to fetch Quizzes Leaderboard data. Read more about it [here](https://www.100ms.live/docs/react-native/v2/how-to-guides/interact-with-room/room/polls).
 
-- Added `sendHLSTimedMetadata` API to send HLS Timed Metadata. Read more about it [here](https://www.100ms.live/docs/react-native/v2/how-to-guides/record-and-live-stream/hls-player).
+-   Added `sendHLSTimedMetadata` API to send HLS Timed Metadata. Read more about it [here](https://www.100ms.live/docs/react-native/v2/how-to-guides/record-and-live-stream/hls-player).
 
 ### react-native-room-kit
 
-- Added Quizzes Leaderboard UI on Prebuilt.
+-   Added Quizzes Leaderboard UI on Prebuilt.
 
     Users can now view the Leaderboard of Quizzes directly from the Prebuilt user interface.
 
@@ -453,7 +447,7 @@ Updated to Android SDK 2.9.4 & iOS SDK 1.6.0
 
 ### react-native-room-kit
 
-- Introducing Quiz on Prebuilt
+-   Introducing Quiz on Prebuilt
 
     Users can now create, manage, and stop Quizzes directly from the Prebuilt user interface.
 
@@ -470,24 +464,27 @@ Updated to Android SDK 2.9.2 & iOS SDK 1.5.1
 
 ### react-native-hms
 
-- Introducing Polls
-    - APIs for Comprehensive Poll Management:
-        - `startPoll` method to start polls
-        - `add` method to add responses/vote on poll questions
-        - `stop` method to end polls
+-   Introducing Polls
 
-    - Poll Update Listeners for Real-Time Notifications:
-        - Use `addPollUpdateListener` to start listening to poll updates
+    -   APIs for Comprehensive Poll Management:
 
-    - Enhanced Poll Permissions within `HMSPermissions`:
-        - `pollRead` property ensures controlled read access to poll results and details.
-        - `pollWrite` property enables secure write access, allowing for poll creation and response submission.
+        -   `startPoll` method to start polls
+        -   `add` method to add responses/vote on poll questions
+        -   `stop` method to end polls
+
+    -   Poll Update Listeners for Real-Time Notifications:
+
+        -   Use `addPollUpdateListener` to start listening to poll updates
+
+    -   Enhanced Poll Permissions within `HMSPermissions`:
+        -   `pollRead` property ensures controlled read access to poll results and details.
+        -   `pollWrite` property enables secure write access, allowing for poll creation and response submission.
 
     More information on Polls can be found [here](https://www.100ms.live/docs/react-native/v2/how-to-guides/interact-with-room/room/polls).
 
 ### react-native-room-kit
 
-- Introducing polls on prebuilt
+-   Introducing polls on prebuilt
 
     Users can now create, manage, and stop polls directly from the prebuilt interface.
 
@@ -504,7 +501,7 @@ Updated to Android SDK 2.9.2 & iOS SDK 1.5.1
 
 ### react-native-room-kit
 
-- Added Immersive Mode when in Landscape Orientation
+-   Added Immersive Mode when in Landscape Orientation
 
     When the device is in Landscape Orientation, the Prebuilt UI will now hide the Status Bar and Navigation Bar to provide a more immersive video experience.
 
@@ -521,12 +518,12 @@ Updated to Android SDK 2.9.0 & iOS SDK 1.5.0
 
 ### react-native-hms
 
-- Added an enhancement on iOS where the user will leave Room if the app is killed. This behaviour will work only if the app gets some execution time before getting terminated by iOS.
+-   Added an enhancement on iOS where the user will leave Room if the app is killed. This behaviour will work only if the app gets some execution time before getting terminated by iOS.
 
 ### react-native-room-kit
 
-- Resolved an issue where the SDK instance was getting recreated on leaving or ending the Room
-- Resolved an issue where the Participants List was not getting updated immediately.
+-   Resolved an issue where the SDK instance was getting recreated on leaving or ending the Room
+-   Resolved an issue where the Participants List was not getting updated immediately.
 
 Updated to Android SDK 2.8.7 & iOS SDK 1.4.2
 
@@ -541,17 +538,17 @@ Updated to Android SDK 2.8.7 & iOS SDK 1.4.2
 
 ### react-native-hms
 
-- Added support for JSON values in Session Store
-- Added `isLargeRoom` prop on `HMSRoom` object
+-   Added support for JSON values in Session Store
+-   Added `isLargeRoom` prop on `HMSRoom` object
 
 ### react-native-room-kit
 
-- Added Real Time Chat Controls to pause/resume chat in a Room
-- Added support to pin up to 3 messages in Chat
-- Added support to configure Message Recipient selector via Prebuilt Customizer
-- Added support to block a Peer from sending Chat Messages
-- Added option to remove a Peer from Room via Chat Messages
-- Added capability to perform Role Change without Preview
+-   Added Real Time Chat Controls to pause/resume chat in a Room
+-   Added support to pin up to 3 messages in Chat
+-   Added support to configure Message Recipient selector via Prebuilt Customizer
+-   Added support to block a Peer from sending Chat Messages
+-   Added option to remove a Peer from Room via Chat Messages
+-   Added capability to perform Role Change without Preview
 
 Updated to Android SDK 2.8.6 & iOS SDK 1.4.1
 
@@ -566,9 +563,9 @@ Updated to Android SDK 2.8.6 & iOS SDK 1.4.1
 
 ### Changed
 
-- Prebuilt: Now if a `username` is passed in `PrebuiltOptions`, then the user cannot modify it
-- Prebuilt: Header and Footer can now be hidden by tapping on Screen
-- Prebuilt: Resolved an issue where sometimes Screenshare on iOS did not start
+-   Prebuilt: Now if a `username` is passed in `PrebuiltOptions`, then the user cannot modify it
+-   Prebuilt: Header and Footer can now be hidden by tapping on Screen
+-   Prebuilt: Resolved an issue where sometimes Screenshare on iOS did not start
 
 Updated to Android SDK 2.8.3 & iOS SDK 1.4.0
 
@@ -583,9 +580,9 @@ Updated to Android SDK 2.8.3 & iOS SDK 1.4.0
 
 ### Added
 
-- Added intermediate state updates to Recording & Streaming APIs
+-   Added intermediate state updates to Recording & Streaming APIs
 
-- Added Landscape orientation support on Prebuilt UI
+-   Added Landscape orientation support on Prebuilt UI
 
 Updated to Android SDK 2.8.2 & iOS SDK 1.3.1
 
@@ -600,7 +597,7 @@ Updated to Android SDK 2.8.2 & iOS SDK 1.3.1
 
 ### Fixed
 
-- Resolved an issue on iOS where build could have failed due to missing self declaration [here](https://github.com/100mslive/100ms-react-native/blob/b1456cb549d41e814f206724b179903ab9d274e1/packages/react-native-hms/ios/HMSRNSDK.swift#L857C9-L857C9).
+-   Resolved an issue on iOS where build could have failed due to missing self declaration [here](https://github.com/100mslive/100ms-react-native/blob/b1456cb549d41e814f206724b179903ab9d274e1/packages/react-native-hms/ios/HMSRNSDK.swift#L857C9-L857C9).
 
 Updated to Android SDK 2.8.1 & iOS SDK 1.3.0
 
@@ -615,13 +612,13 @@ Updated to Android SDK 2.8.1 & iOS SDK 1.3.0
 
 ### Added
 
-- Prebuilt: Added an option to mute the Room locally such that no audio of any Peers is heard in the Room
+-   Prebuilt: Added an option to mute the Room locally such that no audio of any Peers is heard in the Room
 
 ### Fixed
 
-- Publisher and Subscriber Stats are sent according to whether they're enabled in flags on the Dashboard on Android
+-   Publisher and Subscriber Stats are sent according to whether they're enabled in flags on the Dashboard on Android
 
-- Prebuilt: Resolved an issue where the PIP window was shown even when no Remote Peers are in the Room
+-   Prebuilt: Resolved an issue where the PIP window was shown even when no Remote Peers are in the Room
 
 Updated to Android SDK 2.8.1 & iOS SDK 1.3.0
 
@@ -636,15 +633,15 @@ Updated to Android SDK 2.8.1 & iOS SDK 1.3.0
 
 ### Added
 
-- Sending Subscriber side WebRTC analytics
+-   Sending Subscriber side WebRTC analytics
 
 ### Fixed
 
-- Resolved an issue where after a Call Interruption the voices of users were robotic
+-   Resolved an issue where after a Call Interruption the voices of users were robotic
 
-- Resolved an issue where on Android devices the lower video quality was being chosen instead of medium or high-resolution
+-   Resolved an issue where on Android devices the lower video quality was being chosen instead of medium or high-resolution
 
-- Now, Hardware-based Echo Cancellation is the default instead of Software-based. More information is available [here](https://www.100ms.live/docs/react-native/v2/how-to-guides/configure-your-device/microphone/echo-cancellation)
+-   Now, Hardware-based Echo Cancellation is the default instead of Software-based. More information is available [here](https://www.100ms.live/docs/react-native/v2/how-to-guides/configure-your-device/microphone/echo-cancellation)
 
 Updated to Android SDK 2.8.0 & iOS SDK 1.2.0
 
@@ -656,17 +653,17 @@ Released: `@100mslive/react-native-room-kit@1.0.2`, `@100mslive/react-native-hms
 
 ### Added
 
-- Added Automatic Entering Picture-in-Picture (PIP) Mode support on Android when app goes to background
+-   Added Automatic Entering Picture-in-Picture (PIP) Mode support on Android when app goes to background
 
 ### Changed
 
-- Now action APIs like `changeRole`, `changeName`, etc will not send `ON_ERROR` events. Instead only the promise will be rejected with an appropriate error message.
+-   Now action APIs like `changeRole`, `changeName`, etc will not send `ON_ERROR` events. Instead only the promise will be rejected with an appropriate error message.
 
-- Prebuilt: Showing `Bring to Stage` option by default for all off-stage peers
+-   Prebuilt: Showing `Bring to Stage` option by default for all off-stage peers
 
-- Prebuilt: Android device's Back button press can be handled with the `handleBackButton` prop
+-   Prebuilt: Android device's Back button press can be handled with the `handleBackButton` prop
 
-- Prebuilt: After leaving a Room, now a reason - `OnLeaveReason` - for which the `onLeave` callback was called will be sent.
+-   Prebuilt: After leaving a Room, now a reason - `OnLeaveReason` - for which the `onLeave` callback was called will be sent.
 
 Updated to Android SDK 2.7.9 & iOS SDK 1.1.0
 
@@ -678,20 +675,21 @@ Released: `@100mslive/react-native-room-kit@1.0.1`, `@100mslive/react-native-hms
 
 ### Added
 
-- Large Room Support
-    - Added first class "Hand Raise" apis: `raiseLocalPeerHand`, `lowerLocalPeerHand`, `lowerRemotePeerHand` and `isHandRaised` property on `HMSPeer` class instance
-    - Added `ON_PEER_LIST_UPDATED` event on `HMSUpdateListenerActions` enum
-    - Added "Peer List Iterator" APIs - `hmssdk.getPeerListIterator`, `HMSPeerListIterator.ts` and `HMSPeerListIteratorOptions.ts`
+-   Large Room Support
+
+    -   Added first class "Hand Raise" apis: `raiseLocalPeerHand`, `lowerLocalPeerHand`, `lowerRemotePeerHand` and `isHandRaised` property on `HMSPeer` class instance
+    -   Added `ON_PEER_LIST_UPDATED` event on `HMSUpdateListenerActions` enum
+    -   Added "Peer List Iterator" APIs - `hmssdk.getPeerListIterator`, `HMSPeerListIterator.ts` and `HMSPeerListIteratorOptions.ts`
 
     For more details refer [here](https://www.100ms.live/docs/react-native/v2/how-to-guides/interact-with-room/peer/large-room)
 
 ### Changed
 
-- Improved light theme support on `react-native-room-kit` package
+-   Improved light theme support on `react-native-room-kit` package
 
-- Improved Browser Recording State notification while in Room
+-   Improved Browser Recording State notification while in Room
 
-- Removed `react-native-keyboard-controller` lib dependency from `react-native-room-kit` package
+-   Removed `react-native-keyboard-controller` lib dependency from `react-native-room-kit` package
 
 Updated to Android SDK 2.7.7 & iOS SDK 1.1.0
 
@@ -703,17 +701,18 @@ Released: `@100mslive/react-native-hms@2.0.0-alpha.0`
 
 ### Added
 
-- Large Room Support
-    - Added first class "Hand Raise" apis: `raiseLocalPeerHand`, `lowerLocalPeerHand`, `lowerRemotePeerHand` and `isHandRaised` property on `HMSPeer` class instance
-    - Added `ON_PEER_LIST_UPDATED` event on `HMSUpdateListenerActions` enum
+-   Large Room Support
 
-- `ON_PIP_MODE_CHANGED` event on `HMSPIPListenerActions` enum
+    -   Added first class "Hand Raise" apis: `raiseLocalPeerHand`, `lowerLocalPeerHand`, `lowerRemotePeerHand` and `isHandRaised` property on `HMSPeer` class instance
+    -   Added `ON_PEER_LIST_UPDATED` event on `HMSUpdateListenerActions` enum
 
-- new `autoEnterPipMode` option in PIPConfig interface
+-   `ON_PIP_MODE_CHANGED` event on `HMSPIPListenerActions` enum
+
+-   new `autoEnterPipMode` option in PIPConfig interface
 
 ### Changed
 
-- Renamed `enablePipMode` method available on `HMSSDK` instance to `enterPipMode`
+-   Renamed `enablePipMode` method available on `HMSSDK` instance to `enterPipMode`
 
 Updated to Android SDK 2.7.7 & iOS SDK 1.1.0
 
@@ -725,7 +724,7 @@ Released: `@100mslive/react-native-room-kit@1.0.0`, `@100mslive/react-native-hms
 
 ### Added
 
-- Added `previewForRole` & `cancelPreview` APIs to preview the audio / video of a particular role before changing into the new Role.
+-   Added `previewForRole` & `cancelPreview` APIs to preview the audio / video of a particular role before changing into the new Role.
 
     ```js
     // preview video of a particular role
@@ -739,7 +738,7 @@ Released: `@100mslive/react-native-room-kit@1.0.0`, `@100mslive/react-native-hms
 
 ### Changed
 
-- Stopped sending `ON_ERROR` event when an action API fails. Instead, the promise wiil be rejected with an appropriate error message.
+-   Stopped sending `ON_ERROR` event when an action API fails. Instead, the promise wiil be rejected with an appropriate error message.
 
 Updated to Android SDK 2.7.6 & iOS SDK 0.9.12
 
@@ -749,11 +748,11 @@ Updated to Android SDK 2.7.6 & iOS SDK 0.9.12
 
 ### Changed
 
-- Resolved an issue where capturing screenshot of Video on iOS was failing
+-   Resolved an issue where capturing screenshot of Video on iOS was failing
 
-- Resolved an issue where empty peer name was being sent in `onPeerUpdate` events
+-   Resolved an issue where empty peer name was being sent in `onPeerUpdate` events
 
-- Changed `type` prop of `HMSMessage` to `string`
+-   Changed `type` prop of `HMSMessage` to `string`
 
 Updated to Android SDK 2.7.3 & iOS SDK 0.9.10
 
@@ -761,9 +760,9 @@ Updated to Android SDK 2.7.3 & iOS SDK 0.9.10
 
 ## 1.7.1 - 2023-08-19
 
-- Reduced SDK size on Android by trimming out unused packages
+-   Reduced SDK size on Android by trimming out unused packages
 
-- Enabled sending of `HMSRoomUpdate.ROOM_PEER_COUNT_UPDATED` event by default
+-   Enabled sending of `HMSRoomUpdate.ROOM_PEER_COUNT_UPDATED` event by default
 
 Updated to Android SDK 2.7.3 & iOS SDK 0.9.9
 
@@ -773,9 +772,9 @@ Updated to Android SDK 2.7.3 & iOS SDK 0.9.9
 
 ### Breaking
 
-- On Android, in the `build.gradle` file, increasing the `compileSdkVersion` & `targetSdkVersion` to `33` is required. For the changes in `build.gradle` file, refer [here](https://github.com/100mslive/react-native-hms/pull/1064/files#diff-ed8534ece8080a880075e103269eb1b9bdff22e8dfcf8427d7d977603292b889).
+-   On Android, in the `build.gradle` file, increasing the `compileSdkVersion` & `targetSdkVersion` to `33` is required. For the changes in `build.gradle` file, refer [here](https://github.com/100mslive/react-native-hms/pull/1064/files#diff-ed8534ece8080a880075e103269eb1b9bdff22e8dfcf8427d7d977603292b889).
 
-- Removed Session Metadata methods
+-   Removed Session Metadata methods
 
     The `setSessionMetadata` and `getSessionMetadata` methods which were deprecated in previous versions have been removed now.
 
@@ -783,27 +782,27 @@ Updated to Android SDK 2.7.3 & iOS SDK 0.9.9
 
 ### New Features
 
-- Added HLS Player
+-   Added HLS Player
 
     Introducing the 100ms HLS Player named `HMSHLSPlayer` a comprehensive end-to-end solution for playing Live Streaming content with inbuilt support for [Timed Metadata](https://www.100ms.live/docs/react-native/v2/how-to-guides/record-and-live-stream/hls-player#how-to-use-hls-timed-metadata-with-100ms-hls-player), [HLS Diagnostic Stats](https://www.100ms.live/docs/react-native/v2/how-to-guides/record-and-live-stream/hls-player#how-to-know-the-stats-related-to-hls-playback) & [Custom Player Controls](https://www.100ms.live/docs/react-native/v2/how-to-guides/record-and-live-stream/hls-player#how-to-show-video-player-ui).
 
     Learn more about `HMSHLSPlayer` [here](https://www.100ms.live/docs/react-native/v2/how-to-guides/record-and-live-stream/hls-player).
 
-- Switch Audio Output using Native iOS UI
+-   Switch Audio Output using Native iOS UI
 
     On iOS devices, you can now show the Native Airplay UI provided by iOS. Users can control the connected device which can be Airpods, any Bluetooth earphones, Wired Headsets, etc through which the Room's audio should be routed.
 
     Learn more about it [here](https://www.100ms.live/docs/react-native/v2/how-to-guides/configure-your-device/speaker/audio-output-routing#switch-audio-output-device-using-ios-airplay-ui).
 
-- Publisher Stats
+-   Publisher Stats
 
     SDK now sends detailed analytics from the WebRTC publisher side for enhanced debugging of call quality issues.
 
 ### Changed
 
-- RTMP Streaming can now be started without the `meetingUrl`. It is now an optional parameter. Learn more about RTMP Streaming [here](https://www.100ms.live/docs/react-native/v2/how-to-guides/record-and-live-stream/recording#start-streaming-recording).
+-   RTMP Streaming can now be started without the `meetingUrl`. It is now an optional parameter. Learn more about RTMP Streaming [here](https://www.100ms.live/docs/react-native/v2/how-to-guides/record-and-live-stream/recording#start-streaming-recording).
 
-- [Software Audio Echo Cancellation](https://www.100ms.live/docs/react-native/v2/how-to-guides/configure-your-device/microphone/echo-cancellation) is now enabled by default. To further customize Audio & Video Track Settings, refer the docs [here](https://www.100ms.live/docs/react-native/v2/how-to-guides/interact-with-room/track/track-settings).
+-   [Software Audio Echo Cancellation](https://www.100ms.live/docs/react-native/v2/how-to-guides/configure-your-device/microphone/echo-cancellation) is now enabled by default. To further customize Audio & Video Track Settings, refer the docs [here](https://www.100ms.live/docs/react-native/v2/how-to-guides/interact-with-room/track/track-settings).
 
 Updated to Android SDK 2.6.7 & iOS SDK 0.9.5
 
@@ -813,7 +812,7 @@ Updated to Android SDK 2.6.7 & iOS SDK 0.9.5
 
 ### Added
 
-- Added messageId property to HMSMessage class
+-   Added messageId property to HMSMessage class
 
     `messageId` allows you to uniquely identify messages sent or received by users within Rooms.
 
@@ -827,7 +826,7 @@ Updated to Android SDK 2.6.4 & iOS SDK 0.9.4
 
 ### Fixed
 
-- Resolved an issue where applying Aspect Fit Ratio resulted in an unintended reset to AspectFill before restoring the correct behavior.
+-   Resolved an issue where applying Aspect Fit Ratio resulted in an unintended reset to AspectFill before restoring the correct behavior.
 
     For more details, refer to the documentation [here](https://www.100ms.live/docs/react-native/v2/how-to-guides/set-up-video-conferencing/render-video/overview#scale-type).
 
@@ -839,13 +838,13 @@ Updated to Android SDK 2.6.3 & iOS SDK 0.9.4
 
 ### New Features
 
-- Session Store
+-   Session Store
 
     You can now use Session Store, a shared real-time key-value store accessible by everyone in the Room. This can be used to implement new features such as Pinned Messages and Spotlight Video Tiles, which brings a particular peer to the center stage for everyone in the Room.
 
     Learn more about [Session Store here](https://www.100ms.live/docs/react-native/v2/how-to-guides/interact-with-room/room/session-store).
 
-- Music Mode on iOS
+-   Music Mode on iOS
 
     The latest update adds the ability to achieve high-quality audio recordings with full, rich sound, whether you are recording music, podcasts, or any other type of audio.
 
@@ -853,9 +852,9 @@ Updated to Android SDK 2.6.3 & iOS SDK 0.9.4
 
 ### Fixed
 
-- Resolved a compilation error caused by an incorrect import of internal HMSSDK types when used with certain versions of Babel.
+-   Resolved a compilation error caused by an incorrect import of internal HMSSDK types when used with certain versions of Babel.
 
-- Fixed an issue on Android devices where the app was unable to handle null video tracks appropriately.
+-   Fixed an issue on Android devices where the app was unable to handle null video tracks appropriately.
 
 Updated to Android SDK 2.6.2 & iOS SDK 0.9.3
 
@@ -865,25 +864,25 @@ Updated to Android SDK 2.6.2 & iOS SDK 0.9.3
 
 ### Added
 
-- Added support for Adaptive Bitrate (Simulcast)
+-   Added support for Adaptive Bitrate (Simulcast)
 
     Adaptive Bitrate refers to features that enable dynamic adjustments in video quality to optimize for end-user experience under diverse network conditions.
 
     To learn more about how ABR works & how it enhances your app, refer the guide [here](https://www.100ms.live/docs/concepts/v2/concepts/adaptive-bitrate).
 
-- Using HMSVideoView on Android
+-   Using HMSVideoView on Android
 
     HMSVideoView on Android provides a better abstraction to render live video and handles edge cases like managing Release/Init states. It has in-built support to subscribe to video of the correct resolution.
 
     To learn more about Rendering Video, refer the guide [here](https://www.100ms.live/docs/react-native/v2/how--to-guides/set-up-video-conferencing/render-video/overview).
 
-- Added Simulcast support for RTC Stats
+-   Added Simulcast support for RTC Stats
 
     RTC Call Stats are updated to show Simulcast layer data if available for Local Peer's Video Track. This can be used to diagnose user experience with metrics such as Audio/Video Bitrate, Round Trip Time, Packet loss, etc.
 
     To learn more about using RTC Call Stats, refer the guide [here](https://www.100ms.live/docs/react-native/v2/how--to-guides/measure-network-quality-and-performance/rtc-stats).
 
-- Camera Control Capabilities
+-   Camera Control Capabilities
 
     The latest update includes the ability to capture an image from a local peer feed at the maximum resolution supported by the Camera.
 
@@ -897,10 +896,11 @@ Full Changelog: [1.4.0...1.5.0](https://github.com/100mslive/react-native-hms/co
 
 ### Added
 
-- Join using Room Codes
-    - Room Codes is a streamlined and secure way to manage user authentication in Rooms.
-    - By generating short codes via `getAuthTokenByRoomCode` API, you can easily manage user access with one code per role for each room, without the need for server infrastructure
-    - This feature ensures a smoother login experience for users while enhancing security.
+-   Join using Room Codes
+
+    -   Room Codes is a streamlined and secure way to manage user authentication in Rooms.
+    -   By generating short codes via `getAuthTokenByRoomCode` API, you can easily manage user access with one code per role for each room, without the need for server infrastructure
+    -   This feature ensures a smoother login experience for users while enhancing security.
 
     You can read more about Room Codes [here](https://www.100ms.live/docs/concepts/v2/concepts/rooms/room-codes/room-codes).
 
@@ -914,13 +914,13 @@ Full Changelog: [1.3.0...1.4.0](https://github.com/100mslive/react-native-hms/co
 
 Our latest release comes with major performance enhancements which include -
 
-- The introduction of Room and Peer Stores internally to optimize the initial data transfer across the JS Bridge.
+-   The introduction of Room and Peer Stores internally to optimize the initial data transfer across the JS Bridge.
 
-- This design reduces the time taken to Join a Room.
+-   This design reduces the time taken to Join a Room.
 
-- Post joining the Room, a minimal amount of data is exchanged to enhance performance.
+-   Post joining the Room, a minimal amount of data is exchanged to enhance performance.
 
-- This effect is more evident in Rooms with a large number of Peers.
+-   This effect is more evident in Rooms with a large number of Peers.
 
 Updated to Native Android SDK 2.5.9 & Native iOS SDK 0.8.1
 
@@ -930,19 +930,19 @@ Full Changelog: [1.2.0...1.3.0](https://github.com/100mslive/react-native-hms/co
 
 ### Added
 
-- Added support for video snapshot capture in HMSView for iOS, giving users the ability to extract high-quality images from the video playback
+-   Added support for video snapshot capture in HMSView for iOS, giving users the ability to extract high-quality images from the video playback
 
 ### Changed
 
-- Improved performance for joining large rooms, reducing the time taken.
+-   Improved performance for joining large rooms, reducing the time taken.
 
-- Implemented internal caching of Role objects to improve performance in large Rooms.
+-   Implemented internal caching of Role objects to improve performance in large Rooms.
 
-- Updated the internal Native Events subscriber to prevent sending unattached event updates.
+-   Updated the internal Native Events subscriber to prevent sending unattached event updates.
 
-- Fixed an issue where HMSTrack was incorrectly removed from HMSPeer if a RemotePeer un-publishes and re-publishes the HMSTrack.
+-   Fixed an issue where HMSTrack was incorrectly removed from HMSPeer if a RemotePeer un-publishes and re-publishes the HMSTrack.
 
-- Enhanced Disconnected State detection on specific networks for better stability.
+-   Enhanced Disconnected State detection on specific networks for better stability.
 
 Updated to Native Android SDK 2.5.7 & Native iOS SDK 0.6.4
 
@@ -952,13 +952,13 @@ Full Changelog: [1.1.1...1.2.0](https://github.com/100mslive/react-native-hms/co
 
 ### Fixed
 
-- Corrected the path of SDK Versions JSON file used in Gradle & Podspec files
+-   Corrected the path of SDK Versions JSON file used in Gradle & Podspec files
 
 ## 1.1.0 - 2022-12-16
 
 ### Added
 
-- Added support for Bulk Role Change
+-   Added support for Bulk Role Change
 
     Bulk Role Change is used when you want to convert all Roles from a list of Roles, to another Role.
 
@@ -980,7 +980,7 @@ Full Changelog: [1.1.1...1.2.0](https://github.com/100mslive/react-native-hms/co
 
     For More Information, refer: https://www.100ms.live/docs/react-native/v2/features/change-role
 
-- Added HMSPIPConfig to enable buttons on PIP Window on Android
+-   Added HMSPIPConfig to enable buttons on PIP Window on Android
 
     Actionable buttons like Mute/Unmute Audio/Video, Leave Room for local peers can now be configured while enabling PIP Mode.
 
@@ -997,15 +997,15 @@ Full Changelog: [1.1.1...1.2.0](https://github.com/100mslive/react-native-hms/co
 
 ### Deprecated
 
-- Deprecated `changeRole` API in favour of `changeRoleOfPeer`
+-   Deprecated `changeRole` API in favour of `changeRoleOfPeer`
 
     No change in functionality or method signature.
 
 ### Fixed
 
-- Corrected Speaker updates by avoiding sending of update event if a peer is not found in room on Android
-- Microphone not getting captured on Role Change from a non-publishing to publishing Role on iOS
-- Corrected an issue where on iOS a default Audio Mixer was getting created if Track Settings was passed while building the HMSSDK instance
+-   Corrected Speaker updates by avoiding sending of update event if a peer is not found in room on Android
+-   Microphone not getting captured on Role Change from a non-publishing to publishing Role on iOS
+-   Corrected an issue where on iOS a default Audio Mixer was getting created if Track Settings was passed while building the HMSSDK instance
 
 Updated to Native Android SDK 2.5.4 & Native iOS SDK 0.5.3
 
@@ -1015,7 +1015,7 @@ Full Changelog: [1.0.0...1.1.0](https://github.com/100mslive/react-native-hms/co
 
 #### Added
 
-- Added support for Picture in Picture mode on Android.
+-   Added support for Picture in Picture mode on Android.
 
     PIP Mode lets the user watch the room video in a small window pinned to a corner of the screen while navigating between apps or browsing content on the main screen.
 
@@ -1027,7 +1027,7 @@ Full Changelog: [1.0.0...1.1.0](https://github.com/100mslive/react-native-hms/co
     const isEnabled = await hmsInstance.enablePipMode();
     ```
 
-- Added Session Metadata APIs.
+-   Added Session Metadata APIs.
 
     Session metadata is a shared state that is accessible by everyone in the room.
 
@@ -1046,21 +1046,21 @@ Full Changelog: [1.0.0...1.1.0](https://github.com/100mslive/react-native-hms/co
     const metadata = await hmsInstance.getSessionMetaData();
     ```
 
-- Added accessing of the local peer from the `HMSRoom` instance
+-   Added accessing of the local peer from the `HMSRoom` instance
 
     ```js
     // you can now directly access local peer from HMSRoom object returned in `ON_JOIN` event listener
-    const onJoinSuccess = (data: {room: HMSRoom}) => {
+    const onJoinSuccess = (data: { room: HMSRoom }) => {
         console.log('local peer: ', data.room.localPeer);
     };
     ```
 
-- Added `HMSMessageType` enum to Message
+-   Added `HMSMessageType` enum to Message
 
 #### Fixed
 
-- Fixed memory leak on changing props of `HMSView`
-- Importing Native Android SDK dependency from Maven Central instead of Jitpack
+-   Fixed memory leak on changing props of `HMSView`
+-   Importing Native Android SDK dependency from Maven Central instead of Jitpack
 
 Updated to Native Android SDK 2.5.1 & Native iOS SDK 0.4.7
 
@@ -1070,28 +1070,28 @@ Full Changelog: [0.9.94...1.0.0](https://github.com/100mslive/react-native-hms/c
 
 #### Breaking Change
 
-- Removed sending of the list of all peers in `onPeerUpdate` & `onTrackUpdate` event listeners.
-  Now, only the specific peer & track for which the change occurred will be sent to the listeners.
-  All peers in the room can be fetched using the `getRemotePeers` & `getLocalPeer` functions.
+-   Removed sending of the list of all peers in `onPeerUpdate` & `onTrackUpdate` event listeners.
+    Now, only the specific peer & track for which the change occurred will be sent to the listeners.
+    All peers in the room can be fetched using the `getRemotePeers` & `getLocalPeer` functions.
 
 #### Added
 
-- Added option to use Software Decoder for Video rendering on Android devices
-- Added support for Joining with Muted Audio & Video for local peers
-- Added better Telemetrics for analytics
-- Added support for receiving Server-side HMSMessage
-- Added Maven Central repository to look for Android dependencies
-- Added HMSLogSettings to configure Native Android SDK logs
-- Added Utility functions to get all peers - Remote or Local peers & all Roles in the room
-- Added toggle functions to enable/disable network quality updates
+-   Added option to use Software Decoder for Video rendering on Android devices
+-   Added support for Joining with Muted Audio & Video for local peers
+-   Added better Telemetrics for analytics
+-   Added support for receiving Server-side HMSMessage
+-   Added Maven Central repository to look for Android dependencies
+-   Added HMSLogSettings to configure Native Android SDK logs
+-   Added Utility functions to get all peers - Remote or Local peers & all Roles in the room
+-   Added toggle functions to enable/disable network quality updates
 
 #### Fixed
 
-- Corrected RTMP Streaming & Recording running status
-- Corrected `HMSSubscribeSettings`'s roles which are subscribed
-- Fixed LetterBoxing (Black borders on top and bottom) observed when sharing the screen from Android devices
-- Corrected Preview callback track types
-- Removed unused setters for Local Audio & Video Track Settings
+-   Corrected RTMP Streaming & Recording running status
+-   Corrected `HMSSubscribeSettings`'s roles which are subscribed
+-   Fixed LetterBoxing (Black borders on top and bottom) observed when sharing the screen from Android devices
+-   Corrected Preview callback track types
+-   Removed unused setters for Local Audio & Video Track Settings
 
 Updated to Native Android SDK 2.5.1 & Native iOS SDK 0.4.6
 
@@ -1099,229 +1099,229 @@ Full Changelog: [0.9.93...0.9.94](https://github.com/100mslive/react-native-hms/
 
 ## 0.9.93 - 2022-09-27
 
-- Corrected params required while building HMSSDK instance
-- Added the ability to play local audio files from iOS devices
-- Added ability to share audio playing on iOS devices
-- Updated HMSException class. Added `canRetry` attribute
-- Updated to Native Android SDK 2.4.8 & Native iOS SDK 0.4.2
+-   Corrected params required while building HMSSDK instance
+-   Added the ability to play local audio files from iOS devices
+-   Added ability to share audio playing on iOS devices
+-   Updated HMSException class. Added `canRetry` attribute
+-   Updated to Native Android SDK 2.4.8 & Native iOS SDK 0.4.2
 
 **Full Changelog**: [0.9.92...0.9.93](https://github.com/100mslive/react-native-hms/compare/0.9.92...0.9.93)
 
 ## 0.9.92 - 2022-09-13
 
-- Added ability to set track settings while building the SDK
-- Added capability to start screen share from iOS devices
-- Added more descriptive error messages
+-   Added ability to set track settings while building the SDK
+-   Added capability to start screen share from iOS devices
+-   Added more descriptive error messages
 
 **Full Changelog**: [0.9.91...0.9.92](https://github.com/100mslive/react-native-hms/compare/0.9.91...0.9.92)
 
 ## 0.9.91 - 2022-08-18
 
-- Starting HLS streaming can now be done without HLSConfig object
-- Added ability to do custom audio routing on Android
-- Added the ability to share audio from local files on Android
-- Updated permissions available to roles
-- Corrected properties available in `HMSException` class
-- Fixed an issue where exiting from Preview without joining the room was not releasing camera access
-- Correct RTC Stats updates on Android
-- `minifyEnabled` is set to `true` for Android release builds
-- Updated to Native Android SDK 2.4.8 & Native iOS SDK 0.3.3
+-   Starting HLS streaming can now be done without HLSConfig object
+-   Added ability to do custom audio routing on Android
+-   Added the ability to share audio from local files on Android
+-   Updated permissions available to roles
+-   Corrected properties available in `HMSException` class
+-   Fixed an issue where exiting from Preview without joining the room was not releasing camera access
+-   Correct RTC Stats updates on Android
+-   `minifyEnabled` is set to `true` for Android release builds
+-   Updated to Native Android SDK 2.4.8 & Native iOS SDK 0.3.3
 
 **Full Changelog**: [0.9.9...0.9.91](https://github.com/100mslive/react-native-hms/compare/0.9.9...0.9.91)
 
 ## 0.9.9 - 2022-07-11
 
-- `leave` functions fails when invoked in Reconnecting (No Internet) state
-- Added ability to remove logger after attaching
-- `changeMetadata` & `remoteMuteAllAudio` functions is now async
+-   `leave` functions fails when invoked in Reconnecting (No Internet) state
+-   Added ability to remove logger after attaching
+-   `changeMetadata` & `remoteMuteAllAudio` functions is now async
 
 **Full Changelog**: [0.9.8...0.9.9](https://github.com/100mslive/react-native-hms/compare/0.9.8...0.9.9)
 
 ## 0.9.8 - 2022-07-08
 
-- Added resolution option in HMSRTMPConfig
-- Added granular error information when incorrect/missing params found in API invocations
-- Corrected current audio playback status when new tracks are added
-- Updated to Native Android SDK 2.4.4 & Native iOS SDK 0.3.2
+-   Added resolution option in HMSRTMPConfig
+-   Added granular error information when incorrect/missing params found in API invocations
+-   Corrected current audio playback status when new tracks are added
+-   Updated to Native Android SDK 2.4.4 & Native iOS SDK 0.3.2
 
 **Full Changelog**: [0.9.7...0.9.8](https://github.com/100mslive/react-native-hms/compare/0.9.7...0.9.8)
 
 ## 0.9.7 - 2022-06-16
 
-- Corrected parsing of time in HMSMessage objects
-- Made sender peer nullable in HMSMessage. The sender will be null when messages are triggered from Server.
-- Updated to Native Android SDK 2.4.1 & Native iOS SDK 0.3.1
+-   Corrected parsing of time in HMSMessage objects
+-   Made sender peer nullable in HMSMessage. The sender will be null when messages are triggered from Server.
+-   Updated to Native Android SDK 2.4.1 & Native iOS SDK 0.3.1
 
 **Full Changelog**: [0.9.6...0.9.7](https://github.com/100mslive/react-native-hms/compare/0.9.6...0.9.7)
 
 ## 0.9.6 - 2022-06-09
 
-- Corrected HLSRecordingState updates received via room update events
-- Corrected return types of Browser/Server Recording & RTMP Streaming APIs
-- Fixed incorrect source type being passed for some tracks
-- Added function & missing param details on receiving`REQUIRED_KEYS_NOT_FOUND` errors
-- Added `destroy` API which will de-initialize all HMSSDK instances, even for multiple instances scenarios
-- Added sessionId to HMSRoom class
-- Updated to Native Android SDK 2.3.9 & Native iOS SDK 0.3.1
+-   Corrected HLSRecordingState updates received via room update events
+-   Corrected return types of Browser/Server Recording & RTMP Streaming APIs
+-   Fixed incorrect source type being passed for some tracks
+-   Added function & missing param details on receiving`REQUIRED_KEYS_NOT_FOUND` errors
+-   Added `destroy` API which will de-initialize all HMSSDK instances, even for multiple instances scenarios
+-   Added sessionId to HMSRoom class
+-   Updated to Native Android SDK 2.3.9 & Native iOS SDK 0.3.1
 
 ## 0.9.5 - 2022-05-11
 
-- Added the ability to take capture video frame (screenshot) of an individual video track
-- Resolved circular dependency warnings
-- Updated HMSView params - removed `sink` & `id` keys, made `style` optional
-- Corrected `serverReceiveTime` param type in `HMSMessage`
-- Updated to Native Android SDK 2.3.7 & Native iOS SDK 0.2.11
+-   Added the ability to take capture video frame (screenshot) of an individual video track
+-   Resolved circular dependency warnings
+-   Updated HMSView params - removed `sink` & `id` keys, made `style` optional
+-   Corrected `serverReceiveTime` param type in `HMSMessage`
+-   Updated to Native Android SDK 2.3.7 & Native iOS SDK 0.2.11
 
 ## 0.9.4 - 2022-04-20
 
-- Added ability to overlay HMS Views in z-index via `setZOrderMediaOverlay` on `HmsView` [to enable Mini-view type of layouts](/react-native/v2/how-to-guides/set-up-video-conferencing/render-video/mini-view)
-- Added the ability to take screenshots of [individual video tiles using `screenshot` on `HmsView`](https://www.100ms.live/docs/react-native/v2/advanced-features/capture-hmsView)
-- Sending error callback when a user denies permission to start screen-share from an Android device
-- Updated to Native Android SDK 2.3.5 & Native iOS SDK 0.2.9
+-   Added ability to overlay HMS Views in z-index via `setZOrderMediaOverlay` on `HmsView` [to enable Mini-view type of layouts](/react-native/v2/how-to-guides/set-up-video-conferencing/render-video/mini-view)
+-   Added the ability to take screenshots of [individual video tiles using `screenshot` on `HmsView`](https://www.100ms.live/docs/react-native/v2/advanced-features/capture-hmsView)
+-   Sending error callback when a user denies permission to start screen-share from an Android device
+-   Updated to Native Android SDK 2.3.5 & Native iOS SDK 0.2.9
 
 ## 0.9.3 - 2022-04-05
 
-- Added Network Quality Reports measuring a user's connection speed
-- Added the ability to render local auxiliary tracks on Android
-- Updated to Native Android SDK 2.3.4 & Native iOS SDK 0.2.9
+-   Added Network Quality Reports measuring a user's connection speed
+-   Added the ability to render local auxiliary tracks on Android
+-   Updated to Native Android SDK 2.3.4 & Native iOS SDK 0.2.9
 
 ## 0.9.2 - 2022-03-28
 
-- Added `hlsRecordingConfig?: HMSHLSRecordingConfig` to allow HLS Recording
-- Added `hlsRecordingState?: HMSHLSRecordingState` to `HMSRoom` for fetching the HLS Recording state of the room
-- Added `sender: HMSPeer` & `recipient: HMSMessageRecipient` properties on `HMSMessage`
-- Added promise to `startScreenshare` API so that clients can perform an action when screen share from an android mobile device
-- Fixed an issue where muting audio/video of a remote peer does not work
-- Updated to Native Android SDK 2.3.4 & Native iOS SDK 0.2.8
+-   Added `hlsRecordingConfig?: HMSHLSRecordingConfig` to allow HLS Recording
+-   Added `hlsRecordingState?: HMSHLSRecordingState` to `HMSRoom` for fetching the HLS Recording state of the room
+-   Added `sender: HMSPeer` & `recipient: HMSMessageRecipient` properties on `HMSMessage`
+-   Added promise to `startScreenshare` API so that clients can perform an action when screen share from an android mobile device
+-   Fixed an issue where muting audio/video of a remote peer does not work
+-   Updated to Native Android SDK 2.3.4 & Native iOS SDK 0.2.8
 
 ## 0.9.1 - 2022-03-02
 
-- Added room update & peer update callbacks on Preview. So before joining the room, you can know the peers already in the room & current room state like recording/streaming, etc
-- Added RTC Call Stats to show info about packet loss, bitrate, jitter, fps, resolution, etc for video tracks
-- Added start & stop timestamps in Server / Browser Recording & RTMP / HLS Streaming
-- Added streaming allowed attribute to peer's role permission
-- Added peer count attribute on HMSRoom object
-- Updated Native iOS SDK to 0.2.7, Native Android SDK to 2.3.1
+-   Added room update & peer update callbacks on Preview. So before joining the room, you can know the peers already in the room & current room state like recording/streaming, etc
+-   Added RTC Call Stats to show info about packet loss, bitrate, jitter, fps, resolution, etc for video tracks
+-   Added start & stop timestamps in Server / Browser Recording & RTMP / HLS Streaming
+-   Added streaming allowed attribute to peer's role permission
+-   Added peer count attribute on HMSRoom object
+-   Updated Native iOS SDK to 0.2.7, Native Android SDK to 2.3.1
 
 ## 0.9.0 - 2022-01-28
 
-- Added support for HLS Streaming - You can now start / stop / view HLS from the package
-- Added support for Android Screenshare - From an android device, you can do a screen share in the meeting room
-- Updated API parameter types
-- Updated to Native iOS SDK version 0.2.6 & Native Android SDK version 2.2.8
+-   Added support for HLS Streaming - You can now start / stop / view HLS from the package
+-   Added support for Android Screenshare - From an android device, you can do a screen share in the meeting room
+-   Updated API parameter types
+-   Updated to Native iOS SDK version 0.2.6 & Native Android SDK version 2.2.8
 
 ## 0.8.4 - 2022-01-07
 
-- Added check for Preview in progress before invoking join
-- Added support React Native version 0.63
+-   Added check for Preview in progress before invoking join
+-   Added support React Native version 0.63
 
 ## 0.8.3 - 2021-12-29
 
-- Made HMSTrackSettings as an optional parameter while building the HMS SDK instance
+-   Made HMSTrackSettings as an optional parameter while building the HMS SDK instance
 
 ## 0.8.2 - 2021-12-29
 
-- Resolved a bug in Self Role Change which prevented the operation to succeed
-- Updated data passed in onPeerUpdate & onTrackUpdate callbacks
-- Made metadata as an optional field on peer object
-- Added configuration to enable/disable the usage of Hardware Echo Cancellation on Android
-- Added promise callbacks to messaging & Change Track/Role state APIs
-- Corrected error messages sent by SDK
+-   Resolved a bug in Self Role Change which prevented the operation to succeed
+-   Updated data passed in onPeerUpdate & onTrackUpdate callbacks
+-   Made metadata as an optional field on peer object
+-   Added configuration to enable/disable the usage of Hardware Echo Cancellation on Android
+-   Added promise callbacks to messaging & Change Track/Role state APIs
+-   Corrected error messages sent by SDK
 
 ## 0.8.1 - 2021-12-10
 
-- Added peer metadata APIs using which you can build Raise Hand like features
-- Added Recording APIs to start / stop recording / streaming meeting room
-- Added set / get volume APIs
-- Corrected emitting of errors on failures
-- Added support for custom video sources
+-   Added peer metadata APIs using which you can build Raise Hand like features
+-   Added Recording APIs to start / stop recording / streaming meeting room
+-   Added set / get volume APIs
+-   Corrected emitting of errors on failures
+-   Added support for custom video sources
 
 ## 0.8.0 - 2021-11-19
 
 #### Breaking
 
-- `build` function of HMSSDK will not create a singleton now.
-- `requestedBy` field has been made optional for HMSChangeTrackStateRequest, HMSRemovedFromRoomNotification, HMSRoleChangeRequest. It will be nil if the request originated from the REST API.
-- `leave` function is now asynchronous. Join another room only when the previous leave call has been completed.
+-   `build` function of HMSSDK will not create a singleton now.
+-   `requestedBy` field has been made optional for HMSChangeTrackStateRequest, HMSRemovedFromRoomNotification, HMSRoleChangeRequest. It will be nil if the request originated from the REST API.
+-   `leave` function is now asynchronous. Join another room only when the previous leave call has been completed.
 
 #### Changed
 
-- Corrected a bug where userId was not being passed.
-- Sending full error description when any error/exceptions occur.
-- `isMute` function of HMSTrack now returns correct status.
-- `HMSView` is now exported from HMSSDK class.
+-   Corrected a bug where userId was not being passed.
+-   Sending full error description when any error/exceptions occur.
+-   `isMute` function of HMSTrack now returns correct status.
+-   `HMSView` is now exported from HMSSDK class.
 
 #### Added
 
-- Added `isPlaybackAllowed` & `setPlaybackAllowed` for Remote Audio/Video tracks.
-- Added `getRoom` function on HMSSDK which returns the currently joined room. Returns null if the peer is not in a room.
-- Added `changeTrackStateForRole` API with which you can mute/unmute audio/video of all peers of a particular Role.
+-   Added `isPlaybackAllowed` & `setPlaybackAllowed` for Remote Audio/Video tracks.
+-   Added `getRoom` function on HMSSDK which returns the currently joined room. Returns null if the peer is not in a room.
+-   Added `changeTrackStateForRole` API with which you can mute/unmute audio/video of all peers of a particular Role.
 
 ## 0.7.4 - 2021-11-03
 
-- Catching exception on join function
-- Cleared iOS global variables on leave
-- Removed listeners on leave
-- Exposed type param in message functions
+-   Catching exception on join function
+-   Cleared iOS global variables on leave
+-   Removed listeners on leave
+-   Exposed type param in message functions
 
 ## 0.7.3 - 2021-10-29
 
-- Clearing local cache data when leaving a room
-- Catching exceptions thrown by join function
-- Added Role-based permissions checks
+-   Clearing local cache data when leaving a room
+-   Catching exceptions thrown by join function
+-   Added Role-based permissions checks
 
 ## 0.7.2 - 2021-10-28
 
-- Added isPlaybackAllowed to remote audio & video tracks to mute/unmute remote tracks locally
-- Added changeTrackState API to mute/unmute remote peers audio/video tracks for the entire room
+-   Added isPlaybackAllowed to remote audio & video tracks to mute/unmute remote tracks locally
+-   Added changeTrackState API to mute/unmute remote peers audio/video tracks for the entire room
 
 ## 0.7.1 - 2021-10-27
 
-- Added mirror prop to HMSView to horizontally flip video tracks
+-   Added mirror prop to HMSView to horizontally flip video tracks
 
 ## 0.7.0 - 2021-10-22
 
-- Added audio level, peer & track object to HMSSpeaker
-- Made package backwards compatible up to React Native version 0.63.0
-- Removed Xcode 13 requirement
-- Updated Sample app
+-   Added audio level, peer & track object to HMSSpeaker
+-   Made package backwards compatible up to React Native version 0.63.0
+-   Removed Xcode 13 requirement
+-   Updated Sample app
 
 ## 0.6.0 - 2021-10-15
 
-- Added aspect ratio prop to HMSView
-- Asking for Camera & Microphone permissions only when required
-- Updated video tiles aspect ratio
-- Added horizontal pagination in sample app to improve performance
+-   Added aspect ratio prop to HMSView
+-   Asking for Camera & Microphone permissions only when required
+-   Updated video tiles aspect ratio
+-   Added horizontal pagination in sample app to improve performance
 
 ## 0.5.0 - 2021-09-29
 
-- Added Role-based permissions
-- You can now Change the Role of Remote Peers
-- Change Role of yourself
-- If you have permission then you can remove a peer from the room
-- Multiple improvements for network & device usage optimization
+-   Added Role-based permissions
+-   You can now Change the Role of Remote Peers
+-   Change Role of yourself
+-   If you have permission then you can remove a peer from the room
+-   Multiple improvements for network & device usage optimization
 
 ## 0.3.0 - 2021-08-31
 
-- Updated to "react-native": "0.65.1" to mitigate security vulnerabilities
-- Example App updated
-- Multiple bug fixes & performance improvements
+-   Updated to "react-native": "0.65.1" to mitigate security vulnerabilities
+-   Example App updated
+-   Multiple bug fixes & performance improvements
 
 ## 0.2.0 - 2021-08-18
 
-- Added Support for Android! 🥳
+-   Added Support for Android! 🥳
 
 ## 0.1.0 - 2021-08-09
 
 The first version of 100ms React Native SDK comes power-packed with support for multiple features like -
 
-- Join/Leave Rooms
-- Mute / Unmute Audio / Video
-- Switch Camera
-- Chat
-- Preview Screen
-- Network Switch Support
-- Subscribe Degradation in bad network scenarios
-- Error Handling and much more.
+-   Join/Leave Rooms
+-   Mute / Unmute Audio / Video
+-   Switch Camera
+-   Chat
+-   Preview Screen
+-   Network Switch Support
+-   Subscribe Degradation in bad network scenarios
+-   Error Handling and much more.
 
 Take it for a spin! 🥳
