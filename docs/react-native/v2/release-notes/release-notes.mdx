@@ -5,12 +5,148 @@ nav: 4.1
 
 ## Latest Versions
 
-| Package                          | Version                                                                                                                                 |
-| -------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| @100mslive/react-native-room-kit | [![npm](https://img.shields.io/npm/v/@100mslive/react-native-room-kit)](https://www.npmjs.com/package/@100mslive/react-native-room-kit) |
-| @100mslive/react-native-hms      | [![npm](https://img.shields.io/npm/v/@100mslive/react-native-hms)](https://www.npmjs.com/package/@100mslive/react-native-hms)           |
-| @100mslive/react-native-video-plugin      | [![npm](https://img.shields.io/npm/v/@100mslive/react-native-video-plugin)](https://www.npmjs.com/package/@100mslive/react-native-video-plugin)  |
+| Package                              | Version                                                                                                                                         |
+| ------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| @100mslive/react-native-room-kit     | [![npm](https://img.shields.io/npm/v/@100mslive/react-native-room-kit)](https://www.npmjs.com/package/@100mslive/react-native-room-kit)         |
+| @100mslive/react-native-hms          | [![npm](https://img.shields.io/npm/v/@100mslive/react-native-hms)](https://www.npmjs.com/package/@100mslive/react-native-hms)                   |
+| @100mslive/react-native-video-plugin | [![npm](https://img.shields.io/npm/v/@100mslive/react-native-video-plugin)](https://www.npmjs.com/package/@100mslive/react-native-video-plugin) |
 
+## 1.12.0 - 2025-10-28
+
+| Package                              | Version |
+| ------------------------------------ | ------- |
+| @100mslive/react-native-room-kit     | 1.3.0   |
+| @100mslive/react-native-hms          | 1.12.0  |
+| @100mslive/react-native-video-plugin | 1.1.0   |
+
+## Highlights
+
+This is a major release bringing **React Native 0.77+ support**, **Android 16KB page size compliance** for Google Play 2025 requirements, and significant modernization of the SDK build system. This release includes breaking changes - please review the migration guide below.
+
+### Key Improvements
+
+-   ⚡ **React Native 0.77.3 Support** - Full compatibility with the latest React Native version with improved performance and stability
+-   📱 **Android 16KB Page Size Compliance** - Ready for Google Play's 2025 requirements for Android 15+ devices
+-   📷 **Modernized QR Code Scanner** - Migrated to react-native-vision-camera 4.7.2 with ML Kit for better performance
+-   🏗️ **Build System Modernization** - Updated to AGP 8.7.2, Gradle 8.11.1, Kotlin 2.0.21, and Java 17
+-   🚀 **Performance Improvements** - Major dependency updates across 20+ packages
+
+## react-native-hms (1.12.0)
+
+### React Native 0.77.3 Support
+
+The SDK now fully supports React Native 0.77.3 (upgraded from 0.71.19), bringing 6 major versions of improvements including:
+
+-   Enhanced performance and stability
+-   Latest React 18.3.1 features
+-   Improved developer experience
+-   Better TypeScript support
+
+### Android 16KB Page Size Compliance
+
+Full compliance with Google Play's 2025 requirements for Android 15+ devices:
+
+-   NDK r27 support with 16KB page size
+-   Experimental flags enabled for compatibility
+-   Ready for next-generation Android devices
+-   Ensures your app won't be blocked on Google Play
+
+### Architecture Updates
+
+-   **64-bit Only Support**: Dropped 32-bit architectures (armeabi-v7a, x86) to support modern Android requirements
+-   **Supported Architectures**: arm64-v8a, x86_64
+-   Improved performance on modern devices
+
+### Native SDK Updates
+
+-   **Android SDK**: Updated to **2.9.78** (from 2.9.69)
+-   **iOS SDK**: Updated to **1.17.0** (from 1.16.5)
+-   Includes latest bug fixes, performance improvements, and new features from native SDKs
+
+### Modernized Build System
+
+**Android:**
+
+-   Android Gradle Plugin: 8.7.2
+-   Gradle: 8.11.1
+-   Kotlin: 2.0.21
+-   Java: 17 (minimum required)
+-   Target SDK: 35
+-   Compile SDK: 35
+-   Minimum SDK: 24 (Android 7.0)
+
+**iOS:**
+
+-   Minimum iOS: 16.0 (from 13.0)
+-   Updated Podfile for RN 0.77.3 compatibility
+-   New Architecture explicitly disabled for stability
+
+### Technical Improvements
+
+-   Fixed TypeScript event emitter and session store imports
+-   Improved build performance with modern tooling
+-   Better type safety and developer experience
+-   Removed Flipper support (deprecated)
+-   Package namespace updated: com.rnexample → live.hms.rn
+-   MainApplication migrated from Java to Kotlin
+
+## react-native-room-kit (1.3.0)
+
+### Major Dependency Updates
+
+Updated core dependencies for better performance, stability, and RN 0.77.3 compatibility:
+
+| Package                        | Old Version | New Version |
+| ------------------------------ | ----------- | ----------- |
+| react-native-reanimated        | 3.4.2       | 3.16.7      |
+| react-native-screens           | 3.25.0      | 4.18.0      |
+| react-native-gesture-handler   | 2.15.0      | 2.22.0      |
+| react-native-safe-area-context | 3.3.0       | 5.6.1       |
+| react-native-permissions       | 3.4.0       | 4.1.5       |
+| lottie-react-native            | 6.7.2       | 7.3.4       |
+| react-native-device-info       | 11.1.0      | 14.0.0      |
+| @shopify/flash-list            | 1.4.3       | 1.7.1       |
+| zustand                        | -           | 5.0.8 (new) |
+
+### Technical Improvements
+
+-   Fixed TypeScript AnimatedStyleProp type errors
+-   Improved keyboard avoiding view type safety
+-   Added 5 critical patches for RN 0.77.3 compatibility using patch-package
+-   Security fixes from npm audit
+-   Better performance with updated dependencies
+
+---
+
+## Breaking Changes
+
+### Minimum Requirements Updated
+
+| Requirement      | Previous     | New                       | Impact            |
+| ---------------- | ------------ | ------------------------- | ----------------- |
+| **Android**      | 5.0 (API 21) | **7.0 (API 24)**          | ~2.6% of devices  |
+| **iOS**          | 13.0         | **16.0**                  | ~5% of devices    |
+| **React Native** | 0.60+        | **0.77.3+**               | Major upgrade     |
+| **Node.js**      | 14+          | **18+** (22+ recommended) | -                 |
+| **Java**         | 8/11         | **17+**                   | Build requirement |
+
+### Architecture Changes
+
+-   **32-bit Android devices no longer supported**
+    -   Dropped: armeabi-v7a, x86
+    -   Supported: arm64-v8a, x86_64 only
+    -   Reason: Required for 16KB page size compliance and modern Android
+
+### Peer Dependencies
+
+-   React Native peer dependency updated to `>=0.77.3`
+-   React peer dependency updated to `>=18.2.0`
+
+## Version Details
+
+**Uses Android SDK 2.9.78 & iOS SDK 1.17.0**
+
+**Full Changelog**: [1.11.0...1.12.0](https://github.com/100mslive/100ms-react-native/compare/1.11.0...1.12.0)
 
 ## 1.11.0 - 2024-10-29
 
@@ -21,51 +157,49 @@ nav: 4.1
 
 ### react-native-hms
 
-- Added namespace in Android to support compile target 34 and above
+-   Added namespace in Android to support compile target 34 and above
 
-- Resolved an issue in PIP on Android where screen could be stuck when switching to PIP mode fails
+-   Resolved an issue in PIP on Android where screen could be stuck when switching to PIP mode fails
 
 ### react-native-room-kit
 
-- Disabled capturing of network quality in Preview screen by default
+-   Disabled capturing of network quality in Preview screen by default
 
 Uses Android SDK 2.9.69 & iOS SDK 1.16.5
 
 **Full Changelog**: [1.10.9...1.11.0](https://github.com/100mslive/react-native-hms/compare/1.10.9...1.11.0)
 
-
 ## 1.10.9 - 2024-07-31
 
-| Package                          | Version |
-| -------------------------------- | ------- |
-| @100mslive/react-native-room-kit | 1.2.2   |
-| @100mslive/react-native-hms      | 1.10.9  |
-| @100mslive/react-native-video-plugin      |  1.0.0  |
+| Package                              | Version |
+| ------------------------------------ | ------- |
+| @100mslive/react-native-room-kit     | 1.2.2   |
+| @100mslive/react-native-hms          | 1.10.9  |
+| @100mslive/react-native-video-plugin | 1.0.0   |
 
 ### react-native-hms
 
-- Added support for runtime permission handling in Android
+-   Added support for runtime permission handling in Android
 
     Users can now request runtime permissions for Camera, Microphone on Android devices. Read more about it [here](https://www.100ms.live/docs/react-native/v2/how-to-guides/set-up-video-conferencing/permissions).
 
-- Added support for running apps on Android 14
+-   Added support for running apps on Android 14
 
-- Corrected return types of APIs to be more consistent
+-   Corrected return types of APIs to be more consistent
 
 ### react-native-room-kit
 
-- Added support for default state of Noise Cancellation when entering a Room
+-   Added support for default state of Noise Cancellation when entering a Room
 
     Users can now set the default state of Noise Cancellation when entering a Room. This can be set in the Prebuilt Customizer.
 
-- Added support for Switching Role of a Peer in Prebuilt UI
+-   Added support for Switching Role of a Peer in Prebuilt UI
 
     Users can now switch the role of a Peer in the Prebuilt UI. This can be done by clicking on the Peer's name in the Participants List or on the Remote Peer Settings icon.
 
 Uses Android SDK 2.9.64 & iOS SDK 1.15.0
 
 **Full Changelog**: [1.10.8...1.10.9](https://github.com/100mslive/react-native-hms/compare/1.10.8...1.10.9)
-
 
 ## 1.10.8 - 2024-07-10
 
@@ -76,13 +210,13 @@ Uses Android SDK 2.9.64 & iOS SDK 1.15.0
 
 ### react-native-hms
 
-- Added support for PIP Mode in iOS
+-   Added support for PIP Mode in iOS
 
     Users can now switch to Picture-in-Picture mode on iOS devices while in a Room. Read more about it [here](https://www.100ms.live/docs/react-native/v2/how-to-guides/set-up-video-conferencing/render-video/pip-mode).
 
 ### react-native-room-kit
 
-- Added support for PIP Mode in Prebuilt UI
+-   Added support for PIP Mode in Prebuilt UI
 
     Users can now switch to Picture-in-Picture mode in the Prebuilt UI.
 
@@ -90,24 +224,23 @@ Uses Android SDK 2.9.62 & iOS SDK 1.13.0
 
 **Full Changelog**: [1.10.7...1.10.8](https://github.com/100mslive/react-native-hms/compare/1.10.7...1.10.8)
 
-
 ## 1.10.7 - 2024-07-01
 
-| Package                          | Version |
-| -------------------------------- | ------- |
-| @100mslive/react-native-room-kit | 1.2.0   |
-| @100mslive/react-native-hms      | 1.10.7  |
-| @100mslive/react-native-video-plugin | 0.1.2  |
+| Package                              | Version |
+| ------------------------------------ | ------- |
+| @100mslive/react-native-room-kit     | 1.2.0   |
+| @100mslive/react-native-hms          | 1.10.7  |
+| @100mslive/react-native-video-plugin | 0.1.2   |
 
 ### react-native-hms
 
-- Live Transcriptions in WebRTC Calls
+-   Live Transcriptions in WebRTC Calls
 
     HMSSDK now provides support for Live Transcriptions in WebRTC calls. Users can now enable/disable Live Transcriptions during a call. The SDK provides a callback with the transcript for each peer when they speak. Read more about it [here](https://www.100ms.live/docs/react-native/v2/how-to-guides/extend-capabilities/live-captions).
 
 ### react-native-room-kit
 
-- Introducing Live Transcriptions options in Prebuilt
+-   Introducing Live Transcriptions options in Prebuilt
 
     Prebuilt now supports live transcription for better accessibility. Users can enable or disable live transcription from the prebuilt interface.
 
@@ -115,45 +248,41 @@ Uses Android SDK 2.9.60 & iOS SDK 1.12.0
 
 **Full Changelog**: [1.10.6...1.10.7](https://github.com/100mslive/react-native-hms/compare/1.10.6...1.10.7)
 
-
 ## 1.10.6 - 2024-06-10
 
-| Package                          | Version |
-| -------------------------------- | ------- |
-| @100mslive/react-native-room-kit | 1.1.9   |
-| @100mslive/react-native-hms      | 1.10.6  |
-| @100mslive/react-native-video-plugin | 0.1.2  |
+| Package                              | Version |
+| ------------------------------------ | ------- |
+| @100mslive/react-native-room-kit     | 1.1.9   |
+| @100mslive/react-native-hms          | 1.10.6  |
+| @100mslive/react-native-video-plugin | 0.1.2   |
 
 ### react-native-hms
 
-- Introducing Virtual Background support in 100ms
+-   Introducing Virtual Background support in 100ms
 
     HMSSDK now provides support for Virtual Background using [`@100mslive/react-native-video-plugin`](https://github.com/100mslive/react-native-video-plugin).
     It allows users to change their background during a call. Users can choose from a variety of backgrounds or upload their own custom background.
     It also provides a feature to blur the background. Read more about it [here](https://www.100ms.live/docs/react-native/v2/how-to-guides/extend-capabilities/virtual-background).
 
-- Resolved warnings on Android & iOS when using HMSSDK in development mode
+-   Resolved warnings on Android & iOS when using HMSSDK in development mode
 
 ### react-native-room-kit
 
-- Added support for Virtual Background in Prebuilt UI
+-   Added support for Virtual Background in Prebuilt UI
 
     By just adding [`@100mslive/react-native-video-plugin`](https://github.com/100mslive/react-native-video-plugin) package, users can now change their background during a call using the Virtual Background feature in the Prebuilt UI.
 
-- Added support for Hyperlinks in Chat Messages on Prebuilt UI
+-   Added support for Hyperlinks in Chat Messages on Prebuilt UI
 
     Users can now click on hyperlinks in chat messages to open them in a browser.
 
 ### react-native-video-plugin
 
-- The first version of the plugin is released. It provides support for Virtual Background in 100ms. Read more about it [here](https://www.100ms.live/docs/react-native/v2/how-to-guides/extend-capabilities/virtual-background).
-
+-   The first version of the plugin is released. It provides support for Virtual Background in 100ms. Read more about it [here](https://www.100ms.live/docs/react-native/v2/how-to-guides/extend-capabilities/virtual-background).
 
 Uses Android SDK 2.9.59 & iOS SDK 1.11.0
 
 **Full Changelog**: [1.10.5...1.10.6](https://github.com/100mslive/react-native-hms/compare/1.10.5...1.10.6)
-
-
 
 ## 1.10.5 - 2024-05-15
 
@@ -164,27 +293,25 @@ Uses Android SDK 2.9.59 & iOS SDK 1.11.0
 
 ### react-native-hms
 
-- Introducing Whiteboard support in 100ms
+-   Introducing Whiteboard support in 100ms
 
     HMSSDK now provides support for Whiteboard. You can now start/stop a Whiteboard using `startWhiteboard` & `stopWhiteboard` methods on `HMSInteractivityCenter`. HMSSDK provides also provides callbacks for whiteboard start/stop events. Learn more about it [here](https://www.100ms.live/docs/react-native/v2/how-to-guides/extend-capabilities/whiteboard).
 
-
 ### react-native-room-kit
 
-- Whiteboard
+-   Whiteboard
 
     Whiteboard is now supported in the Prebuilt UI. Users can now start/stop a Whiteboard using the Whiteboard button in the Prebuilt UI.
 
-- Updated PIP Mode support for HLS Player
+-   Updated PIP Mode support for HLS Player
 
     PIP Mode is now supported in the HLS Player UI. Users can now switch to PIP mode while watching a video in the HLS Player.
 
-- Resolved an issue where tile content was clipping from bottom in the Prebuilt UI
+-   Resolved an issue where tile content was clipping from bottom in the Prebuilt UI
 
 Uses Android SDK 2.9.56 & iOS SDK 1.10.0
 
 **Full Changelog**: [1.10.4...1.10.5](https://github.com/100mslive/react-native-hms/compare/1.10.4...1.10.5)
-
 
 ## 1.10.4 - 2024-04-26
 
@@ -195,7 +322,7 @@ Uses Android SDK 2.9.56 & iOS SDK 1.10.0
 
 ### react-native-hms
 
-- Support for captions in HLS Player
+-   Support for captions in HLS Player
 
     HMSSDK now provides support for Closed Captions in HLS Player. You can now check the support of captions in the stream, and enable or disable captions in the HLS Player using the methods available on its `ref`
 
@@ -203,24 +330,21 @@ Uses Android SDK 2.9.56 & iOS SDK 1.10.0
 
     Learn more about it [here](https://www.100ms.live/docs/react-native/v2/how-to-guides/record-and-live-stream/hls-player#how-to-enable-or-disable-closed-captions).
 
-
 ### react-native-room-kit
 
-- Support for captions in HLS Player UI
-HLS Player now supports captions for better accessibility. This can be enabled or disabled from the player settings.
+-   Support for captions in HLS Player UI
+    HLS Player now supports captions for better accessibility. This can be enabled or disabled from the player settings.
 
-- Updated Chat message design in the new HLS Player UI
+-   Updated Chat message design in the new HLS Player UI
 
-- Added new controls for the HLS video player
-Added controls are - "Go Live", "Seekbar", "Closed Captions", "Pause", "Resume" and "Seek forward/backwards"
+-   Added new controls for the HLS video player
+    Added controls are - "Go Live", "Seekbar", "Closed Captions", "Pause", "Resume" and "Seek forward/backwards"
 
-- Added support for "Pinch and Zoom" in the HLS Player UI
-
+-   Added support for "Pinch and Zoom" in the HLS Player UI
 
 Uses Android SDK 2.9.54 & iOS SDK 1.9.0
 
 **Full Changelog**: [1.10.3...1.10.4](https://github.com/100mslive/react-native-hms/compare/1.10.3...1.10.4)
-
 
 ## 1.10.3 - 2024-04-15
 
@@ -231,16 +355,15 @@ Uses Android SDK 2.9.54 & iOS SDK 1.9.0
 
 ### react-native-room-kit
 
-- Added revamped HLS Player UI in Prebuilt
+-   Added revamped HLS Player UI in Prebuilt
 
-- Added support for both Portrait & Landscape orientations in HLS Player UI
+-   Added support for both Portrait & Landscape orientations in HLS Player UI
 
-- More enhancements in HLS Player UI will be released soon!
+-   More enhancements in HLS Player UI will be released soon!
 
 Using Android SDK 2.9.53 & iOS SDK 1.8.0
 
 **Full Changelog**: [1.10.2...1.10.3](https://github.com/100mslive/react-native-hms/compare/1.10.2...1.10.3)
-
 
 ## 1.10.2 - 2024-04-08
 
@@ -251,24 +374,23 @@ Using Android SDK 2.9.53 & iOS SDK 1.8.0
 
 ### react-native-hms
 
-- Added Active Noise Cancellation support in SDK. This feature can be used to reduce background noise during a call. Read more details [here](https://www.100ms.live/docs/react-native/v2/how-to-guides/extend-capabilities/noise-cancellation).
+-   Added Active Noise Cancellation support in SDK. This feature can be used to reduce background noise during a call. Read more details [here](https://www.100ms.live/docs/react-native/v2/how-to-guides/extend-capabilities/noise-cancellation).
 
-- Added support for showing Session Initiation Protocol(SIP) Peers in Room. Read more about SIP [here](https://www.100ms.live/docs/server-side/v2/how-to-guides/Session%20Initiation%20Protocol%20(SIP)/SIP-Interconnect).
+-   Added support for showing Session Initiation Protocol(SIP) Peers in Room. Read more about SIP [here](<https://www.100ms.live/docs/server-side/v2/how-to-guides/Session%20Initiation%20Protocol%20(SIP)/SIP-Interconnect>).
 
-- Added support for passing Hand Raise as a layout config in Prebuilt Customizer.
+-   Added support for passing Hand Raise as a layout config in Prebuilt Customizer.
 
 ### react-native-room-kit
 
-- Added support for showing Noise Cancellation option in Preview & Room screens.
+-   Added support for showing Noise Cancellation option in Preview & Room screens.
 
-- Added support for appropriately indicating [SIP](https://www.100ms.live/docs/server-side/v2/how-to-guides/Session%20Initiation%20Protocol%20(SIP)/SIP-Interconnect) Peers in the Room.
+-   Added support for appropriately indicating [SIP](<https://www.100ms.live/docs/server-side/v2/how-to-guides/Session%20Initiation%20Protocol%20(SIP)/SIP-Interconnect>) Peers in the Room.
 
-- Using Hand Raise config to show/hide the Hand Raise button in the Prebuilt UI.
+-   Using Hand Raise config to show/hide the Hand Raise button in the Prebuilt UI.
 
 Updated to Android SDK 2.9.53 & iOS SDK 1.8.0
 
 **Full Changelog**: [1.10.1...1.10.2](https://github.com/100mslive/react-native-hms/compare/1.10.1...1.10.2)
-
 
 ## 1.10.1 - 2024-03-15
 
@@ -279,15 +401,15 @@ Updated to Android SDK 2.9.53 & iOS SDK 1.8.0
 
 ### react-native-hms
 
-- Added support for `switchAudioOutput` on iOS. An example usage of this API can be to programmatically route the audio of the Room to Earpiece or Speaker. Read more about it [here](https://www.100ms.live/docs/react-native/v2/how-to-guides/configure-your-device/speaker/audio-output-routing).
+-   Added support for `switchAudioOutput` on iOS. An example usage of this API can be to programmatically route the audio of the Room to Earpiece or Speaker. Read more about it [here](https://www.100ms.live/docs/react-native/v2/how-to-guides/configure-your-device/speaker/audio-output-routing).
 
-- Added API to keep device awake while in Room. This can be used to prevent the device from going to sleep while in a Room. Read more about it [here](https://www.100ms.live/docs/react-native/v2/how-to-guides/set-up-video-conferencing/keep-awake).
+-   Added API to keep device awake while in Room. This can be used to prevent the device from going to sleep while in a Room. Read more about it [here](https://www.100ms.live/docs/react-native/v2/how-to-guides/set-up-video-conferencing/keep-awake).
 
 ### react-native-room-kit
 
-- Added support for joining a Room in Prebuilt using only the Auth Token instead of Room Code.
+-   Added support for joining a Room in Prebuilt using only the Auth Token instead of Room Code.
 
-- Users can now skip the Preview Screen based on a flag in the Prebuilt Customizer to directly enter a Room.
+-   Users can now skip the Preview Screen based on a flag in the Prebuilt Customizer to directly enter a Room.
 
 Updated to Android SDK 2.9.51 & iOS SDK 1.6.0
 
@@ -928,7 +1050,7 @@ Full Changelog: [1.0.0...1.1.0](https://github.com/100mslive/react-native-hms/co
 
     ```js
     // you can now directly access local peer from HMSRoom object returned in `ON_JOIN` event listener
-    const onJoinSuccess = (data: {room: HMSRoom}) => {
+    const onJoinSuccess = (data: { room: HMSRoom }) => {
         console.log('local peer: ', data.room.localPeer);
     };
     ```
