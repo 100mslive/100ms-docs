@@ -8,6 +8,7 @@ nav: 3.6
 - Amazon Simple Storage Service (AWS S3)
 - Google Cloud Storage (GCP)
 - Alibaba Object Storage (OSS)
+- Azure Blob Storage
 
 By default, recordings will be stored temporarily (for 15 days) in a storage location managed by 100ms if nothing is configured. Post a successful recording, the recording assets can be accessed on the [100ms dashboard](https://dashboard.100ms.live/sessions) or [through the REST API](/server-side/v2/api-reference/recording-assets/get-asset).
 
@@ -59,12 +60,12 @@ You can configure storage in your template's `Recording` tab on the 100ms Dashbo
 
 Use the [Policy API](https://www.100ms.live/docs/server-side/v2/api-reference/policy/create-template-via-api) to programmatically configure your storage location.
 
-You can configure the **`type`** field of recording object to `s3` for AWS, `oss` for Alibaba Object Storage Service and `gs` for Google Cloud Storage with the following details:
+You can configure the **`type`** field of recording object to `s3` for AWS, `oss` for Alibaba Object Storage Service, `gs` for Google Cloud Storage, and `azure` for Azure Blob Storage with the following details:
 
-- Access Key: Access Key for your OSS/GCP Bucket
-- Secret Key: Secret Key for your OSS/GCP Bucket
-- Bucket: Name of the bucket
-- Region: Name of the region where your bucket is located in
+- Access Key: Access Key for your storage bucket (for Azure, use the Storage Account Name)
+- Secret Key: Secret Key for your storage bucket (for Azure, use the Storage Account Key)
+- Bucket: Name of the bucket (for Azure, use the Container Name)
+- Region: Name of the region where your bucket is located in (for Azure, this field is not required)
 - Prefix for Upload Path: Define the directory name (optional)
 
 </Tab>
