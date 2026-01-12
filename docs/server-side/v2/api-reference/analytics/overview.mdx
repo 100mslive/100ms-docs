@@ -24,12 +24,19 @@ Analytics APIs can be utilized to retrieve events via an HTTP request. By using 
     - `client.disconnected`
     - `client.connect.failed`
 
+-  [List Webhook Events](/server-side/v2/api-reference/analytics/list-webhook-events)
+    - Retrieve webhook delivery history
+
+-  [Replay Webhook Events](/server-side/v2/api-reference/analytics/replay-webhook-events)
+    - Replay failed or successful webhooks
+
 Event data can be queried up to **last 30 days**.
 
 ### What can I build?
 
 -   You can use track events to get a better understanding of user activity and build tools around it as explained in [use cases](/server-side/v2/api-reference/analytics/track-events#why-would-you-use-this-api)
 -   You can use error events to dig deeper into the issues which your users are facing.
+-   You can use webhook events to monitor webhook delivery health and replay failed webhooks after recovering from downtime.
 
 <GetRequest title="https://api.100ms.live/v2/analytics/events" />
 <Request id="req-0">

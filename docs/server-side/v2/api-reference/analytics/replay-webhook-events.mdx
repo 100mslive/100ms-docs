@@ -1,0 +1,230 @@
+---
+title: Replay Webhook Events
+nav: 3.65
+---
+
+Initiates a replay of webhooks that failed to deliver or reprocess successful webhooks. This is particularly useful when recovering from server downtime or when you need to reprocess events with updated logic.
+
+## Replay Webhooks
+
+<PostRequest title="https://api.100ms.live/v2/analytics/events/webhooks/replay" />
+<Request id="req-0">
+
+```bash
+curl --location --request POST \
+    'https://api.100ms.live/v2/analytics/events/webhooks/replay' \
+    --header 'Authorization: Bearer <management_token>' \
+    --header 'Content-Type: application/json' \
+    --data-raw '{
+      "start_time": "2025-12-28T00:00:00Z",
+      "end_time": "2025-12-29T00:00:00Z",
+      "event_names": ["peer.join.success"]
+    }'
+```
+
+</Request>
+
+## Allowed Filters
+To be specified as query parameters
+
+| Name        | Type       | Description                                                                                                        | Required |
+| ----------- | ---------- | ------------------------------------------------------------------------------------------------------------------ | -------- |
+| start_time  | `string`   | Start of time range to replay in RFC3339 format (Default: 24 hours ago). Must be within the last 30 days.         | no       |
+| end_time    | `string`   | End of time range to replay in RFC3339 format (Default: Now). Must be after `start_time` but within 14 days of start time. | no       |
+| room_id     | `string`   | Unique identifier of the room you wish to replay webhooks for                                                      | no       |
+| event_names | `string[]` | Filter by original event types (e.g., `peer.join.success`)                                                        | no       |
+| limit       | `int`      | Max webhooks to replay (Default: `50000`, Max: `50000`)                                                           | no       |
+| offset      | `int`      | Skip first N webhooks for pagination (Default: `0`)                                                                | no       |
+| status      | `string`   | Filter by delivery status: `all`, `failed`, `success` (Default: `failed`)                                         | no       |
+
+> **Note:** Maximum 50,000 webhooks per replay request. Duplicate requests with same filters will return existing workflow.
+
+## Response
+
+<ResponseBox id="res-0" status="200 OK">
+
+```json
+{
+  "workflow_id": "webhook-replay-customer123-a1b2c3d4",
+  "status": "started",
+  "message": "Webhook replay has been queued for processing",
+  "filters": {
+    "start_time": "2025-12-28T00:00:00Z",
+    "end_time": "2025-12-29T00:00:00Z",
+    "room_id": "",
+    "event_types": ["peer.join.success", "peer.leave.success"]
+  }
+}
+```
+
+</ResponseBox>
+
+**Status Values:**
+
+| Status            | Description                               |
+| ----------------- | ----------------------------------------- |
+| `started`         | Workflow has been started                 |
+| `already_running` | Identical replay is already in progress   |
+
+## How Replay Works
+
+Once a replay is triggered, the system:
+
+1. Starts a workflow that fetches webhooks from the database in batches of 100
+2. Each webhook is sent to your configured webhook URL with an `is_replay: true` flag
+3. Rate limits are applied to prevent overwhelming your endpoint. Typically, webhooks are sent in batches of 100 events with a few seconds timeout between eaach batch.
+Please ensure that your webhook endpoints are scaled up before triggering the replay API
+
+
+## Supported Event Types
+
+You can filter specific webhooks to replay by the following event types:
+
+| Event Type                 | Description                    |
+| -------------------------- | ------------------------------ |
+| `session.open.success`     | Session started                |
+| `session.close.success`    | Session ended                  |
+| `peer.join.success`        | Peer joined the room           |
+| `peer.leave.success`       | Peer left the room             |
+| `recording.success`        | Recording completed            |
+| `recording.failed`         | Recording failed               |
+| `transcription.success`    | Transcription completed        |
+| `beam.started.success`     | RTMP/HLS streaming started     |
+| `beam.stopped.success`     | RTMP/HLS streaming stopped     |
+
+## Rate Limits
+
+| Endpoint                 | Limit                             |
+| ------------------------ | --------------------------------- |
+| `POST /webhooks/replay`  | 1 request per minute              |
+
+When rate limited, the API returns HTTP 429 with a `Retry-After` header.
+
+## Pagination for Large Replays
+
+For replays with more than 50,000 webhooks, use pagination by making multiple requests with different offsets:
+
+```bash
+# First batch (0-50,000)
+curl --location --request POST \
+    'https://api.100ms.live/v2/analytics/events/webhooks/replay' \
+    --header 'Authorization: Bearer <management_token>' \
+    --header 'Content-Type: application/json' \
+    --data-raw '{
+      "start_time": "2025-12-28T00:00:00Z",
+      "limit": 50000,
+      "offset": 0
+    }'
+
+# Second batch (50,000-100,000) - Run after first completes
+curl --location --request POST \
+    'https://api.100ms.live/v2/analytics/events/webhooks/replay' \
+    --header 'Authorization: Bearer <management_token>' \
+    --header 'Content-Type: application/json' \
+    --data-raw '{
+      "start_time": "2025-12-28T00:00:00Z",
+      "limit": 50000,
+      "offset": 50000
+    }'
+```
+
+## Deduplication
+
+- Replay requests with identical filters will automatically reuse the existing workflow
+- Workflow IDs are deterministically generated based on the request filters
+- Active workflows will return an `already_running` status for duplicate requests
+
+## Error Responses
+
+| Error Code | Message                                           | Description                                     |
+|------------|---------------------------------------------------|-------------------------------------------------|
+| 400        | start_time must be within the last 30 days        | Invalid time range parameters                   |
+| 400        | end_time must be within 14 days after start_time  | Invalid time range parameters                   |
+| 403        | insufficient permissions                          | Unauthorized access or invalid management token |
+| 404        | workflow not found                                | The specified workflow ID does not exist        |
+| 429        | rate limit exceeded, retry after 45 seconds       | Too many requests, rate limit exceeded          |
+| 503        | webhook replay service unavailable                | Service is temporarily unavailable              |
+
+## Why would you use this API?
+
+- **Recover from downtime:** Replay failed webhooks after your server recovers from an outage or maintenance period
+- **Reprocess events:** Replay specific event types following bug fixes, data corrections, or logic updates in your webhook handler
+
+## Check Replay Status
+
+Monitor the status and progress of a webhook replay workflow.
+
+<GetRequest title="https://api.100ms.live/v2/analytics/events/webhooks/replay/{workflow_id}" />
+<Request id="req-1">
+
+```bash
+curl --location --request GET \
+    'https://api.100ms.live/v2/analytics/events/webhooks/replay/webhook-replay-customer123-a1b2c3d4' \
+    --header 'Authorization: Bearer <management_token>'
+```
+
+</Request>
+
+## Allowed Filters
+To be specified as query parameters
+
+| Name        | Type     | Description                                             | Required |
+| ----------- | -------- | ------------------------------------------------------- | -------- |
+| workflow_id | `string` | The workflow ID returned from POST /webhooks/replay     | yes      |
+
+## Response
+
+<ResponseBox id="res-1" status="200 OK">
+
+```json
+{
+  "workflow_id": "webhook-replay-customer123-a1b2c3d4",
+  "status": "completed",
+  "started_at": "2025-12-29T10:00:00Z",
+  "completed_at": "2025-12-29T10:15:00Z",
+  "filters": {
+    "start_time": "2025-12-28T00:00:00Z",
+    "end_time": "2025-12-29T00:00:00Z",
+    "room_id": "",
+    "event_types": ["peer.join.success"],
+    "limit": 50000,
+    "offset": 0
+  },
+  "progress": {
+    "total": 150,
+    "completed": 148,
+    "failed": 2
+  },
+  "result": {
+    "total": 150,
+    "completed": 148,
+    "failed": 2,
+    "failed_events": ["event-id-1", "event-id-2"]
+  }
+}
+```
+
+</ResponseBox>
+
+**Status Values:**
+
+| Status                      | Description                                  |
+| --------------------------- | -------------------------------------------- |
+| `Running`                   | Workflow is currently processing webhooks    |
+| `completed`                 | All webhooks replayed successfully           |
+| `completed_with_failures`   | Replay finished but some webhooks failed     |
+| `failed`                    | All webhooks failed to replay                |
+| `Canceled`                  | Workflow was canceled                        |
+| `Terminated`                | Workflow was terminated                      |
+
+## Why would you use this API?
+
+- **Check status of replay webhook workflow :** Depending on the number of webhook events, a replay workflow trigger can take considerable time to complete. This API can be used to check real time status of any running webhook replay workflow and ensure that it's completed successfully.
+
+## Postman collection
+
+You can use our Postman collection to start exploring 100ms APIs.
+
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://god.gw.postman.com/run-collection/22726679-47dcd974-29d5-4965-a35b-bf9b74a8b25a?action=collection%2Ffork&collection-url=entityId%3D22726679-47dcd974-29d5-4965-a35b-bf9b74a8b25a%26entityType%3Dcollection%26workspaceId%3Dd9145dd6-337b-4761-81d6-21a30b4147a2)
+
+Refer to the [Postman guide](/server-side/v2/introduction/postman-guide) to get started with 100ms API collection.
