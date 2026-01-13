@@ -3,20 +3,20 @@ title: List Webhook Events
 nav: 3.64
 ---
 
-Retrieves webhook delivery history, including both successful and failed webhook deliveries. You can use this API to debug webhook delivery issues and monitor webhook health.
+This API retrieves webhook delivery history including successful and failed webhook events. It can be used to identify failed webhook deliveries and monitor webhook health.
 
-<GetRequest title="https://api.100ms.live/v2/analytics/events/webhooks" />
+<GetRequest title="https://api.100ms.live/v2/analytics/webhooks" />
 <Request id="req-0">
 
 ```bash
 curl --location --request GET \
-    'https://api.100ms.live/v2/analytics/events/webhooks?start_time=2025-12-28T00:00:00Z&status=failed&limit=20' \
+    'https://api.100ms.live/v2/analytics/webhooks?start_time=2025-12-28T00:00:00Z&status=failed&limit=20' \
     --header 'Authorization: Bearer <management_token>'
 ```
 
 </Request>
 
-## Allowed Filters
+### Allowed Filters
 To be specified as query parameters
 
 | Name        | Type     | Description                                                                                                                                                                                                                                             | Required |
@@ -25,11 +25,11 @@ To be specified as query parameters
 | end_time    | `string` | End of time range in RFC3339 format (Default: Now). Must be within 14 days after `start_time`.                                                                                                                                                         | no       |
 | room_id     | `string` | Unique identifier of the room you wish to fetch webhook events for                                                                                                                                                                                     | no       |
 | status      | `string` | Filter by delivery status: `all`, `failed`, `success` (Default: `all`)                                                                                                                                                                                 | no       |
-| event_names | `string` | Filter by original event types (e.g., `session.open.success`). <br /><br /> Can be specified multiple times to include more than one event (for example `event_names=session.open.success&` `event_names=peer.join.success`). (Default: all events) | no       |
+| event_names | `string` | Filter by original event types (e.g., `session.open.success`). <br /><br /> Can be specified multiple times to include more than one event (for example `event_names=session.open.success&` `event_names=peer.join.success`). (Default: all events)    | no       |
 | limit       | `int`    | Items per page (Default: `50`, Min: `1`, Max: `100`)                                                                                                                                                                                                   | no       |
-| page        | `int`    | Page number (Default: `1`)                                                                                                                                                                                                                              | no       |
+| page        | `int`    | Page number (Default: `1`)                                                                                                                                                                                                                             | no       |
 
-## Response
+### Response
 
 <ResponseBox id="res-0" status="200 OK">
 
@@ -71,7 +71,7 @@ To be specified as query parameters
 
 > **Note:** The `error_reason` field is only present for failed webhook events.
 
-## Supported Event Types
+### Supported Event Types
 
 You can filter webhooks by the following event types:
 
@@ -86,16 +86,11 @@ You can filter webhooks by the following event types:
 | `transcription.success`    | Transcription completed        |
 | `beam.started.success`     | RTMP/HLS streaming started     |
 | `beam.stopped.success`     | RTMP/HLS streaming stopped     |
+| `beam.recording.success`   | Browser recording completed    |
+| `hls.recording.success`    | HLS recording completed        |
+| `stream.recording.success` | Stream recording completed     |
 
-## Rate Limits
-
-| Endpoint        | Limit                              |
-| --------------- | ---------------------------------- |
-| `GET /webhooks` | 5 requests per minute              |
-
-When rate limited, the API returns HTTP 429 with a `Retry-After` header.
-
-## Error Responses
+### Error Responses
 
 | Error Code | Message                                      | Description                                     |
 |------------|----------------------------------------------|-------------------------------------------------|
@@ -104,11 +99,11 @@ When rate limited, the API returns HTTP 429 with a `Retry-After` header.
 | 403        | insufficient permissions                     | Unauthorized access or invalid management token |
 | 429        | rate limit exceeded, retry after 45 seconds  | Too many requests, rate limit exceeded          |
 
-## Why would you use this API?
+### Why would you use this API?
 
 - **Debug webhook issues:** Retrieve delivery history to analyze failures, identify patterns, and determine when issues occurred
 
-## Postman collection
+### Postman collection
 
 You can use our Postman collection to start exploring 100ms APIs.
 
