@@ -1,5 +1,5 @@
 ---
-title: Live Transcription for Conferencing (Closed Captions - Beta)
+title: Live Transcription for Conferencing (Closed Captions)
 nav: 1.24
 ---
 
@@ -39,11 +39,9 @@ The `useTranscript` hook is implemented with the `onTranscript` callback as show
 ## How can you check if closed captions are enabled in a room?
 
 ```ts
-
-    import { selectIsTranscriptionEnabled, useHMSStore } from '@100mslive/react-sdk';
-    // use this to check if caption is enabled for your room.
-    const isCaptionPresent: boolean = useHMSStore(selectIsTranscriptionEnabled);
-
+import { selectIsTranscriptionEnabled, useHMSStore } from '@100mslive/react-sdk';
+// use this to check if caption is enabled for your room.
+const isCaptionPresent: boolean = useHMSStore(selectIsTranscriptionEnabled);
 ```
 
 ## How to toggle closed captions on or off?
@@ -51,23 +49,22 @@ The `useTranscript` hook is implemented with the `onTranscript` callback as show
 Closed captions can be dynamically enabled or disabled at runtime within a given room, depending on user requirements. This capability helps minimize unnecessary usage costs by ensuring that captions are enabled only when explicitly needed by the user(s).
 
 ```ts
+// Currently 100ms supports closed captions type mode
+export declare enum HMSTranscriptionMode {
+    CAPTION = 'caption'
+}
 
-    // Currently 100ms supports closed captions type mode
-    export declare enum HMSTranscriptionMode {
-        CAPTION = "caption"
-    }
+export interface TranscriptionConfig {
+    mode: HMSTranscriptionMode;
+}
 
-    export interface TranscriptionConfig {
-        mode: HMSTranscriptionMode;
-    }
-
-    // admin/host role need to startTranscription if he had the access, here is how you will check if you had access to start transcription
-    const isTranscriptionAllowed = useHMSStore(selectIsTranscriptionAllowedByMode(HMSTranscriptionMode.CAPTION));
-
+// admin/host role need to startTranscription if he had the access, here is how you will check if you had access to start transcription
+const isTranscriptionAllowed = useHMSStore(
+    selectIsTranscriptionAllowedByMode(HMSTranscriptionMode.CAPTION)
+);
 ```
 
 Use `hmsActions.startTranscription()` method to start the closed captions.
-
 
 ```ts
     async startCaption() {

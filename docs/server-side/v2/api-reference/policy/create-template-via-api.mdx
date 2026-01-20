@@ -160,7 +160,7 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
         "region": "in",
         "recording": {
             "upload": {
-                "type": "<upload type: supported are s3, gs, oss>",
+                "type": "<upload type: supported are s3, gs, oss, azure>",
                 "location": "<Name of the storage bucket>",
                 "prefix": "<Upload prefix path>",
                 "options": {
@@ -441,7 +441,7 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
         "recording": {
             "upload": {
                 "location": "<Name of the storage bucket>",
-                "type": "<upload type: Supported are s3, gs, oss>",
+                "type": "<upload type: Supported are s3, gs, oss, azure>",
                 "prefix": "<Upload prefix path>",
                 "credentials": {
                     "key": "<access key ID for accessing the storage bucket>",
@@ -695,7 +695,7 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
 
 | Name        | Type     | Description                                                                                                       | Required |
 | :---------- | :------- | :---------------------------------------------------------------------------------------------------------------- | :------- |
-| type        | `string` | Upload destination type. Currently, `s3` (AWS), `gs` (Google Cloud Storage), `oss` (Alibaba Cloud) are supported. | Yes      |
+| type        | `string` | Upload destination type. Currently, `s3` (AWS), `gs` (Google Cloud Storage), `oss` (Alibaba Cloud), `azure` (Azure Blob Storage) are supported. | Yes      |
 | location    | `string` | Name of the storage bucket in which you want to store all recordings                                              | Yes      |
 | prefix      | `string` | Upload prefix path                                                                                                | Yes      |
 | options     | `object` | Additional configurations of type Options to be used for uploading                                                | No       |
