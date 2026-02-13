@@ -1,0 +1,208 @@
+---
+title: Peer Quality Stats
+nav: 3.67
+---
+
+Peer Quality Stats API provides time-series quality metrics for a specific peer in a session. Use this to analyze publishing and subscribing performance, including bitrate, packet loss, FPS, round-trip time, and more.
+
+This is useful for debugging call quality issues, monitoring network conditions, and building custom quality dashboards.
+
+<GetRequest title="https://api.100ms.live/v2/analytics/peer-stats" />
+<Request id="req-0">
+
+```bash
+curl --location --request GET \
+    'https://api.100ms.live/v2/analytics/peer-stats?peer_id=<peer_id>&session_id=<session_id>' \
+    --header 'Authorization: Bearer <management_token>'
+```
+
+</Request>
+
+## Query Parameters
+
+| Name       | Type     | Description                                                        | Required |
+| ---------- | -------- | ------------------------------------------------------------------ | -------- |
+| peer_id    | `string` | Unique identifier of the peer/participant                          | yes      |
+| session_id | `string` | Unique identifier of the session                                   | yes      |
+
+## Response Object
+
+| Attribute   | Type     | Description                                                    |
+| ----------- | -------- | -------------------------------------------------------------- |
+| peer_id     | `string` | Unique identifier of the peer                                  |
+| session_id  | `string` | Unique identifier of the session                               |
+| room_id     | `string` | Unique identifier of the room                                  |
+| publisher   | `object` | Contains `video` and `audio` arrays with publish-side metrics  |
+| subscriber  | `object` | Contains `video` and `audio` arrays with subscribe-side metrics|
+
+### Publisher Video Object
+
+| Attribute   | Type     | Description                                                                 |
+| ----------- | -------- | --------------------------------------------------------------------------- |
+| track_id    | `string` | UUID of the track                                                           |
+| type        | `string` | Track type: `regular` or `screen`                                           |
+| rid         | `string \| null` | Simulcast layer: `h` (high), `m` (medium), `l` (low), or `null`  |
+| time_series | `object` | Time-series metrics for the track                                           |
+
+**Publisher video `time_series` fields:**
+
+| Field               | Type       | Description                             |
+| ------------------- | ---------- | --------------------------------------- |
+| timestamps          | `number[]` | Unix timestamps in milliseconds         |
+| bitrate             | `number[]` | Bitrate in bits per second              |
+| fps                 | `number[]` | Frames per second                       |
+| packet_loss_percent | `number[]` | Packet loss as a percentage             |
+| rtt_ms              | `number[]` | Round-trip time in milliseconds         |
+
+### Publisher Audio Object
+
+| Attribute   | Type     | Description                       |
+| ----------- | -------- | --------------------------------- |
+| track_id    | `string` | UUID of the track                 |
+| time_series | `object` | Time-series metrics for the track |
+
+**Publisher audio `time_series` fields:**
+
+| Field               | Type       | Description                             |
+| ------------------- | ---------- | --------------------------------------- |
+| timestamps          | `number[]` | Unix timestamps in milliseconds         |
+| bitrate             | `number[]` | Bitrate in bits per second              |
+| packet_loss_percent | `number[]` | Packet loss as a percentage             |
+| rtt_ms              | `number[]` | Round-trip time in milliseconds         |
+| jitter_ms           | `number[]` | Jitter in milliseconds                  |
+
+### Subscriber Video Object
+
+| Attribute   | Type     | Description                             |
+| ----------- | -------- | --------------------------------------- |
+| track_id    | `string` | UUID of the track                       |
+| type        | `string` | Track type: `regular` or `screen`       |
+| time_series | `object` | Time-series metrics for the track       |
+
+**Subscriber video `time_series` fields:**
+
+| Field        | Type             | Description                             |
+| ------------ | ---------------- | --------------------------------------- |
+| timestamps   | `number[]`       | Unix timestamps in milliseconds         |
+| bitrate      | `number\|null[]` | Bitrate in bits per second, or `null`   |
+| fps          | `number[]`       | Frames per second                       |
+| freeze_count | `number[]`       | Number of video freezes                 |
+
+### Subscriber Audio Object
+
+| Attribute   | Type     | Description                       |
+| ----------- | -------- | --------------------------------- |
+| track_id    | `string` | UUID of the track                 |
+| time_series | `object` | Time-series metrics for the track |
+
+**Subscriber audio `time_series` fields:**
+
+| Field               | Type             | Description                                  |
+| ------------------- | ---------------- | -------------------------------------------- |
+| timestamps          | `number[]`       | Unix timestamps in milliseconds              |
+| bitrate             | `number\|null[]` | Bitrate in bits per second, or `null`        |
+| concealed_samples   | `number[]`       | Number of concealed (interpolated) samples   |
+| packet_loss_percent | `number[]`       | Packet loss as a percentage                  |
+
+<ResponseBox id="res-0" status="200 OK">
+
+```json
+{
+    "peer_id": "1169b4b7-68c2-4d39-8568-5618433958ac",
+    "session_id": "6977b3f3cdd1e423f8b2cxxx",
+    "room_id": "6977b3f3cdd1e423f8b2xxxx",
+    "publisher": {
+        "video": [
+            {
+                "track_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                "type": "regular",
+                "rid": "h",
+                "time_series": {
+                    "timestamps": [1738843560000, 1738843570000],
+                    "bitrate": [2500000, 2480000],
+                    "fps": [30, 30],
+                    "packet_loss_percent": [0.3, 0.2],
+                    "rtt_ms": [45, 47]
+                }
+            },
+            {
+                "track_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                "type": "regular",
+                "rid": "m",
+                "time_series": {
+                    "timestamps": [1738843560000],
+                    "bitrate": [1200000],
+                    "fps": [30],
+                    "packet_loss_percent": [0.15],
+                    "rtt_ms": [45]
+                }
+            },
+            {
+                "track_id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+                "type": "screen",
+                "rid": null,
+                "time_series": {
+                    "timestamps": [1738843560000],
+                    "bitrate": [800000],
+                    "fps": [5],
+                    "packet_loss_percent": [0.1],
+                    "rtt_ms": [46]
+                }
+            }
+        ],
+        "audio": [
+            {
+                "track_id": "c3d4e5f6-a7b8-9012-cdef-123456789012",
+                "time_series": {
+                    "timestamps": [1738843560000],
+                    "bitrate": [64000],
+                    "packet_loss_percent": [0.1],
+                    "rtt_ms": [45],
+                    "jitter_ms": [2.1]
+                }
+            }
+        ]
+    },
+    "subscriber": {
+        "video": [
+            {
+                "track_id": "4334da7c-1d73-4e19-9d63-4b0571f5acd4",
+                "type": "regular",
+                "time_series": {
+                    "timestamps": [1738843560000],
+                    "bitrate": [null],
+                    "fps": [15],
+                    "freeze_count": [0]
+                }
+            }
+        ],
+        "audio": [
+            {
+                "track_id": "fbc9c8f8-70ea-4d24-9699-12bf3eba94d8",
+                "time_series": {
+                    "timestamps": [1738843560000],
+                    "bitrate": [null],
+                    "concealed_samples": [0],
+                    "packet_loss_percent": [0.2]
+                }
+            }
+        ]
+    }
+}
+```
+
+</ResponseBox>
+
+## Notes
+
+- **Authentication**: Requires a management token in the `Authorization: Bearer <token>` header.
+- **Empty Data**: Arrays will be empty `[]` if no data is available for a given metric.
+- **Simulcast**: For publisher video tracks, the same `track_id` may appear multiple times with different `rid` values (`h`/`m`/`l`) representing different simulcast quality layers.
+
+## Postman collection
+
+You can use our Postman collection to start exploring 100ms APIs.
+
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://god.gw.postman.com/run-collection/22726679-47dcd974-29d5-4965-a35b-bf9b74a8b25a?action=collection%2Ffork&collection-url=entityId%3D22726679-47dcd974-29d5-4965-a35b-bf9b74a8b25a%26entityType%3Dcollection%26workspaceId%3Dd9145dd6-337b-4761-81d6-21a30b4147a2)
+
+Refer to the [Postman guide](/server-side/v2/introduction/postman-guide) to get started with 100ms API collection.
