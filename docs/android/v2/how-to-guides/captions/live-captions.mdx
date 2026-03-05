@@ -1,5 +1,5 @@
 ---
-title:  Live Transcription for Conferencing (Closed Captions - Beta)
+title: Live Transcription for Conferencing (Closed Captions)
 nav: 15.1
 ---
 
@@ -10,6 +10,7 @@ nav: 15.1
 -   Minimum 100ms SDK version required is `2.9.54`
 
 ## Checking if captions are enabled in a room.
+
 To check if WebRTC (not hls) captions are enabled in a room. Look for any transcriptions being in a started state in the room data.
 `val captionsEnabled = hmsSDK.getRoom()?.transcriptions?.find { it.state == TranscriptionState.STARTED } != null`
 
@@ -20,12 +21,13 @@ Implement `fun onTranscripts(transcripts: HmsTranscripts)` in the `HMSUpdateList
 For an example implementation look at [`TranscriptionUseCase.kt`](https://github.com/100mslive/100ms-android/blob/ac66fa76503ec990322c293f8ce6a504c0c3c444/room-kit/src/main/java/live/hms/roomkit/ui/meeting/TranscriptionUseCase.kt#L44) in the 100ms-android [sample app](https://github.com/100mslive/100ms-android/blob/ac66fa76503ec990322c293f8ce6a504c0c3c444/room-kit/src/main/java/live/hms/roomkit/ui/meeting/TranscriptionUseCase.kt#L44) repository.
 
 ## Toggling Live Transcripts
+
 To save on cost, live transcriptions can be disabled for everyone at runtime and toggled on again when required.
 
 ```kotlin
 // Start Real Time Transcription
 hmsSDK.startRealTimeTranscription(
-    
+
     TranscriptionsMode.CAPTION,
 
     object : HMSActionResultListener {
@@ -40,7 +42,7 @@ hmsSDK.startRealTimeTranscription(
 hmsSDK.stopRealTimeTranscription(
 
     TranscriptionsMode.CAPTION,
-    
+
     object : HMSActionResultListener {
         override fun onError(error: HMSException) {}
         override fun onSuccess() {}
