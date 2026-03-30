@@ -11,84 +11,179 @@ nav: 1.24
 
 ## How to implement closed captioning?
 
-The `useTranscript` hook is implemented with the `onTranscript` callback as shown below:
+Each transcript entry has the following structure:
 
 ```ts
-    export interface HMSTranscript {
-        // start time in second
-        start: number;
-        // end time in seconds
-        end: number;
-        // peer_id of the speaker
-        peer_id: string;
-        // transcription will continue to update the transcript until you receive final keyword
-        final: boolean;
-        // closed caption
-        transcript: string;
-    }
-
-    export interface useHMSTranscriptInput {
-        onTranscript?: (data: HMSTranscript[]) => void;
-        handleError?: hooksErrHandler;
-    }
-
-    export const useTranscript = ({ onTranscript, handleError = logErrorHandler }: useHMSTranscriptInput);
-
+interface HMSTranscript {
+    start: number;       // start time in seconds
+    end: number;         // end time in seconds
+    peer_id: string;     // peer_id of the speaker
+    final: boolean;      // true when the transcript segment is finalized
+    transcript: string;  // the caption text
+}
 ```
+
+The transcription engine sends interim results as the speaker talks, then a final result once the segment is complete. Interim results update the same segment in place, while final results indicate that a new segment will follow.
+
+<Tabs id="captions-implement" items={['JavaScript', 'React']} />
+
+<Tab id='captions-implement-0'>
+
+In plain JavaScript, transcript data arrives as `NEW_MESSAGE` notifications of type `hms_transcript`. Subscribe via `hmsNotifications.onNotification`:
+
+```js
+import { HMSNotificationTypes } from '@100mslive/hms-video-store';
+
+const unsubscribe = hmsNotifications.onNotification((notification) => {
+    const msg = notification.data;
+    if (msg && msg.type === 'hms_transcript') {
+        const parsed = JSON.parse(msg.message);
+        const transcripts = parsed.results; // HMSTranscript[]
+
+        transcripts.forEach((entry) => {
+            console.log(
+                `${entry.peer_id}: ${entry.transcript} (final: ${entry.final})`
+            );
+        });
+    }
+}, HMSNotificationTypes.NEW_MESSAGE);
+
+// call unsubscribe() when you no longer need transcript updates
+```
+
+To resolve the `peer_id` to a display name, use the store:
+
+```js
+import { selectPeerNameByID } from '@100mslive/hms-video-store';
+
+const peerName = hmsStore.getState(selectPeerNameByID(entry.peer_id));
+```
+
+</Tab>
+
+<Tab id='captions-implement-1'>
+
+Use the `useTranscript` hook with the `onTranscript` callback:
+
+```jsx
+import { useTranscript } from '@100mslive/react-sdk';
+
+function CaptionsViewer() {
+    useTranscript({
+        onTranscript: (transcripts) => {
+            // transcripts is HMSTranscript[]
+            transcripts.forEach((entry) => {
+                console.log(
+                    `${entry.peer_id}: ${entry.transcript} (final: ${entry.final})`
+                );
+            });
+        },
+    });
+
+    return null;
+}
+```
+
+</Tab>
 
 ## How can you check if closed captions are enabled in a room?
 
-```ts
-import { selectIsTranscriptionEnabled, useHMSStore } from '@100mslive/react-sdk';
-// use this to check if caption is enabled for your room.
-const isCaptionPresent: boolean = useHMSStore(selectIsTranscriptionEnabled);
+<Tabs id="captions-check" items={['JavaScript', 'React']} />
+
+<Tab id='captions-check-0'>
+
+```js
+import { selectIsTranscriptionEnabled } from '@100mslive/hms-video-store';
+
+// read once
+const isCaptionEnabled = hmsStore.getState(selectIsTranscriptionEnabled);
+
+// or subscribe to changes
+hmsStore.subscribe((enabled) => {
+    console.log('Captions enabled:', enabled);
+}, selectIsTranscriptionEnabled);
 ```
+
+</Tab>
+
+<Tab id='captions-check-1'>
+
+```jsx
+import { selectIsTranscriptionEnabled, useHMSStore } from '@100mslive/react-sdk';
+
+function CaptionStatus() {
+    const isCaptionEnabled = useHMSStore(selectIsTranscriptionEnabled);
+    return <span>{isCaptionEnabled ? 'Captions ON' : 'Captions OFF'}</span>;
+}
+```
+
+</Tab>
 
 ## How to toggle closed captions on or off?
 
 Closed captions can be dynamically enabled or disabled at runtime within a given room, depending on user requirements. This capability helps minimize unnecessary usage costs by ensuring that captions are enabled only when explicitly needed by the user(s).
 
-```ts
-// Currently 100ms supports closed captions type mode
-export declare enum HMSTranscriptionMode {
-    CAPTION = 'caption'
-}
+### Check permission
 
-export interface TranscriptionConfig {
-    mode: HMSTranscriptionMode;
-}
+Before starting or stopping transcription, verify that the local peer has the required permission:
 
-// admin/host role need to startTranscription if he had the access, here is how you will check if you had access to start transcription
+<Tabs id="captions-permission" items={['JavaScript', 'React']} />
+
+<Tab id='captions-permission-0'>
+
+```js
+import {
+    HMSTranscriptionMode,
+    selectIsTranscriptionAllowedByMode
+} from '@100mslive/hms-video-store';
+
+const isTranscriptionAllowed = hmsStore.getState(
+    selectIsTranscriptionAllowedByMode(HMSTranscriptionMode.CAPTION)
+);
+```
+
+</Tab>
+
+<Tab id='captions-permission-1'>
+
+```jsx
+import {
+    HMSTranscriptionMode,
+    selectIsTranscriptionAllowedByMode,
+    useHMSStore
+} from '@100mslive/react-sdk';
+
 const isTranscriptionAllowed = useHMSStore(
     selectIsTranscriptionAllowedByMode(HMSTranscriptionMode.CAPTION)
 );
 ```
 
-Use `hmsActions.startTranscription()` method to start the closed captions.
+</Tab>
 
-```ts
-    async startCaption() {
-        try {
-            await hmsActions.startTranscription({
-                mode: HMSTranscriptionMode.CAPTION,
-            });
-        } catch(err) {
-            console.log(err);
-        }
-    }
+### Start captions
 
+Use `hmsActions.startTranscription()` to enable closed captions for the room:
+
+```js
+try {
+    await hmsActions.startTranscription({
+        mode: HMSTranscriptionMode.CAPTION,
+    });
+} catch (err) {
+    console.error('Failed to start captions:', err);
+}
 ```
 
-Use `hmsActions.stopTranscription()` method to stop closed captions.
+### Stop captions
 
-```ts
-    async stopCaption() {
-        try {
-            await hmsActions.stopTranscription({
-                mode: HMSTranscriptionMode.CAPTION,
-            });
-        } catch(err) {
-            console.log(err);
-        }
-    }
+Use `hmsActions.stopTranscription()` to disable closed captions:
+
+```js
+try {
+    await hmsActions.stopTranscription({
+        mode: HMSTranscriptionMode.CAPTION,
+    });
+} catch (err) {
+    console.error('Failed to stop captions:', err);
+}
 ```
