@@ -19,6 +19,18 @@ import AndroidPrebuiltVersionShield from '@/common/android-prebuilt-version-shie
 | live.100ms:virtual-background: |<AndroidSdkVersionShield />|
 | live.100ms:hms-noise-cancellation-android: | <AndroidSdkVersionShield /> |
 
+## v2.9.83 - 2026-04-10
+### Fixed
+* Improved Bluetooth permission handling on Android 12+ — the SDK now declares `BLUETOOTH_CONNECT` in the manifest and detects when it is missing at runtime.
+
+### Changed
+* Improved audio manager selection logic on Android 12+ for more consistent behavior across devices.
+
+## v2.9.82 - 2026-04-07
+### Fixed
+* Fixed Bluetooth audio devices not appearing in `getAudioDevicesList()` on Android 12+.
+* Added `AUTOMATIC` option to the audio device list on Android 12+.
+
 ## v2.9.80 - 2026-02-10
 ### Fixed
 *  Bug fix for image capture callback reliability during camera operations.
