@@ -264,6 +264,13 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
                             "format": "paragraph"
                         }
                     ]
+                },
+                "translation": {
+                    "enabled": true,
+                    "roleLanguages": {
+                        "host": "es",
+                        "guest": "fr"
+                    }
                 }
             }
         }
@@ -804,6 +811,14 @@ Minimum between `width` and `height` should be in range [144, 1080] and Maximum 
 | outputModes      | `array`  | Array of transcript output modes, valid for recorded mode. Valid values: [ txt, srt, json ] (txt: Plain text, srt: SubRip text, json: Granular timestamped words and sentences)  | No       |
 | customVocabulary | `array`  | Array of words that might be spoken during the call. This can consist of non-dictionary words like names, slang, abbreviations and domain specific words.                        | No       |
 | summary          | `object` | Object of type `summary`. This can be used to enable and configure summary, valid for recorded mode.                                                                             | No       |
+| translation      | `object` | Object of type `translation`. This can be used to enable per-role language translation for live captions.                                                                         | No       |
+
+#### transcriptions - translation object
+
+| Name          | Type      | Description                                                                                                                                                                 | Required |
+| ------------- | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| enabled       | `boolean` | Set this to `true` to enable translation for live captions.                                                                                                                 | No       |
+| roleLanguages | `object`  | A map of role names to target language codes. Each role receives captions translated into its configured language. Example: `{ "host": "es", "guest": "fr" }` | No       |
 
 #### transcriptions - summary object
 
