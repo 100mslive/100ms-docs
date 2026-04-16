@@ -811,11 +811,11 @@ Minimum between `width` and `height` should be in range [144, 1080] and Maximum 
 | outputModes      | `array`  | Array of transcript output modes, valid for recorded mode. Valid values: [ txt, srt, json ] (txt: Plain text, srt: SubRip text, json: Granular timestamped words and sentences)  | No       |
 | customVocabulary | `array`  | Array of words that might be spoken during the call. This can consist of non-dictionary words like names, slang, abbreviations and domain specific words.                        | No       |
 | summary          | `object` | Object of type `summary`. This can be used to enable and configure summary, valid for recorded mode.                                                                             | No       |
-| translation      | `object` | Object of type `translation`. This can be used to enable per-role language translation for live captions. Only supported in `live` (caption) mode.                            | No       |
+| translation      | `object` | Object of type `translation`. This can be used to enable per-role language translation for captions. Only supported in `caption` mode.                                        | No       |
 
 #### transcriptions - translation object
 
-> Translation is currently supported only in `live` (caption) mode. The `modes` array in the transcription destination must include `live` for translation to take effect.
+> Translation is currently supported only in `caption` mode. It does not apply to `recorded` or `live` transcription modes.
 
 | Name          | Type      | Description                                                                                                                                                                 | Required |
 | ------------- | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
