@@ -187,3 +187,134 @@ try {
     console.error('Failed to stop captions:', err);
 }
 ```
+
+## Translation
+
+Translation enables each role to receive captions translated into their configured language. Translation must be enabled in the template policy with per-role language mappings (e.g., `host → es`, `guest → fr`).
+
+> Translation requires SDK version 0.13.3 or above and the translation feature enabled in your template's transcription destination.
+
+### Start captions with translation
+
+Pass `translation` when starting transcription to enable translation from the start:
+
+<Tabs id="captions-translation-start" items={['JavaScript', 'React']} />
+
+<Tab id='captions-translation-start-0'>
+
+```js
+import { HMSTranscriptionMode } from '@100mslive/hms-video-store';
+
+await hmsActions.startTranscription({
+    mode: HMSTranscriptionMode.CAPTION,
+    translation: {
+        enabled: true,
+    },
+});
+```
+
+You can also override the template's role-language mapping at start time:
+
+```js
+await hmsActions.startTranscription({
+    mode: HMSTranscriptionMode.CAPTION,
+    translation: {
+        enabled: true,
+        roleLanguages: { host: 'es', guest: 'fr' },
+    },
+});
+```
+
+</Tab>
+
+<Tab id='captions-translation-start-1'>
+
+```jsx
+import { HMSTranscriptionMode, useHMSActions } from '@100mslive/react-sdk';
+
+function StartCaptionsWithTranslation() {
+    const hmsActions = useHMSActions();
+
+    const startWithTranslation = async () => {
+        await hmsActions.startTranscription({
+            mode: HMSTranscriptionMode.CAPTION,
+            translation: { enabled: true },
+        });
+    };
+
+    return <button onClick={startWithTranslation}>Start Captions + Translation</button>;
+}
+```
+
+</Tab>
+
+### Toggle translation mid-session
+
+Use `hmsActions.updateTranscriptionConfig()` to enable or disable translation while captions are already running:
+
+```js
+// Enable translation mid-call
+await hmsActions.updateTranscriptionConfig({
+    translation: { enabled: true },
+});
+
+// Disable translation (captions continue in original language)
+await hmsActions.updateTranscriptionConfig({
+    translation: { enabled: false },
+});
+
+// Change the transcription input language
+await hmsActions.updateTranscriptionConfig({
+    language: 'hi',
+});
+```
+
+### Check translation state
+
+Use the `selectTranslationState` selector to read the current translation state:
+
+<Tabs id="captions-translation-check" items={['JavaScript', 'React']} />
+
+<Tab id='captions-translation-check-0'>
+
+```js
+import { selectTranslationState } from '@100mslive/hms-video-store';
+
+const translationState = hmsStore.getState(selectTranslationState);
+// { available: true, enabled: true, roleLanguages: { host: 'es', guest: 'fr' } }
+
+// Subscribe to changes
+hmsStore.subscribe((state) => {
+    console.log('Translation enabled:', state.enabled);
+    console.log('Role languages:', state.roleLanguages);
+}, selectTranslationState);
+```
+
+</Tab>
+
+<Tab id='captions-translation-check-1'>
+
+```jsx
+import { selectTranslationState, useHMSStore } from '@100mslive/react-sdk';
+
+function TranslationStatus() {
+    const { available, enabled, roleLanguages } = useHMSStore(selectTranslationState);
+
+    if (!available) return <span>Translation not configured</span>;
+
+    return (
+        <div>
+            <span>Translation: {enabled ? 'ON' : 'OFF'}</span>
+            {roleLanguages && (
+                <ul>
+                    {Object.entries(roleLanguages).map(([role, lang]) => (
+                        <li key={role}>{role}: {lang}</li>
+                    ))}
+                </ul>
+            )}
+        </div>
+    );
+}
+```
+
+</Tab>
