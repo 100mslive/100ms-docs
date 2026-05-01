@@ -14,6 +14,16 @@ description: Release Notes for 100ms.live JavaScript SDK
 | @100mslive/hms-noise-cancellation | [![npm version](https://badge.fury.io/js/%40100mslive%2Fhms-noise-cancellation.svg)](https://badge.fury.io/js/%40100mslive%2Fhms-noise-cancellation) |
 | @100mslive/hms-virtual-background | [![npm version](https://badge.fury.io/js/%40100mslive%2Fhms-virtual-background.svg)](https://badge.fury.io/js/%40100mslive%2Fhms-virtual-background) |
 
+## 2026-04-29
+
+Released: `@100mslive/hms-video-store@0.14.0`, `@100mslive/react-sdk@0.12.0`, `@100mslive/hls-player@0.5.0`, `@100mslive/roomkit-react@0.5.0`, `@100mslive/hms-whiteboard@0.2.0`, `@100mslive/hms-virtual-background@1.15.0`
+
+### Fixed:
+
+-   `HMSAudioTrack.setOutputDevice` now surfaces `setSinkId` failures instead of swallowing them — the persisted output device and analytics only update when the browser actually switches sinks, so the UI no longer reports a device as selected while audio still routes to the previous one
+-   Switching audio output device now recovers tracks that were auto-paused by an OS audio-session interruption (headset disconnect, incoming call, Bluetooth swap), via a new `AudioSinkManager.recoverAutoPausedTracks` path that the user-initiated change goes through
+-   Roomkit Prebuilt: Noise suppression level slider in the Audio Settings dropdown now reflects the user's actual configured level on every open — previously it snapped back to 100% on remount even though Krisp retained the real level on the filter node
+
 ## 2026-04-22
 
 Released: `@100mslive/hms-video-store@0.13.4`, `@100mslive/react-sdk@0.11.4`, `@100mslive/hls-player@0.4.4`, `@100mslive/roomkit-react@0.4.4`, `@100mslive/hms-noise-cancellation@0.1.0`
