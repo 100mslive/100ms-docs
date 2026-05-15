@@ -11,6 +11,57 @@ nav: 4.1
 | @100mslive/react-native-hms          | [![npm](https://img.shields.io/npm/v/@100mslive/react-native-hms)](https://www.npmjs.com/package/@100mslive/react-native-hms)                   |
 | @100mslive/react-native-video-plugin | [![npm](https://img.shields.io/npm/v/@100mslive/react-native-video-plugin)](https://www.npmjs.com/package/@100mslive/react-native-video-plugin) |
 
+## 2.0.0-alpha - 2026-05-15
+
+| Package                              | Version       |
+| ------------------------------------ | ------------- |
+| @100mslive/react-native-hms          | 2.0.0-alpha.1 |
+| @100mslive/react-native-room-kit     | 2.0.0-alpha.0 |
+| @100mslive/react-native-video-plugin | 2.0.0-alpha.0 |
+
+## Highlights
+
+First **alpha release** on React Native's **New Architecture** (TurboModules + Fabric + bridgeless mode). The SDK natively integrates with new-arch apps — no longer relying on RN's Interop Layer shim. Consumers whose apps already use `newArchEnabled=true` can adopt without forking.
+
+**Opt-in install** — `latest` still points at the stable 1.x line, so existing customers are unaffected. To try the alpha:
+
+```bash
+npm install @100mslive/react-native-hms@alpha \
+            @100mslive/react-native-room-kit@alpha \
+            @100mslive/react-native-video-plugin@alpha
+```
+
+### What's new
+
+-   Full New Architecture support — TurboModule + Fabric component view + bridgeless event dispatch
+-   Backwards compatible — the SDK still works under `newArchEnabled=false`
+-   Lazy module initialization — faster cold start; modules load on first JS access instead of at app launch
+-   Codegen-typed JS↔native contract — compile-time enforcement, fewer runtime "wrong-shape" bugs
+
+### Breaking changes
+
+-   **iOS `setupPIP()` rejects instead of crashing.** Previously crashed with "unrecognized selector"; now returns a rejected promise with code `HMS_PLATFORM_UNSUPPORTED`. Add a `.catch()` handler if you weren't already.
+
+-   **`<HMSView />` raw native event `onChange` renamed to `onResolutionChange`.** Only affects code that imported the raw Fabric component directly — the public `HmsView` wrapper exposes no event prop, so consumers using the documented API see no change.
+
+Uses Android SDK 2.9.78 & iOS SDK 1.17.0
+
+**Full Changelog**: [1.14.0...2.0.0-alpha.1](https://github.com/100mslive/100ms-react-native/compare/1.14.0...2.0.0-alpha.1)
+
+## 1.14.0 - 2026-05-07
+
+| Package                     | Version |
+| --------------------------- | ------- |
+| @100mslive/react-native-hms | 1.12.2  |
+
+### react-native-hms
+
+-   **React Native New Architecture Interop Layer support.** The SDK now works in apps with `newArchEnabled=true` via RN's built-in Interop Layer. Resolves [#1428](https://github.com/100mslive/100ms-react-native/issues/1428) where `HMSSDK.build()` crashed on iOS under new-arch + Expo SDK 51 / RN 0.74+. Old-arch consumers see no change in behavior.
+
+Uses Android SDK 2.9.78 & iOS SDK 1.17.0
+
+**Full Changelog**: [1.13.0...1.14.0](https://github.com/100mslive/100ms-react-native/compare/1.13.0...1.14.0)
+
 ## 1.13.0 - 2026-04-30
 
 | Package                          | Version |
