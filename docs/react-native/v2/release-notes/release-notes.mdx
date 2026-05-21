@@ -11,6 +11,38 @@ nav: 4.1
 | @100mslive/react-native-hms          | [![npm](https://img.shields.io/npm/v/@100mslive/react-native-hms)](https://www.npmjs.com/package/@100mslive/react-native-hms)                   |
 | @100mslive/react-native-video-plugin | [![npm](https://img.shields.io/npm/v/@100mslive/react-native-video-plugin)](https://www.npmjs.com/package/@100mslive/react-native-video-plugin) |
 
+## 2.0.0-alpha.2 - 2026-05-21
+
+Patch release for the **2.0.0-alpha** track. Fixes an iOS build failure under `use_frameworks! :linkage => :static` — the default Podfile setting in Expo SDK 54+. Bare React Native apps and Expo SDK ≤53 were not affected by alpha.1.
+
+| Package                              | Version       |
+| ------------------------------------ | ------------- |
+| @100mslive/react-native-hms          | 2.0.0-alpha.2 |
+| @100mslive/react-native-room-kit     | 2.0.0-alpha.1 |
+| @100mslive/react-native-video-plugin | 2.0.0-alpha.0 |
+
+### Install
+
+```bash
+npm install @100mslive/react-native-hms@alpha \
+            @100mslive/react-native-room-kit@alpha \
+            @100mslive/react-native-video-plugin@alpha
+```
+
+`latest` still points at the `1.x` line — existing customers are unaffected.
+
+### react-native-hms
+
+-   **Fix iOS build under `use_frameworks! :linkage => :static`.** The auto-generated Swift bridging header (`react_native_hms-Swift.h`) couldn't be located, and the React types it referenced (`RCTViewManager`, `RCTEventEmitter`, `RCTDirectEventBlock`) weren't visible to consumers under framework-mode linkage. The `.mm` files now use `__has_include` to pick the working header path and explicitly import the React headers they need before including the Swift bridging header. Reported by an Expo SDK 54 / RN 0.81.5 customer.
+
+### react-native-room-kit
+
+-   Peer-dep refresh only — no source changes. Bumps `@100mslive/react-native-hms` peer dependency to `2.0.0-alpha.2` so the alpha-track install pulls the iOS fix automatically.
+
+Uses Android SDK 2.9.78 & iOS SDK 1.17.0
+
+**Full Changelog**: [2.0.0-alpha.1...2.0.0-alpha.2](https://github.com/100mslive/100ms-react-native/compare/2.0.0-alpha.1...2.0.0-alpha.2)
+
 ## 2.0.0-alpha - 2026-05-15
 
 | Package                              | Version       |
@@ -21,15 +53,7 @@ nav: 4.1
 
 ## Highlights
 
-First **alpha release** on React Native's **New Architecture** (TurboModules + Fabric + bridgeless mode). The SDK natively integrates with new-arch apps — no longer relying on RN's Interop Layer shim. Consumers whose apps already use `newArchEnabled=true` can adopt without forking.
-
-**Opt-in install** — `latest` still points at the stable 1.x line, so existing customers are unaffected. To try the alpha:
-
-```bash
-npm install @100mslive/react-native-hms@alpha \
-            @100mslive/react-native-room-kit@alpha \
-            @100mslive/react-native-video-plugin@alpha
-```
+First **alpha release** on React Native's **New Architecture** (TurboModules + Fabric + bridgeless mode). The SDK natively integrates with new-arch apps — no longer relying on RN's Interop Layer shim. Consumers whose apps already use `newArchEnabled=true` can adopt without forking. See the latest entry above for install instructions.
 
 ### Phase 0 (1.13.1) → Phase 1 (2.0.0-alpha)
 
