@@ -14,6 +14,27 @@ description: Release Notes for 100ms.live JavaScript SDK
 | @100mslive/hms-noise-cancellation | [![npm version](https://badge.fury.io/js/%40100mslive%2Fhms-noise-cancellation.svg)](https://badge.fury.io/js/%40100mslive%2Fhms-noise-cancellation) |
 | @100mslive/hms-virtual-background | [![npm version](https://badge.fury.io/js/%40100mslive%2Fhms-virtual-background.svg)](https://badge.fury.io/js/%40100mslive%2Fhms-virtual-background) |
 
+## 2026-05-20
+
+Released: `@100mslive/hms-video-store@0.14.2`, `@100mslive/react-sdk@0.12.2`, `@100mslive/hls-player@0.5.2`, `@100mslive/roomkit-react@0.5.2`, `@100mslive/hms-whiteboard@0.2.2`, `@100mslive/hms-virtual-background@1.15.2`
+
+### Fixed:
+
+-   Roomkit Prebuilt: PDF screenshare now renders in gallery layout regardless of the active layout mode — previously sharing a PDF while the room was in sidebar mode left the PDF hidden behind the participant tile strip; the previous layout mode is restored when the PDF view closes
+
+## 2026-05-13
+
+Released: `@100mslive/hms-video-store@0.14.1`, `@100mslive/react-sdk@0.12.1`, `@100mslive/hls-player@0.5.1`, `@100mslive/roomkit-react@0.5.1`, `@100mslive/hms-whiteboard@0.2.1`, `@100mslive/hms-virtual-background@1.15.1`
+
+### Fixed:
+
+-   `HMSRoomProvider` now calls `leave()` on unmount when it owns the store, so apps that mount the provider conditionally no longer leak a live room when the component tree is torn down
+-   `VideoElementManager` observer callbacks are now guarded after track destruction, preventing `Cannot read properties of null` errors when a track is removed while its intersection or resize observers are still firing
+-   Local video track lifecycle hardening: `processedTrack` is now stopped only after `sender.replaceTrack` lands, and several small track-surface fixes prevent the published track from being closed before the SFU has switched over
+-   Signaling robustness: `pingPongLoop` now uses a generation guard on reschedule so stale ping loops can no longer race a fresh socket, and `retrySignalDisconnectTask` bails out early when `joinParameters` has been cleared (avoids reconnect attempts after a deliberate leave)
+-   Transport fixes for ICE/SDP edge cases: corrected the publisher/subscriber role check in `handleIceConnectionFailure`, and the `onOffer` catch path no longer writes connection state directly — failures now flow through the regular reconnection state machine
+-   Resolved Dependabot security advisories on transitive dependencies
+
 ## 2026-04-29
 
 Released: `@100mslive/hms-video-store@0.14.0`, `@100mslive/react-sdk@0.12.0`, `@100mslive/hls-player@0.5.0`, `@100mslive/roomkit-react@0.5.0`, `@100mslive/hms-whiteboard@0.2.0`, `@100mslive/hms-virtual-background@1.15.0`
