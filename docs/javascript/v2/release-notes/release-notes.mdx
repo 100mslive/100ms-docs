@@ -28,11 +28,11 @@ Released: `@100mslive/hms-video-store@0.14.1`, `@100mslive/react-sdk@0.12.1`, `@
 
 ### Fixed:
 
--   `HMSRoomProvider` now calls `leave()` on unmount when it owns the store, so apps that mount the provider conditionally no longer leak a live room when the component tree is torn down
--   `VideoElementManager` observer callbacks are now guarded after track destruction, preventing `Cannot read properties of null` errors when a track is removed while its intersection or resize observers are still firing
--   Local video track lifecycle hardening: `processedTrack` is now stopped only after `sender.replaceTrack` lands, and several small track-surface fixes prevent the published track from being closed before the SFU has switched over
--   Signaling robustness: `pingPongLoop` now uses a generation guard on reschedule so stale ping loops can no longer race a fresh socket, and `retrySignalDisconnectTask` bails out early when `joinParameters` has been cleared (avoids reconnect attempts after a deliberate leave)
--   Transport fixes for ICE/SDP edge cases: corrected the publisher/subscriber role check in `handleIceConnectionFailure`, and the `onOffer` catch path no longer writes connection state directly — failures now flow through the regular reconnection state machine
+-   `HMSRoomProvider` now calls `leave()` on unmount when it owns the store, preventing leaked rooms when the provider is conditionally mounted
+-   Stability fixes for video track teardown to avoid null reference errors during view updates
+-   Local video track publishing stability improvements
+-   Signaling reconnection stability improvements
+-   ICE reconnection improvements for publish
 -   Resolved Dependabot security advisories on transitive dependencies
 
 ## 2026-04-29
