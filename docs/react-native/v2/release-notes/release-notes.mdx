@@ -11,6 +11,89 @@ nav: 4.1
 | @100mslive/react-native-hms          | [![npm](https://img.shields.io/npm/v/@100mslive/react-native-hms)](https://www.npmjs.com/package/@100mslive/react-native-hms)                   |
 | @100mslive/react-native-video-plugin | [![npm](https://img.shields.io/npm/v/@100mslive/react-native-video-plugin)](https://www.npmjs.com/package/@100mslive/react-native-video-plugin) |
 
+## 2.0.0-alpha.2 - 2026-05-21
+
+Patch release for the **2.0.0-alpha** track. Fixes an iOS build failure under `use_frameworks! :linkage => :static` — the default Podfile setting in Expo SDK 54+. Bare React Native apps and Expo SDK ≤53 were not affected by alpha.1.
+
+| Package                              | Version       |
+| ------------------------------------ | ------------- |
+| @100mslive/react-native-hms          | 2.0.0-alpha.2 |
+| @100mslive/react-native-room-kit     | 2.0.0-alpha.1 |
+| @100mslive/react-native-video-plugin | 2.0.0-alpha.0 |
+
+### Install
+
+```bash
+npm install @100mslive/react-native-hms@alpha \
+            @100mslive/react-native-room-kit@alpha \
+            @100mslive/react-native-video-plugin@alpha
+```
+
+`latest` still points at the `1.x` line — existing customers are unaffected.
+
+### react-native-hms
+
+-   **Fix iOS build under `use_frameworks! :linkage => :static`.** The auto-generated Swift bridging header (`react_native_hms-Swift.h`) couldn't be located, and the React types it referenced (`RCTViewManager`, `RCTEventEmitter`, `RCTDirectEventBlock`) weren't visible to consumers under framework-mode linkage. The `.mm` files now use `__has_include` to pick the working header path and explicitly import the React headers they need before including the Swift bridging header. Reported by an Expo SDK 54 / RN 0.81.5 customer.
+
+### react-native-room-kit
+
+-   Peer-dep refresh only — no source changes. Bumps `@100mslive/react-native-hms` peer dependency to `2.0.0-alpha.2` so the alpha-track install pulls the iOS fix automatically.
+
+Uses Android SDK 2.9.78 & iOS SDK 1.17.0
+
+**Full Changelog**: [2.0.0-alpha.1...2.0.0-alpha.2](https://github.com/100mslive/100ms-react-native/compare/2.0.0-alpha.1...2.0.0-alpha.2)
+
+## 2.0.0-alpha - 2026-05-15
+
+| Package                              | Version       |
+| ------------------------------------ | ------------- |
+| @100mslive/react-native-hms          | 2.0.0-alpha.1 |
+| @100mslive/react-native-room-kit     | 2.0.0-alpha.0 |
+| @100mslive/react-native-video-plugin | 2.0.0-alpha.0 |
+
+## Highlights
+
+First **alpha release** on React Native's **New Architecture** (TurboModules + Fabric + bridgeless mode). The SDK natively integrates with new-arch apps — no longer relying on RN's Interop Layer shim. Consumers whose apps already use `newArchEnabled=true` can adopt without forking. See the latest entry above for install instructions.
+
+### Phase 0 (1.13.1) → Phase 1 (2.0.0-alpha)
+
+`1.13.1` made the SDK *survive* under new-arch apps via React Native's **Interop Layer** — a built-in shim that translates new-arch calls back to the old module API. The SDK's internals stayed old-arch; the Interop Layer did the translation. Useful, but you pay a translation cost on every call and can't reach the new-arch performance benefits.
+
+`2.0.0-alpha` replaces the shim with **native new-arch implementation**: TurboModule entry points, Fabric component views, codegen-typed JS↔native contracts, lazy module initialization. The SDK now speaks new-arch directly.
+
+Both releases work in new-arch apps. Pick `2.0.0-alpha` if you want the actual performance benefits (synchronous view measurement, lower per-call overhead, faster cold start) — or if you use libraries that require a fully native new-arch dep tree (`react-native-reanimated` 4.x, `react-native-gesture-handler` 2.31+, etc.).
+
+### What's new
+
+-   Full New Architecture support — TurboModule + Fabric component view + bridgeless event dispatch
+-   Backwards compatible — the SDK still works under `newArchEnabled=false`
+-   Lazy module initialization — faster cold start; modules load on first JS access instead of at app launch
+-   Codegen-typed JS↔native contract — compile-time enforcement, fewer runtime "wrong-shape" bugs
+
+### Breaking changes
+
+-   **iOS `setupPIP()` rejects instead of crashing.** Previously crashed with "unrecognized selector"; now returns a rejected promise with code `HMS_PLATFORM_UNSUPPORTED`. Add a `.catch()` handler if you weren't already.
+
+-   **`<HMSView />` raw native event `onChange` renamed to `onResolutionChange`.** Only affects code that imported the raw Fabric component directly — the public `HmsView` wrapper exposes no event prop, so consumers using the documented API see no change.
+
+Uses Android SDK 2.9.78 & iOS SDK 1.17.0
+
+**Full Changelog**: [1.13.1...2.0.0-alpha.1](https://github.com/100mslive/100ms-react-native/compare/1.13.1...2.0.0-alpha.1)
+
+## 1.13.1 - 2026-05-07
+
+| Package                     | Version |
+| --------------------------- | ------- |
+| @100mslive/react-native-hms | 1.12.2  |
+
+### react-native-hms
+
+-   **React Native New Architecture Interop Layer support.** The SDK now works in apps with `newArchEnabled=true` via RN's built-in Interop Layer. Resolves [#1428](https://github.com/100mslive/100ms-react-native/issues/1428) where `HMSSDK.build()` crashed on iOS under new-arch + Expo SDK 51 / RN 0.74+. Old-arch consumers see no change in behavior.
+
+Uses Android SDK 2.9.78 & iOS SDK 1.17.0
+
+**Full Changelog**: [1.13.0...1.13.1](https://github.com/100mslive/100ms-react-native/compare/1.13.0...1.13.1)
+
 ## 1.13.0 - 2026-04-30
 
 | Package                          | Version |
