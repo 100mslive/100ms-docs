@@ -5,6 +5,14 @@ nav: 5.1
 
 This Changelog highlights notable changes to the 100ms server-side API, such as API additions, improvements, and deprecations. Also, we've included developer experience improvements to this page to keep you on track with items that will enhance your integration journey.
 
+## 2026-05-29
+### Improvements
+- **WebRTC stack upgrade.** The SFU WebRTC stack has been upgraded to pion v4.
+- **Improved recording reliability.** RTCP sender-report timestamps now correctly follow the last received packet timestamp, addressing the root cause of audio timestamp gaps that could split long recordings into many small files.
+- **More stable media under congestion.** Fixes for NACK deadlock, NACK memory leak, GCC bandwidth estimator, and NACK responder handling reduce packet-loss spikes under high load.
+- **Simulcast correctness.** RTP extension headers are now cleared on forwarded packets, preventing stray header data from reaching subscribers.
+- **Security.** Updated DTLS to address CVE-2026-26014.
+
 ## 2026-03-15
 ### Additions
 - Added video support for outbound calls. Pass `"video": true` in the [Initiate outbound call API](/server-side/v2/how-to-guides/Session%20Initiation%20Protocol%20(SIP)/SIP-Outbound#initiating-an-outbound-call) to enable video.
