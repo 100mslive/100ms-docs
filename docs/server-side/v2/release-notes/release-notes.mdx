@@ -7,7 +7,7 @@ This Changelog highlights notable changes to the 100ms server-side API, such as 
 
 ## 2026-05-29
 ### Improvements
-- **WebRTC stack upgrade.** The SFU has been upgraded to pion/webrtc v4.
+- **WebRTC stack upgrade.** The SFU WebRTC stack has been upgraded to pion v4.
 - **Improved recording reliability.** RTCP sender-report timestamps now correctly follow the last received packet timestamp, addressing the root cause of audio timestamp gaps that could split long recordings into many small files.
 - **More stable media under congestion.** Fixes for NACK deadlock, NACK memory leak, GCC bandwidth estimator, and NACK responder handling reduce packet-loss spikes under high load.
 - **Simulcast correctness.** RTP extension headers are now cleared on forwarded packets, preventing stray header data from reaching subscribers.
