@@ -1,0 +1,296 @@
+# 100ms docs
+
+> 100ms is a platform for building real-time audio, video, and interactive live experiences. 100ms provides hosted cloud infrastructure, client SDKs, server-side APIs, and drop-in prebuilt UI components for video conferencing, live streaming, and recording.
+
+## Overview
+
+100ms is a cloud-hosted infrastructure platform for building real-time communication into web and mobile apps. It consists of these primary components:
+
+- **100ms Cloud**: Cloud-hosted infrastructure that orchestrates real-time audio and video communication via WebRTC. Managed entirely through the [100ms Dashboard](https://dashboard.100ms.live).
+- **Client SDKs**: Real-time SDKs for building custom UIs across platforms:
+  - [JavaScript/Web](https://www.100ms.live/docs/javascript/v2/quickstart/javascript-quickstart)
+  - [Android](https://www.100ms.live/docs/android/v2/quickstart/quickstart)
+  - [iOS](https://www.100ms.live/docs/ios/v2/quickstart/quickstart)
+  - [React Native](https://www.100ms.live/docs/react-native/v2/quickstart/quickstart)
+  - [Flutter](https://www.100ms.live/docs/flutter/v2/quickstart/quickstart)
+- **Prebuilt UI**: A [hosted, embeddable conferencing and live streaming UI](https://www.100ms.live/docs/prebuilt/v2/prebuilt/overview) with minimal code integration, available for Web, Android, iOS, React Native, and Flutter.
+- **Server-side APIs & SDK**: [REST APIs](https://www.100ms.live/docs/server-side/v2/how-to-guides/make-api-calls) and a [Node.js server SDK](https://www.100ms.live/docs/server-side/v2/how-to-guides/nodejs-server-side-sdk) for room management, recording control, template configuration, and peer operations.
+- **Integration services**: [HLS live streaming](https://www.100ms.live/docs/javascript/v2/how-to-guides/record-and-live-stream/hls/hls) for scaling to millions of viewers, [recording](https://www.100ms.live/docs/get-started/v2/get-started/features/recordings/overview) (SFU and browser composite), [transcription](https://www.100ms.live/docs/server-side/v2/how-to-guides/enable-transcription-and-summary) (live and post-call), [SIP interconnect](https://www.100ms.live/docs/server-side/v2/how-to-guides/Session%20Initiation%20Protocol%20(SIP)/SIP-Interconnect) for telephony, and [webhooks](https://www.100ms.live/docs/server-side/v2/how-to-guides/configure-webhooks) for event-driven workflows.
+
+For greater detail, see [Product Overview](https://www.100ms.live/docs/get-started/v2/get-started/overview).
+
+## Introduction
+
+### Get Started
+
+- [Documentation Home](https://www.100ms.live/docs): Entry point for all 100ms documentation.
+- [Product Overview](https://www.100ms.live/docs/get-started/v2/get-started/overview): High-level architecture and product capabilities.
+
+### Understanding 100ms
+
+- [Core Concepts](https://www.100ms.live/docs/get-started/v2/get-started/concepts/basics): Rooms, peers, tracks, and the mental model behind 100ms.
+- [Templates and Roles](https://www.100ms.live/docs/get-started/v2/get-started/concepts/templates-and-roles): How room behavior, permissions, and publish/subscribe rules are configured. Templates and roles are the source of truth for all room behavior.
+
+#### Authentication
+
+- [Security and Tokens](https://www.100ms.live/docs/get-started/v2/get-started/security-and-tokens): Overview of auth tokens and management tokens.
+- [Auth Token vs Room Code](https://www.100ms.live/docs/get-started/v2/get-started/authentication-token-versus-room-code): When to use auth tokens vs room codes. For production apps, use backend-generated auth tokens. Room codes are suitable for quick prototyping. Dashboard-generated temporary tokens are not production-ready.
+
+#### Compliance
+
+- [HIPAA Compliant Workspace](https://www.100ms.live/docs/get-started/v2/get-started/security-and-privacy/HIPAA%20compliance/HIPAA-workspace): Configure a HIPAA-compliant workspace for healthcare and sensitive applications.
+
+## Prebuilt (Drop-in UI)
+
+### Get Started
+
+- [Overview](https://www.100ms.live/docs/prebuilt/v2/prebuilt/overview): Hosted, embeddable conferencing and live streaming UI with minimal code.
+- [Quickstart](https://www.100ms.live/docs/prebuilt/v2/prebuilt/quickstart): Get started with Prebuilt links and embedding.
+
+### Customization
+
+- [Screens and Components](https://www.100ms.live/docs/prebuilt/v2/prebuilt/Screens-and-components): Customize Prebuilt UI via screens and components configuration.
+
+### Platform Quickstarts
+
+- [React (Web)](https://www.100ms.live/docs/javascript/v2/quickstart/prebuilt-quickstart): Embed Prebuilt in a React app.
+- [Android](https://www.100ms.live/docs/android/v2/quickstart/prebuilt-android): Embed Prebuilt UI in Android apps.
+- [React Native](https://www.100ms.live/docs/react-native/v2/quickstart/prebuilt): Prebuilt UI for React Native.
+- [React Native Expo](https://www.100ms.live/docs/react-native/v2/quickstart/expo-prebuilt): Prebuilt UI with Expo.
+- [Flutter](https://www.100ms.live/docs/flutter/v2/quickstart/prebuilt): Prebuilt UI for Flutter.
+
+Prefer Prebuilt when speed of integration matters more than deep UI customization. Prefer SDK-based integration when the app needs full control over UX and media behavior.
+
+## Client SDKs
+
+### JavaScript / Web SDK
+
+#### Get Started
+
+- [JavaScript Quickstart](https://www.100ms.live/docs/javascript/v2/quickstart/javascript-quickstart): Get started with the Web SDK.
+- [Web SDK Mental Model](https://www.100ms.live/docs/javascript/v2/quickstart/mental-model): Architecture orientation and key abstractions.
+- [Token Quickstart](https://www.100ms.live/docs/javascript/v2/quickstart/token): Obtain a room code or token during setup.
+
+#### Video Conferencing
+
+- [Chat](https://www.100ms.live/docs/javascript/v2/how-to-guides/set-up-video-conferencing/chat): Broadcast, group, and direct messaging over WebSocket.
+- [Screen Share](https://www.100ms.live/docs/javascript/v2/how-to-guides/set-up-video-conferencing/screen-share): Share screen, window, or browser tab.
+- [Simulcast / Select Video Quality](https://www.100ms.live/docs/javascript/v2/how-to-guides/set-up-video-conferencing/render-video/simulcast): Adaptive bitrate and manual quality selection.
+- [Live Captions (Closed Captions)](https://www.100ms.live/docs/javascript/v2/how-to-guides/set-up-video-conferencing/captions): Real-time speaker-labelled transcription and closed captions in WebRTC conferencing.
+
+#### Interactive Features
+
+- [Polls](https://www.100ms.live/docs/javascript/v2/how-to-guides/build-interactive-features/polls): Create and manage in-session polls.
+- [Session Store](https://www.100ms.live/docs/javascript/v2/how-to-guides/build-interactive-features/session-store): Shared real-time key-value store accessible by all participants. Used for features like pinned text and spotlight.
+
+#### Plugins & Extensions
+
+- [Whiteboard](https://www.100ms.live/docs/javascript/v2/how-to-guides/extend-capabilities/whiteboard): Real-time collaborative whiteboard.
+- [Krisp Noise Cancellation](https://www.100ms.live/docs/javascript/v2/how-to-guides/extend-capabilities/plugins/krisp-noise-cancellation): Background noise elimination plugin powered by Krisp.
+- [Virtual Background](https://www.100ms.live/docs/javascript/v2/how-to-guides/extend-capabilities/plugins/effects-virtual-background): Background blur and image replacement.
+
+#### Recording & Live Streaming
+
+- [HLS Streaming](https://www.100ms.live/docs/javascript/v2/how-to-guides/record-and-live-stream/hls/hls): Start and manage HLS live streams from the client.
+- [RTMP Streaming / Recording](https://www.100ms.live/docs/javascript/v2/how-to-guides/record-and-live-stream/rtmp-recording): Stream to external RTMP endpoints and trigger recordings.
+
+#### Reference
+
+- [Web SDK API Reference](https://www.100ms.live/docs/api-reference/javascript/v2/home/content): Full API reference for the JavaScript SDK.
+
+#### Debugging
+
+- [FAQ](https://www.100ms.live/docs/javascript/v2/how-to-guides/debugging/faq): Common questions and troubleshooting for the Web SDK.
+
+### Android SDK
+
+#### Get Started
+
+- [Android Quickstart](https://www.100ms.live/docs/android/v2/quickstart/quickstart): Get started with the Android SDK.
+- [Android Prebuilt Quickstart](https://www.100ms.live/docs/android/v2/quickstart/prebuilt-android): Embed Prebuilt UI in Android apps.
+
+#### Features
+
+- [Virtual Background](https://www.100ms.live/docs/android/v2/how-to-guides/extend-capabilities/plugins/virtual-background): Background blur and replacement on Android.
+- [Simulcast](https://www.100ms.live/docs/android/v2/how-to-guides/set-up-video-conferencing/render-video/simulcast): Adaptive bitrate on Android.
+
+### iOS SDK
+
+#### Get Started
+
+- [iOS Quickstart](https://www.100ms.live/docs/ios/v2/quickstart/quickstart): Get started with the iOS SDK.
+
+#### Features
+
+- [Screen Sharing](https://www.100ms.live/docs/ios/v2/how-to-guides/set-up-video-conferencing/screen-share): Share screen on iOS.
+- [Call Stats](https://www.100ms.live/docs/ios/v2/how-to-guides/measure-network-quality-and-performance/call-stats): Monitor call quality and network performance on iOS.
+
+### React Native SDK
+
+#### Get Started
+
+- [React Native Quickstart](https://www.100ms.live/docs/react-native/v2/quickstart/quickstart): Get started with React Native.
+- [Expo Quickstart](https://www.100ms.live/docs/react-native/v2/quickstart/expo-quickstart): React Native with Expo.
+
+#### Features
+
+- [Noise Cancellation](https://www.100ms.live/docs/react-native/v2/how-to-guides/extend-capabilities/noise-cancellation): Background noise cancellation on React Native.
+- [Polls & Quizzes](https://www.100ms.live/docs/react-native/v2/how-to-guides/interact-with-room/room/polls): Polls and quizzes on React Native.
+- [Adaptive Bitrate (Simulcast)](https://www.100ms.live/docs/react-native/v2/how-to-guides/set-up-video-conferencing/render-video/adaptive-bitrate): Simulcast on React Native.
+
+#### Debugging
+
+- [FAQ](https://www.100ms.live/docs/react-native/v2/how-to-guides/debugging/faq): Common questions for React Native SDK.
+
+### Flutter SDK
+
+#### Get Started
+
+- [Flutter Quickstart](https://www.100ms.live/docs/flutter/v2/quickstart/quickstart): Get started with Flutter.
+
+#### Features
+
+- [HLS Player](https://www.100ms.live/docs/flutter/v2/how-to-guides/record-and-live-stream/hls-player): Play HLS streams in Flutter apps.
+
+## Live Streaming (HLS)
+
+### Get Started
+
+- [HLS Streaming Overview](https://www.100ms.live/docs/javascript/v2/how-to-guides/record-and-live-stream/hls/hls): Scale to millions of viewers with HLS live streaming. A server-side bot joins the room and streams what it sees and hears as an HLS feed playable on any device.
+
+### Features
+
+- [Live Transcription in HLS](https://www.100ms.live/docs/server-side/v2/how-to-guides/live-transcription-hls): Auto-generated English captions in live streams with ~500ms–1s latency. Paid feature with 300 free minutes per month.
+- [Live Stream Recording](https://www.100ms.live/docs/get-started/v2/get-started/features/recordings/live-stream-recording): Record HLS live streams for later playback.
+- [RTMP Ingestion](https://www.100ms.live/docs/server-side/v2/how-to-guides/live-streaming-rtmp-ingestion): Start a live stream in 100ms from OBS or any external broadcasting application over RTMP.
+
+## Recording
+
+### Get Started
+
+- [Recording Overview](https://www.100ms.live/docs/get-started/v2/get-started/features/recordings/overview): All recording types and how they work. 100ms supports SFU recording (individual and composite) and browser-based composite recording.
+
+### Recording Modes
+
+- [Composite Recordings](https://www.100ms.live/docs/get-started/v2/get-started/features/recordings/recording-modes/composite-recordings): Browser-based composite recording of the room.
+- [SFU Recording](https://www.100ms.live/docs/server-side/v2/Destinations/recording): Individual and composite server-side recording. SFU recordings take approximately 1.5x the call duration to process after the call ends.
+- [Migrating from SFU Recording](https://www.100ms.live/docs/get-started/v2/get-started/features/recordings/recording-modes/migrating-from-sfu): Guide for migrating from legacy SFU recording.
+
+### Recording Content
+
+- [Chat Recording](https://www.100ms.live/docs/get-started/v2/get-started/features/recordings/chat-recording): Record chat messages sent during sessions. Broadcast and role messages are recorded; direct messages are not.
+
+### Recording Assets & Storage
+
+- [Recording Asset Types](https://www.100ms.live/docs/get-started/v2/get-started/features/recordings/recording-assets/recording-asset-types): Types of recording assets generated.
+- [Storage Configuration](https://www.100ms.live/docs/get-started/v2/get-started/features/recordings/recording-assets/storage-configuration): Configure where recordings are stored (e.g., your own S3 bucket).
+
+### Server-side Control
+
+- [Start and Stop Recording](https://www.100ms.live/docs/server-side/v2/how-to-guides/recordings/overview): Control recordings via server-side API.
+
+## Transcription & Summarization
+
+### Live Transcription
+
+- [Live Captions for Conferencing](https://www.100ms.live/docs/javascript/v2/how-to-guides/set-up-video-conferencing/captions): Real-time speaker-labelled closed captions during WebRTC conferencing. Can be enabled/disabled at runtime per room. Currently English only.
+- [Live Transcription in HLS](https://www.100ms.live/docs/server-side/v2/how-to-guides/live-transcription-hls): Auto-generated captions for HLS live streams.
+
+### Post-Call
+
+- [Post-Call Transcription and Summarization](https://www.100ms.live/docs/server-side/v2/how-to-guides/enable-transcription-and-summary): Enable automatic transcription and AI summarization of recorded sessions. Triggered via the "Transcribe Recordings" toggle in template configuration.
+
+## Quality & Network
+
+- [Adaptive Bitrate (Simulcast)](https://www.100ms.live/docs/get-started/v2/get-started/features/quality/adaptive-bitrate): Peers publish multiple quality layers; SDKs automatically upgrade or downgrade based on network conditions and subscriber preferences.
+- [Network Performance Insights](https://www.100ms.live/docs/get-started/v2/get-started/insights/network-performance): Monitor and debug network quality.
+- [Firewall and Ports](https://www.100ms.live/docs/server-side/v2/how-to-guides/firewall-and-ports): Required firewall rules and port allowlisting for enterprise networks. Consult this before assuming SDK defects for connectivity issues.
+
+## Telephony (SIP)
+
+### Get Started
+
+- [SIP Interconnect](https://www.100ms.live/docs/server-side/v2/how-to-guides/Session%20Initiation%20Protocol%20(SIP)/SIP-Interconnect): Dial in to 100ms rooms via SIP using SIP credentials and address.
+
+### Making Calls
+
+- [SIP Outbound](https://www.100ms.live/docs/server-side/v2/how-to-guides/Session%20Initiation%20Protocol%20(SIP)/SIP-Outbound): Initiate SIP calls from a 100ms room to external SIP destinations.
+
+## Server-side API
+
+### Get Started
+
+- [Making API Calls](https://www.100ms.live/docs/server-side/v2/how-to-guides/make-api-calls): Authenticate and make server-side API requests using management tokens. Use management tokens only from trusted backend environments.
+- [Node.js Server SDK](https://www.100ms.live/docs/server-side/v2/how-to-guides/nodejs-server-side-sdk): Official Node.js SDK for server-side operations.
+
+### Rooms
+
+- [Create Rooms via API](https://www.100ms.live/docs/server-side/v2/api-reference/Rooms/create-via-api): Programmatically create rooms.
+- [Create Rooms via Dashboard](https://www.100ms.live/docs/server-side/v2/api-reference/Rooms/create-via-dashboard): Create rooms from the 100ms dashboard.
+
+### Active Rooms
+
+- [List Peers](https://www.100ms.live/docs/server-side/v2/api-reference/active-rooms/list-peers): Query active room participants.
+- [Update a Peer](https://www.100ms.live/docs/server-side/v2/api-reference/active-rooms/update-a-peer): Modify peer properties in an active room.
+
+### Templates & Roles
+
+- [Create Template via API](https://www.100ms.live/docs/server-side/v2/api-reference/policy/create-template-via-api): Programmatically create room templates.
+- [Create Template via Dashboard](https://www.100ms.live/docs/server-side/v2/api-reference/policy/create-template-via-dashboard): Create templates from the dashboard.
+- [Create or Update Role](https://www.100ms.live/docs/server-side/v2/api-reference/policy/create-update-role): Manage roles and their permissions.
+
+### Room Codes
+
+- [Room Codes Overview](https://www.100ms.live/docs/server-side/v2/api-reference/room-codes/room-code-overview): Overview of room codes for generating join links.
+- [Create Room Codes](https://www.100ms.live/docs/server-side/v2/api-reference/room-codes/create-room-code-api): Create room codes for all roles or a specific role in a room.
+- [Retrieve Room Codes](https://www.100ms.live/docs/server-side/v2/api-reference/room-codes/get-room-code-api): Retrieve existing room codes.
+
+### Sessions
+
+- [Session Object](https://www.100ms.live/docs/server-side/v2/api-reference/Sessions/object): Session object structure and fields.
+- [List Sessions](https://www.100ms.live/docs/server-side/v2/api-reference/Sessions/list-sessions): Retrieve details of sessions in your account. A session is a single continuous call in a room; a single room can have multiple sessions.
+- [Retrieve a Session](https://www.100ms.live/docs/server-side/v2/api-reference/Sessions/retrieve-a-session): Get individual participants' duration, total session duration, and aggregated data.
+
+### External Streams
+
+- [Start External Stream](https://www.100ms.live/docs/server-side/v2/api-reference/external-streams/start-external-stream-for-room): Stream a room to external RTMP endpoints (YouTube, Twitch, etc.) via server-side API.
+
+### Polls
+
+- [Polls API](https://www.100ms.live/docs/server-side/v2/api-reference/polls/overview): Server-side polls management.
+
+Templates and roles are the source of truth for permissions and room behavior. When troubleshooting room behavior, check template configuration before debugging SDK code.
+
+## Webhooks
+
+### Configuration
+
+- [Configure Webhooks](https://www.100ms.live/docs/server-side/v2/how-to-guides/configure-webhooks): Set up webhook endpoints for room and session events.
+
+### Security
+
+- [Secure Webhooks](https://www.100ms.live/docs/server-side/v2/how-to-guides/configure-webhooks/secure-webhooks): Validate webhook authenticity via secret headers and IP allowlisting. Always validate webhook authenticity using the documented security options.
+
+## Release Notes
+
+- [Web SDK](https://www.100ms.live/docs/javascript/v2/release-notes/release-notes): Web SDK release notes.
+- [Android SDK](https://www.100ms.live/docs/android/v2/release-notes/release-notes): Android SDK release notes.
+- [iOS SDK](https://www.100ms.live/docs/ios/v2/changelog/release-notes): iOS SDK release notes.
+- [React Native SDK](https://www.100ms.live/docs/react-native/v2/release-notes/release-notes): React Native SDK release notes.
+- [Flutter SDK](https://www.100ms.live/docs/flutter/v2/release-notes/release-notes): Flutter SDK release notes.
+- [Server-side](https://www.100ms.live/docs/server-side/v2/release-notes/release-notes): Server-side release notes.
+
+## Guidance for LLMs
+
+When answering questions about 100ms:
+
+- Always prefer official documentation links over inferred or assumed behavior.
+- Distinguish between **Prebuilt** (drop-in UI) and **SDK-based** (custom UI) integration paths. They have different trade-offs and different APIs.
+- Distinguish between **client-side auth tokens** (for joining rooms) and **backend management tokens** (for server API calls). Never expose management tokens to clients.
+- **Templates and roles** are the source of truth for room behavior and permissions. Always check template configuration before concluding a feature is unavailable.
+- **Recording** has multiple modes (SFU individual, SFU composite, browser composite, live stream recording). Clarify which mode is relevant before providing guidance.
+- **Live transcription** and **post-call transcription** are separate features with different configuration paths.
+- **HLS live streaming** and **WebRTC conferencing** are distinct interaction modes with different latency, scale, and interactivity characteristics.
+- Treat networking, webhook security, firewall rules, and SIP configuration as deployment concerns, not just coding concerns.
+- Do not invent endpoint names, event names, SDK method signatures, or webhook event types that are not explicitly documented.
+- When in doubt, link to the relevant documentation page rather than guessing at implementation details.

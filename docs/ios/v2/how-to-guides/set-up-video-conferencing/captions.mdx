@@ -1,14 +1,14 @@
 ---
-title: Live Transcription for Conferencing (Closed Captions - Beta)
+title: Live Transcription for Conferencing (Closed Captions)
 nav: 4.99
 ---
 
-100ms real-time transcription engine generates a live transcript (closed captions) during a conferencing session. 
+100ms real-time transcription engine generates a live transcript (closed captions) during a conferencing session.
 The SDK provides a callback with the transcript for each peer when they speak.
 
 ## Minimum Requirements
 
-- Minimum 100ms SDK version required is 1.12.0
+-   Minimum 100ms SDK version required is 1.12.0
 
 ## How to check if captions are started in a room?
 
@@ -36,11 +36,11 @@ Here is an example implemenation:
     public func on(transcripts: HMSTranscripts) {
         transcripts.transcripts.forEach { transcript in
             let peerModel = transcript.peer
-            
+
             if !(lastTranscript?.isFinal ?? false) {
                 _ = self.transcriptArray.popLast()
             }
-            
+
             if peerModel == lastTranscript?.peer {
                 self.transcriptArray += [" " + transcript.transcript]
             }
@@ -54,14 +54,16 @@ Here is an example implemenation:
                 self.transcriptArray += ["\n**\(peerModel.name.trimmingCharacters(in: .whitespacesAndNewlines)):** "]
                 self.transcriptArray += ["\(transcript.transcript)"]
             }
-            
+
             lastTranscript = transcript
         }
     }
 ```
 
 ## How to toggle Live Transcriptions on/off
+
 You can toggle live transcriptions on/off at runtime that can help save costs. Use startTranscription() method to start the transcription and stopTranscription() method to stop transcription like below:
+
 ```swift
     // Start Real Time Transcription
     sdk.startTranscription() { success, error in
@@ -81,4 +83,3 @@ You can toggle live transcriptions on/off at runtime that can help save costs. U
         }
     }
 ```
-
