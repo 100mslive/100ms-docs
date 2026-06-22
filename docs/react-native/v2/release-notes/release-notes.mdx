@@ -11,6 +11,43 @@ nav: 4.1
 | @100mslive/react-native-hms          | [![npm](https://img.shields.io/npm/v/@100mslive/react-native-hms)](https://www.npmjs.com/package/@100mslive/react-native-hms)                   |
 | @100mslive/react-native-video-plugin | [![npm](https://img.shields.io/npm/v/@100mslive/react-native-video-plugin)](https://www.npmjs.com/package/@100mslive/react-native-video-plugin) |
 
+## 1.13.2 - 2026-06-22
+
+Patch release. Fixes the local peer's video appearing black/frozen to remote peers after the app is backgrounded.
+
+| Package                          | Version |
+| -------------------------------- | ------- |
+| @100mslive/react-native-hms      | 1.12.3  |
+| @100mslive/react-native-room-kit | 1.3.2   |
+
+### react-native-hms
+
+-   **Fixed: peer video goes black/frozen on the remote side after the app is backgrounded.** When the app was sent to the background while publishing video, Android revoked the camera and the local peer's video stayed frozen/black for remote peers until they manually toggled (mute/unmute) their video. The bundled native Android SDK is bumped to `2.9.84`, which automatically re-acquires the camera when the app returns to the foreground. ([#1666](https://github.com/100mslive/100ms-react-native/issues/1666))
+
+### react-native-room-kit
+
+-   Bumps the `@100mslive/react-native-hms` peer dependency to `1.12.3` to pick up the camera-recovery fix above.
+
+## 2.0.0-alpha.3 - 2026-06-22
+
+Patch release for the **2.0.0-alpha** track — forward-ports the camera-recovery-after-background fix to the new-architecture line.
+
+| Package                              | Version       |
+| ------------------------------------ | ------------- |
+| @100mslive/react-native-hms          | 2.0.0-alpha.3 |
+| @100mslive/react-native-room-kit     | 2.0.0-alpha.2 |
+| @100mslive/react-native-video-plugin | 2.0.0-alpha.0 |
+
+`latest` still points at the `1.x` line — existing customers are unaffected.
+
+### react-native-hms
+
+-   Same camera-recovery fix as `1.12.3` (bundled native Android SDK `2.9.84`): re-acquires the camera when the app returns to the foreground after the OS revokes it while backgrounded. ([#1666](https://github.com/100mslive/100ms-react-native/issues/1666))
+
+### react-native-room-kit
+
+-   Bumps the `@100mslive/react-native-hms` peer dependency to `2.0.0-alpha.3`.
+
 ## 2.0.0-alpha.2 - 2026-05-21
 
 Patch release for the **2.0.0-alpha** track. Fixes an iOS build failure under `use_frameworks! :linkage => :static` — the default Podfile setting in Expo SDK 54+. Bare React Native apps and Expo SDK ≤53 were not affected by alpha.1.
