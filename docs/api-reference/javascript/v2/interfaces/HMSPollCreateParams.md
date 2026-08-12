@@ -5,7 +5,7 @@ nav: '4.51'
 
 ## Hierarchy
 
-- `Pick`<[`HMSPoll`](/api-reference/javascript/v2/interfaces/HMSPoll), `"id"` \| `"title"` \| `"type"` \| `"duration"` \| `"anonymous"` \| `"visibility"` \| `"locked"` \| `"mode"` \| `"rolesThatCanVote"` \| `"rolesThatCanViewResponses"`\>
+- `Pick`\<[`HMSPoll`](/api-reference/javascript/v2/interfaces/HMSPoll), `"id"` \| `"title"` \| `"type"` \| `"duration"` \| `"anonymous"` \| `"visibility"` \| `"locked"` \| `"mode"` \| `"rolesThatCanVote"` \| `"rolesThatCanViewResponses"`\>
 
   ↳ **`HMSPollCreateParams`**
 
