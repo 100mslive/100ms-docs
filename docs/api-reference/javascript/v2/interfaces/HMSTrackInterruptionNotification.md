@@ -1,25 +1,19 @@
 ---
-title: HMSPlaylistItemNotification<T>
-nav: '4.46'
+title: HMSTrackInterruptionNotification
+nav: '4.81'
 ---
-
-## Type parameters
-
-| Name |
-| :--- |
-| `T`  |
 
 ## Hierarchy
 
 - `BaseNotification`
 
-  ↳ **`HMSPlaylistItemNotification`**
+  ↳ **`HMSTrackInterruptionNotification`**
 
 ## Properties
 
 ### data
 
-• **data**: [`HMSPlaylistItem`](/api-reference/javascript/v2/interfaces/HMSPlaylistItem)\<`T`\>
+• **data**: [`HMSTrackInterruption`](/api-reference/javascript/v2/interfaces/HMSTrackInterruption)
 
 ---
 
@@ -55,7 +49,7 @@ BaseNotification.severity
 
 ### type
 
-• **type**: [`PLAYLIST_TRACK_ENDED`](/api-reference/javascript/v2/enums/HMSNotificationTypes#playlist_track_ended)
+• **type**: [`TRACK_INTERRUPTION_START`](/api-reference/javascript/v2/enums/HMSNotificationTypes#track_interruption_start) \| [`TRACK_INTERRUPTION_END`](/api-reference/javascript/v2/enums/HMSNotificationTypes#track_interruption_end)
 
 #### Overrides
 

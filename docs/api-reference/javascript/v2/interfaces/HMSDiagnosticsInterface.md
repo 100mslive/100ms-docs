@@ -31,7 +31,7 @@ nav: '4.23'
 
 ### requestPermission
 
-▸ **requestPermission**(`check`): `Promise`<[`MediaPermissionCheck`](/api-reference/javascript/v2/interfaces/MediaPermissionCheck)\>
+▸ **requestPermission**(`check`): `Promise`\<[`MediaPermissionCheck`](/api-reference/javascript/v2/interfaces/MediaPermissionCheck)\>
 
 #### Parameters
 
@@ -41,13 +41,13 @@ nav: '4.23'
 
 #### Returns
 
-`Promise`<[`MediaPermissionCheck`](/api-reference/javascript/v2/interfaces/MediaPermissionCheck)\>
+`Promise`\<[`MediaPermissionCheck`](/api-reference/javascript/v2/interfaces/MediaPermissionCheck)\>
 
 ---
 
 ### startCameraCheck
 
-▸ **startCameraCheck**(`inputDevice?`): `Promise`<`void`\>
+▸ **startCameraCheck**(`inputDevice?`): `Promise`\<`void`\>
 
 #### Parameters
 
@@ -57,13 +57,13 @@ nav: '4.23'
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 ---
 
 ### startConnectivityCheck
 
-▸ **startConnectivityCheck**(`progress`, `completed`, `region?`, `duration?`): `Promise`<`void`\>
+▸ **startConnectivityCheck**(`progress`, `completed`, `region?`, `duration?`): `Promise`\<`void`\>
 
 #### Parameters
 
@@ -76,13 +76,13 @@ nav: '4.23'
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 ---
 
 ### startMicCheck
 
-▸ **startMicCheck**(`args`): `Promise`<`void`\>
+▸ **startMicCheck**(`args`): `Promise`\<`void`\>
 
 #### Parameters
 
@@ -96,7 +96,7 @@ nav: '4.23'
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 ---
 
@@ -112,11 +112,11 @@ nav: '4.23'
 
 ### stopConnectivityCheck
 
-▸ **stopConnectivityCheck**(): `Promise`<`void`\>
+▸ **stopConnectivityCheck**(): `Promise`\<`void`\>
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 ---
 
