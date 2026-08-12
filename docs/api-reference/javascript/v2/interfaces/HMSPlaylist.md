@@ -17,14 +17,14 @@ nav: '4.44'
 
 #### Type declaration
 
-| Name           | Type                                                                                                    |
-| :------------- | :------------------------------------------------------------------------------------------------------ |
-| `currentTime`  | `number`                                                                                                |
-| `list`         | `Record`<`string`, [`HMSPlaylistItem`](/api-reference/javascript/v2/interfaces/HMSPlaylistItem)<`T`\>\> |
-| `playbackRate` | `number`                                                                                                |
-| `progress`     | `number`                                                                                                |
-| `selection`    | [`HMSPlaylistSelection`](/api-reference/javascript/v2/interfaces/HMSPlaylistSelection)                  |
-| `volume`       | `number`                                                                                                |
+| Name           | Type                                                                                                      |
+| :------------- | :-------------------------------------------------------------------------------------------------------- |
+| `currentTime`  | `number`                                                                                                  |
+| `list`         | `Record`\<`string`, [`HMSPlaylistItem`](/api-reference/javascript/v2/interfaces/HMSPlaylistItem)\<`T`\>\> |
+| `playbackRate` | `number`                                                                                                  |
+| `progress`     | `number`                                                                                                  |
+| `selection`    | [`HMSPlaylistSelection`](/api-reference/javascript/v2/interfaces/HMSPlaylistSelection)                    |
+| `volume`       | `number`                                                                                                  |
 
 ---
 
@@ -34,11 +34,11 @@ nav: '4.44'
 
 #### Type declaration
 
-| Name           | Type                                                                                                    |
-| :------------- | :------------------------------------------------------------------------------------------------------ |
-| `currentTime`  | `number`                                                                                                |
-| `list`         | `Record`<`string`, [`HMSPlaylistItem`](/api-reference/javascript/v2/interfaces/HMSPlaylistItem)<`T`\>\> |
-| `playbackRate` | `number`                                                                                                |
-| `progress`     | `number`                                                                                                |
-| `selection`    | [`HMSPlaylistSelection`](/api-reference/javascript/v2/interfaces/HMSPlaylistSelection)                  |
-| `volume`       | `number`                                                                                                |
+| Name           | Type                                                                                                      |
+| :------------- | :-------------------------------------------------------------------------------------------------------- |
+| `currentTime`  | `number`                                                                                                  |
+| `list`         | `Record`\<`string`, [`HMSPlaylistItem`](/api-reference/javascript/v2/interfaces/HMSPlaylistItem)\<`T`\>\> |
+| `playbackRate` | `number`                                                                                                  |
+| `progress`     | `number`                                                                                                  |
+| `selection`    | [`HMSPlaylistSelection`](/api-reference/javascript/v2/interfaces/HMSPlaylistSelection)                    |
+| `volume`       | `number`                                                                                                  |

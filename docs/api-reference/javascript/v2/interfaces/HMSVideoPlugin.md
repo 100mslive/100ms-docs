@@ -1,6 +1,6 @@
 ---
 title: HMSVideoPlugin
-nav: '4.84'
+nav: '4.86'
 ---
 
 A plugin implementing this interface can be registered with HMSLocalVideoTrack to transform, process or
@@ -62,7 +62,7 @@ HMSVideoPluginType
 
 ### init
 
-▸ **init**(): `Promise`<`void`\>
+▸ **init**(): `Promise`\<`void`\>
 
 This function will be called in the beginning for initialization which may include tasks like setting up
 variables, loading ML models etc. This can be used by a plugin to ensure it's prepared at the time
@@ -70,7 +70,7 @@ processVideoFrame is called.
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 ---
 
@@ -88,7 +88,7 @@ processVideoFrame is called.
 
 ### processVideoFrame
 
-▸ **processVideoFrame**(`input`, `output?`, `skipProcessing?`): `void` \| `Promise`<`void`\>
+▸ **processVideoFrame**(`input`, `output?`, `skipProcessing?`): `void` \| `Promise`\<`void`\>
 
 This function will be called by the SDK for every video frame which the plugin needs to process.
 PluginFrameRate - the rate at which the plugin is expected to process the video frames. This is not necessarily
@@ -110,7 +110,7 @@ CPU usage in case of complex processing.
 
 #### Returns
 
-`void` \| `Promise`<`void`\>
+`void` \| `Promise`\<`void`\>
 
 ---
 
