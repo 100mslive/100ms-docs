@@ -14,6 +14,45 @@ description: Release Notes for 100ms.live JavaScript SDK
 | @100mslive/hms-noise-cancellation | [![npm version](https://badge.fury.io/js/%40100mslive%2Fhms-noise-cancellation.svg)](https://badge.fury.io/js/%40100mslive%2Fhms-noise-cancellation) |
 | @100mslive/hms-virtual-background | [![npm version](https://badge.fury.io/js/%40100mslive%2Fhms-virtual-background.svg)](https://badge.fury.io/js/%40100mslive%2Fhms-virtual-background) |
 
+## 2026-08-12
+
+Released: `@100mslive/hms-video-store@0.14.7`, `@100mslive/react-sdk@0.12.7`, `@100mslive/hls-player@0.5.7`, `@100mslive/roomkit-react@0.5.7`, `@100mslive/hms-whiteboard@0.2.7`, `@100mslive/hms-virtual-background@1.15.7`, `@100mslive/react-icons@0.12.7`
+
+### Added:
+
+-   Two new notifications, `TRACK_INTERRUPTION_START` and `TRACK_INTERRUPTION_END`, raised when the OS or another app takes the mic or camera and when it comes back — see [`HMSTrackInterruption`](/api-reference/javascript/v2/interfaces/HMSTrackInterruption)
+-   Roomkit Prebuilt: a dialog naming the device that was interrupted
+
+### Fixed:
+
+-   Improved interruption handling and recovery for the mic and camera when the OS or another app takes the device — an incoming call, a native VoIP app, or Safari being backgrounded on iOS
+
+## 2026-08-07
+
+Released: `@100mslive/hms-video-store@0.14.6`, `@100mslive/react-sdk@0.12.6`, `@100mslive/hls-player@0.5.6`, `@100mslive/roomkit-react@0.5.6`, `@100mslive/hms-whiteboard@0.2.6`, `@100mslive/hms-virtual-background@1.15.6`, `@100mslive/react-icons@0.12.6`
+
+### Fixed:
+
+-   The reactive store now stays in sync after an SFU migration when `join()` is called without a preceding `preview()`, and on a rejoin after `leave()` — in those paths transport updates were dropped, so `localPeer.videoTrack` kept pointing at a track id that no longer existed once the session migrated
+-   Security fixes
+
+## 2026-07-08
+
+Released: `@100mslive/hms-video-store@0.14.5`, `@100mslive/react-sdk@0.12.5`, `@100mslive/hls-player@0.5.5`, `@100mslive/roomkit-react@0.5.5`, `@100mslive/hms-whiteboard@0.2.5`, `@100mslive/hms-virtual-background@1.15.5`, `@100mslive/react-icons@0.12.5`
+
+### Fixed:
+
+-   `HMSRoomProvider` with `leaveOnUnload` now leaves the room on `pagehide`, `beforeunload` and `freeze` instead of the deprecated `unload` event — `unload` is being disabled by default in Chrome through 2026 and never fired reliably on mobile or when a page entered the back/forward cache, so peers could linger in the room after the tab closed
+
+## 2026-06-24
+
+Released: `@100mslive/hms-video-store@0.14.4`, `@100mslive/react-sdk@0.12.4`, `@100mslive/hls-player@0.5.4`, `@100mslive/roomkit-react@0.5.4`, `@100mslive/hms-whiteboard@0.2.4`, `@100mslive/hms-virtual-background@1.15.4`, `@100mslive/react-icons@0.12.4`
+
+### Fixed:
+
+-   Roomkit Prebuilt: Picture-in-Picture is now enabled on macOS Safari — previously the PiP button was hidden on Safari even when the browser supports it
+-   Security fixes
+
 ## 2026-06-17
 
 Released: `@100mslive/hms-video-store@0.14.3`, `@100mslive/react-sdk@0.12.3`, `@100mslive/hls-player@0.5.3`, `@100mslive/roomkit-react@0.5.3`, `@100mslive/hms-whiteboard@0.2.3`, `@100mslive/hms-virtual-background@1.15.3`
