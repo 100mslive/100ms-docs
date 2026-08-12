@@ -20,15 +20,12 @@ Released: `@100mslive/hms-video-store@0.14.7`, `@100mslive/react-sdk@0.12.7`, `@
 
 ### Added:
 
--   `onTrackInterruption` on the update and preview listeners, with `TRACK_INTERRUPTION_START` and `TRACK_INTERRUPTION_END` notifications for `useHMSNotifications` — your app is now told when the OS or another app takes the mic or camera (an incoming call, a native VoIP app) and when capture comes back. The exported `HMSTrackInterruption` type names the payload. An interruption is only raised while the page is visible and the device is really not capturing, so a prompt is only shown when the user can act on it
+-   `onTrackInterruption` on the update and preview listeners, with `TRACK_INTERRUPTION_START` and `TRACK_INTERRUPTION_END` notifications for `useHMSNotifications` — use it to tell the user when the OS or another app has taken the mic or camera, and when it comes back
 -   Roomkit Prebuilt: a dialog naming the device that was interrupted
 
 ### Fixed:
 
--   The mic now recovers after an OS audio interruption instead of coming back silently dead — the shared `AudioContext` that iOS suspends is resumed, the track is reacquired with a fresh `getUserMedia`, the enabled state is re-published so remote peers resubscribe, and remote playback the OS paused alongside capture is resumed. Previously recovery was decided from the native track flags, which report `live` and unmuted after an iOS interruption even though the capture unit is stopped
--   The camera now recovers after an OS video interruption — `HMSLocalVideoTrack.setEnabled` returns early on an unchanged value, so the native unmute path cleared the published mute and replayed the video elements while the camera stayed frozen, leaving remote peers watching a live tile stuck on a still frame
--   Recovery is deferred while the page is hidden on phones and tablets only, where the OS will not hand capture back to a backgrounded tab. A hidden desktop tab can still call `getUserMedia`, so it no longer waits for the user to return with a dead mic published as muted
--   Recovery is single-flighted, so the native unmute and the return to foreground no longer race a second `getUserMedia` that would stop the track the first one installed
+-   The mic and camera now recover after an OS interruption — an incoming call, a native VoIP app, or Safari being backgrounded on iOS previously left the device silently dead, with remote peers seeing a frozen tile or treating the peer as muted
 
 ## 2026-08-07
 
@@ -37,7 +34,7 @@ Released: `@100mslive/hms-video-store@0.14.6`, `@100mslive/react-sdk@0.12.6`, `@
 ### Fixed:
 
 -   The reactive store now stays in sync after an SFU migration when `join()` is called without a preceding `preview()`, and on a rejoin after `leave()` — in those paths transport updates were dropped, so `localPeer.videoTrack` kept pointing at a track id that no longer existed once the session migrated
--   Resolved Dependabot security advisories across `sigstore`, `brace-expansion`, `js-yaml`, `shell-quote`, `nx`, `tar`, `fast-uri`, `postcss`, `svgo` and `immutable`
+-   Security fixes
 
 ## 2026-07-08
 
@@ -54,7 +51,7 @@ Released: `@100mslive/hms-video-store@0.14.4`, `@100mslive/react-sdk@0.12.4`, `@
 ### Fixed:
 
 -   Roomkit Prebuilt: Picture-in-Picture is now enabled on macOS Safari — previously the PiP button was hidden on Safari even when the browser supports it
--   Resolved Dependabot security advisories including `ua-parser-js` bump from 2.0.6 to 2.0.10
+-   Security fixes
 
 ## 2026-06-17
 
