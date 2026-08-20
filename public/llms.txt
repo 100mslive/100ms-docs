@@ -76,7 +76,7 @@ Prefer Prebuilt when speed of integration matters more than deep UI customizatio
 - [Chat](https://www.100ms.live/docs/javascript/v2/how-to-guides/set-up-video-conferencing/chat): Broadcast, group, and direct messaging over WebSocket.
 - [Screen Share](https://www.100ms.live/docs/javascript/v2/how-to-guides/set-up-video-conferencing/screen-share): Share screen, window, or browser tab.
 - [Simulcast / Select Video Quality](https://www.100ms.live/docs/javascript/v2/how-to-guides/set-up-video-conferencing/render-video/simulcast): Adaptive bitrate and manual quality selection.
-- [Live Captions (Closed Captions)](https://www.100ms.live/docs/javascript/v2/how-to-guides/set-up-video-conferencing/captions): Real-time speaker-labelled transcription and closed captions in WebRTC conferencing.
+- [Live Captions (Closed Captions)](https://www.100ms.live/docs/javascript/v2/how-to-guides/set-up-video-conferencing/captions): Real-time speaker-labelled transcription and closed captions in WebRTC conferencing. Supports per-role translation via template policy (e.g., `host → es`, `guest → fr`); can be toggled mid-session via `updateTranscriptionConfig()`. Translation requires SDK 0.13.3+.
 
 #### Interactive Features
 
@@ -86,7 +86,7 @@ Prefer Prebuilt when speed of integration matters more than deep UI customizatio
 #### Plugins & Extensions
 
 - [Whiteboard](https://www.100ms.live/docs/javascript/v2/how-to-guides/extend-capabilities/whiteboard): Real-time collaborative whiteboard.
-- [Krisp Noise Cancellation](https://www.100ms.live/docs/javascript/v2/how-to-guides/extend-capabilities/plugins/krisp-noise-cancellation): Background noise elimination plugin powered by Krisp.
+- [Krisp Noise Cancellation](https://www.100ms.live/docs/javascript/v2/how-to-guides/extend-capabilities/plugins/krisp-noise-cancellation): Background noise elimination plugin powered by Krisp. Suppression strength is adjustable at runtime via `setNoiseSuppressionLevel(0-100)` once the plugin is active (no-op before plugin attaches to the audio track); the prebuilt Suppression Level slider in `@100mslive/roomkit-react` drives this method.
 - [Virtual Background](https://www.100ms.live/docs/javascript/v2/how-to-guides/extend-capabilities/plugins/effects-virtual-background): Background blur and image replacement.
 
 #### Recording & Live Streaming
@@ -193,7 +193,7 @@ Prefer Prebuilt when speed of integration matters more than deep UI customizatio
 
 ### Live Transcription
 
-- [Live Captions for Conferencing](https://www.100ms.live/docs/javascript/v2/how-to-guides/set-up-video-conferencing/captions): Real-time speaker-labelled closed captions during WebRTC conferencing. Can be enabled/disabled at runtime per room. Currently English only.
+- [Live Captions for Conferencing](https://www.100ms.live/docs/javascript/v2/how-to-guides/set-up-video-conferencing/captions): Real-time speaker-labelled closed captions during WebRTC conferencing. Can be enabled/disabled at runtime per room. Supports per-role translation (each role receives captions in its configured target language) via template policy; toggleable mid-session via `updateTranscriptionConfig()`.
 - [Live Transcription in HLS](https://www.100ms.live/docs/server-side/v2/how-to-guides/live-transcription-hls): Auto-generated captions for HLS live streams.
 
 ### Post-Call
