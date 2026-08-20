@@ -47,6 +47,8 @@ If you attach once to `peer.videoTrack` and never subscribe to changes, the tile
 
 Server migration needs no action from your app or your users, so it is the case that gets missed. The only other way `peer.videoTrack` changes is a real unpublish and republish of that peer's video — for example a role change to a role that cannot publish video, and then back to one that can.
 
+A session is only moved for clients on `@100mslive/hms-video-store` [0.12.17](/javascript/v2/release-notes/release-notes) or newer; older clients are left on their current server. The unpublish and republish case applies on every version, so subscribe by peer id whichever version you are on.
+
 Use the `selectVideoTrackByPeerID` selector with `hmsActions.attachVideo` and `hmsActions.detachVideo`:
 
 ```js
