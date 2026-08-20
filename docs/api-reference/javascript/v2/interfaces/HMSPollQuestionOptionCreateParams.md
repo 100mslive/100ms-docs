@@ -5,7 +5,7 @@ nav: '4.57'
 
 ## Hierarchy
 
-- `Pick`<[`HMSPollQuestionOption`](/api-reference/javascript/v2/interfaces/HMSPollQuestionOption), `"text"` \| `"weight"`\>
+- `Pick`\<[`HMSPollQuestionOption`](/api-reference/javascript/v2/interfaces/HMSPollQuestionOption), `"text"` \| `"weight"`\>
 
   ↳ **`HMSPollQuestionOptionCreateParams`**
 

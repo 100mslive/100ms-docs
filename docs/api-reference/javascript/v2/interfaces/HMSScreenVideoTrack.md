@@ -5,7 +5,7 @@ nav: '4.72'
 
 ## Hierarchy
 
-- `Omit`<[`HMSVideoTrack`](/api-reference/javascript/v2/interfaces/HMSVideoTrack), `"facingMode"`\>
+- `Omit`\<[`HMSVideoTrack`](/api-reference/javascript/v2/interfaces/HMSVideoTrack), `"facingMode"`\>
 
   ↳ **`HMSScreenVideoTrack`**
 
@@ -84,6 +84,22 @@ Omit.height
 #### Inherited from
 
 Omit.id
+
+---
+
+### interrupted
+
+• `Optional` **interrupted**: `boolean`
+
+only applicable for local tracks - true while the OS or another app has taken the device, eg.
+an incoming call. Cleared once capture is back, however it came back.
+
+Backgrounding the tab on mobile is not reported here: the device is handed back on return. It
+is set on return if the device did not come back.
+
+#### Inherited from
+
+Omit.interrupted
 
 ---
 

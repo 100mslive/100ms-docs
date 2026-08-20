@@ -120,6 +120,8 @@ nav: '1.1'
 - [HMSStatsStoreWrapper](/api-reference/javascript/v2/interfaces/HMSStatsStoreWrapper)
 - [HMSStore](/api-reference/javascript/v2/interfaces/HMSStore)
 - [HMSTrackException](/api-reference/javascript/v2/interfaces/HMSTrackException)
+- [HMSTrackInterruption](/api-reference/javascript/v2/interfaces/HMSTrackInterruption)
+- [HMSTrackInterruptionNotification](/api-reference/javascript/v2/interfaces/HMSTrackInterruptionNotification)
 - [HMSTrackNotification](/api-reference/javascript/v2/interfaces/HMSTrackNotification)
 - [HMSTrackStats](/api-reference/javascript/v2/interfaces/HMSTrackStats)
 - [HMSTranscriptionInfo](/api-reference/javascript/v2/interfaces/HMSTranscriptionInfo)
@@ -175,13 +177,13 @@ Renames and re-exports [HMSNotifications](/api-reference/javascript/v2/interface
 
 ### HMSNotification
 
-Ƭ **HMSNotification**: [`HMSPeerNotification`](/api-reference/javascript/v2/interfaces/HMSPeerNotification) \| [`HMSPeerListNotification`](/api-reference/javascript/v2/interfaces/HMSPeerListNotification) \| [`HMSTrackNotification`](/api-reference/javascript/v2/interfaces/HMSTrackNotification) \| [`HMSMessageNotification`](/api-reference/javascript/v2/interfaces/HMSMessageNotification) \| [`HMSExceptionNotification`](/api-reference/javascript/v2/interfaces/HMSExceptionNotification) \| [`HMSChangeTrackStateRequestNotification`](/api-reference/javascript/v2/interfaces/HMSChangeTrackStateRequestNotification) \| [`HMSChangeMultiTrackStateRequestNotification`](/api-reference/javascript/v2/interfaces/HMSChangeMultiTrackStateRequestNotification) \| [`HMSLeaveRoomRequestNotification`](/api-reference/javascript/v2/interfaces/HMSLeaveRoomRequestNotification) \| [`HMSDeviceChangeEventNotification`](/api-reference/javascript/v2/interfaces/HMSDeviceChangeEventNotification) \| [`HMSReconnectionNotification`](/api-reference/javascript/v2/interfaces/HMSReconnectionNotification) \| [`HMSTranscriptionNotification`](/api-reference/javascript/v2/interfaces/HMSTranscriptionNotification) \| [`HMSPlaylistItemNotification`](/api-reference/javascript/v2/interfaces/HMSPlaylistItemNotification)<`any`\>
+Ƭ **HMSNotification**: [`HMSPeerNotification`](/api-reference/javascript/v2/interfaces/HMSPeerNotification) \| [`HMSPeerListNotification`](/api-reference/javascript/v2/interfaces/HMSPeerListNotification) \| [`HMSTrackNotification`](/api-reference/javascript/v2/interfaces/HMSTrackNotification) \| [`HMSMessageNotification`](/api-reference/javascript/v2/interfaces/HMSMessageNotification) \| [`HMSExceptionNotification`](/api-reference/javascript/v2/interfaces/HMSExceptionNotification) \| [`HMSChangeTrackStateRequestNotification`](/api-reference/javascript/v2/interfaces/HMSChangeTrackStateRequestNotification) \| [`HMSChangeMultiTrackStateRequestNotification`](/api-reference/javascript/v2/interfaces/HMSChangeMultiTrackStateRequestNotification) \| [`HMSLeaveRoomRequestNotification`](/api-reference/javascript/v2/interfaces/HMSLeaveRoomRequestNotification) \| [`HMSDeviceChangeEventNotification`](/api-reference/javascript/v2/interfaces/HMSDeviceChangeEventNotification) \| [`HMSReconnectionNotification`](/api-reference/javascript/v2/interfaces/HMSReconnectionNotification) \| [`HMSTrackInterruptionNotification`](/api-reference/javascript/v2/interfaces/HMSTrackInterruptionNotification) \| [`HMSTranscriptionNotification`](/api-reference/javascript/v2/interfaces/HMSTranscriptionNotification) \| [`HMSPlaylistItemNotification`](/api-reference/javascript/v2/interfaces/HMSPlaylistItemNotification)\<`any`\>
 
 ---
 
 ### HMSNotificationCallback
 
-Ƭ **HMSNotificationCallback**<`T`\>: (`notification`: [`HMSNotificationInCallback`](/api-reference/javascript/v2/home/content#hmsnotificationincallback)<`T`\>) => `void`
+Ƭ **HMSNotificationCallback**\<`T`\>: (`notification`: [`HMSNotificationInCallback`](/api-reference/javascript/v2/home/content#hmsnotificationincallback)\<`T`\>) => `void`
 
 #### Type parameters
 
@@ -195,9 +197,9 @@ Renames and re-exports [HMSNotifications](/api-reference/javascript/v2/interface
 
 ##### Parameters
 
-| Name           | Type                                                                                                     |
-| :------------- | :------------------------------------------------------------------------------------------------------- |
-| `notification` | [`HMSNotificationInCallback`](/api-reference/javascript/v2/home/content#hmsnotificationincallback)<`T`\> |
+| Name           | Type                                                                                                      |
+| :------------- | :-------------------------------------------------------------------------------------------------------- |
+| `notification` | [`HMSNotificationInCallback`](/api-reference/javascript/v2/home/content#hmsnotificationincallback)\<`T`\> |
 
 ##### Returns
 
@@ -207,7 +209,7 @@ Renames and re-exports [HMSNotifications](/api-reference/javascript/v2/interface
 
 ### HMSNotificationInCallback
 
-Ƭ **HMSNotificationInCallback**<`T`\>: `T` extends [`HMSNotificationTypes`](/api-reference/javascript/v2/enums/HMSNotificationTypes)[] ? [`MappedNotifications`](/api-reference/javascript/v2/home/content#mappednotifications)<`T`\>[`number`] : `T` extends [`HMSNotificationTypes`](/api-reference/javascript/v2/enums/HMSNotificationTypes) ? [`HMSNotificationMapping`](/api-reference/javascript/v2/home/content#hmsnotificationmapping)<`T`\> : [`HMSNotification`](/api-reference/javascript/v2/home/content#hmsnotification)
+Ƭ **HMSNotificationInCallback**\<`T`\>: `T` extends [`HMSNotificationTypes`](/api-reference/javascript/v2/enums/HMSNotificationTypes)[] ? [`MappedNotifications`](/api-reference/javascript/v2/home/content#mappednotifications)\<`T`\>[`number`] : `T` extends [`HMSNotificationTypes`](/api-reference/javascript/v2/enums/HMSNotificationTypes) ? [`HMSNotificationMapping`](/api-reference/javascript/v2/home/content#hmsnotificationmapping)\<`T`\> : [`HMSNotification`](/api-reference/javascript/v2/home/content#hmsnotification)
 
 #### Type parameters
 
@@ -219,7 +221,7 @@ Renames and re-exports [HMSNotifications](/api-reference/javascript/v2/interface
 
 ### HMSNotificationMapping
 
-Ƭ **HMSNotificationMapping**<`T`, `C`\>: { `CHANGE_MULTI_TRACK_STATE_REQUEST`: [`HMSChangeMultiTrackStateRequestNotification`](/api-reference/javascript/v2/interfaces/HMSChangeMultiTrackStateRequestNotification) ; `CHANGE_TRACK_STATE_REQUEST`: [`HMSChangeTrackStateRequestNotification`](/api-reference/javascript/v2/interfaces/HMSChangeTrackStateRequestNotification) ; `DEVICE_CHANGE_UPDATE`: [`HMSDeviceChangeEventNotification`](/api-reference/javascript/v2/interfaces/HMSDeviceChangeEventNotification) ; `ERROR`: [`HMSExceptionNotification`](/api-reference/javascript/v2/interfaces/HMSExceptionNotification) ; `HAND_RAISE_CHANGED`: [`HMSPeerNotification`](/api-reference/javascript/v2/interfaces/HMSPeerNotification) ; `METADATA_UPDATED`: [`HMSPeerNotification`](/api-reference/javascript/v2/interfaces/HMSPeerNotification) ; `NAME_UPDATED`: [`HMSPeerNotification`](/api-reference/javascript/v2/interfaces/HMSPeerNotification) ; `NEW_MESSAGE`: [`HMSMessageNotification`](/api-reference/javascript/v2/interfaces/HMSMessageNotification) ; `PEER_JOINED`: [`HMSPeerNotification`](/api-reference/javascript/v2/interfaces/HMSPeerNotification) ; `PEER_LEFT`: [`HMSPeerNotification`](/api-reference/javascript/v2/interfaces/HMSPeerNotification) ; `PEER_LIST`: [`HMSPeerListNotification`](/api-reference/javascript/v2/interfaces/HMSPeerListNotification) ; `PLAYLIST_TRACK_ENDED`: [`HMSPlaylistItemNotification`](/api-reference/javascript/v2/interfaces/HMSPlaylistItemNotification)<`C`\> ; `POLLS_LIST`: [`HMSPollNotification`](/api-reference/javascript/v2/interfaces/HMSPollNotification) ; `POLL_CREATED`: [`HMSPollNotification`](/api-reference/javascript/v2/interfaces/HMSPollNotification) ; `POLL_STARTED`: [`HMSPollNotification`](/api-reference/javascript/v2/interfaces/HMSPollNotification) ; `POLL_STOPPED`: [`HMSPollNotification`](/api-reference/javascript/v2/interfaces/HMSPollNotification) ; `POLL_VOTES_UPDATED`: [`HMSPollNotification`](/api-reference/javascript/v2/interfaces/HMSPollNotification) ; `RECONNECTED`: [`HMSReconnectionNotification`](/api-reference/javascript/v2/interfaces/HMSReconnectionNotification) ; `RECONNECTING`: [`HMSReconnectionNotification`](/api-reference/javascript/v2/interfaces/HMSReconnectionNotification) ; `REMOVED_FROM_ROOM`: [`HMSLeaveRoomRequestNotification`](/api-reference/javascript/v2/interfaces/HMSLeaveRoomRequestNotification) ; `ROLE_UPDATED`: [`HMSPeerNotification`](/api-reference/javascript/v2/interfaces/HMSPeerNotification) ; `ROOM_ENDED`: [`HMSLeaveRoomRequestNotification`](/api-reference/javascript/v2/interfaces/HMSLeaveRoomRequestNotification) ; `TRACK_ADDED`: [`HMSTrackNotification`](/api-reference/javascript/v2/interfaces/HMSTrackNotification) ; `TRACK_DEGRADED`: [`HMSTrackNotification`](/api-reference/javascript/v2/interfaces/HMSTrackNotification) ; `TRACK_DESCRIPTION_CHANGED`: [`HMSTrackNotification`](/api-reference/javascript/v2/interfaces/HMSTrackNotification) ; `TRACK_MUTED`: [`HMSTrackNotification`](/api-reference/javascript/v2/interfaces/HMSTrackNotification) ; `TRACK_REMOVED`: [`HMSTrackNotification`](/api-reference/javascript/v2/interfaces/HMSTrackNotification) ; `TRACK_RESTORED`: [`HMSTrackNotification`](/api-reference/javascript/v2/interfaces/HMSTrackNotification) ; `TRACK_UNMUTED`: [`HMSTrackNotification`](/api-reference/javascript/v2/interfaces/HMSTrackNotification) ; `TRANSCRIPTION_STATE_UPDATED`: [`HMSTranscriptionNotification`](/api-reference/javascript/v2/interfaces/HMSTranscriptionNotification) }[`T`]
+Ƭ **HMSNotificationMapping**\<`T`, `C`\>: \{ `CHANGE_MULTI_TRACK_STATE_REQUEST`: [`HMSChangeMultiTrackStateRequestNotification`](/api-reference/javascript/v2/interfaces/HMSChangeMultiTrackStateRequestNotification) ; `CHANGE_TRACK_STATE_REQUEST`: [`HMSChangeTrackStateRequestNotification`](/api-reference/javascript/v2/interfaces/HMSChangeTrackStateRequestNotification) ; `DEVICE_CHANGE_UPDATE`: [`HMSDeviceChangeEventNotification`](/api-reference/javascript/v2/interfaces/HMSDeviceChangeEventNotification) ; `ERROR`: [`HMSExceptionNotification`](/api-reference/javascript/v2/interfaces/HMSExceptionNotification) ; `HAND_RAISE_CHANGED`: [`HMSPeerNotification`](/api-reference/javascript/v2/interfaces/HMSPeerNotification) ; `METADATA_UPDATED`: [`HMSPeerNotification`](/api-reference/javascript/v2/interfaces/HMSPeerNotification) ; `NAME_UPDATED`: [`HMSPeerNotification`](/api-reference/javascript/v2/interfaces/HMSPeerNotification) ; `NEW_MESSAGE`: [`HMSMessageNotification`](/api-reference/javascript/v2/interfaces/HMSMessageNotification) ; `PEER_JOINED`: [`HMSPeerNotification`](/api-reference/javascript/v2/interfaces/HMSPeerNotification) ; `PEER_LEFT`: [`HMSPeerNotification`](/api-reference/javascript/v2/interfaces/HMSPeerNotification) ; `PEER_LIST`: [`HMSPeerListNotification`](/api-reference/javascript/v2/interfaces/HMSPeerListNotification) ; `PLAYLIST_TRACK_ENDED`: [`HMSPlaylistItemNotification`](/api-reference/javascript/v2/interfaces/HMSPlaylistItemNotification)\<`C`\> ; `POLLS_LIST`: [`HMSPollNotification`](/api-reference/javascript/v2/interfaces/HMSPollNotification) ; `POLL_CREATED`: [`HMSPollNotification`](/api-reference/javascript/v2/interfaces/HMSPollNotification) ; `POLL_STARTED`: [`HMSPollNotification`](/api-reference/javascript/v2/interfaces/HMSPollNotification) ; `POLL_STOPPED`: [`HMSPollNotification`](/api-reference/javascript/v2/interfaces/HMSPollNotification) ; `POLL_VOTES_UPDATED`: [`HMSPollNotification`](/api-reference/javascript/v2/interfaces/HMSPollNotification) ; `RECONNECTED`: [`HMSReconnectionNotification`](/api-reference/javascript/v2/interfaces/HMSReconnectionNotification) ; `RECONNECTING`: [`HMSReconnectionNotification`](/api-reference/javascript/v2/interfaces/HMSReconnectionNotification) ; `REMOVED_FROM_ROOM`: [`HMSLeaveRoomRequestNotification`](/api-reference/javascript/v2/interfaces/HMSLeaveRoomRequestNotification) ; `ROLE_UPDATED`: [`HMSPeerNotification`](/api-reference/javascript/v2/interfaces/HMSPeerNotification) ; `ROOM_ENDED`: [`HMSLeaveRoomRequestNotification`](/api-reference/javascript/v2/interfaces/HMSLeaveRoomRequestNotification) ; `TRACK_ADDED`: [`HMSTrackNotification`](/api-reference/javascript/v2/interfaces/HMSTrackNotification) ; `TRACK_DEGRADED`: [`HMSTrackNotification`](/api-reference/javascript/v2/interfaces/HMSTrackNotification) ; `TRACK_DESCRIPTION_CHANGED`: [`HMSTrackNotification`](/api-reference/javascript/v2/interfaces/HMSTrackNotification) ; `TRACK_INTERRUPTION_END`: [`HMSTrackInterruptionNotification`](/api-reference/javascript/v2/interfaces/HMSTrackInterruptionNotification) ; `TRACK_INTERRUPTION_START`: [`HMSTrackInterruptionNotification`](/api-reference/javascript/v2/interfaces/HMSTrackInterruptionNotification) ; `TRACK_MUTED`: [`HMSTrackNotification`](/api-reference/javascript/v2/interfaces/HMSTrackNotification) ; `TRACK_REMOVED`: [`HMSTrackNotification`](/api-reference/javascript/v2/interfaces/HMSTrackNotification) ; `TRACK_RESTORED`: [`HMSTrackNotification`](/api-reference/javascript/v2/interfaces/HMSTrackNotification) ; `TRACK_UNMUTED`: [`HMSTrackNotification`](/api-reference/javascript/v2/interfaces/HMSTrackNotification) ; `TRANSCRIPTION_STATE_UPDATED`: [`HMSTranscriptionNotification`](/api-reference/javascript/v2/interfaces/HMSTranscriptionNotification) }[`T`]
 
 #### Type parameters
 
@@ -250,7 +252,7 @@ Renames and re-exports [HMSNotifications](/api-reference/javascript/v2/interface
 
 ### HMSPreferredSimulcastLayer
 
-Ƭ **HMSPreferredSimulcastLayer**: `Exclude`<[`HMSSimulcastLayer`](/api-reference/javascript/v2/enums/HMSSimulcastLayer), [`NONE`](/api-reference/javascript/v2/enums/HMSSimulcastLayer#none)\>
+Ƭ **HMSPreferredSimulcastLayer**: `Exclude`\<[`HMSSimulcastLayer`](/api-reference/javascript/v2/enums/HMSSimulcastLayer), [`NONE`](/api-reference/javascript/v2/enums/HMSSimulcastLayer#none)\>
 
 ---
 
@@ -313,7 +315,7 @@ selfBrowser - the current browser tab is being shared
 
 ### MappedNotifications
 
-Ƭ **MappedNotifications**<`Type`\>: { [index in keyof Type]: HMSNotificationMapping<Type[index]\> }
+Ƭ **MappedNotifications**\<`Type`\>: \{ [index in keyof Type]: HMSNotificationMapping\<Type[index]\> }
 
 #### Type parameters
 
@@ -331,7 +333,20 @@ selfBrowser - the current browser tab is being shared
 
 ### parsedUserAgent
 
-• `Const` **parsedUserAgent**: `UAParserInstance`
+• `Const` **parsedUserAgent**: `Object`
+
+#### Type declaration
+
+| Name              | Type                         |
+| :---------------- | :--------------------------- |
+| `getBrowser`      | () => `IBrowser`             |
+| `getCPU`          | () => `ICPU`                 |
+| `getDevice`       | () => `IDevice`              |
+| `getEngine`       | () => `IEngine`              |
+| `getOS`           | () => `IOS`                  |
+| `getResult`       | () => `IResult`              |
+| `getUA`           | () => `string`               |
+| `withClientHints` | () => `Promise`\<`IResult`\> |
 
 ---
 
@@ -347,24 +362,24 @@ selfBrowser - the current browser tab is being shared
 
 #### Type declaration
 
-| Name                          | Type                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-| :---------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `availablePublishBitrate`     | `OutputSelector`<[`HMSStatsStore`](/api-reference/javascript/v2/interfaces/HMSStatsStore), `undefined` \| `number`, (`res`: `undefined` \| [`HMSPeerStats`](/api-reference/javascript/v2/interfaces/HMSPeerStats)) => `undefined` \| `number`\>                                                                                                                                                                                            |
-| `availableSubscribeBitrate`   | `OutputSelector`<[`HMSStatsStore`](/api-reference/javascript/v2/interfaces/HMSStatsStore), `undefined` \| `number`, (`res`: `undefined` \| [`HMSPeerStats`](/api-reference/javascript/v2/interfaces/HMSPeerStats)) => `undefined` \| `number`\>                                                                                                                                                                                            |
-| `jitter`                      | `OutputSelector`<[`HMSStatsStore`](/api-reference/javascript/v2/interfaces/HMSStatsStore), `undefined` \| `number`, (`res`: `undefined` \| [`HMSPeerStats`](/api-reference/javascript/v2/interfaces/HMSPeerStats)) => `undefined` \| `number`\>                                                                                                                                                                                            |
-| `localAudioTrackStats`        | `OutputSelector`<[`HMSStatsStore`](/api-reference/javascript/v2/interfaces/HMSStatsStore), `undefined` \| [`HMSTrackStats`](/api-reference/javascript/v2/interfaces/HMSTrackStats), (`res1`: `Record`<`string`, `undefined` \| [`HMSTrackStats`](/api-reference/javascript/v2/interfaces/HMSTrackStats)[]\>, `res2`: `undefined` \| `string`) => `undefined` \| [`HMSTrackStats`](/api-reference/javascript/v2/interfaces/HMSTrackStats)\> |
-| `localAudioTrackStatsByID`    | (`id?`: `string`) => `StoreSelector`<[`HMSStatsStore`](/api-reference/javascript/v2/interfaces/HMSStatsStore), `undefined` \| [`HMSTrackStats`](/api-reference/javascript/v2/interfaces/HMSTrackStats)\>                                                                                                                                                                                                                                   |
-| `localPeerStats`              | `OutputSelector`<[`HMSStatsStore`](/api-reference/javascript/v2/interfaces/HMSStatsStore), `undefined` \| [`HMSPeerStats`](/api-reference/javascript/v2/interfaces/HMSPeerStats), (`res1`: `Record`<`string`, `undefined` \| [`HMSPeerStats`](/api-reference/javascript/v2/interfaces/HMSPeerStats)\>, `res2`: `string`) => `undefined` \| [`HMSPeerStats`](/api-reference/javascript/v2/interfaces/HMSPeerStats)\>                        |
-| `localVideoTrackStats`        | `OutputSelector`<[`HMSStatsStore`](/api-reference/javascript/v2/interfaces/HMSStatsStore), `undefined` \| [`HMSTrackStats`](/api-reference/javascript/v2/interfaces/HMSTrackStats), (`res1`: `Record`<`string`, `undefined` \| [`HMSTrackStats`](/api-reference/javascript/v2/interfaces/HMSTrackStats)[]\>, `res2`: `undefined` \| `string`) => `undefined` \| [`HMSTrackStats`](/api-reference/javascript/v2/interfaces/HMSTrackStats)\> |
-| `localVideoTrackStatsByID`    | (`id?`: `string`) => `StoreSelector`<[`HMSStatsStore`](/api-reference/javascript/v2/interfaces/HMSStatsStore), `undefined` \| [`HMSTrackStats`](/api-reference/javascript/v2/interfaces/HMSTrackStats)[]\>                                                                                                                                                                                                                                 |
-| `localVideoTrackStatsByLayer` | (`layer?`: [`HMSPreferredSimulcastLayer`](/api-reference/javascript/v2/home/content#hmspreferredsimulcastlayer)) => (`id?`: `string`) => `StoreSelector`<[`HMSStatsStore`](/api-reference/javascript/v2/interfaces/HMSStatsStore), `undefined` \| [`HMSTrackStats`](/api-reference/javascript/v2/interfaces/HMSTrackStats)\>                                                                                                               |
-| `packetsLost`                 | `OutputSelector`<[`HMSStatsStore`](/api-reference/javascript/v2/interfaces/HMSStatsStore), `undefined` \| `number`, (`res`: `undefined` \| [`HMSPeerStats`](/api-reference/javascript/v2/interfaces/HMSPeerStats)) => `undefined` \| `number`\>                                                                                                                                                                                            |
-| `peerStatsByID`               | (`id?`: `string`) => `StoreSelector`<[`HMSStatsStore`](/api-reference/javascript/v2/interfaces/HMSStatsStore), `undefined` \| [`HMSPeerStats`](/api-reference/javascript/v2/interfaces/HMSPeerStats)\>                                                                                                                                                                                                                                     |
-| `publishBitrate`              | `OutputSelector`<[`HMSStatsStore`](/api-reference/javascript/v2/interfaces/HMSStatsStore), `undefined` \| `number`, (`res`: `undefined` \| [`HMSPeerStats`](/api-reference/javascript/v2/interfaces/HMSPeerStats)) => `undefined` \| `number`\>                                                                                                                                                                                            |
-| `subscribeBitrate`            | `OutputSelector`<[`HMSStatsStore`](/api-reference/javascript/v2/interfaces/HMSStatsStore), `undefined` \| `number`, (`res`: `undefined` \| [`HMSPeerStats`](/api-reference/javascript/v2/interfaces/HMSPeerStats)) => `undefined` \| `number`\>                                                                                                                                                                                            |
-| `totalBytesReceived`          | `OutputSelector`<[`HMSStatsStore`](/api-reference/javascript/v2/interfaces/HMSStatsStore), `undefined` \| `number`, (`res`: `undefined` \| [`HMSPeerStats`](/api-reference/javascript/v2/interfaces/HMSPeerStats)) => `undefined` \| `number`\>                                                                                                                                                                                            |
-| `totalBytesSent`              | `OutputSelector`<[`HMSStatsStore`](/api-reference/javascript/v2/interfaces/HMSStatsStore), `undefined` \| `number`, (`res`: `undefined` \| [`HMSPeerStats`](/api-reference/javascript/v2/interfaces/HMSPeerStats)) => `undefined` \| `number`\>                                                                                                                                                                                            |
-| `trackStatsByID`              | (`id?`: `string`) => `StoreSelector`<[`HMSStatsStore`](/api-reference/javascript/v2/interfaces/HMSStatsStore), `undefined` \| [`HMSTrackStats`](/api-reference/javascript/v2/interfaces/HMSTrackStats)\>                                                                                                                                                                                                                                   |
+| Name                          | Type                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| :---------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `availablePublishBitrate`     | `OutputSelector`\<[`HMSStatsStore`](/api-reference/javascript/v2/interfaces/HMSStatsStore), `undefined` \| `number`, (`res`: `undefined` \| [`HMSPeerStats`](/api-reference/javascript/v2/interfaces/HMSPeerStats)) => `undefined` \| `number`\>                                                                                                                                                                                             |
+| `availableSubscribeBitrate`   | `OutputSelector`\<[`HMSStatsStore`](/api-reference/javascript/v2/interfaces/HMSStatsStore), `undefined` \| `number`, (`res`: `undefined` \| [`HMSPeerStats`](/api-reference/javascript/v2/interfaces/HMSPeerStats)) => `undefined` \| `number`\>                                                                                                                                                                                             |
+| `jitter`                      | `OutputSelector`\<[`HMSStatsStore`](/api-reference/javascript/v2/interfaces/HMSStatsStore), `undefined` \| `number`, (`res`: `undefined` \| [`HMSPeerStats`](/api-reference/javascript/v2/interfaces/HMSPeerStats)) => `undefined` \| `number`\>                                                                                                                                                                                             |
+| `localAudioTrackStats`        | `OutputSelector`\<[`HMSStatsStore`](/api-reference/javascript/v2/interfaces/HMSStatsStore), `undefined` \| [`HMSTrackStats`](/api-reference/javascript/v2/interfaces/HMSTrackStats), (`res1`: `Record`\<`string`, `undefined` \| [`HMSTrackStats`](/api-reference/javascript/v2/interfaces/HMSTrackStats)[]\>, `res2`: `undefined` \| `string`) => `undefined` \| [`HMSTrackStats`](/api-reference/javascript/v2/interfaces/HMSTrackStats)\> |
+| `localAudioTrackStatsByID`    | (`id?`: `string`) => `StoreSelector`\<[`HMSStatsStore`](/api-reference/javascript/v2/interfaces/HMSStatsStore), `undefined` \| [`HMSTrackStats`](/api-reference/javascript/v2/interfaces/HMSTrackStats)\>                                                                                                                                                                                                                                    |
+| `localPeerStats`              | `OutputSelector`\<[`HMSStatsStore`](/api-reference/javascript/v2/interfaces/HMSStatsStore), `undefined` \| [`HMSPeerStats`](/api-reference/javascript/v2/interfaces/HMSPeerStats), (`res1`: `Record`\<`string`, `undefined` \| [`HMSPeerStats`](/api-reference/javascript/v2/interfaces/HMSPeerStats)\>, `res2`: `string`) => `undefined` \| [`HMSPeerStats`](/api-reference/javascript/v2/interfaces/HMSPeerStats)\>                        |
+| `localVideoTrackStats`        | `OutputSelector`\<[`HMSStatsStore`](/api-reference/javascript/v2/interfaces/HMSStatsStore), `undefined` \| [`HMSTrackStats`](/api-reference/javascript/v2/interfaces/HMSTrackStats), (`res1`: `Record`\<`string`, `undefined` \| [`HMSTrackStats`](/api-reference/javascript/v2/interfaces/HMSTrackStats)[]\>, `res2`: `undefined` \| `string`) => `undefined` \| [`HMSTrackStats`](/api-reference/javascript/v2/interfaces/HMSTrackStats)\> |
+| `localVideoTrackStatsByID`    | (`id?`: `string`) => `StoreSelector`\<[`HMSStatsStore`](/api-reference/javascript/v2/interfaces/HMSStatsStore), `undefined` \| [`HMSTrackStats`](/api-reference/javascript/v2/interfaces/HMSTrackStats)[]\>                                                                                                                                                                                                                                  |
+| `localVideoTrackStatsByLayer` | (`layer?`: [`HMSPreferredSimulcastLayer`](/api-reference/javascript/v2/home/content#hmspreferredsimulcastlayer)) => (`id?`: `string`) => `StoreSelector`\<[`HMSStatsStore`](/api-reference/javascript/v2/interfaces/HMSStatsStore), `undefined` \| [`HMSTrackStats`](/api-reference/javascript/v2/interfaces/HMSTrackStats)\>                                                                                                                |
+| `packetsLost`                 | `OutputSelector`\<[`HMSStatsStore`](/api-reference/javascript/v2/interfaces/HMSStatsStore), `undefined` \| `number`, (`res`: `undefined` \| [`HMSPeerStats`](/api-reference/javascript/v2/interfaces/HMSPeerStats)) => `undefined` \| `number`\>                                                                                                                                                                                             |
+| `peerStatsByID`               | (`id?`: `string`) => `StoreSelector`\<[`HMSStatsStore`](/api-reference/javascript/v2/interfaces/HMSStatsStore), `undefined` \| [`HMSPeerStats`](/api-reference/javascript/v2/interfaces/HMSPeerStats)\>                                                                                                                                                                                                                                      |
+| `publishBitrate`              | `OutputSelector`\<[`HMSStatsStore`](/api-reference/javascript/v2/interfaces/HMSStatsStore), `undefined` \| `number`, (`res`: `undefined` \| [`HMSPeerStats`](/api-reference/javascript/v2/interfaces/HMSPeerStats)) => `undefined` \| `number`\>                                                                                                                                                                                             |
+| `subscribeBitrate`            | `OutputSelector`\<[`HMSStatsStore`](/api-reference/javascript/v2/interfaces/HMSStatsStore), `undefined` \| `number`, (`res`: `undefined` \| [`HMSPeerStats`](/api-reference/javascript/v2/interfaces/HMSPeerStats)) => `undefined` \| `number`\>                                                                                                                                                                                             |
+| `totalBytesReceived`          | `OutputSelector`\<[`HMSStatsStore`](/api-reference/javascript/v2/interfaces/HMSStatsStore), `undefined` \| `number`, (`res`: `undefined` \| [`HMSPeerStats`](/api-reference/javascript/v2/interfaces/HMSPeerStats)) => `undefined` \| `number`\>                                                                                                                                                                                             |
+| `totalBytesSent`              | `OutputSelector`\<[`HMSStatsStore`](/api-reference/javascript/v2/interfaces/HMSStatsStore), `undefined` \| `number`, (`res`: `undefined` \| [`HMSPeerStats`](/api-reference/javascript/v2/interfaces/HMSPeerStats)) => `undefined` \| `number`\>                                                                                                                                                                                             |
+| `trackStatsByID`              | (`id?`: `string`) => `StoreSelector`\<[`HMSStatsStore`](/api-reference/javascript/v2/interfaces/HMSStatsStore), `undefined` \| [`HMSTrackStats`](/api-reference/javascript/v2/interfaces/HMSTrackStats)\>                                                                                                                                                                                                                                    |
 
 ---
 
@@ -416,7 +431,7 @@ selfBrowser - the current browser tab is being shared
 
 ### selectAppData
 
-▸ **selectAppData**(`id?`): `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `any`\>
+▸ **selectAppData**(`id?`): `StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `any`\>
 
 Select a particular key from ui app data by passed in key.
 if key is not passed, full data is returned.
@@ -429,13 +444,13 @@ if key is not passed, full data is returned.
 
 #### Returns
 
-`StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `any`\>
+`StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `any`\>
 
 ---
 
 ### selectAppDataByPath
 
-▸ **selectAppDataByPath**(`...keys`): `OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `undefined` \| `Record`<`string`, `any`\>, (`res`: `undefined` \| `Record`<`string`, `any`\>) => `undefined` \| `Record`<`string`, `any`\>\>
+▸ **selectAppDataByPath**(`...keys`): `OutputSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `undefined` \| `Record`\<`string`, `any`\>, (`res`: `undefined` \| `Record`\<`string`, `any`\>) => `undefined` \| `Record`\<`string`, `any`\>\>
 
 #### Parameters
 
@@ -445,13 +460,13 @@ if key is not passed, full data is returned.
 
 #### Returns
 
-`OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `undefined` \| `Record`<`string`, `any`\>, (`res`: `undefined` \| `Record`<`string`, `any`\>) => `undefined` \| `Record`<`string`, `any`\>\>
+`OutputSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `undefined` \| `Record`\<`string`, `any`\>, (`res`: `undefined` \| `Record`\<`string`, `any`\>) => `undefined` \| `Record`\<`string`, `any`\>\>
 
 ---
 
 ### selectAudioPlaylistTrackByPeerID
 
-▸ **selectAudioPlaylistTrackByPeerID**(`id?`): `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `undefined` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack)\>
+▸ **selectAudioPlaylistTrackByPeerID**(`id?`): `StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `undefined` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack)\>
 
 takes in a normal selector which has store and id as input and curries it to make it easier to use.
 Before: store.getState((store) => normalSelector(store, peerID))
@@ -465,13 +480,13 @@ After: store.getState(curriedSelector(peerID))
 
 #### Returns
 
-`StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `undefined` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack)\>
+`StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `undefined` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack)\>
 
 ---
 
 ### selectAudioTrackByID
 
-▸ **selectAudioTrackByID**(`id?`): `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `null` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack)\>
+▸ **selectAudioTrackByID**(`id?`): `StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `null` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack)\>
 
 Select the [HMSAudioTrack](/api-reference/javascript/v2/interfaces/HMSAudioTrack) object given a track ID.
 
@@ -483,13 +498,13 @@ Select the [HMSAudioTrack](/api-reference/javascript/v2/interfaces/HMSAudioTrack
 
 #### Returns
 
-`StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `null` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack)\>
+`StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `null` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack)\>
 
 ---
 
 ### selectAudioTrackByPeerID
 
-▸ **selectAudioTrackByPeerID**(`id?`): `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `undefined` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack)\>
+▸ **selectAudioTrackByPeerID**(`id?`): `StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `undefined` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack)\>
 
 Select the primary audio track of a peer given a peer ID.
 
@@ -501,13 +516,13 @@ Select the primary audio track of a peer given a peer ID.
 
 #### Returns
 
-`StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `undefined` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack)\>
+`StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `undefined` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack)\>
 
 ---
 
 ### selectAudioTrackVolume
 
-▸ **selectAudioTrackVolume**(`id?`): `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `undefined` \| `number`\>
+▸ **selectAudioTrackVolume**(`id?`): `StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `undefined` \| `number`\>
 
 Select the local audio volume of an audio track given a track ID.
 
@@ -524,13 +539,13 @@ NOTE: **Volume** of a track is different from **Audio Level** of a track,
 
 #### Returns
 
-`StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `undefined` \| `number`\>
+`StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `undefined` \| `number`\>
 
 ---
 
 ### selectAudioVolumeByPeerID
 
-▸ **selectAudioVolumeByPeerID**(`id?`): `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `undefined` \| `number`\>
+▸ **selectAudioVolumeByPeerID**(`id?`): `StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `undefined` \| `number`\>
 
 Select the local audio volume of the primary audio track of a peer given a peer ID.
 
@@ -542,13 +557,13 @@ Select the local audio volume of the primary audio track of a peer given a peer 
 
 #### Returns
 
-`StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `undefined` \| `number`\>
+`StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `undefined` \| `number`\>
 
 ---
 
 ### selectAuxiliaryAudioByPeerID
 
-▸ **selectAuxiliaryAudioByPeerID**(`id?`): `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `undefined` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack)\>
+▸ **selectAuxiliaryAudioByPeerID**(`id?`): `StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `undefined` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack)\>
 
 Select the first auxiliary audio track of a peer given a peer ID.
 
@@ -560,13 +575,13 @@ Select the first auxiliary audio track of a peer given a peer ID.
 
 #### Returns
 
-`StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `undefined` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack)\>
+`StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `undefined` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack)\>
 
 ---
 
 ### selectAuxiliaryTracksByPeerID
 
-▸ **selectAuxiliaryTracksByPeerID**(`id?`): `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, [`HMSTrack`](/api-reference/javascript/v2/home/content#hmstrack)[]\>
+▸ **selectAuxiliaryTracksByPeerID**(`id?`): `StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, [`HMSTrack`](/api-reference/javascript/v2/home/content#hmstrack)[]\>
 
 Select an array of auxiliary tracks of a peer given a peer ID.
 
@@ -578,7 +593,7 @@ Select an array of auxiliary tracks of a peer given a peer ID.
 
 #### Returns
 
-`StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, [`HMSTrack`](/api-reference/javascript/v2/home/content#hmstrack)[]\>
+`StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, [`HMSTrack`](/api-reference/javascript/v2/home/content#hmstrack)[]\>
 
 ---
 
@@ -590,9 +605,9 @@ Select an array of names of available roles in the room.
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -606,9 +621,9 @@ Select an array of names of available roles in the room.
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -622,9 +637,9 @@ Select an array of names of available roles in the room.
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -634,7 +649,7 @@ Select an array of names of available roles in the room.
 
 ### selectCameraStreamByPeerID
 
-▸ **selectCameraStreamByPeerID**(`id?`): `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `undefined` \| [`HMSVideoTrack`](/api-reference/javascript/v2/interfaces/HMSVideoTrack)\>
+▸ **selectCameraStreamByPeerID**(`id?`): `StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `undefined` \| [`HMSVideoTrack`](/api-reference/javascript/v2/interfaces/HMSVideoTrack)\>
 
 Select the camera stream of a peer given a peer ID.
 This is the primary video track of a peer.
@@ -647,29 +662,29 @@ This is the primary video track of a peer.
 
 #### Returns
 
-`StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `undefined` \| [`HMSVideoTrack`](/api-reference/javascript/v2/interfaces/HMSVideoTrack)\>
+`StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `undefined` \| [`HMSVideoTrack`](/api-reference/javascript/v2/interfaces/HMSVideoTrack)\>
 
 ---
 
 ### selectConnectionQualities
 
-▸ **selectConnectionQualities**(`store`): `Record`<`string`, `HMSConnectionQuality`\>
+▸ **selectConnectionQualities**(`store`): `Record`\<`string`, `HMSConnectionQuality`\>
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `store` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
-`Record`<`string`, `HMSConnectionQuality`\>
+`Record`\<`string`, `HMSConnectionQuality`\>
 
 ---
 
 ### selectConnectionQualityByPeerID
 
-▸ **selectConnectionQualityByPeerID**(`id?`): `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `undefined` \| `HMSConnectionQuality`\>
+▸ **selectConnectionQualityByPeerID**(`id?`): `StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `undefined` \| `HMSConnectionQuality`\>
 
 takes in a normal selector which has store and id as input and curries it to make it easier to use.
 Before: store.getState((store) => normalSelector(store, peerID))
@@ -683,7 +698,7 @@ After: store.getState(curriedSelector(peerID))
 
 #### Returns
 
-`StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `undefined` \| `HMSConnectionQuality`\>
+`StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `undefined` \| `HMSConnectionQuality`\>
 
 ---
 
@@ -695,9 +710,9 @@ Select an array of tracks that have been degraded(receiving lower video quality/
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -713,9 +728,9 @@ Select the available audio input, audio output and video input devices on your m
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `store` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -735,7 +750,7 @@ type DeviceMap = {
 
 ### selectDidIJoinWithin
 
-▸ **selectDidIJoinWithin**(`timeMs`): `OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `undefined` \| `boolean`, (`res`: [`HMSRoom`](/api-reference/javascript/v2/interfaces/HMSRoom)) => `undefined` \| `boolean`\>
+▸ **selectDidIJoinWithin**(`timeMs`): `OutputSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `undefined` \| `boolean`, (`res`: [`HMSRoom`](/api-reference/javascript/v2/interfaces/HMSRoom)) => `undefined` \| `boolean`\>
 
 Returns a boolean to indicate if the local peer joined within the past `timeMs` milliseconds.
 
@@ -753,7 +768,7 @@ const joinedWithinASecond = useHMSStore(selectDidIJoinWithin(1000));
 
 #### Returns
 
-`OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `undefined` \| `boolean`, (`res`: [`HMSRoom`](/api-reference/javascript/v2/interfaces/HMSRoom)) => `undefined` \| `boolean`\>
+`OutputSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `undefined` \| `boolean`, (`res`: [`HMSRoom`](/api-reference/javascript/v2/interfaces/HMSRoom)) => `undefined` \| `boolean`\>
 
 ---
 
@@ -765,9 +780,9 @@ Select the peer who's speaking the loudest at the moment
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -781,9 +796,9 @@ Select the peer who's speaking the loudest at the moment
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -799,9 +814,9 @@ Select the current [[]](/api-reference/javascript/v2/interfaces/HMSException) ob
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `store` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -815,9 +830,9 @@ Select the current [[]](/api-reference/javascript/v2/interfaces/HMSException) ob
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -831,9 +846,9 @@ Select the current [[]](/api-reference/javascript/v2/interfaces/HMSException) ob
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -849,9 +864,9 @@ Select an array of messages in the room(sent and received).
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -867,9 +882,9 @@ Select the number of messages(sent and received).
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -883,9 +898,9 @@ Select the number of messages(sent and received).
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -895,7 +910,7 @@ Select the number of messages(sent and received).
 
 ### selectHasPeerHandRaised
 
-▸ **selectHasPeerHandRaised**(`peerId`): `OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `boolean`, (`res`: `null` \| [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)) => `boolean`\>
+▸ **selectHasPeerHandRaised**(`peerId`): `OutputSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `boolean`, (`res`: `null` \| [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)) => `boolean`\>
 
 #### Parameters
 
@@ -905,7 +920,7 @@ Select the number of messages(sent and received).
 
 #### Returns
 
-`OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `boolean`, (`res`: `null` \| [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)) => `boolean`\>
+`OutputSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `boolean`, (`res`: `null` \| [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)) => `boolean`\>
 
 ---
 
@@ -917,9 +932,9 @@ Select what streams is the local peer allowed to preview from video, audio
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -935,9 +950,9 @@ Select what streams is the local peer allowed to publish from video, audio and s
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -953,9 +968,9 @@ Select a boolean denoting whether if your local peer is allowed to subscribe to 
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -965,7 +980,7 @@ Select a boolean denoting whether if your local peer is allowed to subscribe to 
 
 ### selectIsAudioLocallyMuted
 
-▸ **selectIsAudioLocallyMuted**(`id?`): `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `undefined` \| `boolean`\>
+▸ **selectIsAudioLocallyMuted**(`id?`): `StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `undefined` \| `boolean`\>
 
 Select a boolean denoting whether you've muted an audio track locally(only for you) given a track ID.
 
@@ -977,7 +992,7 @@ Select a boolean denoting whether you've muted an audio track locally(only for y
 
 #### Returns
 
-`StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `undefined` \| `boolean`\>
+`StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `undefined` \| `boolean`\>
 
 ---
 
@@ -990,9 +1005,9 @@ NOTE: Returns true only after join, returns false during preview.
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -1006,9 +1021,9 @@ NOTE: Returns true only after join, returns false during preview.
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -1024,9 +1039,9 @@ Select a boolean denoting whether the room is in Preview state.
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -1040,9 +1055,9 @@ Select a boolean denoting whether the room is in Preview state.
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -1059,9 +1074,31 @@ and the audio from your microphone is shared to remote peers
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `store` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
+
+#### Returns
+
+`boolean`
+
+---
+
+### selectIsLocalAudioInterrupted
+
+▸ **selectIsLocalAudioInterrupted**(`store`): `boolean`
+
+Select a boolean denoting whether the OS or another app has taken your microphone, eg. an
+incoming call. Cleared once capture is back, however it came back.
+
+Backgrounding the tab on mobile does not set this - the mic is handed back on return. It is set
+on return if the mic did not come back.
+
+#### Parameters
+
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -1071,7 +1108,7 @@ and the audio from your microphone is shared to remote peers
 
 ### selectIsLocalAudioPluginPresent
 
-▸ **selectIsLocalAudioPluginPresent**(`pluginName`): `OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `boolean`, (`res`: `string`[]) => `boolean`\>
+▸ **selectIsLocalAudioPluginPresent**(`pluginName`): `OutputSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `boolean`, (`res`: `string`[]) => `boolean`\>
 
 #### Parameters
 
@@ -1081,7 +1118,7 @@ and the audio from your microphone is shared to remote peers
 
 #### Returns
 
-`OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `boolean`, (`res`: `string`[]) => `boolean`\>
+`OutputSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `boolean`, (`res`: `string`[]) => `boolean`\>
 
 ---
 
@@ -1093,9 +1130,9 @@ Select a boolean denoting whether your screen is shared to remote peers in the r
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -1116,9 +1153,9 @@ without waiting for the video source
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `store` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -1135,9 +1172,9 @@ and the video from your camera is shared to remote peers
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `store` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -1145,9 +1182,31 @@ and the video from your camera is shared to remote peers
 
 ---
 
+### selectIsLocalVideoInterrupted
+
+▸ **selectIsLocalVideoInterrupted**(`store`): `boolean`
+
+Select a boolean denoting whether the OS or another app has taken your camera.
+
+#### Parameters
+
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
+
+#### Returns
+
+`boolean`
+
+**`See`**
+
+selectIsLocalAudioInterrupted
+
+---
+
 ### selectIsLocalVideoPluginPresent
 
-▸ **selectIsLocalVideoPluginPresent**(`pluginName`): `OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `boolean`, (`res`: `string`[]) => `boolean`\>
+▸ **selectIsLocalVideoPluginPresent**(`pluginName`): `OutputSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `boolean`, (`res`: `string`[]) => `boolean`\>
 
 #### Parameters
 
@@ -1157,13 +1216,13 @@ and the video from your camera is shared to remote peers
 
 #### Returns
 
-`OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `boolean`, (`res`: `string`[]) => `boolean`\>
+`OutputSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `boolean`, (`res`: `string`[]) => `boolean`\>
 
 ---
 
 ### selectIsLocallyMutedByPeerID
 
-▸ **selectIsLocallyMutedByPeerID**(`id?`): `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `undefined` \| `boolean`\>
+▸ **selectIsLocallyMutedByPeerID**(`id?`): `StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `undefined` \| `boolean`\>
 
 Select a boolean denoting whether you've muted the primary audio track of a peer locally(only for you) given a peer ID.
 
@@ -1175,13 +1234,13 @@ Select a boolean denoting whether you've muted the primary audio track of a peer
 
 #### Returns
 
-`StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `undefined` \| `boolean`\>
+`StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `undefined` \| `boolean`\>
 
 ---
 
 ### selectIsPeerAudioEnabled
 
-▸ **selectIsPeerAudioEnabled**(`id?`): `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `boolean`\>
+▸ **selectIsPeerAudioEnabled**(`id?`): `StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `boolean`\>
 
 Select a boolean denoting whether a peer has unmuted audio and sharing it to other peers.
 
@@ -1193,13 +1252,13 @@ Select a boolean denoting whether a peer has unmuted audio and sharing it to oth
 
 #### Returns
 
-`StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `boolean`\>
+`StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `boolean`\>
 
 ---
 
 ### selectIsPeerVideoEnabled
 
-▸ **selectIsPeerVideoEnabled**(`id?`): `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `boolean`\>
+▸ **selectIsPeerVideoEnabled**(`id?`): `StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `boolean`\>
 
 Select a boolean denoting whether a peer has unmuted video and sharing it to other peers.
 
@@ -1211,13 +1270,13 @@ Select a boolean denoting whether a peer has unmuted video and sharing it to oth
 
 #### Returns
 
-`StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `boolean`\>
+`StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `boolean`\>
 
 ---
 
 ### selectIsRoleAllowedToPublish
 
-▸ **selectIsRoleAllowedToPublish**(`roleName`): `OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, [`HMSPublishAllowed`](/api-reference/javascript/v2/interfaces/HMSPublishAllowed), (`res`: [`HMSRole`](/api-reference/javascript/v2/interfaces/HMSRole)) => [`HMSPublishAllowed`](/api-reference/javascript/v2/interfaces/HMSPublishAllowed)\>
+▸ **selectIsRoleAllowedToPublish**(`roleName`): `OutputSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, [`HMSPublishAllowed`](/api-reference/javascript/v2/interfaces/HMSPublishAllowed), (`res`: [`HMSRole`](/api-reference/javascript/v2/interfaces/HMSRole)) => [`HMSPublishAllowed`](/api-reference/javascript/v2/interfaces/HMSPublishAllowed)\>
 
 #### Parameters
 
@@ -1227,13 +1286,13 @@ Select a boolean denoting whether a peer has unmuted video and sharing it to oth
 
 #### Returns
 
-`OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, [`HMSPublishAllowed`](/api-reference/javascript/v2/interfaces/HMSPublishAllowed), (`res`: [`HMSRole`](/api-reference/javascript/v2/interfaces/HMSRole)) => [`HMSPublishAllowed`](/api-reference/javascript/v2/interfaces/HMSPublishAllowed)\>
+`OutputSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, [`HMSPublishAllowed`](/api-reference/javascript/v2/interfaces/HMSPublishAllowed), (`res`: [`HMSRole`](/api-reference/javascript/v2/interfaces/HMSRole)) => [`HMSPublishAllowed`](/api-reference/javascript/v2/interfaces/HMSPublishAllowed)\>
 
 ---
 
 ### selectIsScreenShareLocallyMutedByPeerID
 
-▸ **selectIsScreenShareLocallyMutedByPeerID**(`id?`): `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `undefined` \| `boolean`\>
+▸ **selectIsScreenShareLocallyMutedByPeerID**(`id?`): `StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `undefined` \| `boolean`\>
 
 Select a boolean denoting whether you've muted the screen share audio track of a peer locally(only for you) given a peer ID.
 
@@ -1245,7 +1304,7 @@ Select a boolean denoting whether you've muted the screen share audio track of a
 
 #### Returns
 
-`StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `undefined` \| `boolean`\>
+`StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `undefined` \| `boolean`\>
 
 ---
 
@@ -1257,9 +1316,9 @@ Select a boolean denoting whether someone is sharing screen in the room.
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -1269,7 +1328,7 @@ Select a boolean denoting whether someone is sharing screen in the room.
 
 ### selectIsTranscriptionAllowedByMode
 
-▸ **selectIsTranscriptionAllowedByMode**(`mode`): `OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `boolean`, (`res`: `null` \| [`HMSRole`](/api-reference/javascript/v2/interfaces/HMSRole)) => `boolean`\>
+▸ **selectIsTranscriptionAllowedByMode**(`mode`): `OutputSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `boolean`, (`res`: `null` \| [`HMSRole`](/api-reference/javascript/v2/interfaces/HMSRole)) => `boolean`\>
 
 #### Parameters
 
@@ -1279,7 +1338,7 @@ Select a boolean denoting whether someone is sharing screen in the room.
 
 #### Returns
 
-`OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `boolean`, (`res`: `null` \| [`HMSRole`](/api-reference/javascript/v2/interfaces/HMSRole)) => `boolean`\>
+`OutputSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `boolean`, (`res`: `null` \| [`HMSRole`](/api-reference/javascript/v2/interfaces/HMSRole)) => `boolean`\>
 
 ---
 
@@ -1289,9 +1348,9 @@ Select a boolean denoting whether someone is sharing screen in the room.
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -1305,9 +1364,9 @@ Select a boolean denoting whether someone is sharing screen in the room.
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -1323,9 +1382,9 @@ Select the track ID of your local peer's primary audio track
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -1342,9 +1401,9 @@ i.e., choosen audio input device, audio output device and video input device, au
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `store` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -1360,9 +1419,9 @@ Select the local peer object object assigned to you.
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -1378,9 +1437,9 @@ Select the peer ID of your local peer.
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -1396,9 +1455,9 @@ Select the peer name of your local peer.
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -1414,9 +1473,9 @@ Select the [HMSRole](/api-reference/javascript/v2/interfaces/HMSRole) object of 
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -1432,9 +1491,9 @@ Select the role name of your local peer.
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -1450,9 +1509,9 @@ Select an array of track IDs of all your local peer's tracks
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -1468,9 +1527,9 @@ Select the track ID of your local peer's primary video track
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -1480,7 +1539,7 @@ Select the track ID of your local peer's primary video track
 
 ### selectMessageByMessageID
 
-▸ **selectMessageByMessageID**(`id`): `OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, [`HMSMessage`](/api-reference/javascript/v2/interfaces/HMSMessage), (`res`: `Record`<`string`, [`HMSMessage`](/api-reference/javascript/v2/interfaces/HMSMessage)\>) => [`HMSMessage`](/api-reference/javascript/v2/interfaces/HMSMessage)\>
+▸ **selectMessageByMessageID**(`id`): `OutputSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, [`HMSMessage`](/api-reference/javascript/v2/interfaces/HMSMessage), (`res`: `Record`\<`string`, [`HMSMessage`](/api-reference/javascript/v2/interfaces/HMSMessage)\>) => [`HMSMessage`](/api-reference/javascript/v2/interfaces/HMSMessage)\>
 
 #### Parameters
 
@@ -1490,7 +1549,7 @@ Select the track ID of your local peer's primary video track
 
 #### Returns
 
-`OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, [`HMSMessage`](/api-reference/javascript/v2/interfaces/HMSMessage), (`res`: `Record`<`string`, [`HMSMessage`](/api-reference/javascript/v2/interfaces/HMSMessage)\>) => [`HMSMessage`](/api-reference/javascript/v2/interfaces/HMSMessage)\>
+`OutputSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, [`HMSMessage`](/api-reference/javascript/v2/interfaces/HMSMessage), (`res`: `Record`\<`string`, [`HMSMessage`](/api-reference/javascript/v2/interfaces/HMSMessage)\>) => [`HMSMessage`](/api-reference/javascript/v2/interfaces/HMSMessage)\>
 
 ---
 
@@ -1502,9 +1561,9 @@ Select IDs of messages you've sent or received sorted chronologically.
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `store` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -1514,7 +1573,7 @@ Select IDs of messages you've sent or received sorted chronologically.
 
 ### selectMessagesByPeerID
 
-▸ **selectMessagesByPeerID**(`id?`): `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `undefined` \| [`HMSMessage`](/api-reference/javascript/v2/interfaces/HMSMessage)[]\>
+▸ **selectMessagesByPeerID**(`id?`): `StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `undefined` \| [`HMSMessage`](/api-reference/javascript/v2/interfaces/HMSMessage)[]\>
 
 takes in a normal selector which has store and id as input and curries it to make it easier to use.
 Before: store.getState((store) => normalSelector(store, peerID))
@@ -1528,13 +1587,13 @@ After: store.getState(curriedSelector(peerID))
 
 #### Returns
 
-`StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `undefined` \| [`HMSMessage`](/api-reference/javascript/v2/interfaces/HMSMessage)[]\>
+`StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `undefined` \| [`HMSMessage`](/api-reference/javascript/v2/interfaces/HMSMessage)[]\>
 
 ---
 
 ### selectMessagesByRole
 
-▸ **selectMessagesByRole**(`id?`): `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `undefined` \| [`HMSMessage`](/api-reference/javascript/v2/interfaces/HMSMessage)[]\>
+▸ **selectMessagesByRole**(`id?`): `StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `undefined` \| [`HMSMessage`](/api-reference/javascript/v2/interfaces/HMSMessage)[]\>
 
 takes in a normal selector which has store and id as input and curries it to make it easier to use.
 Before: store.getState((store) => normalSelector(store, peerID))
@@ -1548,13 +1607,13 @@ After: store.getState(curriedSelector(peerID))
 
 #### Returns
 
-`StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `undefined` \| [`HMSMessage`](/api-reference/javascript/v2/interfaces/HMSMessage)[]\>
+`StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `undefined` \| [`HMSMessage`](/api-reference/javascript/v2/interfaces/HMSMessage)[]\>
 
 ---
 
 ### selectMessagesUnreadCountByPeerID
 
-▸ **selectMessagesUnreadCountByPeerID**(`id?`): `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `number`\>
+▸ **selectMessagesUnreadCountByPeerID**(`id?`): `StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `number`\>
 
 takes in a normal selector which has store and id as input and curries it to make it easier to use.
 Before: store.getState((store) => normalSelector(store, peerID))
@@ -1568,13 +1627,13 @@ After: store.getState(curriedSelector(peerID))
 
 #### Returns
 
-`StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `number`\>
+`StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `number`\>
 
 ---
 
 ### selectMessagesUnreadCountByRole
 
-▸ **selectMessagesUnreadCountByRole**(`id?`): `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `number`\>
+▸ **selectMessagesUnreadCountByRole**(`id?`): `StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `number`\>
 
 takes in a normal selector which has store and id as input and curries it to make it easier to use.
 Before: store.getState((store) => normalSelector(store, peerID))
@@ -1588,13 +1647,13 @@ After: store.getState(curriedSelector(peerID))
 
 #### Returns
 
-`StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `number`\>
+`StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `number`\>
 
 ---
 
 ### selectPeerAudioByID
 
-▸ **selectPeerAudioByID**(`id?`): `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `number`\>
+▸ **selectPeerAudioByID**(`id?`): `StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `number`\>
 
 Select audio level of audioTrack of a peer given a peer IDß.
 
@@ -1606,13 +1665,13 @@ Select audio level of audioTrack of a peer given a peer IDß.
 
 #### Returns
 
-`StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `number`\>
+`StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `number`\>
 
 ---
 
 ### selectPeerByCondition
 
-▸ **selectPeerByCondition**(`predicate`): `OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `undefined` \| [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer), (`res`: [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[]) => `undefined` \| [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)\>
+▸ **selectPeerByCondition**(`predicate`): `OutputSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `undefined` \| [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer), (`res`: [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[]) => `undefined` \| [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)\>
 
 Selects the first peer passing the condition given by the argument predicate function
 
@@ -1630,13 +1689,13 @@ const spotlightPeer = useHMSStore(selectPeerByCondition(peer => JSON.parse(peer.
 
 #### Returns
 
-`OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `undefined` \| [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer), (`res`: [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[]) => `undefined` \| [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)\>
+`OutputSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `undefined` \| [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer), (`res`: [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[]) => `undefined` \| [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)\>
 
 ---
 
 ### selectPeerByID
 
-▸ **selectPeerByID**(`id?`): `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `null` \| [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)\>
+▸ **selectPeerByID**(`id?`): `StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `null` \| [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)\>
 
 Select the [HMSPeer](/api-reference/javascript/v2/interfaces/HMSPeer) object given a peer ID.
 
@@ -1648,7 +1707,7 @@ Select the [HMSPeer](/api-reference/javascript/v2/interfaces/HMSPeer) object giv
 
 #### Returns
 
-`StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `null` \| [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)\>
+`StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `null` \| [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)\>
 
 ---
 
@@ -1663,9 +1722,9 @@ without having details of everyone depending on dashboard settings.
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -1675,7 +1734,7 @@ without having details of everyone depending on dashboard settings.
 
 ### selectPeerMetadata
 
-▸ **selectPeerMetadata**(`peerId`): `OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `any`, (`res`: `null` \| [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)) => `any`\>
+▸ **selectPeerMetadata**(`peerId`): `OutputSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `any`, (`res`: `null` \| [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)) => `any`\>
 
 Selects the peer metadata for the passed in peer and returns it as JSON. If metadata is not present
 or conversion to JSON gives an error, an empty object is returned.
@@ -1689,13 +1748,13 @@ Please directly use peer.metadata in case the metadata is not JSON by design.
 
 #### Returns
 
-`OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `any`, (`res`: `null` \| [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)) => `any`\>
+`OutputSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `any`, (`res`: `null` \| [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)) => `any`\>
 
 ---
 
 ### selectPeerName
 
-▸ **selectPeerName**(`peerId`): `OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `undefined` \| `string`, (`res`: `null` \| [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)) => `undefined` \| `string`\>
+▸ **selectPeerName**(`peerId`): `OutputSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `undefined` \| `string`, (`res`: `null` \| [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)) => `undefined` \| `string`\>
 
 #### Parameters
 
@@ -1705,13 +1764,13 @@ Please directly use peer.metadata in case the metadata is not JSON by design.
 
 #### Returns
 
-`OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `undefined` \| `string`, (`res`: `null` \| [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)) => `undefined` \| `string`\>
+`OutputSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `undefined` \| `string`, (`res`: `null` \| [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)) => `undefined` \| `string`\>
 
 ---
 
 ### selectPeerNameByID
 
-▸ **selectPeerNameByID**(`id?`): `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `undefined` \| `string`\>
+▸ **selectPeerNameByID**(`id?`): `StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `undefined` \| `string`\>
 
 Select the name of a [HMSPeer](/api-reference/javascript/v2/interfaces/HMSPeer) given a peer ID.
 
@@ -1723,7 +1782,7 @@ Select the name of a [HMSPeer](/api-reference/javascript/v2/interfaces/HMSPeer) 
 
 #### Returns
 
-`StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `undefined` \| `string`\>
+`StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `undefined` \| `string`\>
 
 ---
 
@@ -1735,9 +1794,9 @@ Select the first peer who is currently sharing their screen.
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -1753,9 +1812,9 @@ Select the first peer who is currently sharing their audio only screen
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -1769,9 +1828,9 @@ Select the first peer who is currently sharing their audio only screen
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -1785,9 +1844,9 @@ Select the first peer who is currently sharing their audio only screen
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -1797,7 +1856,7 @@ Select the first peer who is currently sharing their audio only screen
 
 ### selectPeerTypeByID
 
-▸ **selectPeerTypeByID**(`id?`): `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `undefined` \| [`HMSPeerType`](/api-reference/javascript/v2/enums/HMSPeerType)\>
+▸ **selectPeerTypeByID**(`id?`): `StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `undefined` \| [`HMSPeerType`](/api-reference/javascript/v2/enums/HMSPeerType)\>
 
 takes in a normal selector which has store and id as input and curries it to make it easier to use.
 Before: store.getState((store) => normalSelector(store, peerID))
@@ -1811,7 +1870,7 @@ After: store.getState(curriedSelector(peerID))
 
 #### Returns
 
-`StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `undefined` \| [`HMSPeerType`](/api-reference/javascript/v2/enums/HMSPeerType)\>
+`StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `undefined` \| [`HMSPeerType`](/api-reference/javascript/v2/enums/HMSPeerType)\>
 
 ---
 
@@ -1823,9 +1882,9 @@ Select an array of peers(remote peers and your local peer) present in the room.
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -1835,7 +1894,7 @@ Select an array of peers(remote peers and your local peer) present in the room.
 
 ### selectPeersByCondition
 
-▸ **selectPeersByCondition**(`predicate`): `OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[], (`res`: [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[]) => [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[]\>
+▸ **selectPeersByCondition**(`predicate`): `OutputSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[], (`res`: [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[]) => [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[]\>
 
 Selects all peers passing the condition given by the argument predicate function
 
@@ -1853,13 +1912,13 @@ const handRaisedPeers = useHMSStore(selectPeersByCondition(peer => JSON.parse(pe
 
 #### Returns
 
-`OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[], (`res`: [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[]) => [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[]\>
+`OutputSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[], (`res`: [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[]) => [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[]\>
 
 ---
 
 ### selectPeersByRole
 
-▸ **selectPeersByRole**(`role`): `OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[], (`res`: [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[]) => [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[]\>
+▸ **selectPeersByRole**(`role`): `OutputSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[], (`res`: [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[]) => [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[]\>
 
 Select an array of peers of a particular role
 
@@ -1871,7 +1930,7 @@ Select an array of peers of a particular role
 
 #### Returns
 
-`OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[], (`res`: [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[]) => [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[]\>
+`OutputSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[], (`res`: [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[]) => [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[]\>
 
 HMSPeer[]
 
@@ -1879,7 +1938,7 @@ HMSPeer[]
 
 ### selectPeersByRoles
 
-▸ **selectPeersByRoles**(`roles`): `OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[], (`res`: [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[]) => [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[]\>
+▸ **selectPeersByRoles**(`roles`): `OutputSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[], (`res`: [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[]) => [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[]\>
 
 Select an array of peers of a particular role
 
@@ -1891,7 +1950,7 @@ Select an array of peers of a particular role
 
 #### Returns
 
-`OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[], (`res`: [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[]) => [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[]\>
+`OutputSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[], (`res`: [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[]) => [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[]\>
 
 HMSPeer[]
 
@@ -1905,9 +1964,9 @@ Select an array of peers who are currently sharing their screen.
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -1921,9 +1980,9 @@ Select an array of peers who are currently sharing their screen.
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -1933,25 +1992,25 @@ Select an array of peers who are currently sharing their screen.
 
 ### selectPermissions
 
-▸ **selectPermissions**(`state`): `undefined` \| { `browserRecording`: `boolean` ; `changeRole`: `boolean` ; `endRoom`: `boolean` ; `hlsStreaming`: `boolean` ; `mute`: `boolean` ; `pollRead`: `boolean` ; `pollWrite`: `boolean` ; `removeOthers`: `boolean` ; `rtmpStreaming`: `boolean` ; `transcriptions?`: `Record`<[`CAPTION`](/api-reference/javascript/v2/enums/HMSTranscriptionMode#caption), `HMSPermissionType`[]\> ; `unmute`: `boolean` ; `whiteboard?`: `HMSPermissionType`[] }
+▸ **selectPermissions**(`state`): `undefined` \| \{ `browserRecording`: `boolean` ; `changeRole`: `boolean` ; `endRoom`: `boolean` ; `hlsStreaming`: `boolean` ; `mute`: `boolean` ; `pollRead`: `boolean` ; `pollWrite`: `boolean` ; `removeOthers`: `boolean` ; `rtmpStreaming`: `boolean` ; `transcriptions?`: `Record`\<[`CAPTION`](/api-reference/javascript/v2/enums/HMSTranscriptionMode#caption), `HMSPermissionType`[]\> ; `unmute`: `boolean` ; `whiteboard?`: `HMSPermissionType`[] }
 
 Select the permissions which determine what actions the local peer can do.
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
-`undefined` \| { `browserRecording`: `boolean` ; `changeRole`: `boolean` ; `endRoom`: `boolean` ; `hlsStreaming`: `boolean` ; `mute`: `boolean` ; `pollRead`: `boolean` ; `pollWrite`: `boolean` ; `removeOthers`: `boolean` ; `rtmpStreaming`: `boolean` ; `transcriptions?`: `Record`<[`CAPTION`](/api-reference/javascript/v2/enums/HMSTranscriptionMode#caption), `HMSPermissionType`[]\> ; `unmute`: `boolean` ; `whiteboard?`: `HMSPermissionType`[] }
+`undefined` \| \{ `browserRecording`: `boolean` ; `changeRole`: `boolean` ; `endRoom`: `boolean` ; `hlsStreaming`: `boolean` ; `mute`: `boolean` ; `pollRead`: `boolean` ; `pollWrite`: `boolean` ; `removeOthers`: `boolean` ; `rtmpStreaming`: `boolean` ; `transcriptions?`: `Record`\<[`CAPTION`](/api-reference/javascript/v2/enums/HMSTranscriptionMode#caption), `HMSPermissionType`[]\> ; `unmute`: `boolean` ; `whiteboard?`: `HMSPermissionType`[] }
 
 ---
 
 ### selectPollByID
 
-▸ **selectPollByID**(`id?`): `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `null` \| [`HMSPoll`](/api-reference/javascript/v2/interfaces/HMSPoll)\>
+▸ **selectPollByID**(`id?`): `StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `null` \| [`HMSPoll`](/api-reference/javascript/v2/interfaces/HMSPoll)\>
 
 takes in a normal selector which has store and id as input and curries it to make it easier to use.
 Before: store.getState((store) => normalSelector(store, peerID))
@@ -1965,7 +2024,7 @@ After: store.getState(curriedSelector(peerID))
 
 #### Returns
 
-`StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `null` \| [`HMSPoll`](/api-reference/javascript/v2/interfaces/HMSPoll)\>
+`StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `null` \| [`HMSPoll`](/api-reference/javascript/v2/interfaces/HMSPoll)\>
 
 ---
 
@@ -1975,9 +2034,9 @@ After: store.getState(curriedSelector(peerID))
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `store` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -1987,17 +2046,17 @@ After: store.getState(curriedSelector(peerID))
 
 ### selectPollsMap
 
-▸ **selectPollsMap**(`store`): `Record`<`string`, [`HMSPoll`](/api-reference/javascript/v2/interfaces/HMSPoll)\>
+▸ **selectPollsMap**(`store`): `Record`\<`string`, [`HMSPoll`](/api-reference/javascript/v2/interfaces/HMSPoll)\>
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `store` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
-`Record`<`string`, [`HMSPoll`](/api-reference/javascript/v2/interfaces/HMSPoll)\>
+`Record`\<`string`, [`HMSPoll`](/api-reference/javascript/v2/interfaces/HMSPoll)\>
 
 ---
 
@@ -2009,9 +2068,9 @@ Select the [HMSRole](/api-reference/javascript/v2/interfaces/HMSRole) used for p
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -2025,9 +2084,9 @@ Select the [HMSRole](/api-reference/javascript/v2/interfaces/HMSRole) used for p
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `store` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -2041,9 +2100,9 @@ Select the [HMSRole](/api-reference/javascript/v2/interfaces/HMSRole) used for p
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -2059,9 +2118,9 @@ It will help to get the all the error
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -2075,9 +2134,9 @@ It will help to get the all the error
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -2093,9 +2152,9 @@ Select remote peers(other users you're connected with via the internet) present 
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -2105,7 +2164,7 @@ Select remote peers(other users you're connected with via the internet) present 
 
 ### selectRoleByRoleName
 
-▸ **selectRoleByRoleName**(`roleName`): `OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, [`HMSRole`](/api-reference/javascript/v2/interfaces/HMSRole), (`res`: `Record`<`string`, [`HMSRole`](/api-reference/javascript/v2/interfaces/HMSRole)\>) => [`HMSRole`](/api-reference/javascript/v2/interfaces/HMSRole)\>
+▸ **selectRoleByRoleName**(`roleName`): `OutputSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, [`HMSRole`](/api-reference/javascript/v2/interfaces/HMSRole), (`res`: `Record`\<`string`, [`HMSRole`](/api-reference/javascript/v2/interfaces/HMSRole)\>) => [`HMSRole`](/api-reference/javascript/v2/interfaces/HMSRole)\>
 
 #### Parameters
 
@@ -2115,7 +2174,7 @@ Select remote peers(other users you're connected with via the internet) present 
 
 #### Returns
 
-`OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, [`HMSRole`](/api-reference/javascript/v2/interfaces/HMSRole), (`res`: `Record`<`string`, [`HMSRole`](/api-reference/javascript/v2/interfaces/HMSRole)\>) => [`HMSRole`](/api-reference/javascript/v2/interfaces/HMSRole)\>
+`OutputSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, [`HMSRole`](/api-reference/javascript/v2/interfaces/HMSRole), (`res`: `Record`\<`string`, [`HMSRole`](/api-reference/javascript/v2/interfaces/HMSRole)\>) => [`HMSRole`](/api-reference/javascript/v2/interfaces/HMSRole)\>
 
 ---
 
@@ -2127,9 +2186,9 @@ Select the role change request received for your local peer.
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -2139,19 +2198,19 @@ Select the role change request received for your local peer.
 
 ### selectRolesMap
 
-▸ **selectRolesMap**(`store`): `Record`<`string`, [`HMSRole`](/api-reference/javascript/v2/interfaces/HMSRole)\>
+▸ **selectRolesMap**(`store`): `Record`\<`string`, [`HMSRole`](/api-reference/javascript/v2/interfaces/HMSRole)\>
 
 Select available roles in the room as a map between the role name and [HMSRole](/api-reference/javascript/v2/interfaces/HMSRole) object.
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `store` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
-`Record`<`string`, [`HMSRole`](/api-reference/javascript/v2/interfaces/HMSRole)\>
+`Record`\<`string`, [`HMSRole`](/api-reference/javascript/v2/interfaces/HMSRole)\>
 
 ---
 
@@ -2163,9 +2222,9 @@ Select the current [HMSRoom](/api-reference/javascript/v2/interfaces/HMSRoom) ob
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `store` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -2181,9 +2240,9 @@ Select the ID of the current room to which you are connected.
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -2197,9 +2256,9 @@ Select the ID of the current room to which you are connected.
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -2213,9 +2272,9 @@ Select the ID of the current room to which you are connected.
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -2231,9 +2290,9 @@ Select the current state of the room.
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -2243,7 +2302,7 @@ Select the current state of the room.
 
 ### selectScreenAudioTrackByID
 
-▸ **selectScreenAudioTrackByID**(`id?`): `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `null` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack)\>
+▸ **selectScreenAudioTrackByID**(`id?`): `StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `null` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack)\>
 
 Select the [HMSScreenAudioTrack](/api-reference/javascript/v2/interfaces/HMSScreenAudioTrack) object given a track ID.
 
@@ -2255,13 +2314,13 @@ Select the [HMSScreenAudioTrack](/api-reference/javascript/v2/interfaces/HMSScre
 
 #### Returns
 
-`StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `null` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack)\>
+`StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `null` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack)\>
 
 ---
 
 ### selectScreenShareAudioByPeerID
 
-▸ **selectScreenShareAudioByPeerID**(`id?`): `OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, [`HMSScreenAudioTrack`](/api-reference/javascript/v2/interfaces/HMSScreenAudioTrack), (`res`: { `audio`: [`HMSScreenAudioTrack`](/api-reference/javascript/v2/interfaces/HMSScreenAudioTrack) ; `video`: [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack) }) => [`HMSScreenAudioTrack`](/api-reference/javascript/v2/interfaces/HMSScreenAudioTrack)\>
+▸ **selectScreenShareAudioByPeerID**(`id?`): `OutputSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, [`HMSScreenAudioTrack`](/api-reference/javascript/v2/interfaces/HMSScreenAudioTrack), (`res`: \{ `audio`: [`HMSScreenAudioTrack`](/api-reference/javascript/v2/interfaces/HMSScreenAudioTrack) ; `video`: [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack) }) => [`HMSScreenAudioTrack`](/api-reference/javascript/v2/interfaces/HMSScreenAudioTrack)\>
 
 Select the screen share audio track of a peer given a peer ID.
 
@@ -2273,13 +2332,13 @@ Select the screen share audio track of a peer given a peer ID.
 
 #### Returns
 
-`OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, [`HMSScreenAudioTrack`](/api-reference/javascript/v2/interfaces/HMSScreenAudioTrack), (`res`: { `audio`: [`HMSScreenAudioTrack`](/api-reference/javascript/v2/interfaces/HMSScreenAudioTrack) ; `video`: [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack) }) => [`HMSScreenAudioTrack`](/api-reference/javascript/v2/interfaces/HMSScreenAudioTrack)\>
+`OutputSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, [`HMSScreenAudioTrack`](/api-reference/javascript/v2/interfaces/HMSScreenAudioTrack), (`res`: \{ `audio`: [`HMSScreenAudioTrack`](/api-reference/javascript/v2/interfaces/HMSScreenAudioTrack) ; `video`: [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack) }) => [`HMSScreenAudioTrack`](/api-reference/javascript/v2/interfaces/HMSScreenAudioTrack)\>
 
 ---
 
 ### selectScreenShareByPeerID
 
-▸ **selectScreenShareByPeerID**(`id?`): `OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack), (`res`: { `audio`: [`HMSScreenAudioTrack`](/api-reference/javascript/v2/interfaces/HMSScreenAudioTrack) ; `video`: [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack) }) => [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack)\>
+▸ **selectScreenShareByPeerID**(`id?`): `OutputSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack), (`res`: \{ `audio`: [`HMSScreenAudioTrack`](/api-reference/javascript/v2/interfaces/HMSScreenAudioTrack) ; `video`: [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack) }) => [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack)\>
 
 Select the screen share video track of a peer given a peer ID.
 
@@ -2291,13 +2350,13 @@ Select the screen share video track of a peer given a peer ID.
 
 #### Returns
 
-`OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack), (`res`: { `audio`: [`HMSScreenAudioTrack`](/api-reference/javascript/v2/interfaces/HMSScreenAudioTrack) ; `video`: [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack) }) => [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack)\>
+`OutputSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack), (`res`: \{ `audio`: [`HMSScreenAudioTrack`](/api-reference/javascript/v2/interfaces/HMSScreenAudioTrack) ; `video`: [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack) }) => [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack)\>
 
 ---
 
 ### selectScreenSharesByPeerId
 
-▸ **selectScreenSharesByPeerId**(`id?`): `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, { `audio`: [`HMSScreenAudioTrack`](/api-reference/javascript/v2/interfaces/HMSScreenAudioTrack) ; `video`: [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack) }\>
+▸ **selectScreenSharesByPeerId**(`id?`): `StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, \{ `audio`: [`HMSScreenAudioTrack`](/api-reference/javascript/v2/interfaces/HMSScreenAudioTrack) ; `video`: [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack) }\>
 
 takes in a normal selector which has store and id as input and curries it to make it easier to use.
 Before: store.getState((store) => normalSelector(store, peerID))
@@ -2311,13 +2370,13 @@ After: store.getState(curriedSelector(peerID))
 
 #### Returns
 
-`StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, { `audio`: [`HMSScreenAudioTrack`](/api-reference/javascript/v2/interfaces/HMSScreenAudioTrack) ; `video`: [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack) }\>
+`StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, \{ `audio`: [`HMSScreenAudioTrack`](/api-reference/javascript/v2/interfaces/HMSScreenAudioTrack) ; `video`: [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack) }\>
 
 ---
 
 ### selectScreenVideoTrackByID
 
-▸ **selectScreenVideoTrackByID**(`id?`): `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `null` \| [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack)\>
+▸ **selectScreenVideoTrackByID**(`id?`): `StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `null` \| [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack)\>
 
 Select the [HMSScreenVideoTrack](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack) object given a track ID.
 
@@ -2329,13 +2388,13 @@ Select the [HMSScreenVideoTrack](/api-reference/javascript/v2/interfaces/HMSScre
 
 #### Returns
 
-`StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `null` \| [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack)\>
+`StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `null` \| [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack)\>
 
 ---
 
 ### selectScreenshareAudioVolumeByPeerID
 
-▸ **selectScreenshareAudioVolumeByPeerID**(`id?`): `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `undefined` \| `number`\>
+▸ **selectScreenshareAudioVolumeByPeerID**(`id?`): `StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `undefined` \| `number`\>
 
 Select the local audio volume of the screen share of a peer given a peer ID.
 
@@ -2347,7 +2406,7 @@ Select the local audio volume of the screen share of a peer given a peer ID.
 
 #### Returns
 
-`StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `undefined` \| `number`\>
+`StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `undefined` \| `number`\>
 
 ---
 
@@ -2357,9 +2416,9 @@ Select the local audio volume of the screen share of a peer given a peer ID.
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -2373,9 +2432,9 @@ Select the local audio volume of the screen share of a peer given a peer ID.
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `store` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -2389,16 +2448,16 @@ Select the local audio volume of the screen share of a peer given a peer ID.
 
 ### selectSessionStore
 
-▸ **selectSessionStore**<`T`\>(): (`store`: [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<`T`\>) => `T`[``"sessionStore"``] \| `undefined`
+▸ **selectSessionStore**\<`T`\>(): (`store`: [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<`T`\>) => `T`[``"sessionStore"``] \| `undefined`
 
 Select a particular key from session store by passed in key.
 if key is not passed, full data is returned.
 
 #### Type parameters
 
-| Name | Type                                                                                                                                  |
-| :--- | :------------------------------------------------------------------------------------------------------------------------------------ |
-| `T`  | extends [`HMSGenericTypes`](/api-reference/javascript/v2/interfaces/HMSGenericTypes) = { `sessionStore`: `Record`<`string`, `any`\> } |
+| Name | Type                                                                                                                                    |
+| :--- | :-------------------------------------------------------------------------------------------------------------------------------------- |
+| `T`  | extends [`HMSGenericTypes`](/api-reference/javascript/v2/interfaces/HMSGenericTypes) = \{ `sessionStore`: `Record`\<`string`, `any`\> } |
 
 #### Returns
 
@@ -2408,22 +2467,22 @@ if key is not passed, full data is returned.
 
 ##### Parameters
 
-| Name    | Type                                                                 |
-| :------ | :------------------------------------------------------------------- |
-| `store` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<`T`\> |
+| Name    | Type                                                                  |
+| :------ | :-------------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<`T`\> |
 
 ##### Returns
 
 `T`[``"sessionStore"``] \| `undefined`
 
-▸ **selectSessionStore**<`T`, `K`\>(`key`): (`store`: [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<`T`\>) => `T`[`"sessionStore"`][`K`] \| `undefined`
+▸ **selectSessionStore**\<`T`, `K`\>(`key`): (`store`: [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<`T`\>) => `T`[`"sessionStore"`][`K`] \| `undefined`
 
 #### Type parameters
 
-| Name | Type                                                                                                                                  |
-| :--- | :------------------------------------------------------------------------------------------------------------------------------------ |
-| `T`  | extends [`HMSGenericTypes`](/api-reference/javascript/v2/interfaces/HMSGenericTypes) = { `sessionStore`: `Record`<`string`, `any`\> } |
-| `K`  | extends `string` \| `number` \| `symbol` = keyof `T`[``"sessionStore"``]                                                              |
+| Name | Type                                                                                                                                    |
+| :--- | :-------------------------------------------------------------------------------------------------------------------------------------- |
+| `T`  | extends [`HMSGenericTypes`](/api-reference/javascript/v2/interfaces/HMSGenericTypes) = \{ `sessionStore`: `Record`\<`string`, `any`\> } |
+| `K`  | extends `string` \| `number` \| `symbol` = keyof `T`[``"sessionStore"``]                                                                |
 
 #### Parameters
 
@@ -2439,9 +2498,9 @@ if key is not passed, full data is returned.
 
 ##### Parameters
 
-| Name    | Type                                                                 |
-| :------ | :------------------------------------------------------------------- |
-| `store` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<`T`\> |
+| Name    | Type                                                                  |
+| :------ | :-------------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<`T`\> |
 
 ##### Returns
 
@@ -2451,7 +2510,7 @@ if key is not passed, full data is returned.
 
 ### selectSimulcastLayerByTrack
 
-▸ **selectSimulcastLayerByTrack**(`id?`): `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `undefined` \| [`HMSSimulcastLayer`](/api-reference/javascript/v2/enums/HMSSimulcastLayer)\>
+▸ **selectSimulcastLayerByTrack**(`id?`): `StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `undefined` \| [`HMSSimulcastLayer`](/api-reference/javascript/v2/enums/HMSSimulcastLayer)\>
 
 Select the current simulcast layer of a track given a track ID.
 
@@ -2463,45 +2522,45 @@ Select the current simulcast layer of a track given a track ID.
 
 #### Returns
 
-`StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `undefined` \| [`HMSSimulcastLayer`](/api-reference/javascript/v2/enums/HMSSimulcastLayer)\>
+`StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `undefined` \| [`HMSSimulcastLayer`](/api-reference/javascript/v2/enums/HMSSimulcastLayer)\>
 
 ---
 
 ### selectSpeakers
 
-▸ **selectSpeakers**(`store`): `Record`<`string`, [`HMSSpeaker`](/api-reference/javascript/v2/interfaces/HMSSpeaker)\>
+▸ **selectSpeakers**(`store`): `Record`\<`string`, [`HMSSpeaker`](/api-reference/javascript/v2/interfaces/HMSSpeaker)\>
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `store` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
-`Record`<`string`, [`HMSSpeaker`](/api-reference/javascript/v2/interfaces/HMSSpeaker)\>
+`Record`\<`string`, [`HMSSpeaker`](/api-reference/javascript/v2/interfaces/HMSSpeaker)\>
 
 ---
 
 ### selectTemplateAppData
 
-▸ **selectTemplateAppData**(`store`): `Record`<`string`, `string`\>
+▸ **selectTemplateAppData**(`store`): `Record`\<`string`, `string`\>
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `store` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
-`Record`<`string`, `string`\>
+`Record`\<`string`, `string`\>
 
 ---
 
 ### selectTrackAudioByID
 
-▸ **selectTrackAudioByID**(`id?`): `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `number`\>
+▸ **selectTrackAudioByID**(`id?`): `StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `number`\>
 
 Select the audio level of a track given a track ID.
 
@@ -2513,13 +2572,13 @@ Select the audio level of a track given a track ID.
 
 #### Returns
 
-`StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `number`\>
+`StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `number`\>
 
 ---
 
 ### selectTrackByID
 
-▸ **selectTrackByID**(`id?`): `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `null` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack) \| [`HMSVideoTrack`](/api-reference/javascript/v2/interfaces/HMSVideoTrack) \| [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack)\>
+▸ **selectTrackByID**(`id?`): `StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `null` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack) \| [`HMSVideoTrack`](/api-reference/javascript/v2/interfaces/HMSVideoTrack) \| [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack)\>
 
 Select the [HMSTrack](/api-reference/javascript/v2/home/content#hmstrack) object given a track ID.
 
@@ -2531,7 +2590,7 @@ Select the [HMSTrack](/api-reference/javascript/v2/home/content#hmstrack) object
 
 #### Returns
 
-`StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `null` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack) \| [`HMSVideoTrack`](/api-reference/javascript/v2/interfaces/HMSVideoTrack) \| [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack)\>
+`StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `null` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack) \| [`HMSVideoTrack`](/api-reference/javascript/v2/interfaces/HMSVideoTrack) \| [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack)\>
 
 ---
 
@@ -2541,13 +2600,41 @@ Select the [HMSTrack](/api-reference/javascript/v2/home/content#hmstrack) object
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
 `undefined` \| [`HMSTranscriptionInfo`](/api-reference/javascript/v2/interfaces/HMSTranscriptionInfo)[]
+
+---
+
+### selectTranslationState
+
+▸ **selectTranslationState**(`state`): `Object`
+
+Select the current translation state for captions.
+Reads runtime state from transcriptions if captions are running,
+otherwise falls back to template config from translationConfig.
+
+#### Parameters
+
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
+
+#### Returns
+
+`Object`
+
+`{ available, enabled, roleLanguages }` or `{ available: false }` if not configured
+
+| Name            | Type                                          |
+| :-------------- | :-------------------------------------------- |
+| `available`     | `boolean`                                     |
+| `enabled`       | `boolean`                                     |
+| `roleLanguages` | `undefined` \| `Record`\<`string`, `string`\> |
 
 ---
 
@@ -2559,9 +2646,9 @@ Select the number of unread broadcast messages
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -2577,9 +2664,9 @@ Select the number of unread messages.
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -2589,7 +2676,7 @@ Select the number of unread messages.
 
 ### selectVideoPlaylistAudioTrackByPeerID
 
-▸ **selectVideoPlaylistAudioTrackByPeerID**(`id?`): `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `undefined` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack)\>
+▸ **selectVideoPlaylistAudioTrackByPeerID**(`id?`): `StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `undefined` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack)\>
 
 takes in a normal selector which has store and id as input and curries it to make it easier to use.
 Before: store.getState((store) => normalSelector(store, peerID))
@@ -2603,13 +2690,13 @@ After: store.getState(curriedSelector(peerID))
 
 #### Returns
 
-`StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `undefined` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack)\>
+`StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `undefined` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack)\>
 
 ---
 
 ### selectVideoPlaylistVideoTrackByPeerID
 
-▸ **selectVideoPlaylistVideoTrackByPeerID**(`id?`): `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `undefined` \| [`HMSVideoTrack`](/api-reference/javascript/v2/interfaces/HMSVideoTrack)\>
+▸ **selectVideoPlaylistVideoTrackByPeerID**(`id?`): `StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `undefined` \| [`HMSVideoTrack`](/api-reference/javascript/v2/interfaces/HMSVideoTrack)\>
 
 takes in a normal selector which has store and id as input and curries it to make it easier to use.
 Before: store.getState((store) => normalSelector(store, peerID))
@@ -2623,13 +2710,13 @@ After: store.getState(curriedSelector(peerID))
 
 #### Returns
 
-`StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `undefined` \| [`HMSVideoTrack`](/api-reference/javascript/v2/interfaces/HMSVideoTrack)\>
+`StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `undefined` \| [`HMSVideoTrack`](/api-reference/javascript/v2/interfaces/HMSVideoTrack)\>
 
 ---
 
 ### selectVideoTrackByID
 
-▸ **selectVideoTrackByID**(`id?`): `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `null` \| [`HMSVideoTrack`](/api-reference/javascript/v2/interfaces/HMSVideoTrack)\>
+▸ **selectVideoTrackByID**(`id?`): `StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `null` \| [`HMSVideoTrack`](/api-reference/javascript/v2/interfaces/HMSVideoTrack)\>
 
 Select the [HMSVideoTrack](/api-reference/javascript/v2/interfaces/HMSVideoTrack) object given a track ID.
 
@@ -2641,13 +2728,13 @@ Select the [HMSVideoTrack](/api-reference/javascript/v2/interfaces/HMSVideoTrack
 
 #### Returns
 
-`StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `null` \| [`HMSVideoTrack`](/api-reference/javascript/v2/interfaces/HMSVideoTrack)\>
+`StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `null` \| [`HMSVideoTrack`](/api-reference/javascript/v2/interfaces/HMSVideoTrack)\>
 
 ---
 
 ### selectVideoTrackByPeerID
 
-▸ **selectVideoTrackByPeerID**(`id?`): `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `undefined` \| [`HMSVideoTrack`](/api-reference/javascript/v2/interfaces/HMSVideoTrack)\>
+▸ **selectVideoTrackByPeerID**(`id?`): `StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `undefined` \| [`HMSVideoTrack`](/api-reference/javascript/v2/interfaces/HMSVideoTrack)\>
 
 Select the primary video track of a peer given a peer ID.
 
@@ -2659,7 +2746,7 @@ Select the primary video track of a peer given a peer ID.
 
 #### Returns
 
-`StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `undefined` \| [`HMSVideoTrack`](/api-reference/javascript/v2/interfaces/HMSVideoTrack)\>
+`StoreSelector`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>, `undefined` \| [`HMSVideoTrack`](/api-reference/javascript/v2/interfaces/HMSVideoTrack)\>
 
 ---
 
@@ -2671,9 +2758,9 @@ select the primary/first whiteboard of a session
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
@@ -2683,16 +2770,16 @@ select the primary/first whiteboard of a session
 
 ### selectWhiteboards
 
-▸ **selectWhiteboards**(`store`): `Record`<`string`, `HMSWhiteboard`\>
+▸ **selectWhiteboards**(`store`): `Record`\<`string`, `HMSWhiteboard`\>
 
 select a map of all the whiteboards in the session
 
 #### Parameters
 
-| Name    | Type                                                                                                            |
-| :------ | :-------------------------------------------------------------------------------------------------------------- |
-| `store` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+| Name    | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\> |
 
 #### Returns
 
-`Record`<`string`, `HMSWhiteboard`\>
+`Record`\<`string`, `HMSWhiteboard`\>
