@@ -20,21 +20,20 @@ Released: `@100mslive/hms-video-store@0.15.0`, `@100mslive/react-sdk@0.13.0`, `@
 
 ### Added:
 
--   Peer stats now carry the local and remote ICE candidates behind the active candidate pair, with `publishConnectionType` and `subscribeConnectionType` reporting `host`, `srflx`, `prflx` or `relay(udp|tcp|tls)` — so you can tell whether a peer is connected directly or through a TURN relay. See [`HMSPeerStats`](/api-reference/javascript/v2/interfaces/HMSPeerStats)
+-   Connection type is now available in peer stats — `publishConnectionType` and `subscribeConnectionType` tell you whether a peer is connected directly or through a TURN relay. See [`HMSPeerStats`](/api-reference/javascript/v2/interfaces/HMSPeerStats)
 -   Roomkit Prebuilt: Stats for Nerds shows the publish and subscribe connection type
 
 ### Fixed:
 
--   A remote peer could stay silent for the whole session — attaching their audio element waited on the `prefer-audio-track-state` reply from the SFU and that wait had no timeout, so a single lost reply left the element created but never attached and never played, with no error and no retry. Audio now attaches and plays first, and the subscription state is applied afterwards
--   A peer silenced with `setVolume(0)` became audible again the moment they toggled their own mic — the requested volume is now held on the track, and the resubscribe on unmute is skipped while it is `0`
--   A peer who joined while the app volume was `0` was audible at full volume until the SFU replied, and stayed audible if it never did — the element volume is now applied before the track is attached, including on elements rebuilt during `MEDIA_ERR_DECODE` recovery
--   Noise cancellation could switch back on against a template that disables it — every websocket reconnect reset `room.isNoiseCancellationEnabled` to the raw `/init` feature flag, leaving Krisp running until the template policy re-arrived
--   Screenshare tracks are no longer muted by camera or microphone permission changes — a sharer whose camera was blocked published `mute: true` for the screen track, so remote peers rendered a blank tile while the sharer saw their own share
--   A tile that was scrolled out of view or unmounted could leave the SFU streaming its old layer, and a suspended sink could re-attach to an element that is no longer rendered — the preferred layer is now recomputed from the remaining tiles before the sink is removed
--   A retrying subscribe request no longer replays state that a newer request has already replaced — a peer could unmute and go silent again seconds later, or a resized tile snap back to its previous layer
--   Subscribe request failures are now reported accurately: a retryable error on the final attempt no longer resolves as success, `502`, `503` and `504` from a restarting SFU are retried, and requests in flight when the connection closes settle at once as dropped rather than as failures
--   Layer requests raised from remote video mute/unmute, tile teardown and the resize observer no longer escape as unhandled rejections — under Node that took the process down. `attachVideo` with `autoManageVideo: false` and direct API callers still surface failures
--   `useRemoteAVToggle`, `usePlaylistMusic` and `useScreenshareAudio` now route `setVolume` failures through the `handleError` they already take, matching `toggleAudio` and `toggleVideo`
+-   A remote peer could stay silent for the rest of the session if their audio failed to start
+-   Muting a peer for yourself was undone as soon as that peer muted and unmuted their own mic
+-   A peer who joined while the volume was turned all the way down was audible at full volume
+-   Noise cancellation could turn back on after a reconnect even when disabled in the template
+-   Screenshare appeared as a blank tile to remote peers when the sharer's camera permission was blocked
+-   Video tiles scrolled out of view or closed could keep receiving video at their earlier quality
+-   A peer could go silent again shortly after unmuting, and a resized tile could snap back to its previous video quality
+-   Improved error reporting for subscribe and video quality requests — failures are surfaced instead of being reported as success or escaping as unhandled errors
+-   `setVolume` failures in `useRemoteAVToggle`, `usePlaylistMusic` and `useScreenshareAudio` now go through the hook's error handler
 
 ## 2026-08-12
 
