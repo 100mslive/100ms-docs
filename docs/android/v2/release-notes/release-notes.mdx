@@ -19,6 +19,11 @@ import AndroidPrebuiltVersionShield from '@/common/android-prebuilt-version-shie
 | live.100ms:virtual-background: |<AndroidSdkVersionShield />|
 | live.100ms:hms-noise-cancellation-android: | <AndroidSdkVersionShield /> |
 
+## v2.9.86 - 2026-08-26
+### Fixed
+* Fixed still-image capture (`captureImageAtMaxResolution`) failing with error code 8001 on some devices. The camera image buffer is now released on every capture path — preventing a leak that could make subsequent captures fail — and a failed capture can no longer crash the app.
+* Restored the still-capture timeout to 5 seconds so slower captures on lower-end devices complete instead of timing out.
+
 ## v2.9.85 - 2026-08-05
 ### Fixed
 * Fixed a low-volume production crash in the ICE-failure retry path.
