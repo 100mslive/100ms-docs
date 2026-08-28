@@ -19,9 +19,9 @@ in case you're creating multiple rooms please create new instance per room.
 
 ## Type parameters
 
-| Name | Type                                                                                                                                  |
-| :--- | :------------------------------------------------------------------------------------------------------------------------------------ |
-| `T`  | extends [`HMSGenericTypes`](/api-reference/javascript/v2/interfaces/HMSGenericTypes) = { `sessionStore`: `Record`<`string`, `any`\> } |
+| Name | Type                                                                                                                                    |
+| :--- | :-------------------------------------------------------------------------------------------------------------------------------------- |
+| `T`  | extends [`HMSGenericTypes`](/api-reference/javascript/v2/interfaces/HMSGenericTypes) = \{ `sessionStore`: `Record`\<`string`, `any`\> } |
 
 ## Properties
 
@@ -36,11 +36,11 @@ This will be available after joining the room
 
 ### endRoom
 
-• **endRoom**: (`lock`: `boolean`, `reason`: `string`) => `Promise`<`void`\>
+• **endRoom**: (`lock`: `boolean`, `reason`: `string`) => `Promise`\<`void`\>
 
 #### Type declaration
 
-▸ (`lock`, `reason`): `Promise`<`void`\>
+▸ (`lock`, `reason`): `Promise`\<`void`\>
 
 If you have the **endRoom** permission, you can end the room. That means everyone will be kicked out.
 If lock is passed as true, the room cannot be used further.
@@ -54,7 +54,7 @@ If lock is passed as true, the room cannot be used further.
 
 ##### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 Promise<void> - resolves when the room is ended
 
@@ -71,7 +71,7 @@ This will be available after joining the room
 
 ### sessionStore
 
-• **sessionStore**: [`IHMSSessionStoreActions`](/api-reference/javascript/v2/interfaces/IHMSSessionStoreActions)<`T`[``"sessionStore"``]\>
+• **sessionStore**: [`IHMSSessionStoreActions`](/api-reference/javascript/v2/interfaces/IHMSSessionStoreActions)\<`T`[``"sessionStore"``]\>
 
 actions that can be performed on the real-time key-value store
 
@@ -82,11 +82,11 @@ is persisted throughout a session till the last peer leaves a room(cleared after
 
 ### unblockAudio
 
-• **unblockAudio**: () => `Promise`<`void`\>
+• **unblockAudio**: () => `Promise`\<`void`\>
 
 #### Type declaration
 
-▸ (): `Promise`<`void`\>
+▸ (): `Promise`\<`void`\>
 
 Method to be called with some UI interaction after autoplay error is received
 Most browsers have limitations where an audio can not be played if there was no user interaction.
@@ -95,7 +95,7 @@ to resolve the autoplay error
 
 ##### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 Promise<void> - resolves when the autoplay error is resolved
 
@@ -112,7 +112,7 @@ This will be available after joining the room
 
 ### acceptChangeRole
 
-▸ **acceptChangeRole**(`request`): `Promise`<`void`\>
+▸ **acceptChangeRole**(`request`): `Promise`\<`void`\>
 
 Accept the role change request received
 
@@ -124,7 +124,7 @@ Accept the role change request received
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 Promise<void> - resolves when the role is accepted
 
@@ -132,7 +132,7 @@ Promise<void> - resolves when the role is accepted
 
 ### addPluginToAudioTrack
 
-▸ **addPluginToAudioTrack**(`plugin`): `Promise`<`void`\>
+▸ **addPluginToAudioTrack**(`plugin`): `Promise`\<`void`\>
 
 Add or remove a audio plugin from/to the local peer audio track. Eg. gain filter, noise suppression etc.
 Audio plugins can be added/removed at any time after the audio track is available
@@ -145,7 +145,7 @@ Audio plugins can be added/removed at any time after the audio track is availabl
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 **`See`**
 
@@ -155,7 +155,7 @@ HMSAudioPlugin
 
 ### addPluginToVideoTrack
 
-▸ **addPluginToVideoTrack**(`plugin`, `pluginFrameRate?`): `Promise`<`void`\>
+▸ **addPluginToVideoTrack**(`plugin`, `pluginFrameRate?`): `Promise`\<`void`\>
 
 Add or remove a video plugin from/to the local peer video track. Eg. Virtual Background, Face Filters etc.
 Video plugins can be added/removed at any time after the video track is available.
@@ -170,7 +170,7 @@ pluginFrameRate is the rate at which the output plugin will do processing
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 **`See`**
 
@@ -180,7 +180,7 @@ HMSVideoPlugin
 
 ### addPluginsToVideoStream
 
-▸ **addPluginsToVideoStream**(`plugins`): `Promise`<`void`\>
+▸ **addPluginsToVideoStream**(`plugins`): `Promise`\<`void`\>
 
 Add video plugins to the local peer video stream. Eg. Virtual Background, Face Filters etc.
 Video plugins can be added/removed at any time after the video track is available.
@@ -193,7 +193,7 @@ Video plugins can be added/removed at any time after the video track is availabl
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 **`See`**
 
@@ -203,7 +203,7 @@ HMSMediaStreamPlugin
 
 ### addTrack
 
-▸ **addTrack**(`track`, `type`): `Promise`<`void`\>
+▸ **addTrack**(`track`, `type`): `Promise`\<`void`\>
 
 You can use the addTrack method to add an auxiliary track(canvas capture, electron screen-share, etc...)
 This method adds the track to the local peer's list of auxiliary tracks and publishes it to make it available to remote peers.
@@ -217,7 +217,7 @@ This method adds the track to the local peer's list of auxiliary tracks and publ
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 Promise<void> - resolves when the track is added
 
@@ -225,7 +225,7 @@ Promise<void> - resolves when the track is added
 
 ### attachVideo
 
-▸ **attachVideo**(`localTrackID`, `videoElement`): `Promise`<`void`\>
+▸ **attachVideo**(`localTrackID`, `videoElement`): `Promise`\<`void`\>
 
 You can use the attach and detach video function
 to add/remove video from an element for a track ID. The benefit of using this
@@ -241,7 +241,7 @@ the stream coming from server saving significant bandwidth for the user.
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 Promise<void> - resolves when the video is attached
 
@@ -249,7 +249,7 @@ Promise<void> - resolves when the video is attached
 
 ### autoSelectAudioOutput
 
-▸ **autoSelectAudioOutput**(`delay?`): `Promise`<`void`\>
+▸ **autoSelectAudioOutput**(`delay?`): `Promise`\<`void`\>
 
 An optional delay to add between earpiece and speakerphone selection
 Call this after preview or join is successful
@@ -262,19 +262,19 @@ Call this after preview or join is successful
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 ---
 
 ### cancelMidCallPreview
 
-▸ **cancelMidCallPreview**(): `Promise`<`void`\>
+▸ **cancelMidCallPreview**(): `Promise`\<`void`\>
 
 stop tracks fetched during midcall preview and general cleanup
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 Promise<void> - resolves when the tracks are stopped
 
@@ -282,7 +282,7 @@ Promise<void> - resolves when the tracks are stopped
 
 ### changeMetadata
 
-▸ **changeMetadata**(`metadata`): `Promise`<`void`\>
+▸ **changeMetadata**(`metadata`): `Promise`\<`void`\>
 
 If you want to update the metadata of local peer. If an object is passed, it should be serializable using
 JSON.stringify.
@@ -295,13 +295,13 @@ JSON.stringify.
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 ---
 
 ### changeName
 
-▸ **changeName**(`name`): `Promise`<`void`\>
+▸ **changeName**(`name`): `Promise`\<`void`\>
 
 If you want to update the name of peer.
 
@@ -313,13 +313,13 @@ If you want to update the name of peer.
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 ---
 
 ### changeRole
 
-▸ **changeRole**(`forPeerId`, `toRole`, `force?`): `Promise`<`void`\>
+▸ **changeRole**(`forPeerId`, `toRole`, `force?`): `Promise`\<`void`\>
 
 Request for a role change of a remote peer. Can be forced.
 
@@ -333,7 +333,7 @@ Request for a role change of a remote peer. Can be forced.
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 **`Deprecated`**
 
@@ -343,7 +343,7 @@ Use `changeRoleOfPeer`
 
 ### changeRoleOfPeer
 
-▸ **changeRoleOfPeer**(`forPeerId`, `toRole`, `force?`): `Promise`<`void`\>
+▸ **changeRoleOfPeer**(`forPeerId`, `toRole`, `force?`): `Promise`\<`void`\>
 
 Request for a role change of a remote peer. Can be forced.
 
@@ -357,7 +357,7 @@ Request for a role change of a remote peer. Can be forced.
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 Promise<void> - resolves when the role is changed
 
@@ -365,7 +365,7 @@ Promise<void> - resolves when the role is changed
 
 ### changeRoleOfPeersWithRoles
 
-▸ **changeRoleOfPeersWithRoles**(`roles`, `toRole`): `Promise`<`void`\>
+▸ **changeRoleOfPeersWithRoles**(`roles`, `toRole`): `Promise`\<`void`\>
 
 Request for a role change of a remote peer. Can be forced.
 
@@ -378,7 +378,7 @@ Request for a role change of a remote peer. Can be forced.
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 Promise<void> - resolves when the role is changed
 
@@ -386,7 +386,7 @@ Promise<void> - resolves when the role is changed
 
 ### detachVideo
 
-▸ **detachVideo**(`localTrackID`, `videoElement`): `Promise`<`void`\>
+▸ **detachVideo**(`localTrackID`, `videoElement`): `Promise`\<`void`\>
 
 #### Parameters
 
@@ -397,7 +397,7 @@ Promise<void> - resolves when the role is changed
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 **`See`**
 
@@ -407,13 +407,13 @@ attachVideo
 
 ### enableBeamSpeakerLabelsLogging
 
-▸ **enableBeamSpeakerLabelsLogging**(): `Promise`<`void`\>
+▸ **enableBeamSpeakerLabelsLogging**(): `Promise`\<`void`\>
 
 enable sending audio speaker data to beam
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 Promise<void> - resolves when the speaker data is enabled
 
@@ -421,7 +421,7 @@ Promise<void> - resolves when the speaker data is enabled
 
 ### findPeerByName
 
-▸ **findPeerByName**(`options`): `Promise`<{ `eof?`: `boolean` ; `offset`: `number` ; `peers`: [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[] }\>
+▸ **findPeerByName**(`options`): `Promise`\<\{ `eof?`: `boolean` ; `offset`: `number` ; `peers`: [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[] }\>
 
 #### Parameters
 
@@ -431,13 +431,13 @@ Promise<void> - resolves when the speaker data is enabled
 
 #### Returns
 
-`Promise`<{ `eof?`: `boolean` ; `offset`: `number` ; `peers`: [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[] }\>
+`Promise`\<\{ `eof?`: `boolean` ; `offset`: `number` ; `peers`: [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[] }\>
 
 ---
 
 ### getAuthTokenByRoomCode
 
-▸ **getAuthTokenByRoomCode**(`tokenRequest`, `tokenRequestOptions?`): `Promise`<`string`\>
+▸ **getAuthTokenByRoomCode**(`tokenRequest`, `tokenRequestOptions?`): `Promise`\<`string`\>
 
 Get the auth token for the room code. This is useful when you want to join a room using a room code.
 
@@ -450,7 +450,7 @@ Get the auth token for the room code. This is useful when you want to join a roo
 
 #### Returns
 
-`Promise`<`string`\>
+`Promise`\<`string`\>
 
 ---
 
@@ -472,7 +472,7 @@ Get the auth token for the room code. This is useful when you want to join a roo
 
 ### getPeer
 
-▸ **getPeer**(`peerId`): `Promise`<`undefined` \| [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)\>
+▸ **getPeer**(`peerId`): `Promise`\<`undefined` \| [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)\>
 
 get the peer object by peerId
 
@@ -484,7 +484,7 @@ get the peer object by peerId
 
 #### Returns
 
-`Promise`<`undefined` \| [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)\>
+`Promise`\<`undefined` \| [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)\>
 
 Promise<HMSPeer | undefined> - resolves with the peer object
 
@@ -563,9 +563,9 @@ Notifications for the ignored messages will still be sent, it'll only not be put
 
 #### Parameters
 
-| Name   | Type                       | Description                                                                                                                                                                                                                                                                                                                                                  |
-| :----- | :------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data` | `Record`<`string`, `any`\> | full app data object. use this to initialise app data in store. App Data is a small space in the store for UI to keep a few non updating global state fields for easy reference across UI. Note that if the fields are updating at high frequency or there are too many of them, it's recommended to have another UI side store to avoid performance issues. |
+| Name   | Type                        | Description                                                                                                                                                                                                                                                                                                                                                  |
+| :----- | :-------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `data` | `Record`\<`string`, `any`\> | full app data object. use this to initialise app data in store. App Data is a small space in the store for UI to keep a few non updating global state fields for easy reference across UI. Note that if the fields are updating at high frequency or there are too many of them, it's recommended to have another UI side store to avoid performance issues. |
 
 #### Returns
 
@@ -587,7 +587,7 @@ Method to initialize diagnostics. Should only be called after joining.
 
 ### join
 
-▸ **join**(`config`): `Promise`<`void`\>
+▸ **join**(`config`): `Promise`\<`void`\>
 
 join function can be used to join the room, if the room join is successful,
 current details of participants and track details are populated in the store.
@@ -600,7 +600,7 @@ current details of participants and track details are populated in the store.
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 Promise<void> - resolves when the room is joined
 
@@ -613,14 +613,14 @@ is ignored
 
 ### leave
 
-▸ **leave**(): `Promise`<`void`\>
+▸ **leave**(): `Promise`\<`void`\>
 
 This function can be used to leave the room, if the call is repeated it's ignored.
 This function also cleans up the store and removes all the tracks and participants.
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 Promise<void> - resolves when the room is left
 
@@ -628,13 +628,13 @@ Promise<void> - resolves when the room is left
 
 ### lowerLocalPeerHand
 
-▸ **lowerLocalPeerHand**(): `Promise`<`void`\>
+▸ **lowerLocalPeerHand**(): `Promise`\<`void`\>
 
 lower hand for local peer
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 Promise<void> - resolves when the hand is lowered
 
@@ -642,7 +642,7 @@ Promise<void> - resolves when the hand is lowered
 
 ### lowerRemotePeerHand
 
-▸ **lowerRemotePeerHand**(`peerId`): `Promise`<`void`\>
+▸ **lowerRemotePeerHand**(`peerId`): `Promise`\<`void`\>
 
 lower hand for remote peer
 
@@ -654,7 +654,7 @@ lower hand for remote peer
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 Promise<void> - resolves when the hand is lowered
 
@@ -662,13 +662,13 @@ Promise<void> - resolves when the hand is lowered
 
 ### populateSessionMetadata
 
-▸ **populateSessionMetadata**(): `Promise`<`void`\>
+▸ **populateSessionMetadata**(): `Promise`\<`void`\>
 
 Fetch the current room metadata from the server and populate it in store
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 **`Deprecated`**
 
@@ -678,7 +678,7 @@ use `actions.sessionStore.observe` instead
 
 ### preview
 
-▸ **preview**(`config`): `Promise`<`void`\>
+▸ **preview**(`config`): `Promise`\<`void`\>
 
 Preview function can be used to preview the camera and microphone before joining the room.
 This function is useful when you want to check and/or modify the camera and microphone settings before joining the Room.
@@ -691,7 +691,7 @@ This function is useful when you want to check and/or modify the camera and micr
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 Promise<void> - resolves when the preview is successful
 
@@ -699,13 +699,13 @@ Promise<void> - resolves when the preview is successful
 
 ### raiseLocalPeerHand
 
-▸ **raiseLocalPeerHand**(): `Promise`<`void`\>
+▸ **raiseLocalPeerHand**(): `Promise`\<`void`\>
 
 raise hand for local peer
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 Promise<void> - resolves when the hand is raised
 
@@ -713,7 +713,7 @@ Promise<void> - resolves when the hand is raised
 
 ### raiseRemotePeerHand
 
-▸ **raiseRemotePeerHand**(`peerId`): `Promise`<`void`\>
+▸ **raiseRemotePeerHand**(`peerId`): `Promise`\<`void`\>
 
 raise hand for remote peer
 
@@ -725,7 +725,7 @@ raise hand for remote peer
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 Promise<void> - resolves when the hand is raised
 
@@ -733,11 +733,11 @@ Promise<void> - resolves when the hand is raised
 
 ### refreshDevices
 
-▸ **refreshDevices**(): `Promise`<`void`\>
+▸ **refreshDevices**(): `Promise`\<`void`\>
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 ---
 
@@ -761,7 +761,7 @@ Reject pending role change request
 
 ### removePeer
 
-▸ **removePeer**(`peerID`, `reason`): `Promise`<`void`\>
+▸ **removePeer**(`peerID`, `reason`): `Promise`\<`void`\>
 
 If you have **removeOthers** permission, you can remove a peer from the room.
 
@@ -774,7 +774,7 @@ If you have **removeOthers** permission, you can remove a peer from the room.
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 Promise<void> - resolves when the peer is removed
 
@@ -782,7 +782,7 @@ Promise<void> - resolves when the peer is removed
 
 ### removePluginFromAudioTrack
 
-▸ **removePluginFromAudioTrack**(`plugin`): `Promise`<`void`\>
+▸ **removePluginFromAudioTrack**(`plugin`): `Promise`\<`void`\>
 
 #### Parameters
 
@@ -792,7 +792,7 @@ Promise<void> - resolves when the peer is removed
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 **`See`**
 
@@ -802,7 +802,7 @@ addPluginToAudioTrack
 
 ### removePluginFromVideoTrack
 
-▸ **removePluginFromVideoTrack**(`plugin`): `Promise`<`void`\>
+▸ **removePluginFromVideoTrack**(`plugin`): `Promise`\<`void`\>
 
 #### Parameters
 
@@ -812,7 +812,7 @@ addPluginToAudioTrack
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 **`See`**
 
@@ -822,7 +822,7 @@ addPluginToVideoTrack
 
 ### removePluginsFromVideoStream
 
-▸ **removePluginsFromVideoStream**(`plugins`): `Promise`<`void`\>
+▸ **removePluginsFromVideoStream**(`plugins`): `Promise`\<`void`\>
 
 Remove video plugins to the local peer video stream. Eg. Virtual Background, Face Filters etc.
 Video plugins can be added/removed at any time after the video track is available.
@@ -835,7 +835,7 @@ Video plugins can be added/removed at any time after the video track is availabl
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 **`See`**
 
@@ -845,7 +845,7 @@ HMSMediaStreamPlugin
 
 ### removeTrack
 
-▸ **removeTrack**(`trackId`): `Promise`<`void`\>
+▸ **removeTrack**(`trackId`): `Promise`\<`void`\>
 
 You can use the removeTrack method to remove an auxiliary track.
 This method removes the track from the local peer's list of auxiliary tracks and unpublishes it.
@@ -858,7 +858,7 @@ This method removes the track from the local peer's list of auxiliary tracks and
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 Promise<void> - resolves when the track is removed
 
@@ -866,7 +866,7 @@ Promise<void> - resolves when the track is removed
 
 ### sendBroadcastMessage
 
-▸ **sendBroadcastMessage**(`message`, `type?`): `Promise`<`void`\>
+▸ **sendBroadcastMessage**(`message`, `type?`): `Promise`\<`void`\>
 
 Send a plain text message to all the other participants in the room.
 
@@ -879,7 +879,7 @@ Send a plain text message to all the other participants in the room.
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 Promise<void> - resolves when the message is sent
 
@@ -887,7 +887,7 @@ Promise<void> - resolves when the message is sent
 
 ### sendDirectMessage
 
-▸ **sendDirectMessage**(`message`, `peerID`, `type?`): `Promise`<`void`\>
+▸ **sendDirectMessage**(`message`, `peerID`, `type?`): `Promise`\<`void`\>
 
 #### Parameters
 
@@ -899,7 +899,7 @@ Promise<void> - resolves when the message is sent
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 Promise<void> - resolves when the message is sent
 
@@ -907,7 +907,7 @@ Promise<void> - resolves when the message is sent
 
 ### sendGroupMessage
 
-▸ **sendGroupMessage**(`message`, `roles`, `type?`): `Promise`<`void`\>
+▸ **sendGroupMessage**(`message`, `roles`, `type?`): `Promise`\<`void`\>
 
 #### Parameters
 
@@ -919,7 +919,7 @@ Promise<void> - resolves when the message is sent
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 Promise<void> - resolves when the message is sent
 
@@ -927,7 +927,7 @@ Promise<void> - resolves when the message is sent
 
 ### sendHLSTimedMetadata
 
-▸ **sendHLSTimedMetadata**(`metadataList`): `Promise`<`void`\>
+▸ **sendHLSTimedMetadata**(`metadataList`): `Promise`\<`void`\>
 
 Used to define date range metadata in a media playlist.
 This api adds EXT-X-DATERANGE tags to the media playlist.
@@ -954,7 +954,7 @@ sendHLSTimedMetadata(metadataList);
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 ---
 
@@ -991,11 +991,11 @@ use it for updating a particular property in the appdata
 
 #### Parameters
 
-| Name     | Type                                   | Description                                                                                                                                                                                                                                                                                        |
-| :------- | :------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `key`    | `string`                               | a string. Does not check for existence. If the key is already not a property of the appData, it is added.                                                                                                                                                                                          |
-| `value`  | `Record`<`string` \| `number`, `any`\> | value to set for the key.                                                                                                                                                                                                                                                                          |
-| `merge?` | `boolean`                              | set it to true if you want to merge the appdata. - Always replaces the value for a given key if this parameter is not explicitly set to true. - Always replaces if the value is anything other than a plain object (i.e) JSON.parse()able. - If set to true on non-plain objects, this is ignored. |
+| Name     | Type                                    | Description                                                                                                                                                                                                                                                                                        |
+| :------- | :-------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `key`    | `string`                                | a string. Does not check for existence. If the key is already not a property of the appData, it is added.                                                                                                                                                                                          |
+| `value`  | `Record`\<`string` \| `number`, `any`\> | value to set for the key.                                                                                                                                                                                                                                                                          |
+| `merge?` | `boolean`                               | set it to true if you want to merge the appdata. - Always replaces the value for a given key if this parameter is not explicitly set to true. - Always replaces if the value is anything other than a plain object (i.e) JSON.parse()able. - If set to true on non-plain objects, this is ignored. |
 
 #### Returns
 
@@ -1049,7 +1049,7 @@ cases.
 
 ### setAudioOutputDevice
 
-▸ **setAudioOutputDevice**(`deviceId`): `Promise`<`void`\>
+▸ **setAudioOutputDevice**(`deviceId`): `Promise`\<`void`\>
 
 Set the audio output(speaker) device
 
@@ -1061,7 +1061,7 @@ Set the audio output(speaker) device
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 Promise<void> - resolves when the audio output device is set
 
@@ -1069,25 +1069,25 @@ Promise<void> - resolves when the audio output device is set
 
 ### setAudioSettings
 
-▸ **setAudioSettings**(`settings`): `Promise`<`void`\>
+▸ **setAudioSettings**(`settings`): `Promise`\<`void`\>
 
 Change settings of the local peer's audio track
 
 #### Parameters
 
-| Name       | Type                                                                                                 | Description                                                                 |
-| :--------- | :--------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------- |
-| `settings` | `Partial`<[`HMSAudioTrackSettings`](/api-reference/javascript/v2/interfaces/HMSAudioTrackSettings)\> | HMSAudioTrackSettings `({ volume, codec, maxBitrate, deviceId, advanced })` |
+| Name       | Type                                                                                                  | Description                                                                 |
+| :--------- | :---------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------- |
+| `settings` | `Partial`\<[`HMSAudioTrackSettings`](/api-reference/javascript/v2/interfaces/HMSAudioTrackSettings)\> | HMSAudioTrackSettings `({ volume, codec, maxBitrate, deviceId, advanced })` |
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 ---
 
 ### setEnabledTrack
 
-▸ **setEnabledTrack**(`trackId`, `enabled`): `Promise`<`void`\>
+▸ **setEnabledTrack**(`trackId`, `enabled`): `Promise`\<`void`\>
 
 #### Parameters
 
@@ -1098,7 +1098,7 @@ Change settings of the local peer's audio track
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 Promise<void> - resolves when the track is enabled
 
@@ -1106,7 +1106,7 @@ Promise<void> - resolves when the track is enabled
 
 ### setLocalAudioEnabled
 
-▸ **setLocalAudioEnabled**(`enabled`): `Promise`<`void`\>
+▸ **setLocalAudioEnabled**(`enabled`): `Promise`\<`void`\>
 
 This function can be used to enable/disable(unmute/mute) local audio track
 
@@ -1118,7 +1118,7 @@ This function can be used to enable/disable(unmute/mute) local audio track
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 Promise<void> - resolves when the audio is enabled
 
@@ -1126,7 +1126,7 @@ Promise<void> - resolves when the audio is enabled
 
 ### setLocalVideoEnabled
 
-▸ **setLocalVideoEnabled**(`enabled`): `Promise`<`void`\>
+▸ **setLocalVideoEnabled**(`enabled`): `Promise`\<`void`\>
 
 This function can be used to enable/disable(unmute/mute) local video track
 
@@ -1138,7 +1138,7 @@ This function can be used to enable/disable(unmute/mute) local video track
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 Promise<void> - resolves when the video is enabled
 
@@ -1216,7 +1216,7 @@ Method to override the default settings for playlist tracks
 
 ### setPreferredLayer
 
-▸ **setPreferredLayer**(`trackId`, `layer`): `Promise`<`void`\>
+▸ **setPreferredLayer**(`trackId`, `layer`): `Promise`\<`void`\>
 
 set the quality of the selected videoTrack for simulcast.
 
@@ -1229,7 +1229,7 @@ set the quality of the selected videoTrack for simulcast.
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 Promise<void> - resolves when the layer is set
 
@@ -1237,7 +1237,7 @@ Promise<void> - resolves when the layer is set
 
 ### setRemoteTrackEnabled
 
-▸ **setRemoteTrackEnabled**(`forRemoteTrackID`, `enabled`): `Promise`<`void`\>
+▸ **setRemoteTrackEnabled**(`forRemoteTrackID`, `enabled`): `Promise`\<`void`\>
 
 Change track state a remote peer's track
 This can be used to mute/unmute a remote peer's track
@@ -1251,7 +1251,7 @@ This can be used to mute/unmute a remote peer's track
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 Promise<void> - resolves when the track state is changed
 
@@ -1259,7 +1259,7 @@ Promise<void> - resolves when the track state is changed
 
 ### setRemoteTracksEnabled
 
-▸ **setRemoteTracksEnabled**(`params`): `Promise`<`void`\>
+▸ **setRemoteTracksEnabled**(`params`): `Promise`\<`void`\>
 
 Use this to mute/unmute multiple tracks by source, role or type
 
@@ -1271,7 +1271,7 @@ Use this to mute/unmute multiple tracks by source, role or type
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 Promise<void> - resolves when the track state is changed
 
@@ -1279,7 +1279,7 @@ Promise<void> - resolves when the track state is changed
 
 ### setScreenShareEnabled
 
-▸ **setScreenShareEnabled**(`enabled`, `config?`): `Promise`<`void`\>
+▸ **setScreenShareEnabled**(`enabled`, `config?`): `Promise`\<`void`\>
 
 If you want to enable screenshare for the local peer this class can be called.
 The store will be populated with the incoming track, and the subscriber(or
@@ -1294,7 +1294,7 @@ react component if our hook is used) will be notified/rerendered
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 Promise<void> - resolves when the screenshare is enabled
 
@@ -1302,7 +1302,7 @@ Promise<void> - resolves when the screenshare is enabled
 
 ### setSessionMetadata
 
-▸ **setSessionMetadata**(`metadata`): `Promise`<`void`\>
+▸ **setSessionMetadata**(`metadata`): `Promise`\<`void`\>
 
 If you want to update the metadata of the session. If an object is passed, it should be serializable using
 JSON.stringify.
@@ -1318,7 +1318,7 @@ till the last peer leaves a room
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 **`Deprecated`**
 
@@ -1328,25 +1328,25 @@ use `actions.sessionStore.set` instead
 
 ### setVideoSettings
 
-▸ **setVideoSettings**(`settings`): `Promise`<`void`\>
+▸ **setVideoSettings**(`settings`): `Promise`\<`void`\>
 
 Change settings of the local peer's video track
 
 #### Parameters
 
-| Name       | Type                                                                                                 | Description                                                                                                  |
-| :--------- | :--------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------- |
-| `settings` | `Partial`<[`HMSVideoTrackSettings`](/api-reference/javascript/v2/interfaces/HMSVideoTrackSettings)\> | HMSVideoTrackSettings `({ width, height, codec, maxFramerate, maxBitrate, deviceId, advanced, facingMode })` |
+| Name       | Type                                                                                                  | Description                                                                                                  |
+| :--------- | :---------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------- |
+| `settings` | `Partial`\<[`HMSVideoTrackSettings`](/api-reference/javascript/v2/interfaces/HMSVideoTrackSettings)\> | HMSVideoTrackSettings `({ width, height, codec, maxFramerate, maxBitrate, deviceId, advanced, facingMode })` |
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 ---
 
 ### setVolume
 
-▸ **setVolume**(`value`, `trackId?`): `Promise`<`void`\>
+▸ **setVolume**(`value`, `trackId?`): `Promise`\<`void`\>
 
 Set the output volume of audio tracks(overall/particular audio track)
 
@@ -1359,7 +1359,7 @@ Set the output volume of audio tracks(overall/particular audio track)
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 Promise<void> - resolves when the volume is set
 
@@ -1367,7 +1367,7 @@ Promise<void> - resolves when the volume is set
 
 ### startHLSStreaming
 
-▸ **startHLSStreaming**(`params?`): `Promise`<`void`\>
+▸ **startHLSStreaming**(`params?`): `Promise`\<`void`\>
 
 If you have configured HLS streaming from dashboard, no params are required.
 otherwise
@@ -1380,7 +1380,7 @@ otherwise
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 Promise<void> - resolves when the HLS streaming is started
 
@@ -1388,7 +1388,7 @@ Promise<void> - resolves when the HLS streaming is started
 
 ### startRTMPOrRecording
 
-▸ **startRTMPOrRecording**(`params`): `Promise`<`void`\>
+▸ **startRTMPOrRecording**(`params`): `Promise`\<`void`\>
 
 If you want to start RTMP streaming or recording.
 
@@ -1400,7 +1400,7 @@ If you want to start RTMP streaming or recording.
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 Promise<void> - resolves when the RTMP streaming and recording is started
 
@@ -1408,7 +1408,7 @@ Promise<void> - resolves when the RTMP streaming and recording is started
 
 ### startTranscription
 
-▸ **startTranscription**(`params`): `Promise`<`void`\>
+▸ **startTranscription**(`params`): `Promise`\<`void`\>
 
 If you want to start transcriptions(Closed Caption).
 
@@ -1420,13 +1420,13 @@ If you want to start transcriptions(Closed Caption).
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 ---
 
 ### stopHLSStreaming
 
-▸ **stopHLSStreaming**(`params?`): `Promise`<`void`\>
+▸ **stopHLSStreaming**(`params?`): `Promise`\<`void`\>
 
 If you want to stop HLS streaming. The passed in arguments is not considered at the moment, and everything related to HLS is stopped.
 
@@ -1438,7 +1438,7 @@ If you want to stop HLS streaming. The passed in arguments is not considered at 
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 Promise<void> - resolves when the HLS streaming is stopped
 
@@ -1446,13 +1446,13 @@ Promise<void> - resolves when the HLS streaming is stopped
 
 ### stopRTMPAndRecording
 
-▸ **stopRTMPAndRecording**(): `Promise`<`void`\>
+▸ **stopRTMPAndRecording**(): `Promise`\<`void`\>
 
 If you want to stop both RTMP streaming and recording.
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 Promise<void> - resolves when the RTMP streaming and recording is stopped
 
@@ -1460,7 +1460,7 @@ Promise<void> - resolves when the RTMP streaming and recording is stopped
 
 ### stopTranscription
 
-▸ **stopTranscription**(`params`): `Promise`<`void`\>
+▸ **stopTranscription**(`params`): `Promise`\<`void`\>
 
 If you want to stop transcriptions(Closed Caption).
 
@@ -1472,13 +1472,13 @@ If you want to stop transcriptions(Closed Caption).
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 ---
 
 ### submitSessionFeedback
 
-▸ **submitSessionFeedback**(`feedback`, `eventEndpoint?`): `Promise`<`void`\>
+▸ **submitSessionFeedback**(`feedback`, `eventEndpoint?`): `Promise`\<`void`\>
 
 After leave send feedback to backend for call quality purpose.
 
@@ -1491,7 +1491,7 @@ After leave send feedback to backend for call quality purpose.
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 Promise<void> - resolves when the feedback is submitted
 
@@ -1499,15 +1499,34 @@ Promise<void> - resolves when the feedback is submitted
 
 ### switchCamera
 
-▸ **switchCamera**(): `Promise`<`void`\>
+▸ **switchCamera**(): `Promise`\<`void`\>
 
 Toggle the camera between front and back if the both the camera's exist
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 Promise<void> - resolves when the camera is toggled
+
+---
+
+### updateTranscriptionConfig
+
+▸ **updateTranscriptionConfig**(`params`): `Promise`\<`void`\>
+
+Update transcription config for a running session.
+Use this to enable/disable translation or change the transcription language mid-session.
+
+#### Parameters
+
+| Name     | Type                        |
+| :------- | :-------------------------- |
+| `params` | `TranscriptionConfigUpdate` |
+
+#### Returns
+
+`Promise`\<`void`\>
 
 ---
 

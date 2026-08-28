@@ -35,37 +35,35 @@ hmsActions.detachVideo(videoTrack.id, videoElement);
 
 ## When to attach/detach videos
 
-Starting from this [release](https://www.100ms.live/docs/javascript/v2/changelog/release-notes#2023-03-14), sdk handles the subsequent attach/detach automatically.
-- attach needs to be called only the first time the video element is available. subsequent calls will be ignored.
+Starting from this [release](https://www.100ms.live/docs/javascript/v2/changelog/release-notes#2023-03-14), sdk handles the subsequent attach/detach automatically **for a given track**.
+- attach needs to be called once per track id. Repeat calls for the same track id are ignored, and the sdk takes care of mute/unmute, plugins, camera/device change and going in and out of view on its own. None of these change the peer's track id.
 - detach needs to be called only when the element is removed from the dom while the track is still available. For the majority of cases, calling detach won't be needed.
 
-To disable the auto handling by sdk, pass `autoManageVideo: false` in join or preview config object. Then you will have to follow the below snippet
-to handle video rendering on your end.
+<Note type="warning">
+When a session is moved to another media server, every peer republishes and `peer.videoTrack` becomes a <b>new</b> track id. The sdk's auto handling is scoped to one track id, so it cannot carry your element across to the replacement track.
 
-We need to re-attach video when it's in view after every:
+If you attach once to `peer.videoTrack` and never subscribe to changes, the tile freezes the moment that happens and stays frozen for the rest of the call. Subscribe by <b>peer id</b> instead, so you always receive that peer's current track, and re-attach when the id changes.
+</Note>
 
-1. Unmute(when track.enable is true)
-2. Plugin is added/removed(for example, enable/disable virtual background)
-3. Camera/device change(track.deviceId is changed)
+Server migration needs no action from your app or your users, so it is the case that gets missed. The only other way `peer.videoTrack` changes is a real unpublish and republish of that peer's video — for example a role change to a role that cannot publish video, and then back to one that can.
 
-You can achieve all this by using the `selectVideoTrackByID` selector and the aforementioned `hmsActions.attachVideo` and `hmsActions.detachVideo` functions.
+Use the `selectVideoTrackByPeerID` selector with `hmsActions.attachVideo` and `hmsActions.detachVideo`:
 
 ```js
-// assuming you have peer object and video element
+// assuming you have a peer object and a video element
 // complete code snippet below
+let attachedTrackId = null;
+
 hmsStore.subscribe((track) => {
-    if (!track) {
-        return;
-    }
-    if (track?.enabled) {
-        hmsActions.attachVideo(track.id, videoElement);
-    } else {
-        hmsActions.detachVideo(track.id, videoElement);
-    }
-}, selectVideoTrackByID(peer.videoTrack));
+    const nextTrackId = track?.id ?? null;
+    if (nextTrackId === attachedTrackId) return; // same track, e.g. mute/unmute - nothing to do
+    if (attachedTrackId) hmsActions.detachVideo(attachedTrackId, videoElement);
+    if (nextTrackId) hmsActions.attachVideo(nextTrackId, videoElement);
+    attachedTrackId = nextTrackId;
+}, selectVideoTrackByPeerID(peer.id));
 ```
 
-> Note that if you're using the `useVideo` hook from `react-sdk` this is already being taken care of.
+If you are on React, the `useVideo` hook from `react-sdk` already does exactly this — pass it `peer.videoTrack` and it re-attaches for you.
 
 ## Example Snippet
 
@@ -92,20 +90,21 @@ function renderPeer(peer) {
     videoElement.playsinline = true;
     peerTileName.textContent = peer.name;
 
+    // Subscribe by peer id, not track id: a peer's track id changes when their session
+    // moves to another media server. Re-attach whenever it changes.
+    let attachedTrackId = null;
     hmsStore.subscribe((track) => {
-        if (!track) {
-            return;
-        }
-        if (track.enabled) {
-            hmsActions.attachVideo(track.id, videoElement);
-        } else {
-            hmsActions.detachVideo(track.id, videoElement);
-        }
-    }, selectVideoTrackByID(peer.videoTrack));
+        const nextTrackId = track?.id ?? null;
+        if (nextTrackId === attachedTrackId) return; // same track, e.g. mute/unmute
+        if (attachedTrackId) hmsActions.detachVideo(attachedTrackId, videoElement);
+        if (nextTrackId) hmsActions.attachVideo(nextTrackId, videoElement);
+        attachedTrackId = nextTrackId;
+    }, selectVideoTrackByPeerID(peer.id));
 
     peerTileDiv.append(videoElement);
     peerTileDiv.append(peerTileName);
 
+    // Tile creation stays keyed on peer id so the element is not rebuilt on every change
     renderedPeerIDs.add(peer.id);
     return peerTileDiv;
 }
@@ -119,7 +118,7 @@ function renderPeers(peers) {
             console.log(
                 `rendering video for peer - ${peer.name}, roleName - ${peer.roleName}, isLocal- ${peer.isLocal}`
             );
-            peersContainer.append(renderVideo(peer));
+            peersContainer.append(renderPeer(peer));
         }
     });
 }

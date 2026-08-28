@@ -13,103 +13,103 @@ nav: '3.2'
 
 ### analytics
 
-• `Readonly` **analytics**: `HMSInternalEvent`<`default`\>
+• `Readonly` **analytics**: `HMSInternalEvent`\<`default`\>
 
 ---
 
 ### audioPluginFailed
 
-• `Readonly` **audioPluginFailed**: `HMSInternalEvent`<`HMSException`\>
+• `Readonly` **audioPluginFailed**: `HMSInternalEvent`\<`HMSException`\>
 
 ---
 
 ### audioTrackAdded
 
-• `Readonly` **audioTrackAdded**: `HMSInternalEvent`<{ `peer`: `HMSRemotePeer` ; `track`: `HMSRemoteAudioTrack` }\>
+• `Readonly` **audioTrackAdded**: `HMSInternalEvent`\<\{ `peer`: `HMSRemotePeer` ; `track`: `HMSRemoteAudioTrack` }\>
 
 ---
 
 ### audioTrackRemoved
 
-• `Readonly` **audioTrackRemoved**: `HMSInternalEvent`<`HMSRemoteAudioTrack`\>
+• `Readonly` **audioTrackRemoved**: `HMSInternalEvent`\<`HMSRemoteAudioTrack`\>
 
 ---
 
 ### audioTrackUpdate
 
-• `Readonly` **audioTrackUpdate**: `HMSInternalEvent`<{ `enabled`: `boolean` ; `track`: `HMSRemoteAudioTrack` }\>
+• `Readonly` **audioTrackUpdate**: `HMSInternalEvent`\<\{ `enabled`: `boolean` ; `track`: `HMSRemoteAudioTrack` }\>
 
 ---
 
 ### autoplayError
 
-• `Readonly` **autoplayError**: `HMSInternalEvent`<`HMSException`\>
+• `Readonly` **autoplayError**: `HMSInternalEvent`\<`HMSException`\>
 
 ---
 
 ### deviceChange
 
-• `Readonly` **deviceChange**: `HMSInternalEvent`<`HMSDeviceChangeEvent`\>
+• `Readonly` **deviceChange**: `HMSInternalEvent`\<`HMSDeviceChangeEvent`\>
 
 ---
 
 ### error
 
-• `Readonly` **error**: `HMSInternalEvent`<`HMSException`\>
+• `Readonly` **error**: `HMSInternalEvent`\<`HMSException`\>
 
 ---
 
 ### leave
 
-• `Readonly` **leave**: `HMSInternalEvent`<`undefined` \| `HMSException`\>
+• `Readonly` **leave**: `HMSInternalEvent`\<`undefined` \| `HMSException`\>
 
 ---
 
 ### localAudioEnabled
 
-• `Readonly` **localAudioEnabled**: `HMSInternalEvent`<{ `enabled`: `boolean` ; `track`: `HMSLocalAudioTrack` }\>
+• `Readonly` **localAudioEnabled**: `HMSInternalEvent`\<\{ `enabled`: `boolean` ; `track`: `HMSLocalAudioTrack` }\>
 
 ---
 
 ### localAudioSilence
 
-• `Readonly` **localAudioSilence**: `HMSInternalEvent`<{ `track`: `HMSLocalAudioTrack` }\>
+• `Readonly` **localAudioSilence**: `HMSInternalEvent`\<\{ `track`: `HMSLocalAudioTrack` }\>
 
 ---
 
 ### localAudioUnmutedNatively
 
-• `Readonly` **localAudioUnmutedNatively**: `HMSInternalEvent`<`unknown`\>
+• `Readonly` **localAudioUnmutedNatively**: `HMSInternalEvent`\<`unknown`\>
 
 ---
 
 ### localRoleUpdate
 
-• `Readonly` **localRoleUpdate**: `HMSInternalEvent`<{ `newRole`: [`HMSRole`](/api-reference/javascript/v2/interfaces/HMSRole) ; `oldRole`: [`HMSRole`](/api-reference/javascript/v2/interfaces/HMSRole) }\>
+• `Readonly` **localRoleUpdate**: `HMSInternalEvent`\<\{ `newRole`: [`HMSRole`](/api-reference/javascript/v2/interfaces/HMSRole) ; `oldRole`: [`HMSRole`](/api-reference/javascript/v2/interfaces/HMSRole) }\>
 
 ---
 
 ### localVideoEnabled
 
-• `Readonly` **localVideoEnabled**: `HMSInternalEvent`<{ `enabled`: `boolean` ; `track`: `HMSLocalVideoTrack` }\>
+• `Readonly` **localVideoEnabled**: `HMSInternalEvent`\<\{ `enabled`: `boolean` ; `track`: `HMSLocalVideoTrack` }\>
 
 ---
 
 ### localVideoUnmutedNatively
 
-• `Readonly` **localVideoUnmutedNatively**: `HMSInternalEvent`<`unknown`\>
+• `Readonly` **localVideoUnmutedNatively**: `HMSInternalEvent`\<`unknown`\>
 
 ---
 
 ### policyChange
 
-• `Readonly` **policyChange**: `HMSInternalEvent`<`PolicyParams`\>
+• `Readonly` **policyChange**: `HMSInternalEvent`\<`PolicyParams`\>
 
 ---
 
 ### statsUpdate
 
-• `Readonly` **statsUpdate**: `HMSInternalEvent`<`HMSWebrtcStats`\>
+• `Readonly` **statsUpdate**: `HMSInternalEvent`\<`HMSWebrtcStats`\>
 
 Emitter which processes raw RTC stats from rtcStatsUpdate and calls client callback
 
@@ -117,7 +117,7 @@ Emitter which processes raw RTC stats from rtcStatsUpdate and calls client callb
 
 ### trackAudioLevelUpdate
 
-• `Readonly` **trackAudioLevelUpdate**: `HMSInternalEvent`<`ITrackAudioLevelUpdate`\>
+• `Readonly` **trackAudioLevelUpdate**: `HMSInternalEvent`\<`ITrackAudioLevelUpdate`\>
 
 Emits audio level updates for audio tracks(used with local track in preview)
 
@@ -125,10 +125,16 @@ Emits audio level updates for audio tracks(used with local track in preview)
 
 ### trackDegraded
 
-• `Readonly` **trackDegraded**: `HMSInternalEvent`<`HMSRemoteVideoTrack`\>
+• `Readonly` **trackDegraded**: `HMSInternalEvent`\<`HMSRemoteVideoTrack`\>
+
+---
+
+### trackInterruption
+
+• `Readonly` **trackInterruption**: `HMSInternalEvent`\<[`HMSTrackInterruption`](/api-reference/javascript/v2/interfaces/HMSTrackInterruption)\>
 
 ---
 
 ### trackRestored
 
-• `Readonly` **trackRestored**: `HMSInternalEvent`<`HMSRemoteVideoTrack`\>
+• `Readonly` **trackRestored**: `HMSInternalEvent`\<`HMSRemoteVideoTrack`\>

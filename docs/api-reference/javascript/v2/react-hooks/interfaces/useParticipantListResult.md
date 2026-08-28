@@ -13,7 +13,7 @@ nav: '5.2.11'
 
 ### participantsByRoles
 
-• **participantsByRoles**: `Record`<`string`, `HMSPeer`[]\>
+• **participantsByRoles**: `Record`\<`string`, `HMSPeer`[]\>
 
 ---
 
