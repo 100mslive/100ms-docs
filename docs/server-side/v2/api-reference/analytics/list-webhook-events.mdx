@@ -1,0 +1,112 @@
+---
+title: List Webhook Events
+nav: 3.64
+---
+
+This API retrieves webhook delivery history including successful and failed webhook events. It can be used to identify failed webhook deliveries and monitor webhook health.
+
+<GetRequest title="https://api.100ms.live/v2/analytics/webhooks" />
+<Request id="req-0">
+
+```bash
+curl --location --request GET \
+    'https://api.100ms.live/v2/analytics/webhooks?start_time=2025-12-28T00:00:00Z&status=failed&limit=20' \
+    --header 'Authorization: Bearer <management_token>'
+```
+
+</Request>
+
+### Allowed Filters
+To be specified as query parameters
+
+| Name        | Type     | Description                                                                                                                                                                                                                                             | Required |
+| ----------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| start_time  | `string` | Start of time range in RFC3339 format (Default: 24 hours ago). Must be within the last 30 days.                                                                                                                                                        | no       |
+| end_time    | `string` | End of time range in RFC3339 format (Default: Now). Must be within 14 days after `start_time`.                                                                                                                                                         | no       |
+| room_id     | `string` | Unique identifier of the room you wish to fetch webhook events for                                                                                                                                                                                     | no       |
+| status      | `string` | Filter by delivery status: `all`, `failed`, `success` (Default: `all`)                                                                                                                                                                                 | no       |
+| event_names | `string` | Filter by original event types (e.g., `session.open.success`). <br /><br /> Can be specified multiple times to include more than one event (for example `event_names=session.open.success&` `event_names=peer.join.success`). (Default: all events)    | no       |
+| limit       | `int`    | Items per page (Default: `50`, Min: `1`, Max: `100`)                                                                                                                                                                                                   | no       |
+| page        | `int`    | Page number (Default: `1`)                                                                                                                                                                                                                             | no       |
+
+### Response
+
+<ResponseBox id="res-0" status="200 OK">
+
+```json
+{
+  "events": [
+    {
+      "event_id": "abc123-def456",
+      "event_name": "reporter.webhook.delivery.failed",
+      "room_id": "room-123",
+      "event_timestamp": "2025-12-29T10:30:00Z",
+      "payload": {
+        "event_data": {
+          "session_id": "63f73bf05223403c9671c5c9",
+          "peer_id": "c8e85ab4-d533-4de0-ba7c-4c58a4de6c74",
+          "user_id": "187a1a92-150f-4506-83b7-d8a1cd716fb0"
+        },
+        "webhook_url": "https://example.com/webhook",
+        "original_event_name": "session.open.success",
+        "error_reason": "timeout"
+      }
+    }
+  ],
+  "pagination": {
+    "current_page": 1,
+    "page_size": 50,
+    "total_pages": 10,
+    "total_items": 500,
+    "has_next": true,
+    "has_prev": false
+  },
+  "summary": {
+    "total_events": 500
+  }
+}
+```
+
+</ResponseBox>
+
+> **Note:** The `error_reason` field is only present for failed webhook events.
+
+### Supported Event Types
+
+You can filter webhooks by the following event types:
+
+| Event Type                 | Description                    |
+| -------------------------- | ------------------------------ |
+| `session.open.success`     | Session started                |
+| `session.close.success`    | Session ended                  |
+| `peer.join.success`        | Peer joined the room           |
+| `peer.leave.success`       | Peer left the room             |
+| `recording.success`        | Recording completed            |
+| `recording.failed`         | Recording failed               |
+| `transcription.success`    | Transcription completed        |
+| `beam.started.success`     | RTMP/HLS streaming started     |
+| `beam.stopped.success`     | RTMP/HLS streaming stopped     |
+| `beam.recording.success`   | Browser recording completed    |
+| `hls.recording.success`    | HLS recording completed        |
+| `stream.recording.success` | Stream recording completed     |
+
+### Error Responses
+
+| Error Code | Message                                      | Description                                     |
+|------------|----------------------------------------------|-------------------------------------------------|
+| 400        | start_time must be within the last 30 days   | Invalid time range parameters                   |
+| 400        | end_time must be within 14 days after start_time | Invalid time range parameters               |
+| 403        | insufficient permissions                     | Unauthorized access or invalid management token |
+| 429        | rate limit exceeded, retry after 45 seconds  | Too many requests, rate limit exceeded          |
+
+### Why would you use this API?
+
+- **Debug webhook issues:** Retrieve delivery history to analyze failures, identify patterns, and determine when issues occurred
+
+### Postman collection
+
+You can use our Postman collection to start exploring 100ms APIs.
+
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://god.gw.postman.com/run-collection/22726679-47dcd974-29d5-4965-a35b-bf9b74a8b25a?action=collection%2Ffork&collection-url=entityId%3D22726679-47dcd974-29d5-4965-a35b-bf9b74a8b25a%26entityType%3Dcollection%26workspaceId%3Dd9145dd6-337b-4761-81d6-21a30b4147a2)
+
+Refer to the [Postman guide](/server-side/v2/introduction/postman-guide) to get started with 100ms API collection.

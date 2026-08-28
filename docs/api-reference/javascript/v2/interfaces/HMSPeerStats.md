@@ -7,10 +7,10 @@ nav: '4.42'
 
 ### publish
 
-• `Optional` **publish**: `RTCIceCandidatePairStats` & { `bitrate`: `number` }
+• `Optional` **publish**: `RTCIceCandidatePairStats` & \{ `bitrate`: `number` ; `localCandidate?`: `HMSIceCandidateStats` ; `remoteCandidate?`: `HMSIceCandidateStats` } & \{ `outboundRtpBytesSent?`: `number` }
 
 ---
 
 ### subscribe
 
-• `Optional` **subscribe**: `RTCIceCandidatePairStats` & { `bitrate`: `number` ; `jitter`: `number` ; `packetsLost`: `number` ; `packetsLostRate`: `number` }
+• `Optional` **subscribe**: `RTCIceCandidatePairStats` & \{ `bitrate`: `number` ; `localCandidate?`: `HMSIceCandidateStats` ; `remoteCandidate?`: `HMSIceCandidateStats` } & \{ `jitter`: `number` ; `packetsLost`: `number` ; `packetsLostRate`: `number` }

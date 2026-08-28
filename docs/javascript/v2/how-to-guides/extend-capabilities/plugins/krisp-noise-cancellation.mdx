@@ -40,8 +40,26 @@ toggle(): void;
 // whether the noise cancellation is currently enabled
 isEnabled(): boolean | undefined;
 
+// Sets the noise suppression strength on the active filter node.
+// The prebuilt suppression-level slider drives values from 0 to 100.
+setNoiseSuppressionLevel(level: number): void;
+
 stop(): void; 
 
+```
+
+### Adjusting the noise suppression level
+
+`setNoiseSuppressionLevel(level: number)` forwards the provided level to the underlying Krisp filter node. The prebuilt Suppression Level slider (in `@100mslive/roomkit-react`) drives this method with integer values from `0` to `100`. Calling it before the plugin has been added to the audio track (i.e. before a filter node exists) is a no-op; apply the level after the plugin is active.
+
+```js
+import { HMSKrispPlugin } from '@100mslive/hms-noise-cancellation';
+
+const plugin = new HMSKrispPlugin();
+await hmsActions.addPluginToAudioTrack(plugin);
+
+// Reduce suppression strength to 60% once the plugin is active
+plugin.setNoiseSuppressionLevel(60);
 ```
 
 Checking if noise cancellation is enabled for the room. Please reach out to us to get this enabled for you.
