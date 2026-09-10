@@ -25,7 +25,8 @@ Released: `@100mslive/hms-video-store@0.15.0`, `@100mslive/react-sdk@0.13.0`, `@
 
 ### Fixed:
 
--   A remote peer could stay silent for the rest of the session if their audio failed to start
+-   A remote peer could stay silent for the whole session, or their video could never start — the first subscribe request after joining is sent the instant the API data channel opens, and a request sent in that window never reaches the server. It then went unanswered with no timeout, so the caller waited for the rest of the session: the audio element was never attached, and the server was never told to start sending video. Subscribe and video quality requests now time out after 10 seconds and are retried
+-   Audio playout no longer waits on the subscribe-state reply before attaching the audio element — audio is subscribed by default, so a lost or slow reply can no longer leave a peer permanently unheard
 -   Muting a peer for yourself was undone as soon as that peer muted and unmuted their own mic
 -   A peer who joined while the volume was turned all the way down was audible at full volume
 -   Noise cancellation could turn back on after a reconnect even when disabled in the template
