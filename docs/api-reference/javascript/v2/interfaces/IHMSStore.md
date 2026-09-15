@@ -1,6 +1,6 @@
 ---
 title: IHMSStore<T>
-nav: '4.90'
+nav: '4.92'
 ---
 
 HMS Reactive store can be used to subscribe to different parts of the store using selectors
@@ -8,13 +8,13 @@ and get a callback when the value changes.
 
 ## Type parameters
 
-| Name | Type                                                                                                                                  |
-| :--- | :------------------------------------------------------------------------------------------------------------------------------------ |
-| `T`  | extends [`HMSGenericTypes`](/api-reference/javascript/v2/interfaces/HMSGenericTypes) = { `sessionStore`: `Record`<`string`, `any`\> } |
+| Name | Type                                                                                                                                    |
+| :--- | :-------------------------------------------------------------------------------------------------------------------------------------- |
+| `T`  | extends [`HMSGenericTypes`](/api-reference/javascript/v2/interfaces/HMSGenericTypes) = \{ `sessionStore`: `Record`\<`string`, `any`\> } |
 
 ## Hierarchy
 
-- `IStore`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<`T`\>\>
+- `IStore`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<`T`\>\>
 
   ↳ **`IHMSStore`**
 
@@ -32,7 +32,7 @@ IStore.destroy
 
 ### getState
 
-• **getState**: `GetState`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<`T`\>\>
+• **getState**: `GetState`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<`T`\>\>
 
 Get a part of store using a selector which is true at the current point of time.
 
@@ -46,7 +46,7 @@ IStore.getState
 
 ### setState
 
-• **setState**: `SetState`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<`T`\>\>
+• **setState**: `SetState`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<`T`\>\>
 
 #### Inherited from
 
@@ -56,7 +56,7 @@ IStore.setState
 
 ### subscribe
 
-• **subscribe**: `Subscribe`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<`T`\>\>
+• **subscribe**: `Subscribe`\<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\<`T`\>\>
 
 Subscribe to a part of store using selectors, whenever the subscribed part changes, the callback
 is called with both the latest and previous value of the changed part.

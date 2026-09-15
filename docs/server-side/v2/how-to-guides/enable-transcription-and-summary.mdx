@@ -322,22 +322,18 @@ You can always use 100ms’ Recording Assets API to access the transcripts and s
       ```jsx
       import { useEffect } from "react";
       import { useHMSActions } from "@100mslive/react-sdk";
-      import { useIsHeadless } from "../AppData/useUISettings";
 
       export function BeamSpeakerLabelsLogging() {
         const hmsActions = useHMSActions();
-        const isHeadless = useIsHeadless();
 
         useEffect(() => {
-          if (isHeadless) {
+           // to be called if you are passing custom url for beam recording, preferably before join.
             hmsActions.enableBeamSpeakerLabelsLogging();
-          }
-        }, [hmsActions, isHeadless]);
+        }, [hmsActions]);
         return null;
       }
       ```
-      - Register `<BeamSpeakerLabelsLogging />` in Approutes along with import statement <br/>
-      `import { BeamSpeakerLabelsLogging } from "./components/AudioLevel/BeamSpeakerLabelsLogging";`
+     
 
 
 

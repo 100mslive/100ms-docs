@@ -459,6 +459,26 @@ HMSUpdateListener.onSessionStoreUpdate
 
 ---
 
+### onTrackInterruption
+
+▸ `Optional` **onTrackInterruption**(`interruption`): `void`
+
+#### Parameters
+
+| Name           | Type                                                                                   |
+| :------------- | :------------------------------------------------------------------------------------- |
+| `interruption` | [`HMSTrackInterruption`](/api-reference/javascript/v2/interfaces/HMSTrackInterruption) |
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+HMSUpdateListener.onTrackInterruption
+
+---
+
 ### onTrackUpdate
 
 ▸ **onTrackUpdate**(`type`, `track`, `peer`): `void`

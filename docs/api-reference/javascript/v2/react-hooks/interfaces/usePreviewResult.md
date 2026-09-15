@@ -24,30 +24,30 @@ to decide to show between preview form and conferencing component/video tiles.
 
 ### join
 
-• **join**: () => `Promise`<`void`\>
+• **join**: () => `Promise`\<`void`\>
 
 #### Type declaration
 
-▸ (): `Promise`<`void`\>
+▸ (): `Promise`\<`void`\>
 
 call this function to join the room
 
 ##### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 ---
 
 ### preview
 
-• **preview**: () => `Promise`<`void`\>
+• **preview**: () => `Promise`\<`void`\>
 
 #### Type declaration
 
-▸ (): `Promise`<`void`\>
+▸ (): `Promise`\<`void`\>
 
 call this function to join the room
 
 ##### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>

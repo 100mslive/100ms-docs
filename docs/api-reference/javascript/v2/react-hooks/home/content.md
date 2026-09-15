@@ -82,17 +82,17 @@ only logs the error to the console, and can be overridden for any other behaviou
 
 #### Type declaration
 
-| Name       | Type                       | Description                                                                         |
-| :--------- | :------------------------- | :---------------------------------------------------------------------------------- |
-| `metadata` | `Record`<`string`, `any`\> | To filter by particular by metadata. only supports `{ isHandRaised: true }` for now |
-| `role`     | `HMSRoleName`              | To filter by particular role                                                        |
-| `search`   | `string`                   | To filter by name/role (partial match)                                              |
+| Name       | Type                        | Description                                                                         |
+| :--------- | :-------------------------- | :---------------------------------------------------------------------------------- |
+| `metadata` | `Record`\<`string`, `any`\> | To filter by particular by metadata. only supports `{ isHandRaised: true }` for now |
+| `role`     | `HMSRoleName`               | To filter by particular role                                                        |
+| `search`   | `string`                    | To filter by name/role (partial match)                                              |
 
 ## Functions
 
 ### HMSRoomProvider
 
-▸ **HMSRoomProvider**<`T`\>(`«destructured»`): `FunctionComponentElement`<`ProviderProps`<`null` \| `HMSContextProviderProps`\>\>
+▸ **HMSRoomProvider**\<`T`\>(`«destructured»`): `FunctionComponentElement`\<`ProviderProps`\<`null` \| `HMSContextProviderProps`\>\>
 
 top level wrapper for using react sdk hooks. This doesn't have any mandatory arguments, if you are already
 initialising the sdk on your side, you can pass in the primitives from there as well to use hooks for
@@ -100,19 +100,19 @@ react part of your code.
 
 #### Type parameters
 
-| Name | Type                                                                       |
-| :--- | :------------------------------------------------------------------------- |
-| `T`  | extends `HMSGenericTypes` = { `sessionStore`: `Record`<`string`, `any`\> } |
+| Name | Type                                                                         |
+| :--- | :--------------------------------------------------------------------------- |
+| `T`  | extends `HMSGenericTypes` = \{ `sessionStore`: `Record`\<`string`, `any`\> } |
 
 #### Parameters
 
-| Name             | Type                                               |
-| :--------------- | :------------------------------------------------- |
-| `«destructured»` | `PropsWithChildren`<`HMSRoomProviderProps`<`T`\>\> |
+| Name             | Type                                                 |
+| :--------------- | :--------------------------------------------------- |
+| `«destructured»` | `PropsWithChildren`\<`HMSRoomProviderProps`\<`T`\>\> |
 
 #### Returns
 
-`FunctionComponentElement`<`ProviderProps`<`null` \| `HMSContextProviderProps`\>\>
+`FunctionComponentElement`\<`ProviderProps`\<`null` \| `HMSContextProviderProps`\>\>
 
 ---
 
@@ -127,7 +127,7 @@ given list of peers and all tracks in the room, get a list of tile objects to sh
 | Name                        | Type                             | Default value | Description                                                                              |
 | :-------------------------- | :------------------------------- | :------------ | :--------------------------------------------------------------------------------------- |
 | `peers`                     | `HMSPeer`[]                      | `undefined`   |                                                                                          |
-| `tracks`                    | `Record`<`string`, `HMSTrack`\>  | `undefined`   |                                                                                          |
+| `tracks`                    | `Record`\<`string`, `HMSTrack`\> | `undefined`   |                                                                                          |
 | `includeScreenShareForPeer` | (`peer`: `HMSPeer`) => `boolean` | `undefined`   | fn will be called to check whether to include screenShare for the peer in returned tiles |
 | `filterNonPublishingPeers`  | `boolean`                        | `true`        | by default a peer with no tracks won't be counted towards final tiles                    |
 
@@ -186,12 +186,12 @@ An e.g. use of this hook will be to apply box-shadow on parent tile based on aud
 
 #### Parameters
 
-| Name             | Type                                                 |
-| :--------------- | :--------------------------------------------------- |
-| `«destructured»` | `Object`                                             |
-| › `getStyle`     | (`level`: `number`) => `Record`<`string`, `string`\> |
-| › `ref`          | `RefObject`<`any`\>                                  |
-| › `trackId?`     | `string`                                             |
+| Name             | Type                                                  |
+| :--------------- | :---------------------------------------------------- |
+| `«destructured»` | `Object`                                              |
+| › `getStyle`     | (`level`: `number`) => `Record`\<`string`, `string`\> |
+| › `ref`          | `RefObject`\<`any`\>                                  |
+| › `trackId?`     | `string`                                              |
 
 #### Returns
 
@@ -207,10 +207,10 @@ An e.g. use of this hook will be to apply box-shadow on parent tile based on aud
 
 `Object`
 
-| Name                 | Type                     |
-| :------------------- | :----------------------- |
-| `isMusicModeEnabled` | `boolean`                |
-| `toggleMusicMode`    | () => `Promise`<`void`\> |
+| Name                 | Type                      |
+| :------------------- | :------------------------ |
+| `isMusicModeEnabled` | `boolean`                 |
+| `toggleMusicMode`    | () => `Promise`\<`void`\> |
 
 ---
 
@@ -237,14 +237,14 @@ unblock the browser autoplay block
 
 | Name                | Type                                                             |
 | :------------------ | :--------------------------------------------------------------- |
-| `requestPermission` | () => `Promise`<`void`\>                                         |
+| `requestPermission` | () => `Promise`\<`void`\>                                        |
 | `showNotification`  | (`title`: `string`, `options?`: `NotificationOptions`) => `void` |
 
 ---
 
 ### useCustomEvent
 
-▸ **useCustomEvent**<`T`\>(`«destructured»`): [`useCustomEventResult`](/api-reference/javascript/v2/react-hooks/interfaces/useCustomEventResult)<`T`\>
+▸ **useCustomEvent**\<`T`\>(`«destructured»`): [`useCustomEventResult`](/api-reference/javascript/v2/react-hooks/interfaces/useCustomEventResult)\<`T`\>
 
 A generic function to implement [custom events](https://www.100ms.live/docs/javascript/v2/features/chat#custom-events) in your UI.
 The data to be sent to remote is expected to be a serializable JSON. The serialization
@@ -258,13 +258,13 @@ and deserialization is taken care of by the hook.
 
 #### Parameters
 
-| Name             | Type                                                                                                   |
-| :--------------- | :----------------------------------------------------------------------------------------------------- |
-| `«destructured»` | [`useCustomEventInput`](/api-reference/javascript/v2/react-hooks/interfaces/useCustomEventInput)<`T`\> |
+| Name             | Type                                                                                                    |
+| :--------------- | :------------------------------------------------------------------------------------------------------ |
+| `«destructured»` | [`useCustomEventInput`](/api-reference/javascript/v2/react-hooks/interfaces/useCustomEventInput)\<`T`\> |
 
 #### Returns
 
-[`useCustomEventResult`](/api-reference/javascript/v2/react-hooks/interfaces/useCustomEventResult)<`T`\>
+[`useCustomEventResult`](/api-reference/javascript/v2/react-hooks/interfaces/useCustomEventResult)\<`T`\>
 
 ---
 
@@ -315,17 +315,17 @@ useEmbedShareResult
 
 ### useHMSActions
 
-▸ **useHMSActions**(): `IHMSActions`<{}\>
+▸ **useHMSActions**(): `IHMSActions`\<{}\>
 
 #### Returns
 
-`IHMSActions`<{}\>
+`IHMSActions`\<{}\>
 
 ---
 
 ### useHMSNotifications
 
-▸ **useHMSNotifications**<`T`\>(`type?`): `null` \| `HMSNotificationInCallback`<`T`\>
+▸ **useHMSNotifications**\<`T`\>(`type?`): `null` \| `HMSNotificationInCallback`\<`T`\>
 
 `useHMSNotifications` is a read only hook which gives the latest notification(HMSNotification) received.
 
@@ -343,13 +343,13 @@ useEmbedShareResult
 
 #### Returns
 
-`null` \| `HMSNotificationInCallback`<`T`\>
+`null` \| `HMSNotificationInCallback`\<`T`\>
 
 ---
 
 ### useHMSStatsStore
 
-▸ **useHMSStatsStore**<`StateSlice`\>(`selector`, `equalityFn?`): `undefined` \| `StateSlice`
+▸ **useHMSStatsStore**\<`StateSlice`\>(`selector`, `equalityFn?`): `undefined` \| `StateSlice`
 
 #### Type parameters
 
@@ -359,10 +359,10 @@ useEmbedShareResult
 
 #### Parameters
 
-| Name         | Type                                            | Default value |
-| :----------- | :---------------------------------------------- | :------------ |
-| `selector`   | `StateSelector`<`HMSStatsStore`, `StateSlice`\> | `undefined`   |
-| `equalityFn` | `EqualityChecker`<`StateSlice`\>                | `shallow`     |
+| Name         | Type                                             | Default value |
+| :----------- | :----------------------------------------------- | :------------ |
+| `selector`   | `StateSelector`\<`HMSStatsStore`, `StateSlice`\> | `undefined`   |
+| `equalityFn` | `EqualityChecker`\<`StateSlice`\>                | `shallow`     |
 
 #### Returns
 
@@ -372,7 +372,7 @@ useEmbedShareResult
 
 ### useHMSStore
 
-▸ **useHMSStore**<`StateSlice`\>(`selector`, `equalityFn?`): `StateSlice`
+▸ **useHMSStore**\<`StateSlice`\>(`selector`, `equalityFn?`): `StateSlice`
 
 `useHMSStore` is a read only hook which can be passed a selector to read data.
 The hook can only be used in a component if HMSRoomProvider is present in its ancestors.
@@ -385,10 +385,10 @@ The hook can only be used in a component if HMSRoomProvider is present in its an
 
 #### Parameters
 
-| Name         | Type                                            | Default value |
-| :----------- | :---------------------------------------------- | :------------ |
-| `selector`   | `StateSelector`<`HMSStore`<{}\>, `StateSlice`\> | `undefined`   |
-| `equalityFn` | `EqualityChecker`<`StateSlice`\>                | `shallow`     |
+| Name         | Type                                              | Default value |
+| :----------- | :------------------------------------------------ | :------------ |
+| `selector`   | `StateSelector`\<`HMSStore`\<{}\>, `StateSlice`\> | `undefined`   |
+| `equalityFn` | `EqualityChecker`\<`StateSlice`\>                 | `shallow`     |
 
 #### Returns
 
@@ -408,7 +408,7 @@ The hook can only be used in a component if HMSRoomProvider is present in its an
 
 ### useHMSVanillaStore
 
-▸ **useHMSVanillaStore**(): `IHMSReactStore`<`HMSStore`<{}\>\>
+▸ **useHMSVanillaStore**(): `IHMSReactStore`\<`HMSStore`\<{}\>\>
 
 `useHMSVanillaStore` is a read only hook which returns the vanilla HMSStore.
 Usage:
@@ -424,7 +424,7 @@ For almost every case, `useHMSStore` would get the job done.
 
 #### Returns
 
-`IHMSReactStore`<`HMSStore`<{}\>\>
+`IHMSReactStore`\<`HMSStore`\<{}\>\>
 
 ---
 
@@ -460,13 +460,13 @@ usePDFShareResult
 
 `Object`
 
-| Name            | Type                     |
-| :-------------- | :----------------------- |
-| `hasNext`       | () => `boolean`          |
-| `loadMorePeers` | () => `Promise`<`void`\> |
-| `loadPeers`     | () => `Promise`<`void`\> |
-| `peers`         | `HMSPeer`[]              |
-| `total`         | `number`                 |
+| Name            | Type                      |
+| :-------------- | :------------------------ |
+| `hasNext`       | () => `boolean`           |
+| `loadMorePeers` | () => `Promise`\<`void`\> |
+| `loadPeers`     | () => `Promise`\<`void`\> |
+| `peers`         | `HMSPeer`[]               |
+| `total`         | `number`                  |
 
 ---
 
@@ -478,12 +478,12 @@ usePDFShareResult
 
 `Object`
 
-| Name                  | Type                             |
-| :-------------------- | :------------------------------- |
-| `isConnected`         | `undefined` \| `boolean`         |
-| `participantsByRoles` | `Record`<`string`, `HMSPeer`[]\> |
-| `peerCount`           | `number`                         |
-| `roles`               | `string`[]                       |
+| Name                  | Type                              |
+| :-------------------- | :-------------------------------- |
+| `isConnected`         | `undefined` \| `boolean`          |
+| `participantsByRoles` | `Record`\<`string`, `HMSPeer`[]\> |
+| `peerCount`           | `number`                          |
+| `roles`               | `string`[]                        |
 
 ---
 
@@ -663,12 +663,12 @@ Please check the documentation of input and output types for more details.
 
 `Object`
 
-| Name            | Type                                    |
-| :-------------- | :-------------------------------------- |
-| `endpoint`      | `undefined` \| `string`                 |
-| `isAdmin`       | `boolean`                               |
-| `isOwner`       | `boolean`                               |
-| `open`          | `boolean`                               |
-| `toggle`        | `undefined` \| () => `Promise`<`void`\> |
-| `token`         | `undefined` \| `string`                 |
-| `zoomToContent` | `any`                                   |
+| Name            | Type                                     |
+| :-------------- | :--------------------------------------- |
+| `endpoint`      | `undefined` \| `string`                  |
+| `isAdmin`       | `boolean`                                |
+| `isOwner`       | `boolean`                                |
+| `open`          | `boolean`                                |
+| `toggle`        | `undefined` \| () => `Promise`\<`void`\> |
+| `token`         | `undefined` \| `string`                  |
+| `zoomToContent` | `any`                                    |
