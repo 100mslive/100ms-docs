@@ -19,6 +19,18 @@ import AndroidPrebuiltVersionShield from '@/common/android-prebuilt-version-shie
 | live.100ms:virtual-background: |<AndroidSdkVersionShield />|
 | live.100ms:hms-noise-cancellation-android: | <AndroidSdkVersionShield /> |
 
+## v2.9.87 - 2026-09-15
+### Fixed
+* Fixed joins taking a fixed ~11 seconds, or a multiple of it, on networks where the IPv6 route to our servers silently drops traffic. The SDK now checks which address family is actually reachable before connecting and uses that one, instead of waiting out a connection timeout on an unreachable address. Networks with working IPv6 continue to prefer it.
+
+### Changed
+* Reduced the connection timeout from 11 to 5 seconds, so an unreachable address is given up on sooner.
+
+## v2.9.86 - 2026-08-26
+### Fixed
+* Fixed still-image capture (`captureImageAtMaxResolution`) failing with error code 8001 on some devices. The camera image buffer is now released on every capture path — preventing a leak that could make subsequent captures fail — and a failed capture can no longer crash the app.
+* Restored the still-capture timeout to 5 seconds so slower captures on lower-end devices complete instead of timing out.
+
 ## v2.9.85 - 2026-08-05
 ### Fixed
 * Fixed a low-volume production crash in the ICE-failure retry path.
