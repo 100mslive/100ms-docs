@@ -15,7 +15,7 @@ This returns a list of all pages with every page containing the list of all tile
 
 ### ref
 
-• **ref**: `MutableRefObject`<`any`\>
+• **ref**: `MutableRefObject`\<`any`\>
 
 add the ref to the element going to render the video list, this is used to measure the available
 space/dimensions in order to calculate the best fit

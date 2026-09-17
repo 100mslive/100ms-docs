@@ -7,11 +7,11 @@ nav: '4.38'
 
 ### findPeers
 
-▸ **findPeers**(): `Promise`<[`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[]\>
+▸ **findPeers**(): `Promise`\<[`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[]\>
 
 #### Returns
 
-`Promise`<[`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[]\>
+`Promise`\<[`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[]\>
 
 ---
 
@@ -37,8 +37,8 @@ nav: '4.38'
 
 ### next
 
-▸ **next**(): `Promise`<[`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[]\>
+▸ **next**(): `Promise`\<[`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[]\>
 
 #### Returns
 
-`Promise`<[`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[]\>
+`Promise`\<[`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[]\>

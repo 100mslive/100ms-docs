@@ -21,6 +21,20 @@ nav: '4.33'
 
 ---
 
+### getMetrics
+
+▸ `Optional` **getMetrics**(): `undefined` \| `Record`\<`string`, `unknown`\>
+
+Optional method to get performance metrics from the plugin.
+
+#### Returns
+
+`undefined` \| `Record`\<`string`, `unknown`\>
+
+metrics object with fps, processing time, etc. or undefined if not supported
+
+---
+
 ### getName
 
 ▸ **getName**(): `string`

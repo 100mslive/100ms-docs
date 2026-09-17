@@ -5,21 +5,21 @@ nav: '4.77'
 
 ## Type parameters
 
-| Name | Type                                                                                                                                  |
-| :--- | :------------------------------------------------------------------------------------------------------------------------------------ |
-| `T`  | extends [`HMSGenericTypes`](/api-reference/javascript/v2/interfaces/HMSGenericTypes) = { `sessionStore`: `Record`<`string`, `any`\> } |
+| Name | Type                                                                                                                                    |
+| :--- | :-------------------------------------------------------------------------------------------------------------------------------------- |
+| `T`  | extends [`HMSGenericTypes`](/api-reference/javascript/v2/interfaces/HMSGenericTypes) = \{ `sessionStore`: `Record`\<`string`, `any`\> } |
 
 ## Properties
 
 ### appData
 
-• `Optional` **appData**: `Record`<`string`, `any`\>
+• `Optional` **appData**: `Record`\<`string`, `any`\>
 
 ---
 
 ### connectionQualities
 
-• **connectionQualities**: `Record`<`string`, `HMSConnectionQuality`\>
+• **connectionQualities**: `Record`\<`string`, `HMSConnectionQuality`\>
 
 ---
 
@@ -41,28 +41,28 @@ nav: '4.77'
 
 #### Type declaration
 
-| Name     | Type                                                                                    |
-| :------- | :-------------------------------------------------------------------------------------- |
-| `allIDs` | `string`[]                                                                              |
-| `byID`   | `Record`<`string`, [`HMSMessage`](/api-reference/javascript/v2/interfaces/HMSMessage)\> |
+| Name     | Type                                                                                     |
+| :------- | :--------------------------------------------------------------------------------------- |
+| `allIDs` | `string`[]                                                                               |
+| `byID`   | `Record`\<`string`, [`HMSMessage`](/api-reference/javascript/v2/interfaces/HMSMessage)\> |
 
 ---
 
 ### peers
 
-• **peers**: `Record`<`string`, [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)\>
+• **peers**: `Record`\<`string`, [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)\>
 
 ---
 
 ### playlist
 
-• **playlist**: [`HMSPlaylist`](/api-reference/javascript/v2/interfaces/HMSPlaylist)<`any`\>
+• **playlist**: [`HMSPlaylist`](/api-reference/javascript/v2/interfaces/HMSPlaylist)\<`any`\>
 
 ---
 
 ### polls
 
-• **polls**: `Record`<`string`, [`HMSPoll`](/api-reference/javascript/v2/interfaces/HMSPoll)\>
+• **polls**: `Record`\<`string`, [`HMSPoll`](/api-reference/javascript/v2/interfaces/HMSPoll)\>
 
 ---
 
@@ -89,7 +89,7 @@ nav: '4.77'
 
 ### roles
 
-• **roles**: `Record`<`string`, [`HMSRole`](/api-reference/javascript/v2/interfaces/HMSRole)\>
+• **roles**: `Record`\<`string`, [`HMSRole`](/api-reference/javascript/v2/interfaces/HMSRole)\>
 
 ---
 
@@ -123,22 +123,22 @@ use `sessionStore` instead
 
 ### speakers
 
-• **speakers**: `Record`<`string`, [`HMSSpeaker`](/api-reference/javascript/v2/interfaces/HMSSpeaker)\>
+• **speakers**: `Record`\<`string`, [`HMSSpeaker`](/api-reference/javascript/v2/interfaces/HMSSpeaker)\>
 
 ---
 
 ### templateAppData
 
-• **templateAppData**: `Record`<`string`, `string`\>
+• **templateAppData**: `Record`\<`string`, `string`\>
 
 ---
 
 ### tracks
 
-• **tracks**: `Record`<`string`, [`HMSTrack`](/api-reference/javascript/v2/home/content#hmstrack)\>
+• **tracks**: `Record`\<`string`, [`HMSTrack`](/api-reference/javascript/v2/home/content#hmstrack)\>
 
 ---
 
 ### whiteboards
 
-• **whiteboards**: `Record`<`string`, `HMSWhiteboard`\>
+• **whiteboards**: `Record`\<`string`, `HMSWhiteboard`\>

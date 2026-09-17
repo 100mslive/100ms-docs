@@ -7,7 +7,7 @@ nav: '4.36'
 
 ### onNotification
 
-▸ **onNotification**<`T`\>(`cb`, `types?`): () => `void`
+▸ **onNotification**\<`T`\>(`cb`, `types?`): () => `void`
 
 you can subscribe to notifications for new message, peer add etc. using this function.
 note that this is not meant to maintain any state on your side, as the reactive store already
@@ -22,10 +22,10 @@ We'll provide a display message which can be displayed as it is for common cases
 
 #### Parameters
 
-| Name     | Type                                                                                                 |
-| :------- | :--------------------------------------------------------------------------------------------------- |
-| `cb`     | [`HMSNotificationCallback`](/api-reference/javascript/v2/home/content#hmsnotificationcallback)<`T`\> |
-| `types?` | `T`                                                                                                  |
+| Name     | Type                                                                                                  |
+| :------- | :---------------------------------------------------------------------------------------------------- |
+| `cb`     | [`HMSNotificationCallback`](/api-reference/javascript/v2/home/content#hmsnotificationcallback)\<`T`\> |
+| `types?` | `T`                                                                                                   |
 
 #### Returns
 

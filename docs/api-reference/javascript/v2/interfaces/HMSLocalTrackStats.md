@@ -229,7 +229,7 @@ MissingOutboundStats.qualityLimitationReason
 
 ### remote
 
-• `Optional` **remote**: `RTCRemoteInboundRtpStreamStats` & { `packetsLostRate?`: `number` }
+• `Optional` **remote**: `RTCRemoteInboundRtpStreamStats` & \{ `packetsLostRate?`: `number` }
 
 Stats perceived by the server(SFU) while receiving the local track sent by the peer
 Ref:
@@ -265,6 +265,50 @@ MissingOutboundStats.rid
 #### Inherited from
 
 MissingOutboundStats.roundTripTime
+
+---
+
+### sourceFrameHeight
+
+• `Optional` **sourceFrameHeight**: `number`
+
+---
+
+### sourceFrameWidth
+
+• `Optional` **sourceFrameWidth**: `number`
+
+Capture/source stats from `media-source` (camera or screen).
+
+---
+
+### sourceFrames
+
+• `Optional` **sourceFrames**: `number`
+
+---
+
+### sourceFramesDropped
+
+• `Optional` **sourceFramesDropped**: `number`
+
+---
+
+### sourceFramesPerSecond
+
+• `Optional` **sourceFramesPerSecond**: `number`
+
+---
+
+### sourceStatsAvailable
+
+• `Optional` **sourceStatsAvailable**: `boolean`
+
+---
+
+### sourceTimestamp
+
+• `Optional` **sourceTimestamp**: `number`
 
 ---
 
@@ -305,6 +349,16 @@ MissingOutboundStats.totalPacketSendDelay
 #### Inherited from
 
 MissingOutboundStats.totalRoundTripTime
+
+---
+
+### trackIdentifier
+
+• `Optional` **trackIdentifier**: `string`
+
+#### Inherited from
+
+MissingOutboundStats.trackIdentifier
 
 ---
 

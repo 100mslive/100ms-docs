@@ -7,4 +7,4 @@ nav: '4.27'
 
 ### sessionStore
 
-• **sessionStore**: `Record`<`string`, `any`\>
+• **sessionStore**: `Record`\<`string`, `any`\>

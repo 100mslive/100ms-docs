@@ -1,6 +1,6 @@
 ---
 title: HMSTranscriptionInfo
-nav: '4.82'
+nav: '4.84'
 ---
 
 ## Properties
@@ -14,6 +14,14 @@ nav: '4.82'
 ### initialised_at
 
 • `Optional` **initialised_at**: `Date`
+
+---
+
+### language
+
+• `Optional` **language**: `string`
+
+Transcription input language (ISO 639-1/BCP 47, e.g. "en", "hi", "auto")
 
 ---
 
@@ -38,6 +46,21 @@ nav: '4.82'
 ### stopped_at
 
 • `Optional` **stopped_at**: `Date`
+
+---
+
+### translation
+
+• `Optional` **translation**: `Object`
+
+Translation state — populated when biz broadcasts translation info in room state
+
+#### Type declaration
+
+| Name             | Type                           | Description                                                                                                       |
+| :--------------- | :----------------------------- | :---------------------------------------------------------------------------------------------------------------- |
+| `enabled`        | `boolean`                      | Whether translation is currently active                                                                           |
+| `roleLanguages?` | `Record`\<`string`, `string`\> | Map of role → target language (ISO 639-1/BCP 47). Roles not in this map receive original (untranslated) captions. |
 
 ---
 

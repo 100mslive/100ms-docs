@@ -1,6 +1,6 @@
 ---
 title: HMSVideoTrack
-nav: '4.85'
+nav: '4.87'
 ---
 
 ## Hierarchy
@@ -66,6 +66,22 @@ BaseTrack.enabled
 #### Inherited from
 
 BaseTrack.id
+
+---
+
+### interrupted
+
+• `Optional` **interrupted**: `boolean`
+
+only applicable for local tracks - true while the OS or another app has taken the device, eg.
+an incoming call. Cleared once capture is back, however it came back.
+
+Backgrounding the tab on mobile is not reported here: the device is handed back on return. It
+is set on return if the device did not come back.
+
+#### Inherited from
+
+BaseTrack.interrupted
 
 ---
 
