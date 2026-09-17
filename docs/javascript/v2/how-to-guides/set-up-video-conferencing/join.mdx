@@ -145,7 +145,7 @@ hmsActions.leave();
 
 ## Leave on Navigating Away
 
-If the user closes the tab without calling leave you might seem them as stuck for a few seconds for remote peers. This is
+If the user closes the tab without calling leave you might see them as stuck for a few seconds for remote peers. This is
 because our server assumes that there might be a network issue and keeps a buffer waiting for the peer to rejoin. For this
 reason, it is important to call the leave api if we detect the user navigating away from the page. This includes, refreshing
 or closing the tab. We can set up leave to be called on window unload event.
