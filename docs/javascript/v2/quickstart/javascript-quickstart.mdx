@@ -481,7 +481,8 @@ import {
   selectIsLocalAudioEnabled,
   selectIsLocalVideoEnabled,
   selectPeers,
-  selectIsConnectedToRoom
+  selectIsConnectedToRoom,
+  selectVideoTrackByPeerID,
 } from "@100mslive/hms-video-store";
 
 // Initialize HMS Store
@@ -889,12 +890,16 @@ Let us next add a way to show a tile for every participant in the room. We'll ne
 
 -   We will use the [attachVideo](/api-reference/javascript/v2/interfaces/HMSActions#attach-video) method on `hmsActions` to add the video from an element for a track ID.
 -   And [selectPeers](/api-reference/javascript/v2/home/content#select-peers) selector from `hmsStore`
+-   And the `selectVideoTrackByPeerID` selector, so a tile re-attaches when the peer's video track id changes
 
 <Tabs id="render-peers" items={['JS', 'HTML', 'CSS']} />
 
 <Tab id="render-peers-0">
 
 ```jsx:index.js section=SubscribingToTheState sectionIndex=1 tab=JS
+// store peer IDs already rendered to avoid re-render on mute/unmute
+const renderedPeerIDs = new Set();
+
 // Helper function to create html elements
 function createElementWithClass(tag, className) {
   const newElement = document.createElement(tag);
@@ -906,24 +911,38 @@ function createElementWithClass(tag, className) {
 function renderPeer(peer) {
   const peerTileDiv = createElementWithClass("div", "peer-tile");
   const videoElement = createElementWithClass("video", "peer-video");
-  const peerTileName = createElementWithClass("span", "peer-name");
+  const peerTileName = createElementWithClass("div", "peer-name");
   videoElement.autoplay = true;
   videoElement.muted = true;
   videoElement.playsinline = true;
   peerTileName.textContent = peer.name;
-  hmsActions.attachVideo(peer.videoTrack, videoElement);
+
+  // A peer's video track id is not fixed for the whole call - it becomes a new id when
+  // their session is moved to another media server. Subscribe by peer id so you always
+  // get their *current* track, and re-attach when it changes. Attaching once to
+  // peer.videoTrack would leave the tile frozen from that point on.
+  let attachedTrackId = null;
+  hmsStore.subscribe((track) => {
+    const nextTrackId = track?.id ?? null;
+    if (nextTrackId === attachedTrackId) return; // same track, e.g. mute/unmute - nothing to do
+    if (attachedTrackId) hmsActions.detachVideo(attachedTrackId, videoElement);
+    if (nextTrackId) hmsActions.attachVideo(nextTrackId, videoElement);
+    attachedTrackId = nextTrackId;
+  }, selectVideoTrackByPeerID(peer.id));
+
   peerTileDiv.append(videoElement);
   peerTileDiv.append(peerTileName);
+
+  renderedPeerIDs.add(peer.id);
   return peerTileDiv;
 }
 
-// Display a tile for each peer in the peer list
+// display a tile for each peer in the peer list
 function renderPeers() {
-  peersContainer.innerHTML = "";
   const peers = hmsStore.getState(selectPeers);
 
   peers.forEach((peer) => {
-    if (peer.videoTrack) {
+    if (!renderedPeerIDs.has(peer.id) && peer.videoTrack) {
       peersContainer.append(renderPeer(peer));
     }
   });

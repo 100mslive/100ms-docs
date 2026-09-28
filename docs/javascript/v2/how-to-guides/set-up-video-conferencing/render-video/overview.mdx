@@ -56,14 +56,24 @@ Use the `selectVideoTrackByPeerID` selector with `hmsActions.attachVideo` and `h
 // complete code snippet below
 let attachedTrackId = null;
 
-hmsStore.subscribe((track) => {
+function syncVideo(track) {
     const nextTrackId = track?.id ?? null;
     if (nextTrackId === attachedTrackId) return; // same track, e.g. mute/unmute - nothing to do
     if (attachedTrackId) hmsActions.detachVideo(attachedTrackId, videoElement);
     if (nextTrackId) hmsActions.attachVideo(nextTrackId, videoElement);
     attachedTrackId = nextTrackId;
-}, selectVideoTrackByPeerID(peer.id));
+}
+
+// subscribe only fires on changes, so attach the current track first
+syncVideo(hmsStore.getState(selectVideoTrackByPeerID(peer.id)));
+const unsubscribe = hmsStore.subscribe(syncVideo, selectVideoTrackByPeerID(peer.id));
+
+// when the tile is removed
+unsubscribe();
+if (attachedTrackId) hmsActions.detachVideo(attachedTrackId, videoElement);
 ```
+
+`hmsStore.subscribe` calls your handler only when the selected value changes, so the first `syncVideo` call attaches the track the peer already has. If you have enabled [`triggerOnSubscribe()`](/javascript/v2/how-to-guides/install-the-sdk/integration), `subscribe` makes that first call for you and you can drop the explicit one.
 
 If you are on React, the `useVideo` hook from `react-sdk` already does exactly this — pass it `peer.videoTrack` and it re-attaches for you.
 
@@ -74,12 +84,13 @@ If you are on React, the `useVideo` hook from `react-sdk` already does exactly t
 <Tab id='render-0'>
 
 ```js
-import { hmsActions } from './hms';
+import { selectPeers, selectVideoTrackByPeerID } from '@100mslive/hms-video-store';
+import { hmsActions, hmsStore } from './hms';
 
 const peersContainer = document.getElementById('peers-container');
 
-// store peer IDs already rendered to avoid re-render on mute/unmute
-const renderedPeerIDs = new Set();
+// peer id -> rendered tile, to avoid re-render on mute/unmute and to clean up on leave
+const renderedTiles = new Map();
 
 // render a single peer video tile
 function renderPeer(peer) {
@@ -95,28 +106,46 @@ function renderPeer(peer) {
     // Subscribe by peer id, not track id: a peer's track id changes when their session
     // moves to another media server. Re-attach whenever it changes.
     let attachedTrackId = null;
-    hmsStore.subscribe((track) => {
+    function syncVideo(track) {
         const nextTrackId = track?.id ?? null;
         if (nextTrackId === attachedTrackId) return; // same track, e.g. mute/unmute
         if (attachedTrackId) hmsActions.detachVideo(attachedTrackId, videoElement);
         if (nextTrackId) hmsActions.attachVideo(nextTrackId, videoElement);
         attachedTrackId = nextTrackId;
-    }, selectVideoTrackByPeerID(peer.id));
+    }
+    // subscribe only fires on changes, so attach the current track first
+    syncVideo(hmsStore.getState(selectVideoTrackByPeerID(peer.id)));
+    const unsubscribe = hmsStore.subscribe(syncVideo, selectVideoTrackByPeerID(peer.id));
 
     peerTileDiv.append(videoElement);
     peerTileDiv.append(peerTileName);
 
     // Tile creation stays keyed on peer id so the element is not rebuilt on every change
-    renderedPeerIDs.add(peer.id);
+    renderedTiles.set(peer.id, {
+        element: peerTileDiv,
+        remove() {
+            unsubscribe();
+            if (attachedTrackId) hmsActions.detachVideo(attachedTrackId, videoElement);
+            peerTileDiv.remove();
+        }
+    });
     return peerTileDiv;
 }
 
 // display a tile for each peer in the peer list
 function renderPeers(peers) {
-    peersContainer = document.getElementById('peers-container');
+    const currentPeerIDs = new Set(peers.map((peer) => peer.id));
+
+    // remove tiles of peers who left
+    renderedTiles.forEach((tile, peerID) => {
+        if (!currentPeerIDs.has(peerID)) {
+            tile.remove();
+            renderedTiles.delete(peerID);
+        }
+    });
 
     peers.forEach((peer) => {
-        if (!renderedPeerIDs.has(peer.id) && peer.videoTrack) {
+        if (!renderedTiles.has(peer.id) && peer.videoTrack) {
             console.log(
                 `rendering video for peer - ${peer.name}, roleName - ${peer.roleName}, isLocal- ${peer.isLocal}`
             );
