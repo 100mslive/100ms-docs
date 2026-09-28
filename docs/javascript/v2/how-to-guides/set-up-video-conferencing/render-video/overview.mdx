@@ -56,24 +56,20 @@ Use the `selectVideoTrackByPeerID` selector with `hmsActions.attachVideo` and `h
 // complete code snippet below
 let attachedTrackId = null;
 
-function syncVideo(track) {
+const unsubscribe = hmsStore.subscribe((track) => {
     const nextTrackId = track?.id ?? null;
     if (nextTrackId === attachedTrackId) return; // same track, e.g. mute/unmute - nothing to do
     if (attachedTrackId) hmsActions.detachVideo(attachedTrackId, videoElement);
     if (nextTrackId) hmsActions.attachVideo(nextTrackId, videoElement);
     attachedTrackId = nextTrackId;
-}
-
-// subscribe only fires on changes, so attach the current track first
-syncVideo(hmsStore.getState(selectVideoTrackByPeerID(peer.id)));
-const unsubscribe = hmsStore.subscribe(syncVideo, selectVideoTrackByPeerID(peer.id));
+}, selectVideoTrackByPeerID(peer.id));
 
 // when the tile is removed
 unsubscribe();
 if (attachedTrackId) hmsActions.detachVideo(attachedTrackId, videoElement);
 ```
 
-`hmsStore.subscribe` calls your handler only when the selected value changes, so the first `syncVideo` call attaches the track the peer already has. If you have enabled [`triggerOnSubscribe()`](/javascript/v2/how-to-guides/install-the-sdk/integration), `subscribe` makes that first call for you and you can drop the explicit one.
+This relies on [`triggerOnSubscribe()`](/javascript/v2/how-to-guides/install-the-sdk/integration) being called during setup, so the handler also runs once at subscribe time and attaches the track the peer already has. Without it, `subscribe` only fires on changes and the tile stays blank until the track changes.
 
 If you are on React, the `useVideo` hook from `react-sdk` already does exactly this — pass it `peer.videoTrack` and it re-attaches for you.
 
@@ -105,17 +101,15 @@ function renderPeer(peer) {
 
     // Subscribe by peer id, not track id: a peer's track id changes when their session
     // moves to another media server. Re-attach whenever it changes.
+    // Fires once right away because hms.js calls triggerOnSubscribe().
     let attachedTrackId = null;
-    function syncVideo(track) {
+    const unsubscribe = hmsStore.subscribe((track) => {
         const nextTrackId = track?.id ?? null;
         if (nextTrackId === attachedTrackId) return; // same track, e.g. mute/unmute
         if (attachedTrackId) hmsActions.detachVideo(attachedTrackId, videoElement);
         if (nextTrackId) hmsActions.attachVideo(nextTrackId, videoElement);
         attachedTrackId = nextTrackId;
-    }
-    // subscribe only fires on changes, so attach the current track first
-    syncVideo(hmsStore.getState(selectVideoTrackByPeerID(peer.id)));
-    const unsubscribe = hmsStore.subscribe(syncVideo, selectVideoTrackByPeerID(peer.id));
+    }, selectVideoTrackByPeerID(peer.id));
 
     peerTileDiv.append(videoElement);
     peerTileDiv.append(peerTileName);
