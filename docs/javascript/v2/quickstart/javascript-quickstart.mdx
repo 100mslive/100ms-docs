@@ -90,8 +90,8 @@ const muteAudio = document.getElementById("mute-aud");
 const muteVideo = document.getElementById("mute-vid");
 const controls = document.getElementById("controls");
 
-// store peer IDs already rendered to avoid re-render on mute/unmute
-const renderedPeerIDs = new Set();
+// peer id -> tile, so a tile is built once per peer and removed when they leave
+const peerTiles = new Map();
 
 // Joining the room
 joinBtn.onclick = async () => {
@@ -148,17 +148,27 @@ function renderPeer(peer) {
   peerTileDiv.append(videoElement);
   peerTileDiv.append(peerTileName);
 
-  renderedPeerIDs.add(peer.id);
   return peerTileDiv;
 }
 
 // display a tile for each peer in the peer list
 function renderPeers() {
   const peers = hmsStore.getState(selectPeers);
+  const peerIDs = new Set(peers.map((peer) => peer.id));
+
+  // remove tiles of peers who left
+  peerTiles.forEach((tile, peerID) => {
+    if (!peerIDs.has(peerID)) {
+      tile.remove();
+      peerTiles.delete(peerID);
+    }
+  });
 
   peers.forEach((peer) => {
-    if (!renderedPeerIDs.has(peer.id) && peer.videoTrack) {
-      peersContainer.append(renderPeer(peer));
+    if (!peerTiles.has(peer.id) && peer.videoTrack) {
+      const tile = renderPeer(peer);
+      peerTiles.set(peer.id, tile);
+      peersContainer.append(tile);
     }
   });
 }
@@ -897,8 +907,8 @@ Let us next add a way to show a tile for every participant in the room. We'll ne
 <Tab id="render-peers-0">
 
 ```jsx:index.js section=SubscribingToTheState sectionIndex=1 tab=JS
-// store peer IDs already rendered to avoid re-render on mute/unmute
-const renderedPeerIDs = new Set();
+// peer id -> tile, so a tile is built once per peer and removed when they leave
+const peerTiles = new Map();
 
 // Helper function to create html elements
 function createElementWithClass(tag, className) {
@@ -933,17 +943,27 @@ function renderPeer(peer) {
   peerTileDiv.append(videoElement);
   peerTileDiv.append(peerTileName);
 
-  renderedPeerIDs.add(peer.id);
   return peerTileDiv;
 }
 
 // display a tile for each peer in the peer list
 function renderPeers() {
   const peers = hmsStore.getState(selectPeers);
+  const peerIDs = new Set(peers.map((peer) => peer.id));
+
+  // remove tiles of peers who left
+  peerTiles.forEach((tile, peerID) => {
+    if (!peerIDs.has(peerID)) {
+      tile.remove();
+      peerTiles.delete(peerID);
+    }
+  });
 
   peers.forEach((peer) => {
-    if (!renderedPeerIDs.has(peer.id) && peer.videoTrack) {
-      peersContainer.append(renderPeer(peer));
+    if (!peerTiles.has(peer.id) && peer.videoTrack) {
+      const tile = renderPeer(peer);
+      peerTiles.set(peer.id, tile);
+      peersContainer.append(tile);
     }
   });
 }

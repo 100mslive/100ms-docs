@@ -85,10 +85,10 @@ import { hmsActions, hmsStore } from './hms';
 
 const peersContainer = document.getElementById('peers-container');
 
-// peer id -> rendered tile, to avoid re-render on mute/unmute and to clean up on leave
-const renderedTiles = new Map();
+// peer id -> function that removes that peer's tile; a tile is built once per peer
+const peerTiles = new Map();
 
-// render a single peer video tile
+// render a single peer video tile, returns a function that removes it
 function renderPeer(peer) {
     const peerTileDiv = document.createElement('div');
     // you can either get an existing video element or create a new one.
@@ -113,37 +113,33 @@ function renderPeer(peer) {
 
     peerTileDiv.append(videoElement);
     peerTileDiv.append(peerTileName);
+    peersContainer.append(peerTileDiv);
 
-    // Tile creation stays keyed on peer id so the element is not rebuilt on every change
-    renderedTiles.set(peer.id, {
-        element: peerTileDiv,
-        remove() {
-            unsubscribe();
-            if (attachedTrackId) hmsActions.detachVideo(attachedTrackId, videoElement);
-            peerTileDiv.remove();
-        }
-    });
-    return peerTileDiv;
+    return () => {
+        unsubscribe();
+        if (attachedTrackId) hmsActions.detachVideo(attachedTrackId, videoElement);
+        peerTileDiv.remove();
+    };
 }
 
 // display a tile for each peer in the peer list
 function renderPeers(peers) {
-    const currentPeerIDs = new Set(peers.map((peer) => peer.id));
+    const peerIDs = new Set(peers.map((peer) => peer.id));
 
     // remove tiles of peers who left
-    renderedTiles.forEach((tile, peerID) => {
-        if (!currentPeerIDs.has(peerID)) {
-            tile.remove();
-            renderedTiles.delete(peerID);
+    peerTiles.forEach((removeTile, peerID) => {
+        if (!peerIDs.has(peerID)) {
+            removeTile();
+            peerTiles.delete(peerID);
         }
     });
 
     peers.forEach((peer) => {
-        if (!renderedTiles.has(peer.id) && peer.videoTrack) {
+        if (!peerTiles.has(peer.id) && peer.videoTrack) {
             console.log(
                 `rendering video for peer - ${peer.name}, roleName - ${peer.roleName}, isLocal- ${peer.isLocal}`
             );
-            peersContainer.append(renderPeer(peer));
+            peerTiles.set(peer.id, renderPeer(peer));
         }
     });
 }
