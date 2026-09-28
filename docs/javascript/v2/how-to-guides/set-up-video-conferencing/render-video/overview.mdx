@@ -124,11 +124,9 @@ function renderPeer(peer) {
 
 // display a tile for each peer in the peer list
 function renderPeers(peers) {
-    const peerIDs = new Set(peers.map((peer) => peer.id));
-
     // remove tiles of peers who left
     peerTiles.forEach((removeTile, peerID) => {
-        if (!peerIDs.has(peerID)) {
+        if (!peers.some((peer) => peer.id === peerID)) {
             removeTile();
             peerTiles.delete(peerID);
         }

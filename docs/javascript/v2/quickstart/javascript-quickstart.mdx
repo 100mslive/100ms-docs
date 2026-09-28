@@ -154,11 +154,9 @@ function renderPeer(peer) {
 // display a tile for each peer in the peer list
 function renderPeers() {
   const peers = hmsStore.getState(selectPeers);
-  const peerIDs = new Set(peers.map((peer) => peer.id));
-
   // remove tiles of peers who left
   peerTiles.forEach((tile, peerID) => {
-    if (!peerIDs.has(peerID)) {
+    if (!peers.some((peer) => peer.id === peerID)) {
       tile.remove();
       peerTiles.delete(peerID);
     }
@@ -949,11 +947,9 @@ function renderPeer(peer) {
 // display a tile for each peer in the peer list
 function renderPeers() {
   const peers = hmsStore.getState(selectPeers);
-  const peerIDs = new Set(peers.map((peer) => peer.id));
-
   // remove tiles of peers who left
   peerTiles.forEach((tile, peerID) => {
-    if (!peerIDs.has(peerID)) {
+    if (!peers.some((peer) => peer.id === peerID)) {
       tile.remove();
       peerTiles.delete(peerID);
     }
