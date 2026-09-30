@@ -7,7 +7,7 @@ nav: '5.2.9'
 
 ### iframeRef
 
-• **iframeRef**: `RefObject`<`null` \| `HTMLIFrameElement`\>
+• **iframeRef**: `RefObject`\<`null` \| `HTMLIFrameElement`\>
 
 Reference to attach to the iframe that is responsible for rendering the PDF.
 
@@ -23,11 +23,11 @@ Flag to check if PDF sharing is currently in progress.
 
 ### startPDFShare
 
-• **startPDFShare**: (`value`: `string` \| `File`) => `Promise`<`void`\>
+• **startPDFShare**: (`value`: `string` \| `File`) => `Promise`\<`void`\>
 
 #### Type declaration
 
-▸ (`value`): `Promise`<`void`\>
+▸ (`value`): `Promise`\<`void`\>
 
 Start sharing a PDF file or URL.
 It will throw an error in the following scenarios:
@@ -44,20 +44,20 @@ It will throw an error in the following scenarios:
 
 ##### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 ---
 
 ### stopPDFShare
 
-• **stopPDFShare**: () => `Promise`<`void`\>
+• **stopPDFShare**: () => `Promise`\<`void`\>
 
 #### Type declaration
 
-▸ (): `Promise`<`void`\>
+▸ (): `Promise`\<`void`\>
 
 Stop sharing the PDF file or URL.
 
 ##### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>

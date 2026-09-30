@@ -5,7 +5,7 @@ nav: '4.55'
 
 ## Hierarchy
 
-- `Pick`<[`HMSPollQuestion`](/api-reference/javascript/v2/interfaces/HMSPollQuestion), `"text"` \| `"skippable"` \| `"type"` \| `"answer"`\>
+- `Pick`\<[`HMSPollQuestion`](/api-reference/javascript/v2/interfaces/HMSPollQuestion), `"text"` \| `"skippable"` \| `"type"` \| `"answer"`\>
 
   ↳ **`HMSPollQuestionCreateParams`**
 

@@ -1,6 +1,6 @@
 ---
 title: HMSTrackStats
-nav: '4.81'
+nav: '4.83'
 ---
 
 Extends RTCOutboundRtpStreamStats
@@ -417,7 +417,7 @@ Ref: https://www.w3.org/TR/webrtc-stats/#dom-rtcoutboundrtpstreamstats
 
 ### remote
 
-• `Optional` **remote**: `RTCRemoteInboundRtpStreamStats` & { `packetsLostRate?`: `number` }
+• `Optional` **remote**: `RTCRemoteInboundRtpStreamStats` & \{ `packetsLostRate?`: `number` }
 
 Stats perceived by the server(SFU) while receiving the local track sent by the peer
 Ref:
@@ -467,6 +467,78 @@ https://www.w3.org/TR/webrtc-stats/#dom-rtcremoteinboundrtpstreamstats
 #### Inherited from
 
 [HMSRemoteTrackStats](/api-reference/javascript/v2/interfaces/HMSRemoteTrackStats).[silentConcealedSamples](/api-reference/javascript/v2/interfaces/HMSRemoteTrackStats#silentconcealedsamples)
+
+---
+
+### sourceFrameHeight
+
+• `Optional` **sourceFrameHeight**: `number`
+
+#### Inherited from
+
+[HMSLocalTrackStats](/api-reference/javascript/v2/interfaces/HMSLocalTrackStats).[sourceFrameHeight](/api-reference/javascript/v2/interfaces/HMSLocalTrackStats#sourceframeheight)
+
+---
+
+### sourceFrameWidth
+
+• `Optional` **sourceFrameWidth**: `number`
+
+Capture/source stats from `media-source` (camera or screen).
+
+#### Inherited from
+
+[HMSLocalTrackStats](/api-reference/javascript/v2/interfaces/HMSLocalTrackStats).[sourceFrameWidth](/api-reference/javascript/v2/interfaces/HMSLocalTrackStats#sourceframewidth)
+
+---
+
+### sourceFrames
+
+• `Optional` **sourceFrames**: `number`
+
+#### Inherited from
+
+[HMSLocalTrackStats](/api-reference/javascript/v2/interfaces/HMSLocalTrackStats).[sourceFrames](/api-reference/javascript/v2/interfaces/HMSLocalTrackStats#sourceframes)
+
+---
+
+### sourceFramesDropped
+
+• `Optional` **sourceFramesDropped**: `number`
+
+#### Inherited from
+
+[HMSLocalTrackStats](/api-reference/javascript/v2/interfaces/HMSLocalTrackStats).[sourceFramesDropped](/api-reference/javascript/v2/interfaces/HMSLocalTrackStats#sourceframesdropped)
+
+---
+
+### sourceFramesPerSecond
+
+• `Optional` **sourceFramesPerSecond**: `number`
+
+#### Inherited from
+
+[HMSLocalTrackStats](/api-reference/javascript/v2/interfaces/HMSLocalTrackStats).[sourceFramesPerSecond](/api-reference/javascript/v2/interfaces/HMSLocalTrackStats#sourceframespersecond)
+
+---
+
+### sourceStatsAvailable
+
+• `Optional` **sourceStatsAvailable**: `boolean`
+
+#### Inherited from
+
+[HMSLocalTrackStats](/api-reference/javascript/v2/interfaces/HMSLocalTrackStats).[sourceStatsAvailable](/api-reference/javascript/v2/interfaces/HMSLocalTrackStats#sourcestatsavailable)
+
+---
+
+### sourceTimestamp
+
+• `Optional` **sourceTimestamp**: `number`
+
+#### Inherited from
+
+[HMSLocalTrackStats](/api-reference/javascript/v2/interfaces/HMSLocalTrackStats).[sourceTimestamp](/api-reference/javascript/v2/interfaces/HMSLocalTrackStats#sourcetimestamp)
 
 ---
 
@@ -547,6 +619,16 @@ https://www.w3.org/TR/webrtc-stats/#dom-rtcremoteinboundrtpstreamstats
 #### Inherited from
 
 [HMSRemoteTrackStats](/api-reference/javascript/v2/interfaces/HMSRemoteTrackStats).[totalSamplesReceived](/api-reference/javascript/v2/interfaces/HMSRemoteTrackStats#totalsamplesreceived)
+
+---
+
+### trackIdentifier
+
+• `Optional` **trackIdentifier**: `string`
+
+#### Inherited from
+
+[HMSRemoteTrackStats](/api-reference/javascript/v2/interfaces/HMSRemoteTrackStats).[trackIdentifier](/api-reference/javascript/v2/interfaces/HMSRemoteTrackStats#trackidentifier)
 
 ---
 

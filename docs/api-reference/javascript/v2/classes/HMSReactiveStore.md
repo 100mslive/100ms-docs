@@ -5,42 +5,42 @@ nav: '3.3'
 
 ## Type parameters
 
-| Name | Type                                                                                                                                  |
-| :--- | :------------------------------------------------------------------------------------------------------------------------------------ |
-| `T`  | extends [`HMSGenericTypes`](/api-reference/javascript/v2/interfaces/HMSGenericTypes) = { `sessionStore`: `Record`<`string`, `any`\> } |
+| Name | Type                                                                                                                                    |
+| :--- | :-------------------------------------------------------------------------------------------------------------------------------------- |
+| `T`  | extends [`HMSGenericTypes`](/api-reference/javascript/v2/interfaces/HMSGenericTypes) = \{ `sessionStore`: `Record`\<`string`, `any`\> } |
 
 ## Constructors
 
 ### constructor
 
-• **new HMSReactiveStore**<`T`\>(`hmsStore?`, `hmsActions?`, `hmsNotifications?`)
+• **new HMSReactiveStore**\<`T`\>(`hmsStore?`, `hmsActions?`, `hmsNotifications?`)
 
 #### Type parameters
 
-| Name | Type                                                                                                                                  |
-| :--- | :------------------------------------------------------------------------------------------------------------------------------------ |
-| `T`  | extends [`HMSGenericTypes`](/api-reference/javascript/v2/interfaces/HMSGenericTypes) = { `sessionStore`: `Record`<`string`, `any`\> } |
+| Name | Type                                                                                                                                    |
+| :--- | :-------------------------------------------------------------------------------------------------------------------------------------- |
+| `T`  | extends [`HMSGenericTypes`](/api-reference/javascript/v2/interfaces/HMSGenericTypes) = \{ `sessionStore`: `Record`\<`string`, `any`\> } |
 
 #### Parameters
 
-| Name                | Type                                                                     |
-| :------------------ | :----------------------------------------------------------------------- |
-| `hmsStore?`         | [`IHMSStore`](/api-reference/javascript/v2/interfaces/IHMSStore)<`T`\>   |
-| `hmsActions?`       | [`HMSActions`](/api-reference/javascript/v2/interfaces/HMSActions)<`T`\> |
-| `hmsNotifications?` | `HMSNotifications`<`T`\>                                                 |
+| Name                | Type                                                                      |
+| :------------------ | :------------------------------------------------------------------------ |
+| `hmsStore?`         | [`IHMSStore`](/api-reference/javascript/v2/interfaces/IHMSStore)\<`T`\>   |
+| `hmsActions?`       | [`HMSActions`](/api-reference/javascript/v2/interfaces/HMSActions)\<`T`\> |
+| `hmsNotifications?` | `HMSNotifications`\<`T`\>                                                 |
 
 ## Methods
 
 ### getActions
 
-▸ **getActions**(): [`HMSActions`](/api-reference/javascript/v2/interfaces/HMSActions)<`T`\>
+▸ **getActions**(): [`HMSActions`](/api-reference/javascript/v2/interfaces/HMSActions)\<`T`\>
 
 Any action which may modify the store or may need to talk to the SDK will happen
 through the IHMSActions instance returned by this
 
 #### Returns
 
-[`HMSActions`](/api-reference/javascript/v2/interfaces/HMSActions)<`T`\>
+[`HMSActions`](/api-reference/javascript/v2/interfaces/HMSActions)\<`T`\>
 
 ---
 
@@ -56,14 +56,14 @@ through the IHMSActions instance returned by this
 
 ### getHMSActions
 
-▸ **getHMSActions**(): [`HMSActions`](/api-reference/javascript/v2/interfaces/HMSActions)<`T`\>
+▸ **getHMSActions**(): [`HMSActions`](/api-reference/javascript/v2/interfaces/HMSActions)\<`T`\>
 
 Any action which may modify the store or may need to talk to the SDK will happen
 through the IHMSActions instance returned by this
 
 #### Returns
 
-[`HMSActions`](/api-reference/javascript/v2/interfaces/HMSActions)<`T`\>
+[`HMSActions`](/api-reference/javascript/v2/interfaces/HMSActions)\<`T`\>
 
 **`Deprecated`**
 
@@ -97,7 +97,7 @@ for analytics
 
 ### getStore
 
-▸ **getStore**(): [`HMSStoreWrapper`](/api-reference/javascript/v2/interfaces/HMSStoreWrapper)<{ `sessionStore`: `Record`<`string`, `any`\> }\>
+▸ **getStore**(): [`HMSStoreWrapper`](/api-reference/javascript/v2/interfaces/HMSStoreWrapper)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>
 
 A reactive store which has a subscribe method you can use in combination with selectors
 to subscribe to a subset of the store. The store serves as a single source of truth for
@@ -105,7 +105,7 @@ all data related to the corresponding HMS Room.
 
 #### Returns
 
-[`HMSStoreWrapper`](/api-reference/javascript/v2/interfaces/HMSStoreWrapper)<{ `sessionStore`: `Record`<`string`, `any`\> }\>
+[`HMSStoreWrapper`](/api-reference/javascript/v2/interfaces/HMSStoreWrapper)\<\{ `sessionStore`: `Record`\<`string`, `any`\> }\>
 
 ---
 

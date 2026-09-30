@@ -62,7 +62,7 @@ nav: '3.1'
 
 ### requestPermission
 
-▸ **requestPermission**(`check`): `Promise`<[`MediaPermissionCheck`](/api-reference/javascript/v2/interfaces/MediaPermissionCheck)\>
+▸ **requestPermission**(`check`): `Promise`\<[`MediaPermissionCheck`](/api-reference/javascript/v2/interfaces/MediaPermissionCheck)\>
 
 #### Parameters
 
@@ -72,7 +72,7 @@ nav: '3.1'
 
 #### Returns
 
-`Promise`<[`MediaPermissionCheck`](/api-reference/javascript/v2/interfaces/MediaPermissionCheck)\>
+`Promise`\<[`MediaPermissionCheck`](/api-reference/javascript/v2/interfaces/MediaPermissionCheck)\>
 
 #### Implementation of
 
@@ -82,7 +82,7 @@ nav: '3.1'
 
 ### startCameraCheck
 
-▸ **startCameraCheck**(`inputDevice?`): `Promise`<`void`\>
+▸ **startCameraCheck**(`inputDevice?`): `Promise`\<`void`\>
 
 #### Parameters
 
@@ -92,7 +92,7 @@ nav: '3.1'
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 #### Implementation of
 
@@ -102,7 +102,7 @@ nav: '3.1'
 
 ### startConnectivityCheck
 
-▸ **startConnectivityCheck**(`progress`, `completed`, `region?`, `duration?`): `Promise`<`void`\>
+▸ **startConnectivityCheck**(`progress`, `completed`, `region?`, `duration?`): `Promise`\<`void`\>
 
 #### Parameters
 
@@ -115,7 +115,7 @@ nav: '3.1'
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 #### Implementation of
 
@@ -125,7 +125,7 @@ nav: '3.1'
 
 ### startMicCheck
 
-▸ **startMicCheck**(`«destructured»`): `Promise`<`void`\>
+▸ **startMicCheck**(`«destructured»`): `Promise`\<`void`\>
 
 #### Parameters
 
@@ -139,7 +139,7 @@ nav: '3.1'
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 #### Implementation of
 
@@ -163,11 +163,11 @@ nav: '3.1'
 
 ### stopConnectivityCheck
 
-▸ **stopConnectivityCheck**(): `Promise`<`void`\>
+▸ **stopConnectivityCheck**(): `Promise`\<`void`\>
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 #### Implementation of
 

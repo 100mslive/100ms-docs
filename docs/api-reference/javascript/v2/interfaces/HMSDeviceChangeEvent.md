@@ -23,7 +23,7 @@ So, `selection?: MediaDeviceInfo` instead of `selection?: InputDeviceInfo | Medi
 
 ### selection
 
-• `Optional` **selection**: `Partial`<`MediaDeviceInfo`\>
+• `Optional` **selection**: `Partial`\<`MediaDeviceInfo`\>
 
 ---
 

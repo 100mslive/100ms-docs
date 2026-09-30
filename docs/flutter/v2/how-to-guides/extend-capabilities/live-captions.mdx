@@ -1,5 +1,5 @@
 ---
-title:  Live Transcription for Conferencing (Closed Captions - Beta)
+title: Live Transcription for Conferencing (Closed Captions)
 nav: 13.5
 ---
 
@@ -7,12 +7,12 @@ nav: 13.5
 
 ## Minimum Requirements
 
--  Minimum [`hmssdk_flutter`](https://pub.dev/packages/hmssdk_flutter) version required is `1.10.4`
-- Minimum [`hms_room_kit`](https://pub.dev/packages/hms_room_kit) version required is `1.1.4`
+-   Minimum [`hmssdk_flutter`](https://pub.dev/packages/hmssdk_flutter) version required is `1.10.4`
+-   Minimum [`hms_room_kit`](https://pub.dev/packages/hms_room_kit) version required is `1.1.4`
 
 ## How to check if captions are enabled in a room
 
-To check if WebRTC (not hls) captions are enabled in a room. We can look at the `transcriptions` property in the room data. If any transcriptions 
+To check if WebRTC (not hls) captions are enabled in a room. We can look at the `transcriptions` property in the room data. If any transcriptions
 with mode as `caption` and are in a `started` state, it means captions are enabled.
 
 ```dart
@@ -51,7 +51,7 @@ class Meeting implements HMSUpdateListener {
                             HMSTranscriptionState.started) {
                         ///Captions are enabled in the room
                         isTranscriptionEnabled = true;
-                    } 
+                    }
                     else if(room.transcriptions?[index].state ==
                             HMSTranscriptionState.stopped){
                         ///Captions are disabled in the room
@@ -73,7 +73,7 @@ class Meeting implements HMSUpdateListener {
 ## How to get transcripts
 
 To get the transcripts, we can implement the `onTranscripts` method of `HMSTranscriptListener`. To start getting the transcripts,
-we need to call HMSTranscriptionController's `startTranscription` method. 
+we need to call HMSTranscriptionController's `startTranscription` method.
 
 <div className="steps-container">
 
@@ -158,7 +158,7 @@ class HMSTranscription {
   final String? peerName;
 
   final bool isFinal;
-} 
+}
 ```
 
 ### Step 3: To stop getting transcriptions, remove HMSTranscriptListener
@@ -180,7 +180,7 @@ class Meeting implements HMSUpdateListener,HMSTranscriptListener {
 
 ## How to start/stop transcriptions
 
-Transcriptions can only be started or stopped by the peer having admin permissions. Transcription permissions can be changed from [100ms dashboard](https://dashboard.100ms.live/). 
+Transcriptions can only be started or stopped by the peer having admin permissions. Transcription permissions can be changed from [100ms dashboard](https://dashboard.100ms.live/).
 HMSSDK provides `HMSTranscriptionController` to control transcription.
 
 ### Start Transcription
@@ -203,7 +203,7 @@ class Meeting implements HMSUpdateListener,HMSTranscriptListener {
                             HMSTranscriptionState.started) {
                         ///Captions are enabled in the room
                         isTranscriptionEnabled = true;
-                    } 
+                    }
                     else if(room.transcriptions?[index].state ==
                             HMSTranscriptionState.stopped){
                         ///Captions are disabled in the room
@@ -243,8 +243,7 @@ class Meeting implements HMSUpdateListener,HMSTranscriptListener {
 ```
 
 After calling `startTranscription` method, `onRoomUpdate` will be fired with `HMSRoomUpdate.transcriptionsUpdated` event.
-First update will be with `HMSTranscriptionState.initialized` and then `HMSTranscriptionState.started` state. 
-
+First update will be with `HMSTranscriptionState.initialized` and then `HMSTranscriptionState.started` state.
 
 ### Stop Transcription
 
@@ -268,7 +267,7 @@ class Meeting implements HMSUpdateListener,HMSTranscriptListener {
                             HMSTranscriptionState.started) {
                         ///Captions are enabled in the room
                         isTranscriptionEnabled = true;
-                    } 
+                    }
                     else if(room.transcriptions?[index].state ==
                             HMSTranscriptionState.stopped){
                         ///Captions are disabled in the room
@@ -305,5 +304,5 @@ class Meeting implements HMSUpdateListener,HMSTranscriptListener {
 }
 ```
 
-After calling `stopTranscription` method, `onRoomUpdate` will be fired with `HMSRoomUpdate.transcriptionsUpdated` event. 
+After calling `stopTranscription` method, `onRoomUpdate` will be fired with `HMSRoomUpdate.transcriptionsUpdated` event.
 Update will be fired with `HMSTranscriptionState.stopped` state.

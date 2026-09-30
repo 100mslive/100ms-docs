@@ -1,0 +1,85 @@
+---
+title: Spotlight
+nav: 10.25
+---
+
+Spotlight lets you bring a particular peer's video to center stage for everyone in the room. It uses the [Session Store](/android/v2/how-to-guides/interact-with-room/room/session-store) — a shared key-value store synced across all peers.
+
+When a host spotlights someone, every participant in the room sees that peer in a focused/pinned view.
+
+## Prerequisites
+
+- User must be joined to the room
+- Session Store must be available (provided via `onSessionStoreAvailable` callback)
+
+## Setting a Spotlight
+
+Write the peer's video `trackId` to the `"spotlight"` key in Session Store:
+
+```kotlin
+// Save the session store reference when it becomes available
+var hmsSessionStore: HmsSessionStore? = null
+
+override fun onSessionStoreAvailable(sessionStore: HmsSessionStore) {
+    hmsSessionStore = sessionStore
+}
+
+// Spotlight a peer's video track for everyone
+fun spotlightTrack(trackId: String) {
+    hmsSessionStore?.set(trackId, "spotlight", object : HMSActionResultListener {
+        override fun onSuccess() { }
+        override fun onError(error: HMSException) { }
+    })
+}
+```
+
+## Removing a Spotlight
+
+Set the `"spotlight"` key to `null`:
+
+```kotlin
+fun removeSpotlight() {
+    hmsSessionStore?.set(null, "spotlight", object : HMSActionResultListener {
+        override fun onSuccess() { }
+        override fun onError(error: HMSException) { }
+    })
+}
+```
+
+## Listening for Spotlight Changes
+
+Register a key change listener for the `"spotlight"` key. This fires for all peers in the room, including the one who set the spotlight.
+
+```kotlin
+sessionStore.addKeyChangeListener(
+    listOf("spotlight"),
+    object : HMSKeyChangeListener {
+        override fun onKeyChanged(key: String, value: JsonElement?) {
+            if (key == "spotlight") {
+                val trackId = value?.asString
+                if (trackId != null) {
+                    // A track has been spotlighted — find and display it
+                    showSpotlightView(trackId)
+                } else {
+                    // Spotlight removed — return to default view
+                    showDefaultView()
+                }
+            }
+        }
+    },
+    object : HMSActionResultListener {
+        override fun onSuccess() { }
+        override fun onError(error: HMSException) { }
+    }
+)
+```
+
+## Role-Gating
+
+You may want to restrict spotlight to host/moderator roles only. Check an appropriate permission before showing the spotlight option:
+
+```kotlin
+fun isAllowedToSpotlight(): Boolean {
+    return hmsSDK.getLocalPeer()?.hmsRole?.permission?.changeRole == true
+}
+```

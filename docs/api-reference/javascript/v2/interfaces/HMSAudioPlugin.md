@@ -61,7 +61,7 @@ based on the type of plugin
 
 ### init
 
-▸ **init**(): `void` \| `Promise`<`void`\>
+▸ **init**(): `void` \| `Promise`\<`void`\>
 
 This function will be called in the beginning for initialization which may include tasks like setting up
 variables, loading ML models etc. This can be used by a plugin to ensure it's prepared at the time
@@ -69,7 +69,7 @@ processAudio is called.
 
 #### Returns
 
-`void` \| `Promise`<`void`\>
+`void` \| `Promise`\<`void`\>
 
 ---
 
@@ -87,7 +87,7 @@ processAudio is called.
 
 ### processAudioTrack
 
-▸ **processAudioTrack**(`ctx`, `source`): `Promise`<`AudioNode`\>
+▸ **processAudioTrack**(`ctx`, `source`): `Promise`\<`AudioNode`\>
 
 This function will be called by the SDK for audio track which the plugin needs to process.
 The reason audio context is also part of the interface is that it's recommended to reuse on audio context
@@ -102,7 +102,7 @@ instead of creating new for every use - https://developer.mozilla.org/en-US/docs
 
 #### Returns
 
-`Promise`<`AudioNode`\>
+`Promise`\<`AudioNode`\>
 
 ---
 

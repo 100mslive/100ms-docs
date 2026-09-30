@@ -458,6 +458,16 @@ MissingInboundStats.totalSamplesReceived
 
 ---
 
+### trackIdentifier
+
+• `Optional` **trackIdentifier**: `string`
+
+#### Inherited from
+
+MissingInboundStats.trackIdentifier
+
+---
+
 ### transportId
 
 • `Optional` **transportId**: `string`

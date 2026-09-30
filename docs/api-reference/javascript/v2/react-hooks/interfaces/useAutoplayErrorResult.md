@@ -29,14 +29,14 @@ Call this method to reset(hide) the UI that is rendered when there was an error
 
 ### unblockAudio
 
-• **unblockAudio**: () => `Promise`<`void`\>
+• **unblockAudio**: () => `Promise`\<`void`\>
 
 #### Type declaration
 
-▸ (): `Promise`<`void`\>
+▸ (): `Promise`\<`void`\>
 
 call this method on a UI element click to unblock the blocked audio autoplay.
 
 ##### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>

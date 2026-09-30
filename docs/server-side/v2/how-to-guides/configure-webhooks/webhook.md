@@ -16,6 +16,7 @@ nav: 4.3
 | [role.change.success](#rolechangesuccess)                                                                                                                                              | Role Change Events                 | Triggered when a role is updated                                                        |
 | [transcription.started.success](#transcriptionstartedsuccess),<br/>[transcription.success](#transcriptionsuccess),<br/> [transcription.failure](#transcriptionfailure)                 | Transcription Events               | Triggered at the start and end of transcription                                         |
 | [ingest.start.success](#ingeststartsuccess),<br/> [ingest.end.success](#ingestendsuccess), <br/> [ingest.start.failure](#ingeststartfailure), <br/> [ingest.failure](#ingestfailure)   | RTMP Ingestion Events              | Triggered at the start and end of RTMP Ingestion                                        |
+| [sip.start.success](#sipstartsuccess),<br/> [sip.start.failure](#sipstartfailure),<br/> [sip.end.success](#sipendsuccess),<br/> [sip.end.failure](#sipendfailure)            | SIP Events                         | Triggered when an inbound or outbound SIP call is answered, fails to connect, or ends  |
 
 
 ## Event payload
@@ -1867,6 +1868,195 @@ This event is sent when RTMP ingestion is failed.
             "ingest_id": "***********************",
             "room_id": "***********************",
             "template_id": "***********************"
+  }
+}
+```
+
+## SIP Events
+
+SIP events are sent for calls between a phone network (PSTN / SIP trunk) and a 100ms room, in both directions. Every call produces exactly one `sip.start.*` event: `sip.start.success` once the call is answered, or `sip.start.failure` if it never connects. An answered call is followed by one `sip.end.*` event when it ends. Use `call_id` to match the events of one call.
+
+Events are delivered at most once and can arrive out of order, so order them by `timestamp`. `sip.start.failure` is not sent for calls that could not be matched to a room (for example, a SIP URI with an unknown room code).
+
+### sip.start.success
+
+This event is sent when a SIP call is answered and joins the room.
+
+#### Attributes
+
+| Name         | Type                 | Description                                                                                                                                                                  |
+|:-------------|:---------------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| id           | `string`             | Id of the event <br/><br/> Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4                                                                                                     |
+| account_id   | `string`             | Customer ID from which this event is generated <br/><br/> Example: 5ff5881b80b66969e1fb35f4                                                                                  |
+| app_id       | `string`             | App ID from which this event is generated <br/><br/> Example: 5ff5881b80b66969e1fb35f6                                                                                       |
+| timestamp    | `timestamp (in UTC)` | Timestamp of the event <br/><br/> Example: 2020-11-11T16:32:17Z                                                                                                              |
+| type         | `string`             | Type of the event <br/><br/> Example: sip.start.success                                                                                                                                 |
+| room_id      | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312df                                                                                                          |
+| call_id      | `string`             | Id of the SIP call. For outbound calls this is the `id` returned by the outbound call API; for inbound calls it is assigned by 100ms <br/><br/> Example: 3PlkQ1xX9aZb        |
+| dir          | `string`             | Direction of the call: `inbound` (caller dialed into a 100ms room) or `outbound` (100ms dialed out from a room)                                                               |
+| from         | `string`             | For outbound calls, the caller number the call was placed from. For inbound calls, the SIP call identifier <br/><br/> Example: +14155550100                                  |
+| to           | `string`             | For outbound calls, the number or SIP user dialed. For inbound calls, the SIP URI that was dialed <br/><br/> Example: sip:abc-defg-hij@sip.100ms.live                        |
+
+#### Sample `sip.start.success` event
+
+```json
+{
+  "version": "2.0",
+  "id": "********-****-****-****-***********",
+  "account_id": "***********************",
+  "app_id": "***********************",
+  "room_id": "***********************",
+  "timestamp": "2026-09-27T14:03:57Z",
+  "type": "sip.start.success",
+  "data": {
+    "account_id": "***********************",
+    "app_id": "***********************",
+    "room_id": "***********************",
+    "call_id": "3PlkQ1xX9aZb",
+    "dir": "outbound",
+    "from": "+14155550100",
+    "to": "+14155550199"
+  }
+}
+```
+
+### sip.start.failure
+
+This event is sent when a SIP call does not connect: the call was rejected, the callee did not answer, or the caller hung up before it was answered.
+
+#### Attributes
+
+| Name         | Type                 | Description                                                                                                                                                                  |
+|:-------------|:---------------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| id           | `string`             | Id of the event <br/><br/> Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4                                                                                                     |
+| account_id   | `string`             | Customer ID from which this event is generated <br/><br/> Example: 5ff5881b80b66969e1fb35f4                                                                                  |
+| app_id       | `string`             | App ID from which this event is generated <br/><br/> Example: 5ff5881b80b66969e1fb35f6                                                                                       |
+| timestamp    | `timestamp (in UTC)` | Timestamp of the event <br/><br/> Example: 2020-11-11T16:32:17Z                                                                                                              |
+| type         | `string`             | Type of the event <br/><br/> Example: sip.start.failure                                                                                                                                 |
+| room_id      | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312df                                                                                                          |
+| call_id      | `string`             | Id of the SIP call. For outbound calls this is the `id` returned by the outbound call API; for inbound calls it is assigned by 100ms <br/><br/> Example: 3PlkQ1xX9aZb        |
+| dir          | `string`             | Direction of the call: `inbound` (caller dialed into a 100ms room) or `outbound` (100ms dialed out from a room)                                                               |
+| from         | `string`             | For outbound calls, the caller number the call was placed from. For inbound calls, the SIP call identifier <br/><br/> Example: +14155550100                                  |
+| to           | `string`             | For outbound calls, the number or SIP user dialed. For inbound calls, the SIP URI that was dialed <br/><br/> Example: sip:abc-defg-hij@sip.100ms.live                        |
+| error_message | `string`            | Why the call did not connect. Common values: `"caller hung up before answer"`, `"kicked"` (the room side ended the call before it was answered), `"no dispatch rule matched"`, `"flow start failed"`, `"invite respond failed"`. For outbound calls this can also be the error returned by the carrier |
+
+#### Sample `sip.start.failure` event
+
+```json
+{
+  "version": "2.0",
+  "id": "********-****-****-****-***********",
+  "account_id": "***********************",
+  "app_id": "***********************",
+  "room_id": "***********************",
+  "timestamp": "2026-09-27T14:03:57Z",
+  "type": "sip.start.failure",
+  "data": {
+    "account_id": "***********************",
+    "app_id": "***********************",
+    "room_id": "***********************",
+    "call_id": "95233514_c3356d0b",
+    "dir": "inbound",
+    "from": "95233514_c3356d0b",
+    "to": "sip:abc-defg-hij@sip.100ms.live",
+    "error_message": "caller hung up before answer"
+  }
+}
+```
+
+### sip.end.success
+
+This event is sent when an answered SIP call ends normally: either side hung up, the SIP participant was removed from the room, or the room ended.
+
+#### Attributes
+
+| Name         | Type                 | Description                                                                                                                                                                  |
+|:-------------|:---------------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| id           | `string`             | Id of the event <br/><br/> Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4                                                                                                     |
+| account_id   | `string`             | Customer ID from which this event is generated <br/><br/> Example: 5ff5881b80b66969e1fb35f4                                                                                  |
+| app_id       | `string`             | App ID from which this event is generated <br/><br/> Example: 5ff5881b80b66969e1fb35f6                                                                                       |
+| timestamp    | `timestamp (in UTC)` | Timestamp of the event <br/><br/> Example: 2020-11-11T16:32:17Z                                                                                                              |
+| type         | `string`             | Type of the event <br/><br/> Example: sip.end.success                                                                                                                                 |
+| room_id      | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312df                                                                                                          |
+| call_id      | `string`             | Id of the SIP call. For outbound calls this is the `id` returned by the outbound call API; for inbound calls it is assigned by 100ms <br/><br/> Example: 3PlkQ1xX9aZb        |
+| dir          | `string`             | Direction of the call: `inbound` (caller dialed into a 100ms room) or `outbound` (100ms dialed out from a room)                                                               |
+| from         | `string`             | For outbound calls, the caller number the call was placed from. For inbound calls, the SIP call identifier <br/><br/> Example: +14155550100                                  |
+| to           | `string`             | For outbound calls, the number or SIP user dialed. For inbound calls, the SIP URI that was dialed <br/><br/> Example: sip:abc-defg-hij@sip.100ms.live                        |
+| duration     | `int`                | Duration of the answered call (in seconds) <br/><br/> Example: 731                                                                                                           |
+| peer_id      | `string`             | Peer ID of the SIP participant in the room (inbound calls) <br/><br/> Example: 6fc5fc17-07c3-42bf-8e8e-4e9aae1bc5dc                                                          |
+| user_id      | `string`             | User ID of the SIP participant. For inbound calls this is the caller number <br/><br/> Example: +14155550100                                                                 |
+
+#### Sample `sip.end.success` event
+
+```json
+{
+  "version": "2.0",
+  "id": "********-****-****-****-***********",
+  "account_id": "***********************",
+  "app_id": "***********************",
+  "room_id": "***********************",
+  "timestamp": "2026-09-27T14:03:57Z",
+  "type": "sip.end.success",
+  "data": {
+    "account_id": "***********************",
+    "app_id": "***********************",
+    "room_id": "***********************",
+    "call_id": "95233514_c3356d0b",
+    "dir": "inbound",
+    "from": "95233514_c3356d0b",
+    "to": "sip:abc-defg-hij@sip.100ms.live",
+    "duration": 731,
+    "peer_id": "6fc5fc17-07c3-42bf-8e8e-4e9aae1bc5dc",
+    "user_id": "+14155550100"
+  }
+}
+```
+
+### sip.end.failure
+
+This event is sent when an answered SIP call ends abnormally, for example when the call hits the maximum call duration or the media connection fails.
+
+#### Attributes
+
+| Name         | Type                 | Description                                                                                                                                                                  |
+|:-------------|:---------------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| id           | `string`             | Id of the event <br/><br/> Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4                                                                                                     |
+| account_id   | `string`             | Customer ID from which this event is generated <br/><br/> Example: 5ff5881b80b66969e1fb35f4                                                                                  |
+| app_id       | `string`             | App ID from which this event is generated <br/><br/> Example: 5ff5881b80b66969e1fb35f6                                                                                       |
+| timestamp    | `timestamp (in UTC)` | Timestamp of the event <br/><br/> Example: 2020-11-11T16:32:17Z                                                                                                              |
+| type         | `string`             | Type of the event <br/><br/> Example: sip.end.failure                                                                                                                                 |
+| room_id      | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312df                                                                                                          |
+| call_id      | `string`             | Id of the SIP call. For outbound calls this is the `id` returned by the outbound call API; for inbound calls it is assigned by 100ms <br/><br/> Example: 3PlkQ1xX9aZb        |
+| dir          | `string`             | Direction of the call: `inbound` (caller dialed into a 100ms room) or `outbound` (100ms dialed out from a room)                                                               |
+| from         | `string`             | For outbound calls, the caller number the call was placed from. For inbound calls, the SIP call identifier <br/><br/> Example: +14155550100                                  |
+| to           | `string`             | For outbound calls, the number or SIP user dialed. For inbound calls, the SIP URI that was dialed <br/><br/> Example: sip:abc-defg-hij@sip.100ms.live                        |
+| duration     | `int`                | Duration of the answered call (in seconds) <br/><br/> Example: 731                                                                                                           |
+| peer_id      | `string`             | Peer ID of the SIP participant in the room (inbound calls) <br/><br/> Example: 6fc5fc17-07c3-42bf-8e8e-4e9aae1bc5dc                                                          |
+| user_id      | `string`             | User ID of the SIP participant. For inbound calls this is the caller number <br/><br/> Example: +14155550100                                                                 |
+| error_message | `string`            | Why the call ended abnormally. Common values: `"max call duration exceeded"`, `"connect failed"`, `"sdk fatal error"`, `"terminal signal"`, `"error"` |
+
+#### Sample `sip.end.failure` event
+
+```json
+{
+  "version": "2.0",
+  "id": "********-****-****-****-***********",
+  "account_id": "***********************",
+  "app_id": "***********************",
+  "room_id": "***********************",
+  "timestamp": "2026-09-27T14:03:57Z",
+  "type": "sip.end.failure",
+  "data": {
+    "account_id": "***********************",
+    "app_id": "***********************",
+    "room_id": "***********************",
+    "call_id": "3PlkQ1xX9aZb",
+    "dir": "outbound",
+    "from": "+14155550100",
+    "to": "+14155550199",
+    "duration": 1646,
+    "user_id": "PJuhYVmWprOpEWvVU_cySQ",
+    "error_message": "max call duration exceeded"
   }
 }
 ```

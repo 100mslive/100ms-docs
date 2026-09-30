@@ -1,6 +1,6 @@
 ---
 title: TokenRequest
-nav: '4.96'
+nav: '4.98'
 ---
 
 ## Properties

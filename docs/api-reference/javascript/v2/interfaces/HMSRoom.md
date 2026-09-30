@@ -130,3 +130,11 @@ if this number is available room.peers is not guaranteed to have all the peers.
 ### transcriptions
 
 • `Optional` **transcriptions**: [`HMSTranscriptionInfo`](/api-reference/javascript/v2/interfaces/HMSTranscriptionInfo)[]
+
+---
+
+### translationConfig
+
+• `Optional` **translationConfig**: `Record`\<[`CAPTION`](/api-reference/javascript/v2/enums/HMSTranscriptionMode#caption), \{ `enabled`: `boolean` ; `roleLanguages?`: `Record`\<`string`, `string`\> }\>
+
+Translation config from template policy. Presence means translation is available.

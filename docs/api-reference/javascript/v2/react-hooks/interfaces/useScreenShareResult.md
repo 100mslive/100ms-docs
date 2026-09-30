@@ -49,11 +49,11 @@ In case of multiple screenshares, the behavior of which one is picked is not def
 
 ### toggleScreenShare
 
-• `Optional` **toggleScreenShare**: (`config?`: `HMSScreenShareConfig`) => `Promise`<`void`\>
+• `Optional` **toggleScreenShare**: (`config?`: `HMSScreenShareConfig`) => `Promise`\<`void`\>
 
 #### Type declaration
 
-▸ (`config?`): `Promise`<`void`\>
+▸ (`config?`): `Promise`\<`void`\>
 
 toggle screenshare for the local user, will only be present if the user has the permission to toggle
 
@@ -65,4 +65,4 @@ toggle screenshare for the local user, will only be present if the user has the 
 
 ##### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>

@@ -1,6 +1,6 @@
 ---
 title: IHMSSessionStoreActions<T>
-nav: '4.88'
+nav: '4.90'
 ---
 
 ## Type parameters
@@ -13,7 +13,7 @@ nav: '4.88'
 
 ### observe
 
-▸ **observe**(`keys`): `Promise`<`void`\>
+▸ **observe**(`keys`): `Promise`\<`void`\>
 
 observe a particular key or set of keys to receive updates of its latest value when its changed
 
@@ -25,13 +25,13 @@ observe a particular key or set of keys to receive updates of its latest value w
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 ---
 
 ### set
 
-▸ **set**<`K`\>(`key`, `value?`): `Promise`<`void`\>
+▸ **set**\<`K`\>(`key`, `value?`): `Promise`\<`void`\>
 
 #### Type parameters
 
@@ -48,13 +48,13 @@ observe a particular key or set of keys to receive updates of its latest value w
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 ---
 
 ### unobserve
 
-▸ **unobserve**(`keys`): `Promise`<`void`\>
+▸ **unobserve**(`keys`): `Promise`\<`void`\>
 
 unobserve a particular key or set of keys to stop receiving updates of its latest value
 
@@ -66,4 +66,4 @@ unobserve a particular key or set of keys to stop receiving updates of its lates
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>

@@ -7,7 +7,7 @@ nav: '5.2.6'
 
 ### allDevices
 
-• **allDevices**: `DeviceTypeAndInfo`<`MediaDeviceInfo`[]\>
+• **allDevices**: `DeviceTypeAndInfo`\<`MediaDeviceInfo`[]\>
 
 list of all devices by type
 
@@ -15,7 +15,7 @@ list of all devices by type
 
 ### selectedDeviceIDs
 
-• **selectedDeviceIDs**: `DeviceTypeAndInfo`<`string`\>
+• **selectedDeviceIDs**: `DeviceTypeAndInfo`\<`string`\>
 
 selected device ids for all types
 
@@ -23,11 +23,11 @@ selected device ids for all types
 
 ### updateDevice
 
-• **updateDevice**: (`__namedParameters`: { `deviceId`: `string` ; `deviceType`: `DeviceType` }) => `Promise`<`void`\>
+• **updateDevice**: (`__namedParameters`: \{ `deviceId`: `string` ; `deviceType`: `DeviceType` }) => `Promise`\<`void`\>
 
 #### Type declaration
 
-▸ (`«destructured»`): `Promise`<`void`\>
+▸ (`«destructured»`): `Promise`\<`void`\>
 
 function to call to update device
 
@@ -41,4 +41,4 @@ function to call to update device
 
 ##### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>

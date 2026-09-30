@@ -76,5 +76,58 @@ class HMSPrebuiltOptions {
 }
 
 ```
+
+
+## Customizing Foreground Notification
+
+
+When your app goes to the background during an active call, a foreground service notification is displayed to keep the call alive. You can customize this notification to match your app's branding using `CallNotificationConfig`.
+
+### Available Options
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `smallIcon` | `@DrawableRes Int?` | Default icon | Small icon shown in status bar and notification header. Should be monochrome for best results. |
+| `largeIcon` | `@DrawableRes Int?` | Default icon | Large icon shown on the right side of the notification. Can be full-color. |
+| `title` | `String?` | "Call in progress" | Notification title text. |
+| `text` | `String?` | "Tap to return to the call" | Notification body text. |
+| `channelName` | `String?` | "Ongoing Call" | Name for the notification channel (visible in system settings). |
+| `channelDescription` | `String?` | Default description | Description for the notification channel. |
+
+### Example Usage
+
+```kotlin
+import live.hms.roomkit.ui.HMSRoomKit
+import live.hms.roomkit.ui.HMSPrebuiltOptions
+import live.hms.roomkit.ui.notification.CallNotificationConfig
+
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val roomCode = "<room-code>"
+
+        val notificationConfig = CallNotificationConfig(
+            smallIcon = R.drawable.my_app_logo,      // Your app's notification icon
+            largeIcon = R.drawable.my_app_icon,      // Optional larger icon
+            title = "MyApp - Call Active",
+            text = "Tap to return to your call",
+            channelName = "MyApp Calls",
+            channelDescription = "Notifications for ongoing calls"
+        )
+
+        val options = HMSPrebuiltOptions(
+            userName = "<my-name>",
+            callNotificationConfig = notificationConfig
+        )
+
+        HMSRoomKit.launchPrebuilt(roomCode, this, options)
+    }
+}
+```
+
+All parameters are optional. If not provided, default values will be used.
+
+
 ## Sample Code
 The sample project for the library is at https://github.com/100mslive/AndroidPrebuiltDemo#readme you can download the app for it [here](https://github.com/100mslive/AndroidPrebuiltDemo/suites/14604646490/artifacts/827757135).

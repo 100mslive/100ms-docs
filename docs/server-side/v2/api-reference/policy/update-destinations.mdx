@@ -76,7 +76,7 @@ curl --location --request POST 'https://api.100ms.live/v2/templates/<template_id
         "default": {
             "name": "default",
             "role": "host",
-            "modes": ["recorded", "live"],
+            "modes": ["recorded", "live", "caption"],
             "outputModes": [ "txt", "srt", "json" ],
             "customVocabulary": ["100ms", "SDK", "Sundar", "Pichai" ],
             "summary": {
@@ -101,6 +101,13 @@ curl --location --request POST 'https://api.100ms.live/v2/templates/<template_id
                         "format": "paragraph"
                     }
                 ]
+            },
+            "translation": {
+                "enabled": true,
+                "roleLanguages": {
+                    "host": "es",
+                    "guest": "fr"
+                }
             }
         }
     }
@@ -173,7 +180,7 @@ curl --location --request POST 'https://api.100ms.live/v2/templates/<template_id
         "default": {
             "name": "default",
             "role": "host",
-            "modes": ["recorded", "live"],
+            "modes": ["recorded", "live", "caption"],
             "outputModes": [ "txt", "srt", "json" ],
             "customVocabulary": ["100ms", "SDK", "Sundar", "Pichai" ],
             "summary": {
@@ -198,6 +205,13 @@ curl --location --request POST 'https://api.100ms.live/v2/templates/<template_id
                         "format": "paragraph"
                     }
                 ]
+            },
+            "translation": {
+                "enabled": true,
+                "roleLanguages": {
+                    "host": "es",
+                    "guest": "fr"
+                }
             }
         }
     }

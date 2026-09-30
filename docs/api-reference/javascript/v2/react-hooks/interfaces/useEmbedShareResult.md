@@ -7,7 +7,7 @@ nav: '5.2.7'
 
 ### iframeRef
 
-• **iframeRef**: `RefObject`<`null` \| `HTMLIFrameElement`\>
+• **iframeRef**: `RefObject`\<`null` \| `HTMLIFrameElement`\>
 
 Reference to attach to the iframe that is responsible for rendering the URL passed.
 
@@ -23,11 +23,11 @@ Flag to check if an embed is currently being shared.
 
 ### startEmbedShare
 
-• **startEmbedShare**: (`value`: `string`) => `Promise`<`void`\>
+• **startEmbedShare**: (`value`: `string`) => `Promise`\<`void`\>
 
 #### Type declaration
 
-▸ (`value`): `Promise`<`void`\>
+▸ (`value`): `Promise`\<`void`\>
 
 Embed and start sharing a URL.
 
@@ -45,20 +45,20 @@ It will throw an error in the following scenarios:
 
 ##### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
 
 ---
 
 ### stopEmbedShare
 
-• **stopEmbedShare**: () => `Promise`<`void`\>
+• **stopEmbedShare**: () => `Promise`\<`void`\>
 
 #### Type declaration
 
-▸ (): `Promise`<`void`\>
+▸ (): `Promise`\<`void`\>
 
 Stop sharing the embed.
 
 ##### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
