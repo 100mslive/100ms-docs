@@ -2014,7 +2014,7 @@ This event is sent when an answered SIP call ends normally: either side hung up,
 
 ### sip.end.failure
 
-This event is sent when an answered SIP call ends abnormally, for example when the call hits the maximum call duration or the media connection fails.
+This event is sent when an answered SIP call ends abnormally, for example when the carrier hangs up with an error reason (such as an ACK timeout) or the media connection fails.
 
 #### Attributes
 
@@ -2033,7 +2033,7 @@ This event is sent when an answered SIP call ends abnormally, for example when t
 | duration     | `int`                | Duration of the answered call (in seconds) <br/><br/> Example: 731                                                                                                           |
 | peer_id      | `string`             | Peer ID of the SIP participant in the room (inbound calls) <br/><br/> Example: 6fc5fc17-07c3-42bf-8e8e-4e9aae1bc5dc                                                          |
 | user_id      | `string`             | User ID of the SIP participant. For inbound calls this is the caller number <br/><br/> Example: +14155550100                                                                 |
-| error_message | `string`            | Why the call ended abnormally. Common values: `"max call duration exceeded"`, `"connect failed"`, `"sdk fatal error"`, `"terminal signal"`, `"error"` |
+| error_message | `string`            | Why the call ended abnormally. Common values: `"remote hangup: <protocol> <cause> <text>"` (the carrier sent a BYE with an abnormal Reason header, e.g. `"remote hangup: SIP 408 ACK Timeout"`), `"sdk fatal error"`, `"max call duration exceeded"` (outbound calls only) |
 
 #### Sample `sip.end.failure` event
 
@@ -2056,7 +2056,7 @@ This event is sent when an answered SIP call ends abnormally, for example when t
     "to": "+14155550199",
     "duration": 1646,
     "user_id": "PJuhYVmWprOpEWvVU_cySQ",
-    "error_message": "max call duration exceeded"
+    "error_message": "remote hangup: SIP 408 ACK Timeout"
   }
 }
 ```
