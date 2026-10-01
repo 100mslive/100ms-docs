@@ -56,14 +56,20 @@ Use the `selectVideoTrackByPeerID` selector with `hmsActions.attachVideo` and `h
 // complete code snippet below
 let attachedTrackId = null;
 
-hmsStore.subscribe((track) => {
+const unsubscribe = hmsStore.subscribe((track) => {
     const nextTrackId = track?.id ?? null;
     if (nextTrackId === attachedTrackId) return; // same track, e.g. mute/unmute - nothing to do
     if (attachedTrackId) hmsActions.detachVideo(attachedTrackId, videoElement);
     if (nextTrackId) hmsActions.attachVideo(nextTrackId, videoElement);
     attachedTrackId = nextTrackId;
 }, selectVideoTrackByPeerID(peer.id));
+
+// when the tile is removed
+unsubscribe();
+if (attachedTrackId) hmsActions.detachVideo(attachedTrackId, videoElement);
 ```
+
+This relies on [`triggerOnSubscribe()`](/javascript/v2/how-to-guides/install-the-sdk/integration) being called during setup, so the handler also runs once at subscribe time and attaches the track the peer already has. Without it, `subscribe` only fires on changes and the tile stays blank until the track changes.
 
 If you are on React, the `useVideo` hook from `react-sdk` already does exactly this — pass it `peer.videoTrack` and it re-attaches for you.
 
@@ -74,14 +80,15 @@ If you are on React, the `useVideo` hook from `react-sdk` already does exactly t
 <Tab id='render-0'>
 
 ```js
-import { hmsActions } from './hms';
+import { selectPeers, selectVideoTrackByPeerID } from '@100mslive/hms-video-store';
+import { hmsActions, hmsStore } from './hms';
 
 const peersContainer = document.getElementById('peers-container');
 
-// store peer IDs already rendered to avoid re-render on mute/unmute
-const renderedPeerIDs = new Set();
+// peer id -> function that removes that peer's tile; a tile is built once per peer
+const peerTiles = new Map();
 
-// render a single peer video tile
+// render a single peer video tile, returns a function that removes it
 function renderPeer(peer) {
     const peerTileDiv = document.createElement('div');
     // you can either get an existing video element or create a new one.
@@ -94,8 +101,9 @@ function renderPeer(peer) {
 
     // Subscribe by peer id, not track id: a peer's track id changes when their session
     // moves to another media server. Re-attach whenever it changes.
+    // Fires once right away because hms.js calls triggerOnSubscribe().
     let attachedTrackId = null;
-    hmsStore.subscribe((track) => {
+    const unsubscribe = hmsStore.subscribe((track) => {
         const nextTrackId = track?.id ?? null;
         if (nextTrackId === attachedTrackId) return; // same track, e.g. mute/unmute
         if (attachedTrackId) hmsActions.detachVideo(attachedTrackId, videoElement);
@@ -105,22 +113,31 @@ function renderPeer(peer) {
 
     peerTileDiv.append(videoElement);
     peerTileDiv.append(peerTileName);
+    peersContainer.append(peerTileDiv);
 
-    // Tile creation stays keyed on peer id so the element is not rebuilt on every change
-    renderedPeerIDs.add(peer.id);
-    return peerTileDiv;
+    return () => {
+        unsubscribe();
+        if (attachedTrackId) hmsActions.detachVideo(attachedTrackId, videoElement);
+        peerTileDiv.remove();
+    };
 }
 
 // display a tile for each peer in the peer list
 function renderPeers(peers) {
-    peersContainer = document.getElementById('peers-container');
+    // remove tiles of peers who left
+    peerTiles.forEach((removeTile, peerID) => {
+        if (!peers.some((peer) => peer.id === peerID)) {
+            removeTile();
+            peerTiles.delete(peerID);
+        }
+    });
 
     peers.forEach((peer) => {
-        if (!renderedPeerIDs.has(peer.id) && peer.videoTrack) {
+        if (!peerTiles.has(peer.id) && peer.videoTrack) {
             console.log(
                 `rendering video for peer - ${peer.name}, roleName - ${peer.roleName}, isLocal- ${peer.isLocal}`
             );
-            peersContainer.append(renderPeer(peer));
+            peerTiles.set(peer.id, renderPeer(peer));
         }
     });
 }
