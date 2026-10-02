@@ -1,0 +1,49 @@
+name: llms.txt guard
+
+# Fails the PR if any docs/**/*.mdx file is added or removed without a
+# corresponding update to public/llms.txt. Modifications to existing MDX
+# files do not trigger the guard — only new pages or removed pages must
+# be reflected in the curated index.
+
+on:
+  pull_request:
+    branches:
+      - main
+      - qa
+    paths:
+      - 'docs/**/*.mdx'
+      - 'public/llms.txt'
+
+jobs:
+  check:
+    name: llms.txt updated for new docs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Detect new or removed MDX pages vs llms.txt changes
+        run: |
+          BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          HEAD_SHA="${{ github.event.pull_request.head.sha }}"
+
+          ADDED_REMOVED=$(git diff --name-only --diff-filter=AD "$BASE_SHA" "$HEAD_SHA" -- 'docs/**/*.mdx' || true)
+          LLMS_CHANGED=$(git diff --name-only "$BASE_SHA" "$HEAD_SHA" -- 'public/llms.txt' || true)
+
+          if [ -z "$ADDED_REMOVED" ]; then
+            echo "No MDX pages added or removed. Skipping."
+            exit 0
+          fi
+
+          echo "Added/removed MDX pages:"
+          echo "$ADDED_REMOVED"
+
+          if [ -z "$LLMS_CHANGED" ]; then
+            echo ""
+            echo "::error::New or removed docs/**/*.mdx pages detected but public/llms.txt was not updated."
+            echo "Add (or remove) a one-line entry in public/llms.txt for each new (or removed) page so LLM consumers stay in sync."
+            exit 1
+          fi
+
+          echo "public/llms.txt was updated. OK."
