@@ -98,6 +98,63 @@ It will select a layer that best matches the current view frame size and reacts 
 hmsVideoView.disableAutoSimulcastLayerSelect(true)
 ```
 
+## Rounded or overlapping tiles with HMSTextureRenderer
+
+`HMSVideoView` is backed by a `SurfaceView`, which renders on a separate compositor layer. As a result it ignores `clipToOutline` (so it can't have rounded corners) and doesn't cleanly overlap another video tile. For a rounded or overlapping tile — for example a local picture-in-picture tile drawn on top of a full-screen remote tile — use `HMSTextureRenderer`, which renders into a normal `TextureView`.
+
+`HMSTextureRenderer` lives in the `video-view` package (`live.hms.videoview.textureview.HMSTextureRenderer`). Unlike `HMSVideoView`, it is not a `View`: you construct it with the `SurfaceTexture` from your own `TextureView` and hand it the track.
+
+```kotlin
+var renderer: HMSTextureRenderer? = null
+
+textureView.surfaceTextureListener = object : TextureView.SurfaceTextureListener {
+    override fun onSurfaceTextureAvailable(surface: SurfaceTexture, width: Int, height: Int) {
+        renderer = HMSTextureRenderer(surface).apply {
+            addTrack(videoTrack)
+            displayResolution(width, height)
+        }
+    }
+    override fun onSurfaceTextureSizeChanged(surface: SurfaceTexture, width: Int, height: Int) {
+        renderer?.displayResolution(width, height)
+    }
+    override fun onSurfaceTextureDestroyed(surface: SurfaceTexture): Boolean {
+        renderer?.removeTrack()
+        return true
+    }
+    override fun onSurfaceTextureUpdated(surface: SurfaceTexture) {}
+}
+```
+
+### Rounded corners
+
+A `TextureView` cannot hold a background drawable (setting one throws `UnsupportedOperationException: TextureView doesn't support displaying a background drawable`). To round its corners, wrap it in a parent container that carries the rounded background and clips its children:
+
+```xml
+<FrameLayout
+    android:layout_width="120dp"
+    android:layout_height="160dp"
+    android:background="@drawable/rounded_bg"
+    android:outlineProvider="background"
+    android:clipToOutline="true">
+
+    <TextureView
+        android:id="@+id/localPip"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</FrameLayout>
+```
+
+### Scaling
+
+Use `setScalingType` to control how the frame fits the tile when their aspect ratios differ. `SCALE_ASPECT_FILL` fills the tile without distortion, cropping the overflow — the common choice for a small PiP tile:
+
+```kotlin
+renderer.setScalingType(RendererCommon.ScalingType.SCALE_ASPECT_FILL)
+renderer.displayResolution(view.width, view.height) // required for FILL; update on resize
+```
+
+`SCALE_ASPECT_FILL` is handled by the SDK. `SCALE_ASPECT_FIT` and `SCALE_ASPECT_BALANCED` (letterboxing with bars) require a view-level transform the renderer can't apply, since it only owns the `SurfaceTexture`, not the `TextureView`. To letterbox, apply a `Matrix` on your own view with `TextureView.setTransform(...)`, using the frame size reported through `addVideoViewStateChangeListener` (`onResolutionChange`).
+
 ### Special cases for videos in RecyclerViews
 
 If you're going to be using a RecyclerView to display multiple videos in a grid there are specific places where you should do these operations.
