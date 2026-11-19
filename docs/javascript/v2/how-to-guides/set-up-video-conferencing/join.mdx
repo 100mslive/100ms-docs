@@ -132,6 +132,41 @@ function ConnectionState() {
 > For more granular
 > room states, use [`selectRoomState`](/api-reference/javascript/v2/home/content#select-room-state).
 
+## Refreshing the auth token in long-running sessions
+
+The SDK reuses the auth token passed to `join` every time it reconnects after a network disconnection. If the call outlives the token's expiry (24 hours in the [sample token server code](/get-started/v2/get-started/security-and-tokens#set-up-your-token-server)), the next reconnect is rejected and the peer is removed from the room.
+
+For sessions that can run longer than the token's validity, fetch a fresh token from your token service before the current one expires and pass it to `updateAuthToken`. The call stays connected; the new token is used for the next reconnect.
+
+```js
+import { hmsActions } from './hms';
+
+function getExpiry(token) {
+    const payload = JSON.parse(atob(token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')));
+    return payload.exp * 1000;
+}
+
+function scheduleTokenRefresh(token) {
+    // refresh 10 minutes before expiry
+    const refreshIn = getExpiry(token) - Date.now() - 10 * 60 * 1000;
+    setTimeout(async () => {
+        const newToken = await fetchTokenFromYourServer(); // same room and user_id
+        hmsActions.updateAuthToken(newToken);
+        scheduleTokenRefresh(newToken);
+    }, Math.max(refreshIn, 0));
+}
+
+await hmsActions.join({ userName: 'Jon Snow', authToken: token });
+scheduleTokenRefresh(token);
+```
+
+In React, call `updateAuthToken` on the actions returned by `useHMSActions()`.
+
+> Note:
+> - Call `updateAuthToken` before the current token expires. Once a reconnect has failed with an expired token, a new token cannot recover that session — the peer needs to join again.
+> - The new token must be for the same room and the same `user_id`, otherwise `updateAuthToken` throws. If you use room codes, pass the same `userId` to `getAuthTokenByRoomCode` when fetching the new token.
+> - Call it only after `preview` or `join`.
+
 ## Leaving a room
 
 Leaving a room should be quick. Once a user wishes to end their interaction in the room, they can choose to leave the meeting. 👋

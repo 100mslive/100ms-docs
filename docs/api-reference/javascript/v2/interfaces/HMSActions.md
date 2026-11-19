@@ -1511,6 +1511,25 @@ Promise<void> - resolves when the camera is toggled
 
 ---
 
+### updateAuthToken
+
+▸ **updateAuthToken**(`token`): `void`
+
+Replace the auth token used for reconnects, so sessions can outlive the original token's expiry.
+Call it before the current token expires. The new token must be for the same room and user.
+
+#### Parameters
+
+| Name    | Type     | Description    |
+| :------ | :------- | :------------- |
+| `token` | `string` | new auth token |
+
+#### Returns
+
+`void`
+
+---
+
 ### updateTranscriptionConfig
 
 ▸ **updateTranscriptionConfig**(`params`): `Promise`\<`void`\>
